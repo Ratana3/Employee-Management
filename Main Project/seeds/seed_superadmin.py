@@ -8,8 +8,8 @@ def get_db_connection():
     """Establish a connection to the PostgreSQL database."""
     return psycopg2.connect(
         host='localhost',
-        database='postgres',
-        user='postgres',
+        database='YourDatabaseName',
+        user='Username',
         password='123',
     )
 

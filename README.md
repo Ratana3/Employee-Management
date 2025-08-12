@@ -1,5 +1,3 @@
-# Employee-Management
-
 ```text
 ═════════════════════════════════════════════════════════════════════════════
                      		🖥️ EMPLOYEE MANAGEMENT SYSTEM 🖥️
@@ -493,11 +491,13 @@ information, and looks good on computers, tablets, and phones.
 │ Step 1: Clone the Project                                                 │
 │ • Create a folder on your desired drive for the project                   │
 │ • Open terminal in the created folder                                     │
-│ • Run the clone command (command not provided in original)                │
+│ • Run the clone command below : 					    |
+|									    |
+|  "https://github.com/Ratana3/Employee-Management.git"                	    │
 │                                                                           │
 │ Example path structure:                                                   │
 │ ┌─────────────────────────────────────────────────────────────────────┐   │
-│ │ PS D:\yourfoldername>                                               │   │
+│ │ PS D:\yourfoldername> https://github.com/Ratana3/Employee-Management.git    	    │
 │ └─────────────────────────────────────────────────────────────────────┘   │
 │                                                                           │
 │ Step 2: Install Dependencies                                              │
@@ -506,7 +506,7 @@ information, and looks good on computers, tablets, and phones.
 │ • Install requirements:                                                   │
 │                                                                           │
 │ ┌─────────────────────────────────────────────────────────────────────┐   │
-│ │ PS D:\yourfoldername\Main Project> pip install -r requirements.txt │   │
+│ │ PS D:\yourfoldername\Employe-Management\Main Project> pip install -r requirements.txt   │   │
 │ └─────────────────────────────────────────────────────────────────────┘   │
 └───────────────────────────────────────────────────────────────────────────┘
 
@@ -524,29 +524,54 @@ information, and looks good on computers, tablets, and phones.
 │                                                                           │
 │ Step 3: Execute SQL Script                                                │
 │ • Select your new database                                                │
-│ • Click "Query Tool" (pencil icon)                                        │
+│ • Right click and choose "Query Tool"		                            │
 │ • Click "Open File" and navigate to:                                      │
-│   D:\yourfoldername\Database Setup                                        │
+│   D:\yourfoldername\Employee-Management\Database Setup                    │
 │ • Select the .sql file and execute it                                     │
 │                                                                           │
 │ Step 4: Verify Setup                                                      │
-│ • Check "Tables" section under your database                              │
-│ • Run test queries to verify data insertion                               │
-│                                                                           │
-│ 💡 Troubleshooting                                                        │
+│ • Check "Tables" section under your database ( YourDatabase -> Schemas     │
+| -> Tables )           					            │
+│ • Run test queries to verify data insertion ( Optional )                  │
+|									    |
+| Step 5: Setup database inside the system				    |
+| • Navigate to "Main Project\Employee-Management\routes\Auth\utils.py"     |
+| • find this function below 				                    |
+|								            |
+| def get_db_connection():                                                  |
+|    """Establish a connection to the PostgreSQL database."""               |
+|    return psycopg2.connect(                                               |
+|        host='localhost',                                                  |
+|        database='YourDatabaseName', 					    |
+|        user='Username',						    |
+|        password='123', 						    |
+|    ) 									    |
+| • change the value to the database you use				    |
+|									    |
+| • After that , navigate to :						    |
+| "Main Project\Employee-Management\routes\Auth\config.py		    |
+| • Find the variables below and update it to fit your database like what   |
+| you did in the above point 						    |
+|									    |
+| DB_HOST = "localhost"							    |
+| DB_NAME = "YourDatabaseName"						    |
+| DB_USER = "Username"                                                      |
+| DB_PASSWORD = "123"                                                       |
+|  									    |
+│ 💡 Troubleshooting                                                       │
 │ • Ensure .sql file matches your PostgreSQL version                        │
 │ • Verify connection to correct database                                   │
 └───────────────────────────────────────────────────────────────────────────┘
 
 ┌─ 🔗 GitHub Token Setup ──────────────────────────────────────────────────┐
 │                                                                           │
-│ Configuration Location: Main Project/routes/Auth/config.py                │
+│ Configuration Location: Main Project\routes\Auth\config.py                │
 │                                                                           │
 │ Variables to Update:                                                      │
-│ ┌─────────────────────────────────────────────────────────────────────┐   │
-│ │ GITHUB_TOKEN = 'ghp_vajS91hvRX0wo4YZIqLT6Crf1hJNXC3qhEIM'           │   │
-│ │ GITHUB_REPO = 'Username/EmployeeAttendance'                         │   │
-│ └─────────────────────────────────────────────────────────────────────┘   │
+│ ┌─────────────────────────────────────────────────────────────────────┐
+│ │ GITHUB_TOKEN = 'yourtoken'           				 │   │
+│ │ GITHUB_REPO = 'Username\repositoryname'                         	 │   │
+│ └─────────────────────────────────────────────────────────────────────┘
 │                                                                           │
 │ Instructions:                                                             │
 │ • Follow the guides in the config.py file                                 │
@@ -556,7 +581,8 @@ information, and looks good on computers, tablets, and phones.
 
 ┌─ 📧 Email Configuration ─────────────────────────────────────────────────┐
 │                                                                           │
-│ Configuration Location: yourfoldername/Main Project/.env                  │
+│ Configuration Location: 						    |
+| yourfoldername\Employee-Management\Main Project\.env                      │
 │                                                                           │
 │ Instructions:                                                             │
 │ • Navigate to the .env file                                               │
@@ -564,81 +590,126 @@ information, and looks good on computers, tablets, and phones.
 │ • Complete email setup configuration                                      │
 └───────────────────────────────────────────────────────────────────────────┘
 
+┌─ 🔐 Super Admin Creation And Roles (Security Critical) ────────────────────────────┐
+│                                                                                   │
+│ Step 1: Navigate to Seeds Folder                                                  │
+│ ┌─────────────────────────────────────────────────────────────────────────────┐   │
+│ │ PS D:\yourfoldername\Employee-Management\Main Project\seeds>                                      │   │
+│ └─────────────────────────────────────────────────────────────────────────────┘   │
+│                                                                                   │
+│ Step 2: Setup Initial Roles                                                       │
+│ • Configure "seed_roles.py" with initial role data                                │
+│ • Change the database value to your own database value                            │
+│ • Execute the roles script:                                                       │
+│                                                                                   │
+│ ┌─────────────────────────────────────────────────────────────────────────────┐   │
+│ │ PS D:\yourfoldername\Employee-Management\Main Project\seeds> python seed_roles.py                 │   │
+│ └─────────────────────────────────────────────────────────────────────────────┘   │
+│                                                                                   │
+│ Step 3: Configure Super Admin                                                     │
+│ • Open "seed_superadmin.py"                                                       │
+│ • Change the database value to your own database value                            │
+│ • Follow the guides to insert your super admin data                               │
+│ • Execute the script:                                                             │
+│                                                                                   │
+│ ┌─────────────────────────────────────────────────────────────────────────────┐   │
+│ │ PS D:\yourfoldername\Employee-Management\Main Project\seeds> python seed_superadmin.py            │   │
+│ └─────────────────────────────────────────────────────────────────────────────┘   │
+└───────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ 🎛️ Access Control Database Seeds ───────────────────────────────────────┐
+│                                                                           	     │
+│ Purpose: Initialize all page permissions and access control system        	     │
+│ File Location : 								     |
+| \yourfoldername\Employee-Management\Main Project\seeds\seed_routeAndactions.sql    │
+│                                                                           	      │
+│ 🚀 STEP-BY-STEP SETUP:                                                             │
+│                                                                                     │
+│ 📱 Open pgAdmin                               			    	      │
+│ Step 1: Open pgAdmin 4 application                                       	      │
+│ Step 2: Connect to your PostgreSQL server                                	      │
+│ Step 3: Expand Servers → Your Server → Databases                                    │
+│ Step 4: Right-click your database → Select "Query Tool"                             │
+│ Step 5: Click "Open File" icon (📁) in toolbar                                     │
+│ Step 6: Navigate to: 								      |
+|  \yourfoldername\Employee-Management\Main Project\seeds\                            │
+│ Step 7: Select "seed_routeAndactions.sql" → Click "Open"                            │
+│ Step 8: Click "Execute/Run" button (▶️) or press F5                                │
+│ Step 9: Check "Messages" tab for "✅ Success" confirmation                         │
+│                                                                                     │
+│ ✅ VERIFICATION STEPS:                                                             │
+│ Step 1: Run: SELECT COUNT(*) FROM routes;        (Expected: ~15)         	      │
+│ Step 2: Run: SELECT COUNT(*) FROM actions;       (Expected: ~248)        	      │
+│ Step 3: Run: SELECT COUNT(*) FROM route_actions; (Expected: ~248)        	      │
+│                                                                                     │
+│ 📦 What You Get: 15 Admin pages, 200+ actions, Pre-configured mappings             │
+│ ⚠️ Prerequisites: PostgreSQL running, tables exist, INSERT permissions             │
+│ 🆘 Issues? Check: DB connection, table existence, user privileges                   │
+└───────────────────────────────────────────────────────────────────────────┘
+
+┌─ 🚀 Run the Project ────────────────────────────────────────────────────────────────┐
+│                                                                                    │
+│ Step 3: Start the Flask Server  						     |
+| • Open your terminal or command prompt                                             │
+│ • Make sure you are inside the "Main Project" folder                               │
+│ • Run the command below to launch the development server in debug mode:            │
+│                                                                                    │
+│ ┌───────────────────────────────────────────────────────────────────────────────┐  │
+│ │ PS D:\yourfoldername\Employee-Management\Main Project> flask run --debug                             │  │
+│ └───────────────────────────────────────────────────────────────────────────────┘  │
+│                                                                                    │
+│ You should see output similar to:                                                  │
+│                                                                                    │
+│    * Debug mode: on                                                                │
+│    * Running on http://127.0.0.1:5000                                              │
+│    INFO:werkzeug:Press CTRL+C to quit                                              │
+│                                                                                    │
+│ ※ Note:                                                                            │
+│ • By default, Flask uses port 5000.                                                │
+│ • If port 5000 is unavailable, Flask will use a different port (e.g., 7000).       │
+│ • The exact URL will be shown in your terminal, e.g.:                              │
+│                                                                                    │
+│      http://127.0.0.1:5000                                                         │
+│      http://127.0.0.1:7000                                                         │
+│                                                                                    │
+│ Step 4: Access the Application                                                     │
+│ • Copy the URL from the terminal (e.g., http://127.0.0.1:5000)                     │
+│ • Paste it into your web browser's address bar, or Ctrl+Click the link if enabled  │
+│ • The system should now be running perfectly!                                      │
+└────────────────────────────────────────────────────────────────────────────────────┘
+
 ┌─ 🚀 Initial Setup & Account Management ──────────────────────────────────┐
+| Creating account							     |
+| • The UI will be clear on how to create a new account			     |
 │                                                                           │
-│ Account Verification Process                                              │
+│ Account Verification Process For Admins To Login :                        │
 │ • New accounts require super_admin verification                           │
 │ • Login as super_admin first                                              │
 │ • Navigate to "Access Control"                                            │
 │ • Verify admin registrations to enable login                              │
 │                                                                           │
-│ Employee Account Activation                                               │
+│ Employee Account Activation For Employees To Login :                      │
 │ • Employee accounts need activation before login                          │
 │ • Navigate to "Employee Management"                                       │
 │ • Activate employee accounts to enable access                             │
 │                                                                           │
 │ ⚠️ Important Role Information                                             │
-│ All roles except "Employee" function as admin roles with dual access:    │
+│ All roles except "Employee" function as admin roles with dual access:     │
 │ • Employee login: For clock in/out functionality                          │
 │ • Admin login: For administrative actions based on granted permissions    │
+| • For more guide on this , Navigate to :                                   |
+|                                               			     |
+|   📁 : "Main Project\routes\Login\register.py"			     |
+|									     |
 └───────────────────────────────────────────────────────────────────────────┘
 
-┌─ 🔐 Super Admin Creation (Security Critical) ────────────────────────────┐
-│                                                                           │
-│ Step 1: Navigate to Seeds Folder                                          │
-│ ┌─────────────────────────────────────────────────────────────────────┐   │
-│ │ PS D:\yourfoldername\Main Project\seeds>                            │   │
-│ └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                           │
-│ Step 2: Configure Super Admin                                             │
-│ • Open "seed_superadmin.py"                                               │
-│ • Follow the guides to insert your super admin data                       │
-│ • Execute the script:                                                     │
-│                                                                           │
-│ ┌─────────────────────────────────────────────────────────────────────┐   │
-│ │ PS D:\yourfoldername\Main Project\seeds> python seed_superadmin.py  │   │
-│ └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                           │
-│ Step 3: Setup Initial Roles                                               │
-│ • Configure "seed_roles.py" with initial role data                        │
-│ • Execute the roles script:                                               │
-│                                                                           │
-│ ┌─────────────────────────────────────────────────────────────────────┐   │
-│ │ PS D:\yourfoldername\Main Project\seeds> python seed_roles.py       │   │
-│ └─────────────────────────────────────────────────────────────────────┘   │
-└───────────────────────────────────────────────────────────────────────────┘
 
-┌─ 🎛️ Access Control Database Seeds ───────────────────────────────────────┐
-│                                                                           │
-│ Purpose: Initialize all page permissions and access control system        │
-│ File: \yourfoldername\Main Project\seeds\seed_routeAndactions.sql        │
-│                                                                           │
-│ 🚀 STEP-BY-STEP SETUP:                                                    │
-│                                                                           │
-│ 📱 Open pgAdmin                               			    │
-│ Step 1: Open pgAdmin 4 application                                       │
-│ Step 2: Connect to your PostgreSQL server                                │
-│ Step 3: Expand Servers → Your Server → Databases                         │
-│ Step 4: Right-click your database → Select "Query Tool"                  │
-│ Step 5: Click "Open File" icon (📁) in toolbar                           │
-│ Step 6: Navigate to: \yourfoldername\Main Project\seeds\                 │
-│ Step 7: Select "seed_routeAndactions.sql" → Click "Open"                 │
-│ Step 8: Click "Execute/Run" button (▶️) or press F5                      │
-│ Step 9: Check "Messages" tab for "✅ Success" confirmation               │
-│                                                                           │
-│ ✅ VERIFICATION STEPS:                                                    │
-│ Step 1: Run: SELECT COUNT(*) FROM routes;        (Expected: ~16)         │
-│ Step 2: Run: SELECT COUNT(*) FROM actions;       (Expected: ~150)        │
-│ Step 3: Run: SELECT COUNT(*) FROM route_actions; (Expected: ~150)        │
-│                                                                           │
-│ 📦 What You Get: 16 Admin pages, 150+ actions, Pre-configured mappings   │
-│ ⚠️ Prerequisites: PostgreSQL running, tables exist, INSERT permissions    │
-│ 🆘 Issues? Check: DB connection, table existence, user privileges         │
-└───────────────────────────────────────────────────────────────────────────┘
+➤ 🔔 Info you might need later :
 
-┌─ 📃 Testing resources ───────────────────────────────────────┐
-│ For performing the import action inside "Data Import" page , follow the instruction below │
-│ • Navigate to the folder called "yourfoldername\Testing resource" for performing imports  │
+┌─ 📃 Testing resources ────────────────────────────────────────────────────────┐
+│ For performing the import action inside "Data Import" page , follow the instruction below  │
+│ • Navigate to : 									     |
+|  "yourfoldername\Employee-Management\Testing resource" for performing imports  	     │
 | in the "Data Import" page 								     │
 | What's in the folder:       		    		 	                             │
 | ✅ .csv file sample for importing datas			                             │
@@ -677,7 +748,7 @@ information, and looks good on computers, tablets, and phones.
 │ └─────────────────────────────────────────────────────────────────────┘
 │                                                                           │
 │ Step 3: Register Actions                                                  │
-│ • Navigate to: Main Project/routes/Auth/token.py                          │
+│ • Navigate to: Main Project\routes\Auth\token.py                          │
 │ • Add new endpoint following existing patterns:                           │
 │                                                                           │
 │ ┌─────────────────────────────────────────────────────────────────────┐
@@ -710,7 +781,7 @@ information, and looks good on computers, tablets, and phones.
 │ └─────────────────────────────────────────────────────────────────────┘
 │                                                                           │
 │ Step 2: Update Registration                                               │
-│ • Navigate to: Main Project/routes/Auth/token.py                          │
+│ • Navigate to: Main Project\routes\Auth\token.py                          │
 │ • Add new action to correct endpoint group:                               │
 │                                                                           │
 │ ┌─────────────────────────────────────────────────────────────────────┐
@@ -772,7 +843,7 @@ information, and looks good on computers, tablets, and phones.
 │ 📂 Where to Go                                                            │
 │ ┌─────────────────────────────────────────────────────────────────────┐   │
 │ │                                                                     │   │
-│ │  📁 Main Project/routes/Auth/data_imports.py                        │   │
+│ │  📁 Main Project\routes\Auth\data_imports.py                        │   │
 │ │                                                                     │   │
 │ │  📝 Look for the step-by-step guide inside this file                │   │
 │ │     and follow it to add new table imports                          │   │
@@ -795,10 +866,12 @@ information, and looks good on computers, tablets, and phones.
 ║                       		    DOCUMENTS						║
 ╚══════════════════════════════════════════════════════════════════════════╝
 
-┌─ 📃 DOCUMENTATION ───────────────────────────────────────────────────────────┐
-│ Navigate to "yourfoldername\Documentation, there will be important documents about this system │
-│ • Diagram about core tables that this system used						  |			                                 │ • Security diagram about the system								  |
-└───────────────────────────────────────────────────────────────────────────┘
+┌─ 📃 DOCUMENTATION ────────────────────────────────────────────────────────────────────────────────┐
+│ Navigate to "yourfoldername\Employee-Management\Documentation, 			    				   |
+| there will be important documents about this system 										       │
+│ • Diagram about core tables that this system used						  				    	   |
+│ • Security diagram about the system								  				    			|
+└───────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 
 ■ CONTACT INFORMATION
