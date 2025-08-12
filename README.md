@@ -493,11 +493,11 @@ information, and looks good on computers, tablets, and phones.
 │ • Open terminal in the created folder                                     │
 │ • Run the clone command below : 					    |
 |									    |
-|  "https://github.com/Ratana3/Employee-Management.git"                	    │
+|  "git clone https://github.com/Ratana3/Employee-Management.git"           │
 │                                                                           │
 │ Example path structure:                                                   │
 │ ┌─────────────────────────────────────────────────────────────────────┐   │
-│ │ PS D:\yourfoldername> https://github.com/Ratana3/Employee-Management.git    	    │
+│ │ PS D:\yourfoldername> git clone https://github.com/Ratana3/Employee-Management.git    	│
 │ └─────────────────────────────────────────────────────────────────────┘   │
 │                                                                           │
 │ Step 2: Install Dependencies                                              │
