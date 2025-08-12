@@ -559,6 +559,7 @@ information, and looks good on computers, tablets, and phones.
 │ • Run test queries to verify data insertion ( Optional )                  │
 |									    |
 | Step 5: Setup database inside the system				    |
+| • Open visual studio code				    		    |
 | • Navigate to "Main Project\Employee-Management\routes\Auth\utils.py"     |
 | • find this function below 				                    |
 |								            |
