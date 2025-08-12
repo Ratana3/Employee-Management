@@ -1,0 +1,134 @@
+┌─ 🗄️ Employee Management System - Database Architecture ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                                                                                                                                                                                              │
+│ 👥 USER MANAGEMENT & AUTHENTICATION                                                                                                                                                                                                                          │
+│ ┌─────────────────────────────────────┐    1:M    ┌──────────────────────────────────────────────┐    1:M    ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐ │
+│ │              roles                  │ ──────→  │                 admins                       │           │                                           employees                                                                                    │ │
+│ ├─────────────────────────────────────┤          ├──────────────────────────────────────────────┤           ├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤ │
+│ │ 🔑 role_id (PK, SERIAL)             │          │ 🔑 admin_id (PK, SERIAL)                    │           │ 🔑 employee_id (PK, SERIAL)                                                                                                     │ │
+│ │ role_name (VARCHAR(50), NOT NULL)   │          │ email (VARCHAR(255))                         │           │ first_name (VARCHAR(100))                    │ hobbies (TEXT)                                                            │ │
+│ └─────────────────────────────────────┘          │ password (TEXT)                              │           │ last_name (VARCHAR(100))                     │ 🔗 goal_id (FK → goals.goal_id)                                          │ │
+│                   │                              │ first_name (VARCHAR(100))                    │           │ email (VARCHAR(150))                         │ 🔗 team_id (FK → teams.team_id)                                          │ │
+│                   │                              │ last_name (VARCHAR(100))                     │           │ phone_number (VARCHAR(15))                   │ 🔗 announcement_id (FK → announcements.announcement_id)                  │ │
+│                   │                              │ profile_image (BYTEA)                        │           │ department (VARCHAR(100))                    │ is_2fa_enabled (BOOLEAN, DEFAULT false)                                  │ │
+│                   │                              │ created_at (TIMESTAMP)                       │           │ salary (NUMERIC)                             │ two_factor_secret (VARCHAR(255))                                         │ │
+│                   │                              │ last_login (TIMESTAMP)                       │           │ status (VARCHAR(50), DEFAULT 'active')       │ 🔗 role_id (FK → roles.role_id)                                          │ │
+│                   │                              │ status (VARCHAR(20))                         │           │ date_hired (DATE)                            │ current_jti (TEXT)                                                       │ │
+│                   │                              │ last_modified (TIMESTAMP)                    │           │ date_terminated (DATE)                       │ gender (VARCHAR(1))                                                       │ │
+│                   │                              │ permissions (JSONB, DEFAULT '[]')            │           │ profile (BYTEA)                              │ date_of_birth (DATE)                                                     │ │
+│                   │                              │ is_verified (BOOLEAN, DEFAULT false)         │           │ created (DATE, DEFAULT CURRENT_DATE)         │                                                                           │ │
+│                   │                              │ is_2fa_enabled (BOOLEAN, DEFAULT false)      │           │ account_status (TEXT)                        │                                                                           │ │
+│                   │                              │ two_factor_secret (VARCHAR(255))             │           │ address1 (TEXT)                              │                                                                           │ │
+│                   │                              │ 🔗 role_id (FK → roles.role_id)              │           │ city (TEXT)                                  │                                                                           │ │
+│                   │                              │ phone_number (INTEGER)                       │           │ address2 (TEXT)                              │                                                                           │ │
+│                   │                              │ bio (TEXT)                                   │           │ password (TEXT, NOT NULL)                    │                                                                           │ │
+│                   │                              │ gender (VARCHAR(1))                          │           │ skills (TEXT)                                │                                                                           │ │
+│                   │                              │ date_of_birth (DATE)                         │           │ certification (TEXT)                         │                                                                           │ │
+│                   │                              │ jti (TEXT)                                   │           │ education (TEXT)                             │                                                                           │ │
+│                   │                              └──────────────────────────────────────────────┘           │ language (TEXT)                              │                                                                           │ │
+│                   │                                                                                          └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘ │
+│                   │                                                                                                                         │                                                                                               │
+│                   └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘                                                                                               │
+│                                                                                                                                                                                                                                              │
+│ 🕒 ATTENDANCE & TIME MANAGEMENT                                                                                                                                                                                                               │
+│                                  ┌──────────────────────────────────────────────┐                              ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐ │
+│                                  │                 shifts                       │                              │                                              leave_requests                                                      │ │
+│                                  ├──────────────────────────────────────────────┤                              ├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤ │
+│                                  │ 🔑 shift_id (PK, SERIAL)                    │                              │ 🔑 request_id (PK, SERIAL)                                                                                     │ │
+│                                  │ shift_name (VARCHAR(100))                    │                              │ 🔗 employee_id (FK → employees.employee_id)                                                                    │ │
+│                                  │ start_time (TIME, NOT NULL)                  │                              │ leave_type (TEXT)                                                                                               │ │
+│                                  │ end_time (TIME, NOT NULL)                    │                              │ start_date (DATE)                                                                                               │ │
+│                                  └──────────────────────────────────────────────┘                              │ end_date (DATE)                                                                                                 │ │
+│                                                                                                                  │ total_days (INTEGER, NOT NULL)                                                                                  │ │
+│                                                                                                                  │ status (VARCHAR(20), DEFAULT 'Pending')                                                                         │ │
+│                                                                                                                  │ remarks (TEXT)                                                                                                   │ │
+│                                                                                                                  │ verification_status (BOOLEAN)                                                                                    │ │
+│                                                                                                                  │ created_at (DATE)                                                                                                │ │
+│                                                                                                                  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                                                                                         ▲                                                                            │
+│                                                                                                                                                         │ 1:M                                                                      │
+│                                                                                                                                                         │                                                                          │
+│ 💰 PAYROLL & FINANCIAL MANAGEMENT                                                                                                                       │                                                                          │
+│ ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐                                │                                                                          │
+│ │                                           payroll                                                                  │                                │                                                                          │
+│ ├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤                                │                                                                          │
+│ │ 🔑 payroll_id (PK, SERIAL)                                                                                        │                                │                                                                          │
+│ │ 🔗 employee_id (FK → employees.employee_id)                                                                       │ ←──────────────────────────────┘                                                                          │
+│ │ month (DATE, NOT NULL)                │ tax_rate (NUMERIC)                                                       │                                                                                                                   │
+│ │ base_salary (NUMERIC, NOT NULL)       │ tax (NUMERIC)                                                            │                                                                                                                   │
+│ │ hours_worked (NUMERIC)                │ net_salary (NUMERIC)                                                     │                                                                                                                   │
+│ │ overtime_hours (NUMERIC)              │ created_at (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)                       │                                                                                                                   │
+│ │ overtime_pay (NUMERIC)                │ deductions (NUMERIC, DEFAULT 0)                                          │                                                                                                                   │
+│ │ bonuses (NUMERIC, DEFAULT 0)          │ payment_status (VARCHAR(20), DEFAULT 'Pending')                         │                                                                                                                   │
+│ │ payment_date (TIMESTAMP)              │                                                                          │                                                                                                                   │
+│ └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘                                                                                                                   │
+│                                                                                                                                                                                                                                              │
+│ ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐                                                                                                                   │
+│ │                                       expense_claims                                                              │                                                                                                                   │
+│ ├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤                                                                                                                   │
+│ │ 🔑 claim_id (PK, SERIAL)                                                                                          │                                                                                                                   │
+│ │ 🔗 employee_id (FK → employees.employee_id)                                                                       │ ←──────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+│ │ claim_date (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)     │ receipt_image (BYTEA)                                    │
+│ │ amount (NUMERIC)                                       │ status (VARCHAR(20), DEFAULT 'pending')                 │
+│ │ description (TEXT)                                     │ submitted_at (DATE)                                      │
+│ │ receipt_path (TEXT)                                    │ title (TEXT)                                             │
+│ │ category (TEXT)                                        │                                                          │
+│ └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+│
+│ 🎯 PERFORMANCE & TASK MANAGEMENT
+│ ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐                    ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ │                                           goals                                                                    │                    │                                           tasks                                                                    │
+│ ├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤                    ├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ │ 🔑 goal_id (PK, SERIAL)                                                                                           │                    │ 🔑 task_id (PK, SERIAL)                                                                                           │
+│ │ goal_name (VARCHAR(255), NOT NULL)                    │ 🔗 employee_id (FK → employees.employee_id)                │                    │ task_name (VARCHAR(255), NOT NULL)                    │ 🔗 employee_id (FK → employees.employee_id)             │
+│ │ description (TEXT)                                     │ 🔗 team_id (FK → teams.team_id)                            │                    │ description (TEXT)                                     │ 🔗 team_id (FK → teams.team_id)                         │
+│ │ specific_goal (TEXT)                                   │ status (VARCHAR(50), DEFAULT 'Not Started')                │                    │ assigned_date (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)  │ 🔗 project_id (FK → projects.project_id)                │
+│ │ measurable_goal (TEXT)                                 │ created_at (TIMESTAMP WITH TIME ZONE, DEFAULT CURRENT_TIMESTAMP) │            │ due_date (TIMESTAMP)                                   │ status (VARCHAR(50), DEFAULT 'Pending')                 │
+│ │ achievable_goal (TEXT)                                 │ updated_at (TIMESTAMP WITH TIME ZONE, DEFAULT CURRENT_TIMESTAMP) │            │ progress (INTEGER, DEFAULT 0)                          │                                                          │
+│ │ relevant_goal (TEXT)                                   │                                                                      │            └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+│ │ time_bound_goal (DATE)                                 │                                                                      │                                               ▲
+│ └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘                                               │ 1:M
+│                          ▲                                                                                                                                          │
+│                          │ 1:M                                                                                                                                      │
+│                          │                                                                                                                                          │
+│                          └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+│
+│ 🔐 ACCESS CONTROL SYSTEM (Your Unique Feature!)
+│ ┌─────────────────────────────────────┐    M:M    ┌─────────────────────────────────────┐    M:M    ┌─────────────────────────────────────┐
+│ │              routes                 │ ←────────  │           route_actions             │  ────────→ │             actions                 │
+│ ├─────────────────────────────────────┤           ├─────────────────────────────────────┤           ├─────────────────────────────────────┤
+│ │ 🔑 id (PK, SERIAL)                  │           │ 🔑 id (PK, SERIAL)                  │           │ 🔑 id (PK, SERIAL)                  │
+│ │ route_name (VARCHAR, NOT NULL)      │           │ 🔗 route_id (FK → routes.id)        │           │ action_name (VARCHAR, NOT NULL)     │
+│ │ description (VARCHAR)               │           │ 🔗 action_id (FK → actions.id)      │           │ description (VARCHAR)               │
+│ └─────────────────────────────────────┘           └─────────────────────────────────────┘           └─────────────────────────────────────┘
+│                                                                    │
+│                                                                    │ This junction table maps which actions 
+│                                                                    │ are available on which routes/pages
+│                                                                    │
+│                                                    ┌─────────────────────────────────────┐
+│                                                    │         admin_permissions           │
+│                                                    ├─────────────────────────────────────┤
+│                                                    │ 🔑 id (PK, SERIAL)                  │
+│                                                    │ 🔗 admin_id (FK → admins.admin_id)  │
+│                                                    │ 🔗 action_id (FK → actions.id)      │
+│                                                    │ granted_at (TIMESTAMP)              │
+│                                                    └─────────────────────────────────────┘
+│                                                                    ▲
+│                                                                    │ M:M
+│                                                                    │ Maps which admin users have 
+│                                                                    │ which specific permissions
+│
+|
+│ 📊 CARDINALITY LEGEND:
+│ 🔑 = Primary Key    🔗 = Foreign Key    1:M = One-to-Many    M:M = Many-to-Many    ▲ = Relationship Direction
+│
+│ 💡 ARCHITECTURAL HIGHLIGHTS:
+│ ✅ Normalized database design (3NF) with proper relationship modeling
+│ ✅ Flexible role-based access control with granular permissions
+│ ✅ Comprehensive audit trail through timestamps and status fields  
+│ ✅ Scalable team and project assignment architecture
+│ ✅ Enterprise-level security with 2FA and JWT token management
+│ ✅ Financial workflow automation with approval processes
+│ ✅ Performance management with SMART goals framework
+│
+│ 🎯 Created for Portfolio Presentation - Demonstrates Advanced Database Design Skills
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
