@@ -1,0 +1,2293 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>Ready Bootstrap Dashboard</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+	<link rel="stylesheet" href="../../static/Employee/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+	<link rel="stylesheet" href="../../static/Employee/assets/css/ready.css">
+	<link rel="stylesheet" href="../../static/Employee/assets/css/demo.css">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+		<!-- Styling the logging you out spinner -->	
+	<style>
+        /* Make modal-body scrollable in Bootstrap 4 */
+.inbox-scrollable {
+  max-height: 60vh;   /* Adjust height as needed */
+  overflow-y: auto;
+}
+		/* Basic styling for spinner container */
+    .spinner-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Spinner Animation (Circular Progress) */
+    .spinner {
+        border: 4px solid transparent;
+        border-top: 4px solid #007bff; /* Blue color for the spinner */
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        animation: spin 1.5s linear infinite;
+    }
+		/* CSS for spinner animation */
+		@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .spinner-border {
+        animation: spin 2s linear infinite;
+    }
+	</style>
+	<!-- Styling the logging you out spinner -->	
+</head>
+<body>
+	<div class="wrapper">
+		<div class="main-header">
+			<div class="logo-header">
+				<a href="#" class="logo" data-toggle="modal" data-target="#modalUpdate">
+					Contact Details
+				</a>
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+			</div>
+			<nav class="navbar navbar-header navbar-expand-lg">
+				<div class="container-fluid">
+					
+					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+						<!-- Message Dropdown -->
+<li class="nav-item dropdown hidden-caret">
+	<a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  <i class="la la-envelope"></i>
+	</a>
+	<ul class="dropdown-menu notif-box msg-box" aria-labelledby="messageDropdown">
+	  <li>
+		<div class="dropdown-title d-flex justify-content-between align-items-center">
+		  Messages
+		  <a href="javascript:void(0);" onclick="openComposeMessageModal()">Compose</a>
+		</div>
+	  </li>
+	  <li>
+		<div class="message-notif-scroll" style="max-height: 250px; overflow-y: auto;">
+		  <div id="messagePreviewContainer" class="notif-center">
+			<!-- JS will insert message previews here -->
+		  </div>
+		</div>
+	  </li>
+	  <li>
+		<a class="see-all" href="javascript:void(0);" onclick="openMessageInboxModal()"> <strong>View Inbox</strong> <i class="la la-angle-right"></i> </a>
+	  </li>
+	</ul>
+  </li>
+  
+  <!-- Notification Dropdown -->
+  <li class="nav-item dropdown hidden-caret">
+	<a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  <i class="la la-bell"></i>
+	  <span class="notification" id="unreadCountBadge" style="display:none;"></span>
+	</a>
+	<ul class="dropdown-menu notif-box" aria-labelledby="notificationDropdown">
+	  <li>
+		<div class="dropdown-title">You have <span id="notificationTitleCount">0</span> new notification(s)</div>
+	  </li>
+	  <li>
+		<div class="notif-center" id="notificationList">
+		  <!-- JS will insert notifications here -->
+		</div>
+	  </li>
+	</ul>
+  </li>  
+						<li class="nav-item dropdown">
+							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img alt="user-img" width="36" class="img-circle" id="profile-picture-dropdown"><span id="user-name"></span></span> </a>
+							<ul class="dropdown-menu dropdown-user">
+								<li>
+									<div class="user-box">
+										<div class="u-img"><img alt="user" id="profile-picture-box"></div>
+										<div class="u-text">
+											<h4 id="user-name"></h4>
+											<p class="text-muted" id="user-email-dropdown"></p>
+											<a href="/profile" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+										</div>
+										</div>
+									</li>
+									
+									
+								</ul>
+								<!-- /.dropdown-user -->
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="sidebar">
+				<div class="scrollbar-inner sidebar-wrapper">
+					<div class="user">
+						<div class="photo">
+							<img id="profile-picture-sidebar">
+						</div>
+						<div class="info">
+							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+								<span>
+									<span id="user-name"></span> (Your ID: <span id="user-id"></span>)
+									<span class="user-level" id="user-position"></span>
+									<span class="caret"></span>
+								</span>
+							</a>
+							<div class="clearfix"></div>
+
+							<div class="collapse in" id="collapseExample" aria-expanded="true" >
+								<ul class="nav">
+									<li>
+										
+											<span class="link-collapse" style="color: black;">Department : <span id="user-department"></span></span>
+										
+									</li>
+									<li>
+										
+										<span class="link-collapse" style="color: black;">Hired since : <span id="user-date-hired"></span></span>
+									
+								</li>
+								<li>
+										
+									<span class="link-collapse" style="color: black;">Team : <span id="user-team_name"></span></span>
+								
+							</li>
+							
+									
+								</ul>
+							</div>
+						</div>
+					</div>
+					<ul class="nav">
+						<li class="nav-item ">
+							<a href="/user">
+								<i class="la la-dashboard"></i>
+								<p>Dashboard</p>
+							</a>
+						</li>
+						<li class="nav-item ">
+							<a href="/payroll">
+								<i class="la la-cc-mastercard"></i>
+								<p>Payroll information</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/goals">
+								<i class="
+								la la-crosshairs"></i>
+								<p>Your goals</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/workandproductivity">
+								<i class="
+								la la-file-text-o"></i>
+								<p>Your tasks</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/notifications">
+								<i class="la la-bell"></i>
+								<p>Notifications</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/trainings">
+								<i class="la la-mortar-board"></i>
+								<p>Training and Development</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/feedbackandsupport">
+								<i class="la la-weixin"></i>
+								<p>Feedback and support</p>
+							</a>
+						</li>
+						<li class="nav-item ">
+							<a href="/financialmanagement">
+								<i class="la la-usd"></i>
+								<p>Financial management</p>
+							</a>
+						</li>
+						<li class="nav-item active">
+							<a href="/AdministrativeTools">
+								<i class="la la-gear"></i>
+								<p>Administrative Tools</p>
+							</a>
+						</li>
+						
+						<li class="nav-item update-pro">
+							<button class="btn btn-danger" data-toggle="modal" data-target="#logoutModal">
+								<i class="la la-power-off"></i>
+								<p>Logout</p>
+							</button>
+						</li>
+
+						<li class="nav-item update-pro">
+						<button id="viewDevicesBtn" class="btn btn-warning">
+							🖥️ View Recent Devices
+						</button>
+					</li>
+					</ul>
+				</div>
+			</div>
+			<div class="main-panel">
+				<div class="content">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+							  <div class="card-header d-flex justify-content-between align-items-center">
+								<div>
+								  <h4 class="card-title">My Documents</h4>
+								  <p class="card-category mb-0">Access company policies, contracts, and other official documents.</p>
+								</div>
+							  </div>
+						  
+							  <div class="card-body">
+								<div class="table-responsive">
+								  <table class="table table-bordered">
+									<thead class="text-primary">
+									  <tr>
+										<th>Title</th>
+										<th>Description</th>
+										<th>Upload Date</th>
+										<th>Version</th>
+										<th>Actions</th>
+									  </tr>
+									</thead>
+									<tbody id="employeeDocumentsTableBody">
+									  <!-- JS will inject rows here -->
+									</tbody>
+								  </table>
+								</div>
+							  </div>
+							</div>
+						  </div>	
+						  <div class="col-md-12">
+							<div class="card">
+							  <div class="card-header d-flex justify-content-between align-items-center">
+								<div>
+								  <button class="btn btn-primary mb-2" onclick="prepareNewTravelRequest()">Request Travel</button>
+								  <h4 class="card-title">My Travel Requests</h4>
+								  <p class="card-category mb-0">Manage your travel requests (pending, approved, or rejected).</p>
+								</div>
+							  </div>
+						  
+							  <div class="card-body">
+								<div class="table-responsive">
+								  <table class="table table-bordered">
+									<thead class="text-primary">
+									  <tr>
+										<th>Destination</th>
+										<th>Purpose</th>
+										<th>Start Date</th>
+										<th>End Date</th>
+										<th>Estimated Expense</th>
+										<th>Status</th>
+										<th>Remarks</th>
+										<th>Actions</th>
+									  </tr>
+									</thead>
+									<tbody id="travelRequestTableBody">
+									  <!-- JS will inject rows here -->
+									</tbody>
+								  </table>
+								</div>
+							  </div>
+							</div>
+						  </div>
+						  <div id="error-message" class="alert alert-danger" style="display:none;"></div>
+					</div>
+				</div>
+				<footer class="footer">
+					<div class="container-fluid">
+						<nav class="pull-left">
+							<ul class="nav">
+								<li class="nav-item">
+									<a class="nav-link" href="http://www.themekita.com">
+										ThemeKita
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">
+										Help
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="https://themewagon.com/license/#free-item">
+										Licenses
+									</a>
+								</li>
+							</ul>
+						</nav>
+						<div class="copyright ml-auto">
+							2018, made with <i class="la la-heart heart text-danger"></i> by <a href="http://www.themekita.com">ThemeKita</a>
+						</div>				
+					</div>
+				</footer>
+			</div>
+		</div>
+	</div> 
+
+<!-- 🌟 View Travel Request Modal (Bootstrap 4 Compatible) -->
+<div class="modal fade" id="viewTravelRequestModal" tabindex="-1" role="dialog" aria-labelledby="viewTravelRequestModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewTravelRequestModalLabel">Travel Request Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Destination:</strong> <span id="view_destination"></span></p>
+        <p><strong>Purpose:</strong> <span id="view_purpose"></span></p>
+        <p><strong>Start Date:</strong> <span id="view_start_date"></span></p>
+        <p><strong>End Date:</strong> <span id="view_end_date"></span></p>
+        <p><strong>Estimated Expense:</strong> <span id="view_estimated_expense"></span></p>
+        <p><strong>Remarks:</strong> <span id="view_remarks"></span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+	<!-- 🌟 Travel Request Modal (Create/Edit) -->
+<div class="modal fade" id="travelRequestModal" tabindex="-1" role="dialog" aria-labelledby="travelRequestModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form id="submitTravelRequestForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="travelRequestModalLabel">Submit Travel Request</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="destination">Destination</label>
+            <input type="text" class="form-control" id="destination" required>
+          </div>
+
+          <div class="form-group">
+            <label for="purpose">Purpose</label>
+            <input type="text" class="form-control" id="purpose" required>
+          </div>
+
+          <div class="form-group">
+            <label for="start_date">Start Date</label>
+            <input type="date" class="form-control" id="start_date" required>
+          </div>
+
+          <div class="form-group">
+            <label for="end_date">End Date</label>
+            <input type="date" class="form-control" id="end_date" required>
+          </div>
+
+          <div class="form-group">
+            <label for="estimated_expense">Estimated Expense ($)</label>
+            <input type="number" class="form-control" id="estimated_expense" step="0.01" required>
+          </div>
+
+          <div class="form-group">
+            <label for="remarks">Remarks (optional)</label>
+            <textarea class="form-control" id="remarks" rows="2"></textarea>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" id="travelRequestModalSubmitButton">Submit Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+  
+  <!-- 🌟 Delete Confirmation Modal -->
+<div class="modal fade" id="deleteTravelRequestModal" tabindex="-1" role="dialog" aria-labelledby="deleteTravelRequestModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteTravelRequestModalLabel">Confirm Deletion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this travel request? This action cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteTravelRequestBtn">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  	  
+	<!-- Compose Message Modal -->
+<div class="modal fade" id="composeMessageModal" tabindex="-1" role="dialog" aria-labelledby="composeMessageLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="composeMessageLabel">Compose Message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="composeForm">
+          <div class="form-group">
+            <label for="roleSelect">Select Role</label>
+            <select id="roleSelect" class="form-control"></select>
+          </div>
+          <div class="form-group">
+            <label for="receiverSelect">Select Receiver</label>
+            <select id="receiverSelect" class="form-control"></select>
+          </div>
+          <div class="form-group">
+            <label for="messageText">Message</label>
+            <textarea class="form-control" id="messageText" rows="4" placeholder="Write your message..."></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" id="sendButton" class="btn btn-primary">Send Message</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Inbox Modal -->
+<div class="modal fade" id="inboxModal" tabindex="-1" role="dialog" aria-labelledby="inboxLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="inboxLabel">Inbox</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body inbox-scrollable" id="inboxMessages">
+        <!-- Messages are dynamically inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+	 <!-- Logout Confirmation Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to logout?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmLogoutBtnCurrentUser">Logout</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal for displaying the recent devices (Bootstrap 4 Compatible) -->
+<div class="modal fade" id="recentDevicesModal" tabindex="-1" role="dialog" aria-labelledby="recentDevicesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="recentDevicesLabel">Recent Devices</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped" id="devicesTable">
+          <thead>
+            <tr>
+              <th>Device</th>
+              <th>OS</th>
+              <th>Browser</th>
+              <th>IP Address</th>
+              <th>Last Seen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Devices will be injected here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Logging you out modal (Bootstrap 4 Compatible) -->
+<div id="loadingModalCurrentUser" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="max-width: 600px;">
+    <div class="modal-content">
+      <div class="modal-body text-center" style="padding: 30px;">
+        <h4 style="font-size: 2rem; font-weight: 600; color: #007bff;">Logging you out... 🔄</h4>
+        <p style="font-size: 1.2rem; color: #6c757d; margin-top: 10px;">Please wait while we log you out from your account.</p>
+        <div class="spinner-container" style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Logout Notification Modal (Bootstrap 4 Compatible) -->
+<div class="modal fade" id="multiTabLogoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content text-center">
+      <div class="modal-header">
+        <h5 class="modal-title w-100" id="logoutModalLabel">Session Ended</h5>
+      </div>
+      <div class="modal-body">
+        You have been logged out from another tab.
+      </div>
+      <div class="modal-footer justify-content-center">
+        <div class="spinner-container" style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal for contact details (Bootstrap 4 Compatible) -->
+<div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h6 class="modal-title">
+          <i class="la la-phone-square"></i> Contact <span id="user-name"></span>
+        </h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <p>Phone number : <b><span id="user-phone"></span></b></p>
+        <p>Email : <b><span id="user-email-contact"></span></b></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Token Invalid / Session Expired Modal (Bootstrap 4 Compatible) -->
+<div class="modal fade" id="sessionExpiredModal" tabindex="-1" role="dialog" aria-labelledby="sessionExpiredLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content text-center">
+      <div class="modal-header">
+        <h5 class="modal-title w-100" id="sessionExpiredLabel">Session Expired</h5>
+      </div>
+      <div class="modal-body">
+        Your session has ended due to another login or token expiration.
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-danger" id="redirectToLogin">Go to Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Account Deactivated Modal (Bootstrap 4 Compatible) -->
+<div class="modal fade" id="accountDeactivatedModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-danger border-3 shadow">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">Account Deactivated</h5>
+      </div>
+      <div class="modal-body fw-semibold text-danger text-center">
+        Your account has been <strong>deactivated</strong> by the administrator. Please contact support for assistance.
+      </div>
+      <div class="modal-footer justify-content-center">
+        <!-- Optional buttons can be added here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Account Terminated Modal (Bootstrap 4 Compatible) -->
+<div class="modal fade" id="accountTerminatedModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content bg-dark text-white border-light border-2 shadow">
+      <div class="modal-header border-0">
+        <h5 class="modal-title">Account Terminated</h5>
+      </div>
+      <div class="modal-body text-center fw-semibold">
+        Your account has been <strong>terminated</strong>. Access is no longer available.
+      </div>
+      <div class="modal-footer border-0 justify-content-center">
+        <!-- Optional buttons can be added here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Success Modal (Bootstrap 4 Compatible) -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white justify-content-center">
+        <div class="d-flex align-items-center mx-auto">
+          <h5 class="modal-title mb-0" id="successModalLabel">Success</h5>
+        </div>
+      </div>
+      <div class="modal-body text-center" id="successModalBody"></div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Error Modal (Bootstrap 4 Compatible) -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white justify-content-center">
+        <div class="d-flex align-items-center mx-auto">
+          <h5 class="modal-title mb-0" id="errorModalLabel">Error</h5>
+        </div>
+      </div>
+      <div class="modal-body text-center" id="errorModalBody"></div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal (Bootstrap 4 Compatible) -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger" id="confirmDeleteModalHeader">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this message?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Custom Styled Spinner Modal for Employee Page (Bootstrap 4) -->
+<div class="modal fade" id="employeeSpinnerModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="background: rgba(255,255,255,0.90); border: none; box-shadow: none;">
+      <div class="modal-body d-flex flex-column justify-content-center align-items-center" style="min-height: 170px;">
+        <!-- Custom Circle Spinner -->
+        <div style="
+          width: 3.5rem;
+          height: 3.5rem;
+          border: 0.5rem solid #e3e6ef;
+          border-top: 0.5rem solid #007bff;
+          border-radius: 50%;
+          animation: employee-spin 0.8s linear infinite;
+          margin-bottom: 16px;
+          ">
+        </div>
+        <div style="color: #007bff; font-weight: 600; font-size: 1.15rem; letter-spacing: 0.02em;">
+          Loading...
+        </div>
+        <!-- Inline spinner animation keyframes -->
+        <style>
+          @keyframes employee-spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+          }
+        </style>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+<!-- Chart.js (if needed) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- jQuery (required for Bootstrap 4 JS) -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- Other necessary custom JS (NO popper.min.js or bootstrap.min.js duplicates here) -->
+ <script src="../../static/Employee/assets/js/core/popper.min.js"></script>
+<script src="../../static/Employee/assets/js/core/bootstrap.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/chartist/chartist.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/chart-circle/circles.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="../../static/Employee/assets/js/ready.min.js"></script>
+<script src="../../static/Employee/assets/js/demo.js"></script>
+
+<!-- Script for checking 2FA (Start) -->
+<script>
+(function () {
+  const modalId = 'employeeSpinnerModal';
+  let _spinnerOpen = false;
+  let _eventAttached = false;
+  let _forceHideTimeoutId = null;
+
+  function getModalElement() {
+    return document.getElementById(modalId);
+  }
+
+  function showEmployeeSpinner() {
+    const modalElement = getModalElement();
+    if (!modalElement || typeof jQuery === "undefined") return;
+
+    if (!_eventAttached) {
+      jQuery(modalElement).off('hidden.bs.modal', spinnerHiddenHandler);
+      jQuery(modalElement).on('hidden.bs.modal', spinnerHiddenHandler);
+      _eventAttached = true;
+    }
+
+    if (!_spinnerOpen) {
+      jQuery(modalElement).modal({
+        backdrop: 'static',
+        keyboard: false,
+        show: true
+      });
+      _spinnerOpen = true;
+      _forceHideTimeoutId = setTimeout(forceHideSpinner, 30000); // fallback
+    }
+  }
+
+  function hideEmployeeSpinner() {
+    const modalElement = getModalElement();
+    if (!modalElement || typeof jQuery === "undefined") return;
+
+    if (_spinnerOpen) {
+      jQuery(modalElement).modal('hide');
+      _spinnerOpen = false;
+      setTimeout(forceHideSpinner, 2000);
+    }
+  }
+
+  function spinnerHiddenHandler() {
+    _spinnerOpen = false;
+    if (_forceHideTimeoutId) clearTimeout(_forceHideTimeoutId);
+
+    // Check for other active modals
+    const hasOtherModals = checkForOtherActiveModals();
+
+    if (!hasOtherModals) {
+      removeAllBackdrops();
+      document.body.classList.remove('modal-open');
+      document.body.style.paddingRight = '';
+    }
+  }
+
+  function forceHideSpinner() {
+    const modalElement = getModalElement();
+    if (!modalElement) return;
+
+    jQuery(modalElement).modal('hide');
+    jQuery(modalElement).hide();
+    _spinnerOpen = false;
+    if (_forceHideTimeoutId) clearTimeout(_forceHideTimeoutId);
+
+    const hasOtherModals = checkForOtherActiveModals();
+    if (!hasOtherModals) {
+      removeAllBackdrops();
+      document.body.classList.remove('modal-open');
+      document.body.style.paddingRight = '';
+    }
+  }
+
+  function checkForOtherActiveModals() {
+    const allModals = document.querySelectorAll('.modal');
+    for (let modal of allModals) {
+      if (modal.id !== modalId && (modal.classList.contains('show') || jQuery(modal).hasClass('show'))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function removeAllBackdrops() {
+    const backdrops = document.querySelectorAll('.modal-backdrop');
+    backdrops.forEach(el => el.parentNode && el.parentNode.removeChild(el));
+  }
+
+  function isSpinnerVisible() {
+    const modalElement = getModalElement();
+    if (!modalElement) return false;
+    return _spinnerOpen || 
+           modalElement.classList.contains('show') ||
+           jQuery(modalElement).hasClass('show') ||
+           jQuery(modalElement).is(':visible');
+  }
+
+  function waitForSpinnerHide(callback) {
+    if (!isSpinnerVisible()) {
+      setTimeout(callback, 100);
+      return;
+    }
+
+    const modalElement = getModalElement();
+    if (modalElement) {
+      jQuery(modalElement).one('hidden.bs.modal', function() {
+        setTimeout(callback, 150);
+      });
+    }
+
+    let attempts = 0;
+    const maxAttempts = 50;
+    const checkHidden = () => {
+      attempts++;
+      if (!isSpinnerVisible() || attempts >= maxAttempts) {
+        setTimeout(callback, 150);
+      } else {
+        setTimeout(checkHidden, 100);
+      }
+    };
+    setTimeout(checkHidden, 100);
+  }
+
+  window.showEmployeeSpinner = showEmployeeSpinner;
+  window.hideEmployeeSpinner = hideEmployeeSpinner;
+  window.waitForSpinnerHide = waitForSpinnerHide;
+  window.isSpinnerVisible = isSpinnerVisible;
+})();
+
+function employeeSecureFetch(url, options = {}) {
+  options.headers = options.headers || {};
+  const token = sessionStorage.getItem('employeeToken');
+  if (token) options.headers['Authorization'] = 'Bearer ' + token;
+  options.headers['X-Requested-With'] = 'XMLHttpRequest';
+
+  const showSpinner = options.showSpinner !== false;
+  let didRedirect = false;
+
+  if (showSpinner) {
+    showEmployeeSpinner();
+  }
+
+  const finalize = async () => {
+    if (!didRedirect && showSpinner) {
+      hideEmployeeSpinner();
+      await new Promise(resolve => waitForSpinnerHide(resolve));
+    }
+  };
+
+  return fetch(url, options)
+    .then(async res => {
+      let data;
+      try { data = await res.clone().json(); } catch { data = {}; }
+      if (res.status === 403 && data?.error === "2FA_REQUIRED" && data.redirect) {
+        didRedirect = true;
+        window.location.href = data.redirect;
+        return Promise.reject("2FA required, redirecting");
+      }
+      if ((res.status === 401 || res.status === 403) && data.redirect) {
+        didRedirect = true;
+        window.location.href = data.redirect;
+        return Promise.reject(data.error || "Unauthorized, redirecting");
+      }
+      if (!res.ok) {
+        throw new Error(data.message || "An error occurred");
+      }
+      if (options.showSuccessMessage) {
+        // Use your preferred success modal logic here
+      }
+      return data;
+    })
+    .catch(err => {
+      if (!didRedirect && !options.suppressErrorModal) {
+        // Use your preferred error modal logic here
+      }
+      throw err;
+    })
+    .finally(finalize);
+}
+
+</script>
+<!-- Script for checking 2FA  (End) -->
+
+<!-- Script for checking if the account is terminated or deactivated (Start) -->
+<script>
+function checkAccountStatusPeriodically() {
+  async function checkStatus() {
+    try {
+      const data = await employeeSecureFetch('/api/employee_status', { showSpinner: false });
+      // Employee is still active
+    } catch (err) {
+      if (typeof err === 'string') return;
+
+      try {
+        const res = await fetch('/api/employee_status', {
+          headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('employeeToken') || ''}`,
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        });
+
+        if (res.status === 401 || res.status === 403) {
+          const data = await res.json();
+          const status = data.status?.toLowerCase();
+
+          if (status === 'deactivated') {
+            $('#accountDeactivatedModal').modal({ backdrop: 'static', keyboard: false });
+            $('#accountDeactivatedModal').modal('show');
+          } else if (status === 'terminated') {
+            $('#accountTerminatedModal').modal({ backdrop: 'static', keyboard: false });
+            $('#accountTerminatedModal').modal('show');
+          }
+
+          setTimeout(function() {
+            sessionStorage.clear();
+            sessionStorage.clear();
+            hideEmployeeSpinner(); // 🧩 ensure spinner hides before redirect
+            window.location.href = '/';
+          }, 5000);
+        }
+      } catch (modalErr) {
+        console.error('Modal error:', modalErr);
+        hideEmployeeSpinner(); // 🧩 hide on fetch failure
+      }
+    }
+  }
+
+  checkStatus();
+  setInterval(checkStatus, 10000);
+}
+document.addEventListener('DOMContentLoaded', checkAccountStatusPeriodically);
+</script>
+<!-- Script for checking if the account is terminated or deactivated (End) -->
+
+<!-- Script for forcing logout when the logout all devices triggered from other tabs (Start) -->
+<script>
+window.addEventListener('storage', function (event) {
+  if (event.key === 'employeeToken' && event.newValue === null) {
+    $('#multiTabLogoutModal').modal('show');
+showEmployeeSpinner();
+setTimeout(function() {
+  hideEmployeeSpinner();
+  window.location.href = '/';
+}, 3000);
+  }
+});
+</script>
+<!-- Script for forcing logout when the logout all devices triggered from other tabs (End) -->
+
+<!-- Script for handling logout confirmation (Current User) (Start) -->
+<script>
+  let tokenCheckIntervalId = null;
+
+  function checkTokenValidity() {
+    employeeSecureFetch('/validate_token', { method: 'GET', showSpinner: false })
+      .catch(err => {
+        showExpiredModal();
+      });
+  }
+
+  function showExpiredModal() {
+    $('#sessionExpiredModal').modal({
+      backdrop: 'static',
+      keyboard: false
+    });
+
+    $('#sessionExpiredModal').modal('show');
+
+    document.body.classList.add("modal-open");
+    document.querySelectorAll('button, a, input, select, textarea').forEach(el => {
+      if (!el.closest('#sessionExpiredModal')) {
+        el.setAttribute('disabled', 'disabled');
+      }
+    });
+
+    document.getElementById('redirectToLogin').addEventListener('click', () => {
+      sessionStorage.removeItem('employeeToken');
+      window.location.href = '/';
+    });
+  }
+
+  tokenCheckIntervalId = setInterval(checkTokenValidity, 10000);
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const logoutBtn = document.getElementById('confirmLogoutBtnCurrentUser');
+    if (!logoutBtn) return;
+
+    logoutBtn.addEventListener('click', function () {
+      clearInterval(tokenCheckIntervalId);
+
+      const token = sessionStorage.getItem("employeeToken"); // 👈 Read BEFORE removing
+
+      $('#loadingModalCurrentUser').modal('show');
+      $('#logoutModal').modal('hide');
+
+      fetch("{{ url_for('login_bp.logout') }}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`  // 👈 Add token to header
+        }
+      })
+      .then(res => {
+        sessionStorage.removeItem("employeeToken"); // 👈 Now safe to remove
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 3000);
+      })
+      .catch(err => {
+        sessionStorage.removeItem("employeeToken");
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 3000);
+      });
+    });
+  });
+</script>
+<!-- Script for handling logout confirmation (Current User (End) -->
+
+<!-- Script for displaying the recent devices that is logged in (Start) -->
+<script>
+  $('#viewDevicesBtn').on('click', function () {
+    employeeSecureFetch('/recent-devices', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(data => {
+      // Wait for spinner to hide before showing modal and updating DOM
+      $('#employeeSpinnerModal').one('hidden.bs.modal', () => {
+        const tableBody = $('#devicesTable tbody');
+        tableBody.empty();
+
+        if (data.success) {
+          if (data.devices.length === 0) {
+            tableBody.html('<tr><td colspan="5" class="text-center">No devices found.</td></tr>');
+          } else {
+            data.devices.forEach(device => {
+              const row = `
+                <tr>
+                  <td>${device.device_name}</td>
+                  <td>${device.device_os}</td>
+                  <td>${device.browser_name}</td>
+                  <td>${device.ip_address}</td>
+                  <td>${device.issued_at}</td>
+                </tr>`;
+              tableBody.append(row);
+            });
+          }
+        } else {
+          tableBody.html('<tr><td colspan="5" class="text-center text-danger">Failed to load recent devices.</td></tr>');
+        }
+
+        // Now show the recent devices modal after spinner hidden and table updated
+        $('#recentDevicesModal').modal('show');
+
+        // Fix Bootstrap removing modal-open class for multiple modals
+        setTimeout(() => {
+          if ($('#recentDevicesModal').hasClass('show')) {
+            document.body.classList.add('modal-open');
+          }
+        }, 100);
+      });
+
+      // Hide spinner modal (will trigger the one('hidden.bs.modal') handler above)
+      $('#employeeSpinnerModal').modal('hide');
+    })
+    .catch(error => {
+      console.error('Error fetching recent devices:', error);
+      const tableBody = $('#devicesTable tbody');
+      tableBody.empty();
+      tableBody.html('<tr><td colspan="5" class="text-center text-danger">Failed to load recent devices.</td></tr>');
+
+      // Also hide spinner if visible
+      $('#employeeSpinnerModal').modal('hide');
+
+      // Show recent devices modal anyway (or show an error modal if you prefer)
+      $('#recentDevicesModal').modal('show');
+
+      setTimeout(() => {
+        if ($('#recentDevicesModal').hasClass('show')) {
+          document.body.classList.add('modal-open');
+        }
+      }, 100);
+    });
+  });
+</script>
+<!-- Script for displaying the recent devices that is logged in (End) -->
+
+<!-- Script for redirecting the employee back to login page when the token is blacklisted or overwritten (Start) -->
+<script>
+    // Assumes employeeSecureFetch function is already defined and loaded before this script
+
+    function checkTokenValidity() {
+        // Use employeeSecureFetch; pass { showSpinner: false } to suppress spinner
+        employeeSecureFetch('/validate_token', { method: 'GET', showSpinner: false })
+        .catch(function(err) {
+            // On any error or non-OK, show modal (employeeSecureFetch throws on non-OK)
+            showExpiredModal();
+        });
+    }
+
+    function showExpiredModal() {
+        // Bootstrap 4 modal usage with jQuery
+        $('#sessionExpiredModal').modal('show');
+        document.body.classList.add("modal-open");
+        document.querySelectorAll('button, a, input, select, textarea').forEach(function(el) {
+            if (!el.closest('#sessionExpiredModal')) el.setAttribute('disabled', 'disabled');
+        });
+        document.getElementById('redirectToLogin').addEventListener('click', function() {
+            // No spinner on redirect for this version
+            sessionStorage.removeItem('employeeToken');
+            setTimeout(function() {
+                window.location.href = '/';
+            }, 1000);
+        });
+    }
+
+    // Periodically check every 10 seconds
+    setInterval(checkTokenValidity, 10000);
+</script>
+<!-- Script for redirecting the employee back to login page when the token is blacklisted or overwritten (End) -->
+
+<!-- Script for loading user data from API routes (Start) -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+	 showEmployeeSpinner();
+    console.log("📦 DOM fully loaded and parsed.");
+
+    // Use employeeSecureFetch instead of fetch
+    employeeSecureFetch("/api/profile-info", { method: "GET" })
+    .then(data => {
+        console.log("📄 Parsed response data:", data);
+
+        const user = data.user;
+        const userRole = data.employee_role;
+
+        if (!user) {
+            throw new Error("User data not found in response");
+        }
+
+        console.log("👤 Populating UI with user data:", user);
+
+        // Helper: If value is null/undefined/empty, return "N/A"
+        const displayValue = (val) => (val === null || val === undefined || val === "") ? "N/A" : val;
+
+        // Safely set elements, logging each step
+        const safeSet = (id, value, prop = "textContent") => {
+            const el = document.getElementById(id);
+            if (el) {
+                if (prop === "src") el.src = value;
+                else el.textContent = displayValue(value);
+                console.log(`✅ Set #${id} →`, value);
+            } else {
+                console.warn(`⚠️ Element with id "${id}" not found.`);
+            }
+        };
+
+        // Add cache-buster to profile images to always get the latest image
+        let cacheBustedUrl = "";
+        if (user.profile_picture_url) {
+            cacheBustedUrl = user.profile_picture_url + (user.profile_picture_url.includes('?') ? '&' : '?') + 'v=' + Date.now();
+        }
+
+        // For images, set N/A as a fallback alt text if no image
+        safeSet("profile-picture", cacheBustedUrl || "N/A", "src");
+        safeSet("profile-picture-dropdown", cacheBustedUrl || "N/A", "src");
+        safeSet("profile-picture-box", cacheBustedUrl || "N/A", "src");
+        safeSet("profile-picture-sidebar", cacheBustedUrl || "N/A", "src");
+
+        // The new IDs you requested
+        safeSet("user-email-dropdown", user.email);
+        safeSet("user-id", user.employee_id);
+        safeSet("user-position", user.role_name);
+        safeSet("user-name", user.first_name + " " + user.last_name);
+        safeSet("user-department", user.department);
+        safeSet("user-date-hired", user.date_hired);
+        safeSet("user-team_name", user.team_name); // Will display "N/A" if missing
+		safeSet("user-email-contact", user.email);
+		safeSet("user-phone", user.phone_number);
+		
+        // Existing fields
+        safeSet("position-modal-detail", user.role_name);
+        safeSet("first-name-modal", user.first_name);
+        safeSet("last-name-modal", user.last_name);
+        safeSet("email", user.email);
+        safeSet("phone-number-modal", user.phone_number);
+        safeSet("phone-number-modal-emergency", user.phone_number);
+        safeSet("department-modal", user.department);
+        safeSet("department-modal-detail", user.department);
+        safeSet("address1-modal", user.address1);
+        safeSet("address2-modal", user.address2);
+        safeSet("certification", user.certification);
+        safeSet("skills", user.skills);
+        safeSet("education", user.education);
+        safeSet("language", user.language);
+        safeSet("hobbies", user.hobbies);
+        safeSet("city-modal", user.city);
+
+        // Initialize messaging features (notifications, badge, etc)
+        if (typeof initMessagingFeatures === "function") {
+            console.log("📬 Initializing messaging features...");
+            initMessagingFeatures({
+                user: user,
+                employee_role: userRole
+            });
+        } else {
+            console.log("ℹ️ initMessagingFeatures() not found, skipping messaging setup.");
+        }
+
+    })
+    .catch(error => {
+        console.error("❌ Error loading profile info:", error);
+        alert("Error loading profile info. Please try again later or contact support.");
+    })
+	.finally(() => {
+      hideEmployeeSpinner();
+    });
+});
+</script>
+<!-- Script for loading user data from API routes (End) -->
+
+<!-- Script for messages and notifications (Start) -->
+<script>
+  // Employee Messaging Module - Seamless spinner, success, and error handling using employeeSecureFetch
+
+// Globals
+let previousUnreadCount = 0;
+let messageIdToDelete = null;
+let userData = null;
+
+/**
+ * Fetches messages from inbox.
+ * @returns {Promise<Array>}
+ */
+function fetchMessages(url = '/employee/messages/inbox') {
+  return employeeSecureFetch(url, { method: 'GET' })
+    .then(messages => {
+      if (Array.isArray(messages)) return messages;
+      if (Array.isArray(messages.messages)) return messages.messages;
+      return [];
+    });
+}
+
+/**
+ * Opens the compose message modal, fetching roles.
+ */
+function openComposeMessageModal() {
+  employeeSecureFetch("/employee/roles", { method: 'GET' })
+    .then(roleData => {
+      $('#composeMessageModal').modal('show');
+      const roleSelect = document.getElementById("roleSelect");
+      roleSelect.innerHTML = '<option disabled selected>Select a role</option>';
+      roleData.forEach(role => {
+        const option = document.createElement("option");
+        option.value = role.role_id;
+        option.textContent = role.role_name;
+        roleSelect.appendChild(option);
+      });
+      if (roleData.length > 0) {
+        roleSelect.selectedIndex = 1;
+        roleSelect.dispatchEvent(new Event("change"));
+        handleRoleChange();
+      }
+    })
+    .catch(err => {
+      console.error("[openComposeMessageModal] Error:", err);
+      showMessageModal("Failed to load compose modal.", false);
+    });
+}
+
+/**
+ * Opens the message inbox modal and populates messages.
+ */
+function openMessageInboxModal() {
+  fetchMessages()
+    .then(messages => {
+      const container = document.getElementById('inboxMessages');
+      container.innerHTML = '';
+      if (!messages || messages.length === 0) {
+        container.innerHTML = '<p class="text-muted">No messages found.</p>';
+      } else {
+        messages.forEach(msg => {
+          const card = createMessageCard(msg);
+          container.appendChild(card);
+        });
+      }
+      $('#inboxModal').modal('show');
+    })
+    .catch(err => {
+      console.error("[openMessageInboxModal] Error:", err);
+      showMessageModal("Failed to load inbox messages.", false);
+    });
+}
+
+/**
+ * Creates a DOM card for a message.
+ * @param {Object} msg
+ * @returns {HTMLElement}
+ */
+function createMessageCard(msg) {
+  const card = document.createElement('div');
+  card.className = 'card mb-2';
+  card.innerHTML = `
+    <div class="card-body">
+      <h6 class="card-subtitle mb-1 text-muted">
+        From ${msg.sender_role?.toUpperCase() || ''} (User ID: ${msg.sender_id})
+      </h6>
+      <p class="card-text">${msg.content}</p>
+      <small class="text-muted">${new Date(msg.timestamp).toLocaleString()}</small>
+      ${!msg.is_read ? `<button class="btn btn-sm btn-outline-primary float-right ml-2" onclick="markAsRead(${msg.message_id})">Mark as Read</button>` : ''}
+      <button class="btn btn-sm btn-outline-danger float-right" onclick="showDeleteConfirmModal(${msg.message_id})">Delete</button>
+    </div>`;
+  return card;
+}
+
+/**
+ * Shows the delete confirm modal for a message.
+ * @param {number} messageId
+ */
+function showDeleteConfirmModal(messageId) {
+  messageIdToDelete = messageId;
+  $('#confirmDeleteModal').modal('show');
+}
+
+// Confirm delete handler
+document.addEventListener('DOMContentLoaded', function() {
+  const deleteBtn = document.getElementById('confirmDeleteBtn');
+  if (deleteBtn) {
+    deleteBtn.onclick = function() {
+      if (messageIdToDelete !== null) {
+        actuallyDeleteMessage(messageIdToDelete);
+        messageIdToDelete = null;
+        $('#confirmDeleteModal').modal('hide');
+      }
+    };
+  }
+});
+
+/**
+ * Deletes a message.
+ * @param {number} messageId
+ */
+function actuallyDeleteMessage(messageId) {
+  employeeSecureFetch(`/employee/messages/delete/${messageId}`, { method: 'DELETE' })
+    .then(response => {
+      showMessageModal("Message deleted successfully.", true);
+      openMessageInboxModal();
+      loadMessageNotifications(userData.user.employee_id, userData.employee_role);
+    })
+    .catch(err => {
+      console.error("[deleteMessage] Error:", err);
+      showMessageModal("Failed to delete message.", false);
+    });
+}
+
+/**
+ * Marks a message as read.
+ * @param {number} messageId
+ */
+function markAsRead(messageId) {
+  employeeSecureFetch(`/employee/messages/read/${messageId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+    },
+    body: JSON.stringify({})
+  })
+    .then(() => {
+      openMessageInboxModal();
+      loadMessageNotifications(userData.user.employee_id, userData.employee_role);
+    })
+    .catch(err => {
+      console.error("[markAsRead] Error:", err);
+      showMessageModal("Failed to mark message as read.", false);
+    });
+}
+
+/**
+ * Loads unread message count and updates UI.
+ * @param {string} userId
+ * @param {string} role
+ */
+function loadMessageNotifications(userId, role) {
+  const url = `/employee/messages/unread-count?user_id=${userId}&role=${role}`;
+  employeeSecureFetch(url, { method: 'GET', showSpinner: false })
+    .then(data => {
+      updateUnreadCountBadge(data.unread_count);
+      updateNotificationList(data.unread_count);
+      if (data.unread_count > previousUnreadCount) {
+        playNotificationSound();
+        showNewMessageNotification(data.unread_count - previousUnreadCount);
+      }
+      previousUnreadCount = data.unread_count;
+    })
+    .catch(error => {
+      console.error("[loadMessageNotifications] Error:", error);
+      showMessageModal("Failed to load unread messages count.", false);
+    });
+}
+
+/**
+ * Updates the unread badge in the UI.
+ * @param {number} count
+ */
+function updateUnreadCountBadge(count) {
+  const badge = document.getElementById('unreadCountBadge');
+  if (!badge) return;
+  badge.innerText = count;
+  badge.style.display = count === 0 ? 'none' : 'inline-block';
+}
+
+/**
+ * Updates the notification dropdown.
+ * @param {number} count
+ */
+function updateNotificationList(count) {
+  const list = document.getElementById('notificationList');
+  if (!list) return;
+  list.innerHTML = count > 0
+    ? `<a class="dropdown-item preview-item" href="#" onclick="openMessageInboxModal()">
+        <div class="preview-thumbnail">
+          <div class="preview-icon bg-warning">
+            <i class="mdi mdi-email-alert text-white"></i>
+          </div>
+        </div>
+        <div class="preview-item-content">
+          <h6 class="preview-subject font-weight-normal">You have ${count} unread message${count > 1 ? 's' : ''}</h6>
+          <p class="font-weight-light small-text text-muted mb-0">Check your inbox</p>
+        </div>
+      </a>`
+    : '<p class="px-3 text-muted">Empty</p>';
+}
+
+/**
+ * Shows a notification for new messages.
+ * @param {number} newCount
+ */
+function showNewMessageNotification(newCount) {
+  if (Notification.permission === 'granted') {
+    new Notification(`New Message${newCount > 1 ? 's' : ''}`, {
+      body: `You have ${newCount} new unread message${newCount > 1 ? 's' : ''}.`,
+      icon: '/path/to/your/message-icon.png'
+    });
+  }
+}
+
+/**
+ * Plays a notification sound.
+ */
+function playNotificationSound() {
+  const audio = document.getElementById('messageSound');
+  if (audio) {
+    audio.play().catch(err => console.error("[playNotificationSound] Play error:", err));
+  }
+}
+
+/**
+ * Handles a role change in the compose message modal.
+ */
+function handleRoleChange() {
+  const roleSelect = document.getElementById("roleSelect");
+  const roleId = roleSelect.value;
+  if (!roleId) return;
+  const url = `/employee/users/by_role/${roleId}`;
+  employeeSecureFetch(url, { method: 'GET' })
+    .then(users => {
+      const receiverSelect = document.getElementById("receiverSelect");
+      receiverSelect.innerHTML = '';
+      if (!users || users.length === 0) {
+        receiverSelect.innerHTML = '<option disabled selected>No users available</option>';
+      } else {
+        const defaultOption = document.createElement("option");
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        defaultOption.value = "";
+        defaultOption.textContent = "Select a receiver";
+        receiverSelect.appendChild(defaultOption);
+        users.forEach(user => {
+          const option = document.createElement("option");
+          option.value = user.user_id;
+          option.setAttribute("data-email", user.email);
+          option.textContent = user.email;
+          receiverSelect.appendChild(option);
+        });
+      }
+    })
+    .catch(err => {
+      console.error("[handleRoleChange] Error:", err);
+      showMessageModal("Failed to load users for the selected role.", false);
+    });
+}
+
+/**
+ * Sends a message from the compose modal.
+ */
+function sendMessage() {
+  const receiverSelect = document.getElementById("receiverSelect");
+  const selectedOption = receiverSelect.options[receiverSelect.selectedIndex];
+  if (!selectedOption || selectedOption.disabled) {
+    showMessageModal("Please select a valid receiver.", false);
+    return;
+  }
+  const receiverId = parseInt(selectedOption.value);
+  const receiverEmail = selectedOption.getAttribute("data-email");
+  const receiverRoleText = document.getElementById("roleSelect").selectedOptions[0]?.text || "Unknown";
+  const message = document.getElementById("messageText").value;
+  if (!message.trim()) {
+    showMessageModal("Please enter a message.", false);
+    return;
+  }
+  const payload = {
+    sender_id: userData.user.employee_id,
+    sender_role: userData.employee_role,
+    receiver_id: receiverId,
+    receiver_email: receiverEmail,
+    receiver_role: receiverRoleText,
+    subject: "No Subject",
+    body: message
+  };
+  employeeSecureFetch('/employee/messages/send', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+    },
+    body: JSON.stringify(payload)
+  })
+    .then(response => {
+      showMessageModal("Message sent!", true);
+      $('#composeMessageModal').modal('hide');
+    })
+    .catch(err => {
+      console.error("[sendMessage] Error:", err);
+      showMessageModal('Failed to send message.', false);
+    });
+}
+
+/**
+ * Shows a message modal (success or error) using the correct modal IDs.
+ * @param {string} message
+ * @param {boolean} isSuccess
+ */
+function showMessageModal(message, isSuccess = true) {
+  if (isSuccess) {
+    const body = document.getElementById("successModalBody");
+    if (body) body.textContent = message || "Success!";
+    $('#successModal').modal('show');
+  } else {
+    const body = document.getElementById("errorModalBody");
+    if (body) body.textContent = message || "An error occurred!";
+    $('#errorModal').modal('show');
+  }
+}
+
+/**
+ * Initializes messaging features.
+ * @param {Object} data
+ */
+function initMessagingFeatures(data) {
+  userData = data;
+  const roleSelect = document.getElementById("roleSelect");
+  const sendButton = document.getElementById("sendButton");
+  if (roleSelect) roleSelect.addEventListener("change", handleRoleChange);
+  if (sendButton) sendButton.addEventListener("click", sendMessage);
+  fetchMessages();
+  loadMessageNotifications(userData.user.employee_id, userData.employee_role);
+  setInterval(() => loadMessageNotifications(userData.user.employee_id, userData.employee_role), 30000);
+
+  if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+    Notification.requestPermission().then(permission => {
+      console.log("[initMessagingFeatures] Notification permission:", permission);
+    });
+  }
+}
+</script>
+<!-- Script for messages and notifications (End) -->
+
+<!-- Script for handling travel plan requests (Start) -->
+<script>
+  /**
+ * Assumes employeeSecureFetch is defined globally.
+ */
+document.addEventListener('DOMContentLoaded', () => {
+  fetchEmployeeTravelRequests();
+});
+
+// --- Bootstrap 4 Modal helpers ---
+function showSuccessModal(message) {
+  document.getElementById('successModalBody').textContent = message;
+  $('#successModal').modal('show');
+}
+function showErrorModal(message) {
+  document.getElementById('errorModalBody').textContent = message;
+  $('#errorModal').modal('show');
+}
+
+// View Travel Request
+function openViewTravelRequestModal(requestId) {
+  employeeSecureFetch(`/travel-requests/${requestId}`)
+    .then(request => {
+      document.getElementById('view_destination').textContent = request.destination;
+      document.getElementById('view_purpose').textContent = request.purpose;
+      document.getElementById('view_start_date').textContent = request.start_date;
+      document.getElementById('view_end_date').textContent = request.end_date;
+      document.getElementById('view_estimated_expense').textContent = `$${parseFloat(request.estimated_expense).toFixed(2)}`;
+      document.getElementById('view_remarks').textContent = request.remarks || '-';
+      waitForSpinnerHide(function() {
+        $('#viewTravelRequestModal').modal('show');
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching travel request details:', error);
+      showErrorModal('Error loading travel request for viewing.');
+    });
+}
+
+// Fetch all travel requests for employee
+function fetchEmployeeTravelRequests() {
+  employeeSecureFetch('/travel-requests')
+    .then(data => {
+      const tableBody = document.getElementById('travelRequestTableBody');
+      tableBody.innerHTML = '';
+
+      if (data.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="8" class="text-center">No travel requests found.</td></tr>`;
+        return;
+      }
+
+      data.forEach(request => {
+        const row = document.createElement('tr');
+
+        let statusBadge = '';
+        if (request.status === 'Pending') {
+          statusBadge = '<span class="badge badge-warning text-dark">Pending</span>';
+        } else if (request.status === 'Approved') {
+          statusBadge = '<span class="badge badge-success">Approved</span>';
+        } else if (request.status === 'Rejected') {
+          statusBadge = '<span class="badge badge-danger">Rejected</span>';
+        } else {
+          statusBadge = `<span class="badge badge-secondary">${request.status}</span>`;
+        }
+
+        row.innerHTML = `
+          <td>${request.destination}</td>
+          <td>${request.purpose}</td>
+          <td>${request.start_date}</td>
+          <td>${request.end_date}</td>
+          <td>$${parseFloat(request.estimated_expense).toFixed(2)}</td>
+          <td>${statusBadge}</td>
+          <td>${request.remarks || '-'}</td>
+          <td>
+            <button class="btn btn-sm btn-info" onclick="openViewTravelRequestModal(${request.request_id})">View</button>
+            ${request.status === 'Pending' ? `
+              <button class="btn btn-sm btn-warning" onclick="openEditTravelRequestModal(${request.request_id})">Edit</button>
+              <button class="btn btn-sm btn-danger" onclick="confirmDeleteTravelRequest(${request.request_id})">Delete</button>
+            ` : '-'}
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching travel requests:', error);
+      showErrorModal('Failed to load travel requests.');
+    });
+}
+
+let travelModalInstance = null;
+
+function prepareNewTravelRequest() {
+  document.getElementById('travelRequestModalLabel').textContent = 'Submit Travel Request';
+  document.getElementById('travelRequestModalSubmitButton').textContent = 'Submit Request';
+  document.getElementById('submitTravelRequestForm').reset();
+
+  document.getElementById('submitTravelRequestForm').onsubmit = function (e) {
+    e.preventDefault();
+    submitNewTravelRequest();
+  };
+
+  $('#travelRequestModal').modal('show');
+}
+
+function submitNewTravelRequest() {
+  const travelData = {
+    destination: document.getElementById('destination').value,
+    purpose: document.getElementById('purpose').value,
+    start_date: document.getElementById('start_date').value,
+    end_date: document.getElementById('end_date').value,
+    estimated_expense: document.getElementById('estimated_expense').value,
+    remarks: document.getElementById('remarks').value
+  };
+
+  employeeSecureFetch('/travel-requests', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(travelData)
+  })
+    .then(data => {
+      if (data.success) {
+        showSuccessModal('Travel request submitted successfully.');
+        document.getElementById('submitTravelRequestForm').reset();
+        $('#travelRequestModal').modal('hide');
+        fetchEmployeeTravelRequests();
+      } else {
+        showErrorModal('Failed to submit travel request.');
+      }
+    })
+    .catch(error => {
+      console.error('Error submitting travel request:', error);
+      showErrorModal('Error submitting travel request.');
+    });
+}
+
+function openEditTravelRequestModal(requestId) {
+  employeeSecureFetch(`/travel-requests/${requestId}`)
+    .then(request => {
+      const formatDate = (dateStr) => {
+        const date = new Date(dateStr);
+        return date.toISOString().split('T')[0];
+      };
+
+      document.getElementById('destination').value = request.destination;
+      document.getElementById('purpose').value = request.purpose;
+      document.getElementById('start_date').value = formatDate(request.start_date);
+      document.getElementById('end_date').value = formatDate(request.end_date);
+      document.getElementById('estimated_expense').value = request.estimated_expense;
+      document.getElementById('remarks').value = request.remarks || '';
+
+      document.getElementById('travelRequestModalLabel').textContent = 'Edit Travel Request';
+      document.getElementById('travelRequestModalSubmitButton').textContent = 'Save Changes';
+
+      document.getElementById('submitTravelRequestForm').onsubmit = function (e) {
+        e.preventDefault();
+        updateTravelRequest(requestId);
+      };
+
+      waitForSpinnerHide(function() {
+        $('#travelRequestModal').modal('show');
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching travel request:', error);
+      showErrorModal('Error loading travel request for editing.');
+    });
+}
+
+function updateTravelRequest(requestId) {
+  const updatedData = {
+    destination: document.getElementById('destination').value,
+    purpose: document.getElementById('purpose').value,
+    start_date: document.getElementById('start_date').value,
+    end_date: document.getElementById('end_date').value,
+    estimated_expense: document.getElementById('estimated_expense').value,
+    remarks: document.getElementById('remarks').value
+  };
+
+  employeeSecureFetch(`/travel-requests/${requestId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(updatedData)
+  })
+    .then(data => {
+      if (data.success) {
+        showSuccessModal('Travel request updated successfully.');
+        $('#travelRequestModal').modal('hide');
+        fetchEmployeeTravelRequests();
+      } else {
+        showErrorModal('Failed to update travel request.');
+      }
+    })
+    .catch(error => {
+      console.error('Error updating travel request:', error);
+      showErrorModal('Error updating travel request.');
+    });
+}
+
+let travelRequestToDelete = null;
+
+function confirmDeleteTravelRequest(requestId) {
+  travelRequestToDelete = requestId;
+  $('#deleteTravelRequestModal').modal('show');
+}
+
+document.getElementById('confirmDeleteTravelRequestBtn').addEventListener('click', function () {
+  if (!travelRequestToDelete) return;
+  employeeSecureFetch(`/travel-requests/${travelRequestToDelete}`, {
+    method: 'DELETE'
+  })
+    .then(data => {
+      if (data.success) {
+        showSuccessModal('Travel request deleted successfully.');
+        $('#deleteTravelRequestModal').modal('hide');
+        fetchEmployeeTravelRequests();
+      } else {
+        showErrorModal('Failed to delete travel request.');
+      }
+      travelRequestToDelete = null;
+    })
+    .catch(error => {
+      console.error('Error deleting travel request:', error);
+      showErrorModal('Error deleting travel request.');
+    });
+});
+</script>
+ <!-- Script for handling travel plan requests (End) -->
+
+<!-- Script for handling documents (Start) -->
+<script>
+/**
+ * Enhanced Employee Document Management Script
+ * Assumes employeeSecureFetch is defined globally.
+ * Preserves original design while upgrading logic.
+ */
+
+// Global variables for employee document management
+let employeeDocumentsCache = [];
+let employeeDocumentStats = {};
+let isEmployeeDocumentsLoading = false;
+
+/**
+ * Enhanced function to fetch employee documents with better error handling
+ */
+function fetchEmployeeDocuments() {
+  if (isEmployeeDocumentsLoading) return;
+  
+  console.log("📋 Fetching employee documents...");
+  isEmployeeDocumentsLoading = true;
+  
+  // Show loading state in table
+  const tbody = document.getElementById('employeeDocumentsTableBody');
+  if (tbody) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" class="text-center py-4">
+          <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="mt-2">Loading documents...</div>
+        </td>
+      </tr>
+    `;
+  }
+
+  // Spinner is handled by employeeSecureFetch internally
+  employeeSecureFetch('/documents')
+    .then((response) => {
+      console.log("📊 Documents response:", response);
+      
+      // Handle both old format (array) and new format (object with documents array)
+      let documents = [];
+      let stats = {};
+      
+      if (Array.isArray(response)) {
+        // Old format - just array of documents
+        documents = response;
+        stats = { total: documents.length, accessible: documents.length, missing: 0 };
+      } else if (response && Array.isArray(response.documents)) {
+        // New format - object with documents array and statistics
+        documents = response.documents;
+        stats = response.statistics || { total: documents.length, accessible: documents.length, missing: 0 };
+      } else {
+        throw new Error("Invalid response format");
+      }
+
+      // Cache the data
+      employeeDocumentsCache = documents;
+      employeeDocumentStats = stats;
+
+      const tbody = document.getElementById('employeeDocumentsTableBody');
+      if (!tbody) {
+        console.error("employeeDocumentsTableBody element not found");
+        return;
+      }
+
+      tbody.innerHTML = "";
+
+      if (documents.length === 0) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td colspan="5" class="text-center text-muted py-4">
+            <i class="mdi mdi-file-document-outline" style="font-size: 48px;"></i>
+            <div class="mt-2">No documents available for your role.</div>
+            <small class="text-muted">Contact your administrator if you believe this is an error.</small>
+          </td>
+        `;
+        tbody.appendChild(row);
+        return;
+      }
+
+      // Render documents with enhanced information
+      documents.forEach((doc, index) => {
+        const row = document.createElement("tr");
+        row.className = "employee-document-row";
+        
+        // Safe string escaping for onclick handlers
+        const safeTitle = (doc.title || 'Untitled').replace(/'/g, "\\'").replace(/"/g, '\\"');
+        const safeDescription = (doc.description || '').replace(/'/g, "\\'").replace(/"/g, '\\"');
+        
+        // File status indicator
+        const fileStatusIcon = doc.file_exists !== false ? 
+          '<i class="mdi mdi-file-check text-success" title="File available"></i>' : 
+          '<i class="mdi mdi-file-alert text-warning" title="File may be missing"></i>';
+        
+        // File size display
+        const fileSizeDisplay = doc.file_size_mb > 0 ? 
+          `<small class="text-muted">(${doc.file_size_mb} MB)</small>` : '';
+
+        row.innerHTML = `
+          <td class="text-break">
+            <strong>${doc.title || 'Untitled'}</strong>
+            ${fileStatusIcon}
+            ${doc.category_name ? `<br><span class="badge badge-info badge-sm">${doc.category_name}</span>` : ''}
+          </td>
+          <td class="text-break">
+            ${doc.description || '-'}
+            ${fileSizeDisplay}
+          </td>
+          <td class="text-break">
+            <small>${doc.upload_date || 'Unknown'}</small>
+            ${doc.uploaded_by_role_name ? `<br><span class="text-muted">${doc.uploaded_by_role_name}</span>` : ''}
+          </td>
+          <td class="text-center">
+            <span class="badge badge-primary">v${doc.version || 1}</span>
+            ${doc.download_count > 0 ? `<br><small class="text-muted">${doc.download_count} downloads</small>` : ''}
+          </td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-success" 
+              onclick="downloadEmployeeDocument(${doc.document_id}, '${safeTitle}')"
+              ${doc.file_exists === false ? 'title="File may be missing"' : 'title="Download document"'}>
+              <i class="mdi mdi-download"></i> Download
+            </button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      // Update statistics display if element exists
+      updateEmployeeDocumentStats(stats);
+
+      console.log(`✅ Loaded ${documents.length} employee documents`);
+    })
+    .catch((err) => {
+      console.error("❌ Error loading employee documents:", err);
+      
+      const tbody = document.getElementById('employeeDocumentsTableBody');
+      if (tbody) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="text-center text-danger py-4">
+              <i class="mdi mdi-alert-circle" style="font-size: 48px;"></i>
+              <div class="mt-2">Failed to load documents</div>
+              <small class="text-muted">${err.message || 'Please try again later'}</small>
+              <div class="mt-2">
+                <button class="btn btn-sm btn-outline-primary" onclick="fetchEmployeeDocuments()">
+                  <i class="mdi mdi-refresh"></i> Retry
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+      
+      // Show user-friendly error message
+      if (typeof showEmployeeNotification === 'function') {
+        showEmployeeNotification("Failed to load documents: " + (err.message || 'Please try again later'), 'error');
+      } else {
+        alert("Failed to load documents: " + (err.message || 'Please try again later'));
+      }
+    })
+    .finally(() => {
+      isEmployeeDocumentsLoading = false;
+    });
+}
+
+/**
+ * Update document statistics display
+ */
+function updateEmployeeDocumentStats(stats) {
+  const statsElement = document.getElementById('employeeDocumentStats');
+  if (statsElement && stats) {
+    const missingClass = stats.missing > 0 ? 'text-warning' : 'text-muted';
+    statsElement.innerHTML = `
+      <small class="text-muted">
+        Total: <strong>${stats.total || 0}</strong> | 
+        Available: <strong class="text-success">${stats.accessible || 0}</strong> | 
+        Issues: <strong class="${missingClass}">${stats.missing || 0}</strong>
+      </small>
+    `;
+  }
+}
+
+/**
+ * Enhanced function to download employee documents with better error handling
+ */
+function downloadEmployeeDocument(documentId, title) {
+  console.log(`📥 Starting download for employee document ${documentId}: ${title}`);
+  
+  // Prevent multiple simultaneous downloads
+  const downloadBtn = event.target.closest('button');
+  if (downloadBtn && downloadBtn.disabled) return;
+  
+  // Update button state
+  if (downloadBtn) {
+    downloadBtn.disabled = true;
+    downloadBtn.innerHTML = '<i class="mdi mdi-loading mdi-spin"></i> Downloading...';
+  }
+
+  // Spinner is handled manually here due to raw fetch usage
+  showEmployeeSpinner();
+  
+  const token = sessionStorage.getItem('employeeToken');
+  if (!token) {
+    hideEmployeeSpinner();
+    if (downloadBtn) {
+      downloadBtn.disabled = false;
+      downloadBtn.innerHTML = '<i class="mdi mdi-download"></i> Download';
+    }
+    alert('Authentication token not found. Please log in again.');
+    return;
+  }
+
+  fetch(`/documents/${documentId}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+    .then(response => {
+      console.log(`📊 Download response status: ${response.status}`);
+      
+      if (!response.ok) {
+        return response.json().then(errData => {
+          throw new Error(errData.message || errData.error || `Download failed (${response.status})`);
+        }).catch(() => {
+          // If response is not JSON, create generic error
+          throw new Error(`Download failed (${response.status})`);
+        });
+      }
+
+      // Extract filename from response headers
+      const disposition = response.headers.get('Content-Disposition');
+      let filename = title;
+      
+      if (disposition && disposition.indexOf('filename=') !== -1) {
+        // Handle both quoted and unquoted filenames
+        const matches = disposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+        if (matches && matches[1]) {
+          filename = matches[1].replace(/['"]/g, '').trim();
+        }
+      }
+      
+      // Ensure filename has an extension
+      if (!filename.includes('.')) {
+        filename = filename + '.pdf'; // Default extension
+      }
+
+      return response.blob().then(blob => ({ blob, filename }));
+    })
+    .then(({ blob, filename }) => {
+      hideEmployeeSpinner();
+      
+      // Create and trigger download
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      
+      // Cleanup
+      setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }, 100);
+      
+      console.log(`✅ Employee download completed: ${filename}`);
+      
+      // Show success message
+      if (typeof showEmployeeNotification === 'function') {
+        showEmployeeNotification(`Download started: ${filename}`, 'success');
+      } else {
+        // Fallback to simple notification
+        console.log(`Download started: ${filename}`);
+      }
+      
+      // Refresh document list to update download count
+      setTimeout(() => {
+        fetchEmployeeDocuments();
+      }, 1000);
+    })
+    .catch(error => {
+      hideEmployeeSpinner();
+      console.error('❌ Employee download error:', error);
+      
+      // Show user-friendly error message
+      let errorMessage = "Failed to download document";
+      if (error.message) {
+        if (error.message.includes('Access denied')) {
+          errorMessage = "You don't have permission to download this document";
+        } else if (error.message.includes('not found')) {
+          errorMessage = "Document file not found on server";
+        } else if (error.message.includes('corrupted')) {
+          errorMessage = "Document file appears to be corrupted";
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
+      if (typeof showEmployeeNotification === 'function') {
+        showEmployeeNotification(errorMessage, 'error');
+      } else {
+        alert(errorMessage);
+      }
+    })
+    .finally(() => {
+      // Reset button state
+      if (downloadBtn) {
+        downloadBtn.disabled = false;
+        downloadBtn.innerHTML = '<i class="mdi mdi-download"></i> Download';
+      }
+    });
+}
+
+/**
+ * Search functionality for employee documents
+ */
+function setupEmployeeDocumentSearch() {
+  const searchInput = document.getElementById('employeeDocumentSearch');
+  if (!searchInput) return;
+
+  let searchTimeout;
+  searchInput.addEventListener('input', function() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      const filter = this.value.toLowerCase().trim();
+      filterEmployeeDocuments(filter);
+    }, 300); // Debounce search
+  });
+}
+
+/**
+ * Filter employee documents based on search term
+ */
+function filterEmployeeDocuments(searchTerm) {
+  const tbody = document.getElementById('employeeDocumentsTableBody');
+  if (!tbody) return;
+
+  const rows = tbody.querySelectorAll('.employee-document-row');
+  let visibleCount = 0;
+
+  rows.forEach(row => {
+    const text = row.textContent.toLowerCase();
+    const isVisible = !searchTerm || text.includes(searchTerm);
+    row.style.display = isVisible ? '' : 'none';
+    if (isVisible) visibleCount++;
+  });
+
+  // Update search results count
+  const searchResults = document.getElementById('employeeDocumentSearchResults');
+  if (searchResults) {
+    if (searchTerm) {
+      searchResults.textContent = `${visibleCount} document(s) found`;
+      searchResults.style.display = 'block';
+    } else {
+      searchResults.style.display = 'none';
+    }
+  }
+
+  console.log(`🔍 Employee search "${searchTerm}": ${visibleCount} results`);
+}
+
+/**
+ * Refresh employee documents
+ */
+function refreshEmployeeDocuments() {
+  console.log("🔄 Refreshing employee documents...");
+  employeeDocumentsCache = [];
+  fetchEmployeeDocuments();
+}
+
+/**
+ * Initialize employee document management
+ */
+function initializeEmployeeDocuments() {
+  console.log("🚀 Initializing employee document management...");
+  
+  // Setup search functionality
+  setupEmployeeDocumentSearch();
+  
+  // Setup refresh button if it exists
+  const refreshBtn = document.getElementById('refreshEmployeeDocuments');
+  if (refreshBtn) {
+    refreshBtn.addEventListener('click', refreshEmployeeDocuments);
+  }
+  
+  // Load documents
+  fetchEmployeeDocuments();
+  
+  console.log("✅ Employee document management initialized");
+}
+
+// Auto-load documents when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+  // Add small delay to ensure all elements are loaded
+  setTimeout(initializeEmployeeDocuments, 100);
+});
+
+// Make functions globally available
+window.fetchEmployeeDocuments = fetchEmployeeDocuments;
+window.downloadEmployeeDocument = downloadEmployeeDocument;
+window.refreshEmployeeDocuments = refreshEmployeeDocuments;
+</script>
+<!-- Script for handling documents (End) -->
+
+</html>

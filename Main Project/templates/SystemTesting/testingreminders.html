@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Attendance Reminders</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      body {
+        background-color: #f5f5f5;
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      .card {
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-header {
+        font-weight: bold;
+      }
+
+      #results-area {
+        min-height: 200px;
+        max-height: 500px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+      }
+
+      .container {
+        max-width: 1200px;
+      }
+
+      .page-header {
+        padding-bottom: 9px;
+        margin: 40px 0 20px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .user-info {
+        text-align: right;
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-bottom: 20px;
+      }
+
+      .setup-info {
+        font-size: 0.9rem;
+        color: #6c757d;
+        font-style: italic;
+      }
+
+      .test-sequence-info {
+        background-color: #f8f9fa;
+        border-left: 4px solid #6c757d;
+        padding: 10px 15px;
+        margin-top: 20px;
+      }
+
+      #search-results-counter {
+        font-size: 0.9rem;
+        color: #6c757d;
+        font-style: italic;
+      }
+
+      .highlight {
+        background-color: #fff3cd;
+      }
+
+      .search-date-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .search-date-controls label {
+        margin-bottom: 0;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="user-info">
+        <span><i class="fas fa-user"></i> User: {{ username }}</span> |
+        <span
+          ><i class="fas fa-clock"></i> Current Time (UTC): {{ current_time
+          }}</span
+        >
+      </div>
+
+      <div class="page-header">
+        <h2>Attendance Reminder System - Testing Panel</h2>
+      </div>
+
+      <!-- SETUP SECTION: Test Data Setup -->
+      <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+          <h4><i class="fas fa-tools"></i> Setup Test Data</h4>
+        </div>
+        <div class="card-body">
+          <p>
+            Before testing reminders, you need to set up the appropriate test
+            data for each test type:
+          </p>
+
+          <div class="row mb-3">
+            <div class="col-md-6 mb-2">
+              <button
+                id="setup-clock-in-test"
+                class="btn btn-outline-primary w-100"
+              >
+                <i class="fas fa-sign-in-alt"></i> Setup Clock-In Test
+              </button>
+              <p class="setup-info mt-1">Removes today's attendance record</p>
+            </div>
+            <div class="col-md-6 mb-2">
+              <button
+                id="setup-clock-out-test"
+                class="btn btn-outline-primary w-100"
+              >
+                <i class="fas fa-sign-out-alt"></i> Setup Clock-Out Test
+              </button>
+              <p class="setup-info mt-1">
+                Creates record with clock-in but no clock-out
+              </p>
+            </div>
+          </div>
+
+          <div class="test-sequence-info">
+            <h5>
+              <i class="fas fa-list-ol"></i> Recommended Testing Sequence:
+            </h5>
+            <ol>
+              <li>
+                Click "Setup Clock-In Test" to prepare an employee for clock-in
+                testing
+              </li>
+              <li>
+                Click "Run Clock-In Check" to test missing clock-in reminders
+              </li>
+              <li>
+                Click "Setup Clock-Out Test" to prepare an employee for
+                clock-out testing
+              </li>
+              <li>
+                Click "Run Clock-Out Check" to test missing clock-out reminders
+              </li>
+            </ol>
+            <p class="text-muted">
+              <i class="fas fa-info-circle"></i> Note: Each test must be set up
+              separately for proper testing.
+            </p>
+          </div>
+
+          <div id="setup-result" class="mt-3"></div>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h4><i class="fas fa-play"></i> Run Reminder Tests</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h5>Clock-In Reminders</h5>
+                </div>
+                <div class="card-body">
+                  <p>
+                    Test the system that checks for employees who haven't
+                    clocked in today.
+                  </p>
+                  <button id="test-clock-in" class="btn btn-primary">
+                    <i class="fas fa-play-circle"></i> Run Clock-In Check
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h5>Clock-Out Reminders</h5>
+                </div>
+                <div class="card-body">
+                  <p>
+                    Test the system that checks for employees who haven't
+                    clocked out today.
+                  </p>
+                  <button id="test-clock-out" class="btn btn-primary">
+                    <i class="fas fa-play-circle"></i> Run Clock-Out Check
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-secondary text-white">
+          <h4>Results</h4>
+        </div>
+        <div class="card-body">
+          <div id="results-area" class="bg-light p-3 rounded">
+            <div class="text-muted text-center py-5">
+              <i class="fas fa-info-circle fa-2x mb-3"></i>
+              <p>Results will appear here after running tests.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <h3><i class="fas fa-history"></i> Recently Sent Reminders</h3>
+
+        <!-- Search and Filter Controls -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-5">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    id="reminder-search"
+                    class="form-control"
+                    placeholder="Search by employee or message..."
+                  />
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    id="clear-search"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <select id="reminder-type-filter" class="form-select">
+                  <option value="all">All Reminder Types</option>
+                  <option value="Clock-In">Clock-In Only</option>
+                  <option value="Clock-Out">Clock-Out Only</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <input
+                  type="date"
+                  id="reminder-date-filter"
+                  class="form-control"
+                  title="Filter by date"
+                />
+              </div>
+              <div class="col-md-2">
+                <button
+                  id="refresh-reminders"
+                  class="btn btn-outline-primary w-100"
+                >
+                  <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-12">
+                <div class="d-flex justify-content-end">
+                  <button
+                    id="clear-all-filters"
+                    class="btn btn-sm btn-outline-secondary"
+                  >
+                    <i class="fas fa-filter"></i> Clear All Filters
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Counter -->
+        <div id="search-results-counter" class="mb-2">
+          Showing all reminders
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+              <tr>
+                <th>Time Sent</th>
+                <th>Employee</th>
+                <th>Type</th>
+                <th>Subject</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody id="recent-reminders">
+              <!-- Will be populated via AJAX -->
+              <tr>
+                <td colspan="5" class="text-center">
+                  <i class="fas fa-spinner fa-spin"></i> Loading recent
+                  reminders...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-search-results" class="alert alert-info text-center d-none">
+          <i class="fas fa-search me-2"></i> No reminders match your search
+          criteria.
+        </div>
+      </div>
+
+      <footer class="mt-5 pt-3 text-center text-muted border-top">
+        <p>Employee Attendance System &copy; 2025</p>
+      </footer>
+    </div>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        // Get user data from sessionStorage (set by the loader)
+        const username = sessionStorage.getItem("email") || "Unknown";
+        const currentTime =
+          sessionStorage.getItem("reminderTestTime") || "Unknown";
+
+        // Check if we have a token
+        const token = sessionStorage.getItem("adminToken");
+        if (!token) {
+          // Redirect back to the loader page which will handle authentication
+          window.location.href = "/admin/test-reminders";
+          return;
+        }
+
+        // Update the UI with user data
+        $(".user-info span:first-child").html(
+          `<i class="fas fa-user"></i> User: ${username}`
+        );
+        $(".user-info span:last-child").html(
+          `<i class="fas fa-clock"></i> Current Time (UTC): ${currentTime}`
+        );
+
+        // Setup AJAX defaults to include token in all requests
+        $.ajaxSetup({
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", "Bearer " + token);
+          },
+        });
+
+        function showLoading(elementId) {
+          const btn = $(`#${elementId}`);
+          btn.prop("disabled", true);
+          btn.html('<i class="fas fa-spinner fa-spin"></i> Processing...');
+        }
+
+        function resetButton(elementId, text, icon = "fa-play-circle") {
+          const btn = $(`#${elementId}`);
+          btn.prop("disabled", false);
+          btn.html(`<i class="fas ${icon}"></i> ${text}`);
+        }
+
+        function addResultMessage(message, isError = false) {
+          const timestamp = new Date().toLocaleTimeString();
+          const alertClass = isError ? "alert-danger" : "alert-success";
+
+          // Clear initial message if this is the first result
+          if ($("#results-area .text-muted").length) {
+            $("#results-area").empty();
+          }
+
+          $("#results-area").prepend(`
+            <div class="alert ${alertClass} mb-2">
+              <strong>${timestamp}:</strong> ${message}
+            </div>
+          `);
+        }
+
+        function handleAuthError() {
+          // Clear token and redirect to login
+          sessionStorage.removeItem("adminToken");
+          sessionStorage.removeItem("reminderTestUsername");
+          sessionStorage.removeItem("reminderTestTime");
+          alert("Your session has expired. Please log in again.");
+          window.location.href = "/admin/login";
+        }
+
+        // Store all reminders for filtering
+        let allReminders = [];
+
+        function loadRecentReminders() {
+          $.ajax({
+            url: "/admin/recent-reminders",
+            type: "GET",
+            success: function (data) {
+              if (data.reminders && data.reminders.length > 0) {
+                // Store all reminders for filtering
+                allReminders = data.reminders;
+
+                // Display all reminders initially
+                displayReminders(allReminders);
+
+                // Update counter
+                updateResultsCounter(allReminders.length, allReminders.length);
+              } else {
+                $("#recent-reminders").html(
+                  '<tr><td colspan="5" class="text-center">No recent reminders found</td></tr>'
+                );
+                $("#no-search-results").addClass("d-none");
+                $("#search-results-counter").text("No reminders available");
+              }
+            },
+            error: function (xhr) {
+              if (xhr.status === 401 || xhr.status === 403) {
+                handleAuthError();
+                return;
+              }
+              $("#recent-reminders").html(
+                '<tr><td colspan="5" class="text-center text-danger">Error loading recent reminders</td></tr>'
+              );
+              $("#search-results-counter").text("Error loading reminders");
+            },
+          });
+        }
+
+        function displayReminders(reminders) {
+          $("#recent-reminders").empty();
+
+          if (reminders.length === 0) {
+            $("#recent-reminders").html(
+              '<tr><td colspan="5" class="text-center">No matching reminders</td></tr>'
+            );
+            $("#no-search-results").removeClass("d-none");
+            return;
+          }
+
+          $("#no-search-results").addClass("d-none");
+
+          reminders.forEach(function (reminder) {
+            const typeBadge =
+              reminder.type === "Clock-In"
+                ? '<span class="badge bg-primary">Clock-In</span>'
+                : '<span class="badge bg-warning text-dark">Clock-Out</span>';
+
+            // Truncate message body if too long
+            const shortBody =
+              reminder.body && reminder.body.length > 100
+                ? reminder.body.substring(0, 100) + "..."
+                : reminder.body || "No message body";
+
+            $("#recent-reminders").append(`
+              <tr>
+                <td>${reminder.sent_at}</td>
+                <td>${
+                  reminder.employee_name || "Unknown"
+                } (ID: ${reminder.employee_id})<br>
+                    <small class="text-muted">${
+                      reminder.email || "No email"
+                    }</small></td>
+                <td>${typeBadge}</td>
+                <td>${reminder.subject || "No subject"}</td>
+                <td>${shortBody}</td>
+              </tr>
+            `);
+          });
+        }
+
+        function filterReminders() {
+          const searchTerm = $("#reminder-search").val().toLowerCase();
+          const typeFilter = $("#reminder-type-filter").val();
+          const dateFilter = $("#reminder-date-filter").val();
+
+          let filteredReminders = allReminders;
+
+          // Filter by type if not "all"
+          if (typeFilter !== "all") {
+            filteredReminders = filteredReminders.filter(
+              (reminder) => reminder.type === typeFilter
+            );
+          }
+
+          // Filter by date if selected
+          if (dateFilter) {
+            filteredReminders = filteredReminders.filter((reminder) => {
+              // Extract just the date part from sent_at (format: YYYY-MM-DD HH:MM:SS)
+              if (!reminder.sent_at) return false;
+              const reminderDate = reminder.sent_at.split(" ")[0];
+              return reminderDate === dateFilter;
+            });
+          }
+
+          // Filter by search term if not empty
+          if (searchTerm) {
+            filteredReminders = filteredReminders.filter(
+              (reminder) =>
+                (reminder.employee_name &&
+                  reminder.employee_name.toLowerCase().includes(searchTerm)) ||
+                (reminder.email &&
+                  reminder.email.toLowerCase().includes(searchTerm)) ||
+                (reminder.body &&
+                  reminder.body.toLowerCase().includes(searchTerm)) ||
+                (reminder.subject &&
+                  reminder.subject.toLowerCase().includes(searchTerm)) ||
+                (reminder.employee_id &&
+                  reminder.employee_id.toString().includes(searchTerm))
+            );
+          }
+
+          displayReminders(filteredReminders);
+          updateResultsCounter(filteredReminders.length, allReminders.length);
+        }
+
+        function updateResultsCounter(count, total) {
+          if (count === total) {
+            $("#search-results-counter").text(`Showing all ${count} reminders`);
+          } else {
+            $("#search-results-counter").text(
+              `Showing ${count} of ${total} reminders`
+            );
+          }
+        }
+
+        function clearAllFilters() {
+          $("#reminder-search").val("");
+          $("#reminder-type-filter").val("all");
+          $("#reminder-date-filter").val("");
+          filterReminders();
+        }
+
+        // Setup button handlers
+        $("#setup-clock-in-test").click(function () {
+          setupTestData("clock-in");
+        });
+
+        $("#setup-clock-out-test").click(function () {
+          setupTestData("clock-out");
+        });
+
+        // Setup Test Data
+        function setupTestData(type) {
+          const buttonId = `setup-${type}-test`;
+          showLoading(buttonId);
+
+          $.ajax({
+            url: "/admin/test-reminders/setup-test-data",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ type: type }),
+            success: function (data) {
+              let resultHtml = "";
+              if (data.success) {
+                resultHtml = `<div class="alert alert-success">
+                  <strong>Success!</strong> ${data.message}<br>
+                  <strong>Employee:</strong> ${data.employee_used.name} (${data.employee_used.email})
+                  <ul>`;
+
+                data.actions.forEach((action) => {
+                  resultHtml += `<li>${action}</li>`;
+                });
+
+                resultHtml += `</ul>
+                </div>`;
+              } else {
+                resultHtml = `<div class="alert alert-danger">
+                  <strong>Error!</strong> ${data.message}
+                </div>`;
+              }
+              $("#setup-result").html(resultHtml);
+            },
+            error: function (xhr) {
+              if (xhr.status === 401 || xhr.status === 403) {
+                handleAuthError();
+                return;
+              }
+              const errorMsg = xhr.responseJSON
+                ? xhr.responseJSON.message
+                : "An error occurred";
+              $("#setup-result").html(`<div class="alert alert-danger">
+                <strong>Error!</strong> ${errorMsg}
+              </div>`);
+            },
+            complete: function () {
+              // Reset buttons
+              resetButton(
+                "setup-clock-in-test",
+                "Setup Clock-In Test",
+                "fa-sign-in-alt"
+              );
+              resetButton(
+                "setup-clock-out-test",
+                "Setup Clock-Out Test",
+                "fa-sign-out-alt"
+              );
+            },
+          });
+        }
+
+        // Clock-In Test
+        $("#test-clock-in").click(function () {
+          showLoading("test-clock-in");
+
+          $.ajax({
+            url: "/admin/test-reminders/clock-in",
+            type: "POST",
+            success: function (data) {
+              addResultMessage(`Clock-In check completed. ${data.message}`);
+              loadRecentReminders();
+            },
+            error: function (xhr) {
+              if (xhr.status === 401 || xhr.status === 403) {
+                handleAuthError();
+                return;
+              }
+
+              if (xhr.status === 429) {
+                // Rate limited
+                const response = xhr.responseJSON || {};
+                addResultMessage(`Rate limited: ${response.message}`, true);
+              } else {
+                const errorMsg = xhr.responseJSON
+                  ? xhr.responseJSON.message
+                  : "An error occurred";
+                addResultMessage(`Clock-In check failed: ${errorMsg}`, true);
+              }
+            },
+            complete: function () {
+              resetButton("test-clock-in", "Run Clock-In Check");
+            },
+          });
+        });
+
+        // Clock-Out Test
+        $("#test-clock-out").click(function () {
+          showLoading("test-clock-out");
+
+          $.ajax({
+            url: "/admin/test-reminders/clock-out",
+            type: "POST",
+            success: function (data) {
+              addResultMessage(`Clock-Out check completed. ${data.message}`);
+              loadRecentReminders();
+            },
+            error: function (xhr) {
+              if (xhr.status === 401 || xhr.status === 403) {
+                handleAuthError();
+                return;
+              }
+
+              if (xhr.status === 429) {
+                // Rate limited
+                const response = xhr.responseJSON || {};
+                addResultMessage(`Rate limited: ${response.message}`, true);
+              } else {
+                const errorMsg = xhr.responseJSON
+                  ? xhr.responseJSON.message
+                  : "An error occurred";
+                addResultMessage(`Clock-Out check failed: ${errorMsg}`, true);
+              }
+            },
+            complete: function () {
+              resetButton("test-clock-out", "Run Clock-Out Check");
+            },
+          });
+        });
+
+        // Set up event handlers for search and filter
+        $("#reminder-search").on("input", filterReminders);
+        $("#reminder-type-filter").on("change", filterReminders);
+        $("#reminder-date-filter").on("change", filterReminders);
+
+        // Clear search
+        $("#clear-search").on("click", function () {
+          $("#reminder-search").val("");
+          filterReminders();
+        });
+
+        // Clear all filters
+        $("#clear-all-filters").on("click", clearAllFilters);
+
+        // Refresh button
+        $("#refresh-reminders").on("click", function () {
+          $(this).html('<i class="fas fa-spinner fa-spin"></i>');
+          $(this).prop("disabled", true);
+
+          // Reset filters before refreshing
+          clearAllFilters();
+
+          loadRecentReminders();
+
+          setTimeout(() => {
+            $(this).html('<i class="fas fa-sync-alt"></i> Refresh');
+            $(this).prop("disabled", false);
+          }, 500);
+        });
+
+        // Load recent reminders on page load
+        loadRecentReminders();
+      });
+    </script>
+  </body>
+</html>

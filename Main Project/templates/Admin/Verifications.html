@@ -1,0 +1,3736 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Spica Admin</title>
+    <link
+      rel="stylesheet"
+      href="../../static/Admin/vendors/mdi/css/materialdesignicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../static/Admin/vendors/css/vendor.bundle.base.css"
+    />
+    <link rel="stylesheet" href="../../static/Admin/css/style.css" />
+    <link rel="shortcut icon" href="../../static/Admin/images/favicon.png" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+  </head>
+
+  <body>
+    <div class="container-scroller d-flex">
+      <!-- partial:../../partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item sidebar-category">
+            <p>Admin dashboard</p>
+            <span></span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard">
+              <i class="mdi mdi-view-quilt menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+              <div class="badge badge-info badge-pill"></div>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/employeemanagement">
+              <i class="mdi mdi-account-box-outline menu-icon"></i>
+              <span class="menu-title">Employee <br />management</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/attendanceandtimetracking">
+              <i class="mdi mdi-clipboard-text menu-icon"></i>
+              <span class="menu-title">Attendance and <br />Time tracking</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/perfomancemanagement">
+              <i class="mdi mdi-settings menu-icon"></i>
+              <span class="menu-title">Performance <br />management</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/reportingandanalytics">
+              <i class="mdi mdi-chart-pie menu-icon"></i>
+              <span class="menu-title">Reporting <br />and Analytics </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/notificationsandcommunication">
+              <i class="mdi mdi-bell-ring menu-icon"></i>
+              <span class="menu-title"
+                >Notifications <br />and Communication
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/payrollandfinancialmanagement">
+              <i class="mdi mdi-currency-usd menu-icon"></i>
+              <span class="menu-title"
+                >Payroll and <br />Financial Management
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/securityandcompliance">
+              <i class="mdi mdi-security menu-icon"></i>
+              <span class="menu-title"
+                >Security and<br />
+                Compliance
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/systemadministration">
+              <i class="mdi mdi-monitor menu-icon"></i>
+              <span class="menu-title">System <br />Administration </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/traininganddevelopment">
+              <i class="mdi mdi-grease-pencil menu-icon"></i>
+              <span class="menu-title"
+                >Training and<br />
+                Development
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/workflowmanagement">
+              <i class="mdi mdi-lan-connect menu-icon"></i>
+              <span class="menu-title">Workflow <br />Management </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/employeeEngagement">
+              <i class="mdi mdi-human-male menu-icon"></i>
+              <span class="menu-title">Employee <br />Engagement </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dataimportandexport">
+              <i class="mdi mdi-file-document menu-icon"></i>
+              <span class="menu-title">Data Import </span>
+            </a>
+          </li>
+                    <li class="nav-item">
+            <a class="nav-link" href="/verification">
+              <i class="mdi mdi-clipboard-check menu-icon"></i>
+              <span class="menu-title">Access control</span>
+              <div class="badge badge-info badge-pill"></div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-danger logout-btn" style="margin-left: 80px">
+              <i class="la la-power-off"></i>
+              <p>Logout</p>
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Search for any features</h4>
+                    <!-- Add this somewhere at the top of your page, e.g. above the route-list -->
+                    <div class="input-group mb-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="global-search-bar"
+                        placeholder="Search anywhere (page, route, action, description)..."
+                        autocomplete="off"
+                      />
+                    </div>
+                    <h4 class="card-title">- Route management</h4>
+                    <button
+                      class="btn btn-primary"
+                      data-toggle="modal"
+                      data-target="#createRouteModal"
+                    >
+                      Create A New Page
+                    </button>
+                    <div class="mb-3">
+                      <p class="text-muted mb-2" style="margin-top: 10px">
+                        Search for a specific page or action
+                      </p>
+                      <input
+                        style="margin-top: 10px; border: 1px solid black"
+                        type="text"
+                        id="route-search-bar"
+                        class="form-control"
+                        placeholder="Search pages or actions by name or description..."
+                      />
+                    </div>
+                    <div id="pagination-info"></div>
+                    <div id="route-list"></div>
+                    <div id="pagination-container"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">- Request routes for admins</h4>
+                    <p class="card-description">Search for admins</p>
+                    <input
+                      type="text"
+                      id="search-admin"
+                      placeholder="Search Admins..."
+                      class="form-control mb-3"
+                    />
+                    <div id="admins-pagination-info"></div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Role</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="admin-table"></tbody>
+                    </table>
+                    <div id="admins-pagination-container"></div>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">- Pending Route Requests</h4>
+                    <p class="card-description">Search for requests</p>
+                    <input
+                      type="text"
+                      id="search-request"
+                      placeholder="Search Requests..."
+                      class="form-control mb-3"
+                    />
+                    <div id="requests-pagination-info"></div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Role</th>
+                          <th>Route</th>
+                          <th>Action</th>
+                          <th>Requested At</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="request-table"></tbody>
+                    </table>
+                    <div id="requests-pagination-container"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">- Admin registrations</h4>
+                    <input
+                      type="text"
+                      id="admin-search-bar"
+                      class="form-control"
+                      placeholder="Search by name, email, or role..."
+                    />
+                    <div id="registrations-pagination-info"></div>
+                    <div class="card-body" id="admin-list"></div>
+                    <div id="registrations-pagination-container"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="footer">
+            <div class="card">
+              <div class="card-body">
+                <div
+                  class="d-sm-flex justify-content-center justify-content-sm-between"
+                >
+                  <span
+                    class="text-muted d-block text-center text-sm-left d-sm-inline-block"
+                    >Copyright © bootstrapdash.com 2020</span
+                  >
+                  <span
+                    class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"
+                  >
+                    Free
+                    <a href="https://www.bootstrapdash.com/" target="_blank"
+                      >Bootstrap dashboard templates</a
+                    >
+                    from Bootstrapdash.com
+                  </span>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+<!-- View Action Modal (Bootstrap 4) -->
+<div
+  class="modal fade"
+  id="viewActionModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="viewActionModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content border-info">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title" id="viewActionModalLabel">
+          View Action Details
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <dl class="row mb-0">
+          <dt class="col-sm-4">Action Name</dt>
+          <dd class="col-sm-8" id="view-action-name"></dd>
+
+          <dt class="col-sm-4">Description</dt>
+          <dd class="col-sm-8" id="view-action-description"></dd>
+        </dl>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create Route Modal (Bootstrap 4) -->
+<div
+  class="modal fade"
+  id="createRouteModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="createRouteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <form class="modal-content" id="create-route-form">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createRouteModalLabel">
+          Create New Route
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-2">
+          <label class="form-label">Page Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="new-route-name"
+            required
+          />
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            id="new-route-description"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary">Create Route</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Route Modal (Bootstrap 4) -->
+<div
+  class="modal fade"
+  id="editRouteModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="editRouteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <form class="modal-content" id="edit-route-form">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editRouteModalLabel">Edit Route</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="edit-route-id" />
+        <div class="mb-2">
+          <label class="form-label">Route Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="edit-route-name"
+            required
+          />
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            id="edit-route-description"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-warning">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Delete Route Modal (Bootstrap 4) -->
+<div
+  class="modal fade"
+  id="deleteRouteModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="deleteRouteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger" id="deleteRouteModalLabel">
+          Delete Route
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="delete-route-id" />
+        <p>
+          Are you sure you want to delete the route
+          <span id="delete-route-name" class="font-weight-bold"></span>?
+        </p>
+        <div class="alert alert-warning">
+          This will also remove all actions linked to this route!
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          id="confirm-delete-route-btn"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create Action Modal (Bootstrap 4) -->
+<div
+  class="modal fade"
+  id="createActionModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="createActionModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <form class="modal-content" id="create-action-form">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createActionModalLabel">Add Action</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="create-action-route-id" />
+        <div class="mb-2">
+          <label class="form-label">Action Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="new-action-name"
+            required
+          />
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            id="new-action-description"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-success">Add Action</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Action Modal (Bootstrap 4) -->
+<div
+  class="modal fade"
+  id="editActionModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="editActionModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <form class="modal-content" id="edit-action-form">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editActionModalLabel">Edit Action</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="edit-action-route-id" />
+        <input type="hidden" id="edit-action-id" />
+        <div class="mb-2">
+          <label class="form-label">Action Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="edit-action-name"
+            required
+          />
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            id="edit-action-description"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-warning">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Delete Action Modal (Bootstrap 4) -->
+<div
+  class="modal fade"
+  id="deleteActionModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="deleteActionModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger" id="deleteActionModalLabel">
+          Delete Action
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="delete-action-route-id" />
+        <input type="hidden" id="delete-action-id" />
+        <p>
+          Are you sure you want to delete the action
+          <span id="delete-action-name" class="font-weight-bold"></span>?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          id="confirm-delete-action-btn"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Verify Modal (Bootstrap 4) -->
+<div
+  class="modal fade"
+  id="verify-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="verifyModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="verifyModalLabel">Grant Permissions</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="permissions-form">
+          <div class="form-group">
+            <div>Are you sure you want to verify this user?</div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-success"
+          id="confirm-verification"
+        >
+          Confirm
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Grant Access Modal (Bootstrap 4) -->
+<div
+  class="modal fade"
+  id="grantAccessModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="grantAccessModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="grantAccessModalLabel">Grant Access</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="grantAccessForm">
+          <label for="grant-route-dropdown" class="form-label"
+            >Select Page/Route:</label
+          >
+          <select
+            id="grant-route-dropdown"
+            class="form-control"
+            required
+            onchange="onGrantRouteSelect()"
+          ></select>
+          <!-- Route Description -->
+          <div
+            id="grant-route-description"
+            class="text-muted small mb-2"
+          ></div>
+          <!-- Bulk Check/Uncheck Buttons -->
+          <div class="mb-2">
+            <button type="button" class="btn btn-sm btn-primary" onclick="checkAllGrantActions(true)">
+              Tick All
+            </button>
+            <button type="button" class="btn btn-sm btn-secondary" onclick="checkAllGrantActions(false)">
+              Untick All
+            </button>
+          </div>
+          <div id="grant-actions-container" class="mt-3">
+            <!-- Checkboxes for actions (with descriptions) will be injected here by JS -->
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="grantAccess()"
+        >
+          Grant
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Remove Access Modal (Bootstrap 4) -->
+<div
+  class="modal fade"
+  id="removeAccessModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="removeAccessModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="removeAccessModalLabel">
+          Remove Access
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="removeAccessForm">
+          <label for="remove-route-dropdown" class="form-label"
+            >Select Route:</label
+          >
+          <select
+            id="remove-route-dropdown"
+            class="form-control"
+            required
+            onchange="onRemoveRouteSelect()"
+          ></select>
+          <!-- Route Description -->
+          <div
+            id="remove-route-description"
+            class="text-muted small mb-2"
+          ></div>
+          <!-- Bulk Check/Uncheck Buttons -->
+          <div class="mb-2">
+            <button type="button" class="btn btn-sm btn-primary" onclick="checkAllRemoveActions(true)">
+              Tick All
+            </button>
+            <button type="button" class="btn btn-sm btn-secondary" onclick="checkAllRemoveActions(false)">
+              Untick All
+            </button>
+          </div>
+          <div id="remove-actions-container" class="mt-3">
+            <!-- Checkboxes for actions (with descriptions) will be injected here by JS -->
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          onclick="removeAccess()"
+        >
+          Remove
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Reject Modal (Bootstrap 4) -->
+<div
+  class="modal fade"
+  id="reject-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="rejectModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rejectModalLabel">
+          Reject Registration
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="reject-form">
+          <div class="mb-3">
+            <label for="reject-title" class="form-label">Title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="reject-title"
+              placeholder="Enter title"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="reject-message" class="form-label">Message</label>
+            <textarea
+              class="form-control"
+              id="reject-message"
+              rows="3"
+              placeholder="Enter message"
+              required
+            ></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="confirm-rejection">
+          Reject
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Logout Confirmation Modal (Bootstrap 4) -->
+<div
+  class="modal fade"
+  id="logoutModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="logoutModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          id="closeLogoutModal"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to logout?</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="cancelLogout"
+          data-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-danger" id="confirmLogout">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal (Bootstrap 4) -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-success">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title">Success</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="successMessage">
+        Action completed successfully.
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-success"
+          data-dismiss="modal"
+        >
+          OK
+        </button>
+        <!-- OR, if you need reload: -->
+        <!--
+        <button
+          type="button"
+          class="btn btn-success"
+          onclick="location.reload()"
+        >
+          Reload Page
+        </button>
+        -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Error Modal for Bootstrap 4 -->
+<div
+  class="modal fade"
+  id="errorModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="errorModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="errorModalLabel">
+          <i class="fas fa-exclamation-triangle mr-2"></i>Error
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="errorMessage"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal (For delete registration) - Bootstrap 4 -->
+<div
+  class="modal fade"
+  id="delete-confirmation-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="deleteConfirmLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteConfirmLabel">
+          Confirm Deletion
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this registration?
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          id="confirm-delete-btn"
+          type="button"
+          class="btn btn-danger"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Info Modal (For displaying details to admin if something goes wrong when granting or removing access) - Bootstrap 4 -->
+<div
+  class="modal fade"
+  id="infoModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="infoModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-info">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title" id="infoModalLabel">Information</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Message will be inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for alerting super_admin when admins have no access to any route - Bootstrap 4 -->
+<div
+  class="modal fade"
+  id="warningModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="warningLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content border-warning">
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title" id="warningLabel">Warning</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This admin now has no access to any routes.
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-warning"
+          data-dismiss="modal"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Session Conflict Modal - Bootstrap 4 -->
+<div
+  class="modal fade"
+  id="sessionConflictModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="sessionConflictLabel"
+  aria-hidden="true"
+  data-backdrop="static"
+  data-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content text-center">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="sessionConflictLabel">
+          Session Conflict
+        </h5>
+        <!-- Optionally, you can add a close button here, but since this modal is static, it may not be needed -->
+      </div>
+      <div class="modal-body">
+        <p>
+          <strong>
+            Someone has logged into your account from another tab or device.
+          </strong>
+        </p>
+        <p>You will be logged out for security reasons.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-danger" id="confirmLogoutBetweenTabs">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Loading Spinner Modal -->
+    <div
+      class="modal fade"
+      id="loadingSpinnerModal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+      data-backdrop="static"
+      data-keyboard="false"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 bg-transparent shadow-none">
+          <div class="modal-body text-center">
+            <div
+              class="spinner-border text-white"
+              style="width: 4rem; height: 4rem"
+              role="status"
+            >
+              <span class="sr-only"></span>
+            </div>
+            <div class="mt-3 text-white font-weight-bold">Please wait...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (required for Bootstrap 4) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Popper.js (required for Bootstrap 4 Tooltips, Popovers, Modals) -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<!-- Bootstrap 4.6 JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/js/bootstrap.min.js"></script>
+    <script src="../../static/Admin/vendors/js/vendor.bundle.base.js"></script>
+    <script src="../../static/Admin/js/off-canvas.js"></script>
+    <script src="../../static/Admin/js/hoverable-collapse.js"></script>
+    <script src="../../static/Admin/js/template.js"></script>
+    <script src="../../static/Admin/js/file-upload.js"></script>
+
+        <!-- Spinner logic (add once, for all modals and actions) -->
+    <script>
+      function showSpinner() {
+        if (!window._spinnerOpen) {
+          $("#loadingSpinnerModal").modal({
+            backdrop: "static",
+            keyboard: false,
+          });
+          window._spinnerOpen = true;
+        }
+      }
+      function hideSpinner() {
+        $("#loadingSpinnerModal").modal("hide");
+        window._spinnerOpen = false;
+      }
+    </script>
+
+    <!-- Script for the global search bar (Start) -->
+    <script>
+      // Place this after your other JS or in the same script block
+
+      // Helper to normalize text for comparison
+      function normalize(s) {
+        return (s || "").toLowerCase();
+      }
+
+      // Global Search Handler
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("global-search-bar")
+          .addEventListener("input", function () {
+            let searchTerm = normalize(this.value.trim());
+
+            // If no search, show all route cards
+            if (!searchTerm) {
+              document
+                .querySelectorAll("#route-list > .card")
+                .forEach((card) => {
+                  card.style.display = "";
+                });
+              return;
+            }
+
+            // Loop through all cards
+            document.querySelectorAll("#route-list > .card").forEach((card) => {
+              // Gather card text
+              let cardText = normalize(card.textContent);
+
+              // If the card text (including route name, description, action names, etc) matches, show it
+              if (cardText.includes(searchTerm)) {
+                card.style.display = "";
+              } else {
+                card.style.display = "none";
+              }
+            });
+          });
+      });
+    </script>
+    <!-- Script for the global search bar (End) -->
+
+<!-- Script for displaying admin requests for access to features in a page (START) -->
+<script>
+
+// Utility: Get admin token from sessionStorage
+function getAdminToken() {
+  return sessionStorage.getItem("adminToken");
+}
+function makeAuthHeaders() {
+  const token = getAdminToken();
+  return token ? { Authorization: "Bearer " + token } : {};
+}
+
+// --- Bootstrap 4 Modal Instance Helper ---
+// Bootstrap 4 uses jQuery and modal() API
+function showBootstrap4Modal(modalId, options = {}) {
+  const $modal = $("#" + modalId);
+  // Default options
+  const defaultOptions = {
+    backdrop: "static",
+    keyboard: false,
+    show: true
+  };
+  $modal.modal($.extend({}, defaultOptions, options));
+  return $modal;
+}
+
+// Success Modal
+function showSuccessModal(message) {
+  // Assumes your modal body is id="successMessage"
+  var successMsg = document.getElementById("successMessage");
+  if (successMsg) {
+    successMsg.textContent = message || "Action completed successfully.";
+  }
+  showBootstrap4Modal("successModal");
+  window._successModal = $("#successModal");
+}
+
+// Error Modal
+function showErrorModal(message) {
+  var errorMsg = document.getElementById("errorMessage");
+  if (errorMsg) {
+    errorMsg.textContent =
+      message || "You are not authorized to perform this action.";
+  }
+  showBootstrap4Modal("errorModal");
+  window._errorModal = $("#errorModal");
+}
+
+let allRequestData = []; // Store for filtering/search
+
+// Pagination configuration for requests
+let requestsPaginationConfig = {
+  currentPage: 1,
+  itemsPerPage: 10,
+  totalItems: 0,
+  totalPages: 0
+};
+
+async function loadRequestTable() {
+  const tbody = document.getElementById("request-table");
+  tbody.innerHTML =
+    '<tr><td colspan="8" class="text-center">Loading...</td></tr>';
+  showSpinner();
+  try {
+    const res = await fetch("/review-requests", {
+      headers: { ...makeAuthHeaders() },
+    });
+    if (!res.ok) throw new Error("Failed to fetch requests.");
+    const data = await res.json();
+    allRequestData = data.requests || [];
+    requestsPaginationConfig.currentPage = 1; // Reset to first page
+    renderRequestTable();
+    hideSpinner();
+  } catch (e) {
+    hideSpinner();
+    tbody.innerHTML = `<tr><td colspan="8" class="text-danger">${e.message}</td></tr>`;
+    displayRequestsPaginationInfo(0, 0, 0);
+    displayRequestsPaginationControls();
+  }
+}
+
+function renderRequestTable(filter = "") {
+  const tbody = document.getElementById("request-table");
+  let filtered = allRequestData;
+  
+  if (filter) {
+    const term = filter.toLowerCase();
+    filtered = allRequestData.filter(
+      (req) =>
+        (req.name && req.name.toLowerCase().includes(term)) ||
+        (req.email && req.email.toLowerCase().includes(term)) ||
+        (req.role && req.role.toLowerCase().includes(term)) ||
+        (req.route_name && req.route_name.toLowerCase().includes(term)) ||
+        (req.action_name && req.action_name.toLowerCase().includes(term)) ||
+        (req.status && req.status.toLowerCase().includes(term))
+    );
+  }
+
+  // Update pagination config
+  requestsPaginationConfig.totalItems = filtered.length;
+  requestsPaginationConfig.totalPages = Math.ceil(requestsPaginationConfig.totalItems / requestsPaginationConfig.itemsPerPage);
+
+  // Adjust current page if it exceeds total pages
+  if (requestsPaginationConfig.currentPage > requestsPaginationConfig.totalPages && requestsPaginationConfig.totalPages > 0) {
+    requestsPaginationConfig.currentPage = requestsPaginationConfig.totalPages;
+  }
+
+  // Calculate pagination
+  const startIndex = (requestsPaginationConfig.currentPage - 1) * requestsPaginationConfig.itemsPerPage;
+  const endIndex = startIndex + requestsPaginationConfig.itemsPerPage;
+  const paginatedRequests = filtered.slice(startIndex, endIndex);
+
+  // Clear table
+  tbody.innerHTML = "";
+
+  if (!paginatedRequests.length && filtered.length === 0) {
+    tbody.innerHTML =
+      '<tr><td colspan="8" class="text-center">No pending requests.</td></tr>';
+    displayRequestsPaginationInfo(0, 0, 0);
+    displayRequestsPaginationControls();
+    return;
+  }
+
+  if (!paginatedRequests.length && filtered.length > 0) {
+    tbody.innerHTML =
+      '<tr><td colspan="8" class="text-center">No requests found on this page.</td></tr>';
+  } else {
+    tbody.innerHTML = paginatedRequests
+      .map(
+        (req) => `
+<tr>
+  <td>${req.name}</td>
+  <td>${req.email}</td>
+  <td>${req.role}</td>
+  <td>${req.route_name}</td>
+  <td>${req.action_name}</td>
+  <td>${
+    req.requested_at ? new Date(req.requested_at).toLocaleString() : ""
+  }</td>
+  <td>
+    <span class="badge badge-warning text-dark">${req.status}</span>
+  </td>
+  <td>
+    <button class="btn btn-success btn-sm approve-btn" data-id="${
+      req.id
+    }">Approve</button>
+    <button class="btn btn-danger btn-sm reject-btn ml-1" data-id="${
+      req.id
+    }">Reject</button>
+  </td>
+</tr>
+`
+      )
+      .join("");
+  }
+
+  // Display pagination info and controls
+  displayRequestsPaginationInfo(startIndex, Math.min(endIndex, filtered.length), filtered.length);
+  displayRequestsPaginationControls();
+}
+
+function displayRequestsPaginationInfo(startIndex, endIndex, totalItems) {
+  const showingStart = totalItems > 0 ? startIndex + 1 : 0;
+  const infoContainer = document.getElementById("requests-pagination-info");
+  if (!infoContainer) return;
+
+  const infoHTML = `
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="pagination-info">
+        Showing ${showingStart} to ${endIndex} of ${totalItems} requests
+      </div>
+      <div class="pagination-controls">
+        <label for="requests-items-per-page" class="mr-2 mb-0">Items per page:</label>
+        <select id="requests-items-per-page" class="form-control form-control-sm" style="width: auto; display: inline-block;">
+          <option value="5" ${requestsPaginationConfig.itemsPerPage === 5 ? 'selected' : ''}>5</option>
+          <option value="10" ${requestsPaginationConfig.itemsPerPage === 10 ? 'selected' : ''}>10</option>
+          <option value="25" ${requestsPaginationConfig.itemsPerPage === 25 ? 'selected' : ''}>25</option>
+          <option value="50" ${requestsPaginationConfig.itemsPerPage === 50 ? 'selected' : ''}>50</option>
+          <option value="100" ${requestsPaginationConfig.itemsPerPage === 100 ? 'selected' : ''}>100</option>
+        </select>
+      </div>
+    </div>
+  `;
+  infoContainer.innerHTML = infoHTML;
+
+  // Re-bind the change event since we're recreating the element
+  const newSelector = document.getElementById("requests-items-per-page");
+  if (newSelector) {
+    newSelector.addEventListener("change", function() {
+      requestsPaginationConfig.itemsPerPage = parseInt(this.value);
+      requestsPaginationConfig.currentPage = 1; // Reset to first page
+      const searchInput = document.getElementById("search-request");
+      const filter = searchInput ? searchInput.value : "";
+      renderRequestTable(filter);
+    });
+  }
+}
+
+function displayRequestsPaginationControls() {
+  const paginationContainer = document.getElementById("requests-pagination-container");
+  if (!paginationContainer) return;
+
+  if (requestsPaginationConfig.totalPages <= 1) {
+    paginationContainer.innerHTML = "";
+    return;
+  }
+
+  let paginationHTML = '<nav aria-label="Requests pagination"><ul class="pagination justify-content-center mb-0">';
+
+  // Previous button
+  if (requestsPaginationConfig.currentPage > 1) {
+    paginationHTML += `
+      <li class="page-item">
+        <a class="page-link" href="#" onclick="goToRequestsPage(${requestsPaginationConfig.currentPage - 1})" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>`;
+  } else {
+    paginationHTML += `
+      <li class="page-item disabled">
+        <span class="page-link" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </span>
+      </li>`;
+  }
+
+  // Page numbers with smart display
+  const maxVisiblePages = 5;
+  let startPage = Math.max(1, requestsPaginationConfig.currentPage - Math.floor(maxVisiblePages / 2));
+  let endPage = Math.min(requestsPaginationConfig.totalPages, startPage + maxVisiblePages - 1);
+
+  // Adjust start page if we're near the end
+  if (endPage - startPage + 1 < maxVisiblePages) {
+    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+  }
+
+  // First page and ellipsis
+  if (startPage > 1) {
+    paginationHTML += `
+      <li class="page-item">
+        <a class="page-link" href="#" onclick="goToRequestsPage(1)">1</a>
+      </li>`;
+    if (startPage > 2) {
+      paginationHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+    }
+  }
+
+  // Page numbers
+  for (let i = startPage; i <= endPage; i++) {
+    if (i === requestsPaginationConfig.currentPage) {
+      paginationHTML += `<li class="page-item active"><span class="page-link">${i}</span></li>`;
+    } else {
+      paginationHTML += `<li class="page-item"><a class="page-link" href="#" onclick="goToRequestsPage(${i})">${i}</a></li>`;
+    }
+  }
+
+  // Last page and ellipsis
+  if (endPage < requestsPaginationConfig.totalPages) {
+    if (endPage < requestsPaginationConfig.totalPages - 1) {
+      paginationHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+    }
+    paginationHTML += `
+      <li class="page-item">
+        <a class="page-link" href="#" onclick="goToRequestsPage(${requestsPaginationConfig.totalPages})">${requestsPaginationConfig.totalPages}</a>
+      </li>`;
+  }
+
+  // Next button
+  if (requestsPaginationConfig.currentPage < requestsPaginationConfig.totalPages) {
+    paginationHTML += `
+      <li class="page-item">
+        <a class="page-link" href="#" onclick="goToRequestsPage(${requestsPaginationConfig.currentPage + 1})" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>`;
+  } else {
+    paginationHTML += `
+      <li class="page-item disabled">
+        <span class="page-link" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </span>
+      </li>`;
+    }
+
+  paginationHTML += '</ul></nav>';
+  paginationContainer.innerHTML = paginationHTML;
+}
+
+function goToRequestsPage(page) {
+  if (page >= 1 && page <= requestsPaginationConfig.totalPages && page !== requestsPaginationConfig.currentPage) {
+    requestsPaginationConfig.currentPage = page;
+    const searchInput = document.getElementById("search-request");
+    const filter = searchInput ? searchInput.value : "";
+    renderRequestTable(filter);
+  }
+}
+
+// Approve/Reject logic (Bootstrap 4 modal support)
+document.addEventListener("click", async function (e) {
+  if (
+    e.target.classList.contains("approve-btn") ||
+    e.target.classList.contains("reject-btn")
+  ) {
+    const id = e.target.dataset.id;
+    const action = e.target.classList.contains("approve-btn")
+      ? "approve"
+      : "reject";
+    showSpinner();
+    try {
+      const res = await fetch("/review-requests/action", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...makeAuthHeaders(),
+        },
+        body: JSON.stringify({ request_id: id, action }),
+      });
+      const result = await res.json();
+      hideSpinner();
+      if (res.ok) {
+        showSuccessModal(result.message || `${action}d!`);
+        // Reload the table to refresh data and maintain current page if possible
+        loadRequestTable();
+      } else {
+        showErrorModal(result.error || `Failed to ${action} request.`);
+      }
+    } catch (err) {
+      hideSpinner();
+      showErrorModal(`Failed to ${action} request. ${err.message}`);
+    }
+  }
+});
+
+// Attach search bar logic
+window.addEventListener("DOMContentLoaded", function () {
+  loadRequestTable();
+  
+  const searchInput = document.getElementById("search-request");
+  if (searchInput) {
+    searchInput.addEventListener("input", function () {
+      requestsPaginationConfig.currentPage = 1; // Reset to first page on search
+      renderRequestTable(this.value);
+    });
+  }
+
+  // Page size selector event listener
+  const itemsPerPageSelector = document.getElementById("requests-items-per-page");
+  if (itemsPerPageSelector) {
+    itemsPerPageSelector.addEventListener("change", function() {
+      requestsPaginationConfig.itemsPerPage = parseInt(this.value);
+      requestsPaginationConfig.currentPage = 1; // Reset to first page
+      const filter = searchInput ? searchInput.value : "";
+      renderRequestTable(filter);
+    });
+  }
+});
+
+// Bulk Actions (Optional Enhancement)
+function approveSelected() {
+  const selectedCheckboxes = document.querySelectorAll('.request-checkbox:checked');
+  if (selectedCheckboxes.length === 0) {
+    showErrorModal("Please select at least one request to approve.");
+    return;
+  }
+  
+  if (confirm(`Are you sure you want to approve ${selectedCheckboxes.length} selected request(s)?`)) {
+    const requestIds = Array.from(selectedCheckboxes).map(cb => cb.dataset.id);
+    processBulkAction(requestIds, 'approve');
+  }
+}
+
+function rejectSelected() {
+  const selectedCheckboxes = document.querySelectorAll('.request-checkbox:checked');
+  if (selectedCheckboxes.length === 0) {
+    showErrorModal("Please select at least one request to reject.");
+    return;
+  }
+  
+  if (confirm(`Are you sure you want to reject ${selectedCheckboxes.length} selected request(s)?`)) {
+    const requestIds = Array.from(selectedCheckboxes).map(cb => cb.dataset.id);
+    processBulkAction(requestIds, 'reject');
+  }
+}
+
+async function processBulkAction(requestIds, action) {
+  showSpinner();
+  try {
+    const promises = requestIds.map(id => 
+      fetch("/review-requests/action", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...makeAuthHeaders(),
+        },
+        body: JSON.stringify({ request_id: id, action }),
+      })
+    );
+    
+    const results = await Promise.all(promises);
+    const successes = results.filter(res => res.ok).length;
+    const failures = results.length - successes;
+    
+    hideSpinner();
+    
+    if (failures === 0) {
+      showSuccessModal(`Successfully ${action}ed ${successes} request(s).`);
+    } else {
+      showErrorModal(`${action}ed ${successes} request(s), ${failures} failed.`);
+    }
+    
+    loadRequestTable();
+  } catch (err) {
+    hideSpinner();
+    showErrorModal(`Failed to ${action} requests. ${err.message}`);
+  }
+}
+
+function toggleSelectAll() {
+  const selectAllCheckbox = document.getElementById('select-all-requests');
+  const requestCheckboxes = document.querySelectorAll('.request-checkbox');
+  
+  requestCheckboxes.forEach(cb => {
+    cb.checked = selectAllCheckbox.checked;
+  });
+}
+
+</script>
+<!-- Script for displaying admin requests for access to features in a page (End) -->
+
+    <!-- Script for redirect admin back to the login page when someone else logged in from another tab (Start) -->
+    <script>
+      function getToken() {
+        return sessionStorage.getItem("adminToken");
+      }
+
+      function checkSessionConflict() {
+        const token = getToken();
+        if (!token) return;
+
+        fetch("/check_jti", {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+          .then((response) => {
+            if (response.status === 403) {
+              throw new Error("session_conflict");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.error === "session_conflict") {
+              throw new Error("session_conflict");
+            }
+          })
+          .catch((err) => {
+            if (err.message === "session_conflict") {
+              // Show modal
+              const modal = new bootstrap.Modal(
+                document.getElementById("sessionConflictModal"),
+                {
+                  backdrop: "static",
+                  keyboard: false,
+                }
+              );
+              modal.show();
+
+              // Attach event listener only once
+              const logoutBtn = document.getElementById(
+                "confirmLogoutBetweenTabs"
+              );
+              if (!logoutBtn.dataset.bound) {
+                logoutBtn.addEventListener("click", () => {
+                  sessionStorage.removeItem("adminToken");
+                  window.location.href = "/admin_login";
+                });
+                logoutBtn.dataset.bound = "true";
+              }
+            }
+          });
+      }
+
+      // Initial check + every 30 seconds
+      checkSessionConflict();
+      setInterval(checkSessionConflict, 30000);
+    </script>
+    <!-- Script for redirect admin back to the login page when someone else logged in from another tab (End) -->
+
+    <!-- Script that redirects admin back to login page if the token doesn't exist (Start) -->
+    <script>
+      const token = sessionStorage.getItem("adminToken");
+      if (!token) {
+        alert("Not authenticated. Redirecting to login.");
+        window.location.href = "/admin_login";
+      }
+    </script>
+    <!-- Script that redirects admin back to login page if the token doesn't exist (End) -->
+
+<!-- Script for granting access to admins and removing access from admins for available routes (Start) -->
+<script>
+
+  // Script for admin access modals and logic (Bootstrap 4 version)
+
+  function showBootstrap4Modal(modalId, message) {
+    var $modal = $("#" + modalId);
+    if (message !== undefined) {
+      var $modalBody = $modal.find(".modal-body");
+      $modalBody.text(message);
+    }
+    $modal.modal({ backdrop: "static", keyboard: false, show: true });
+    window["_" + modalId] = $modal;
+  }
+
+  function getToken() {
+    const token = sessionStorage.getItem("adminToken");
+    if (!token) {
+      showBootstrap4Modal("errorModal", "Session is missing. Please log in again.");
+      return null;
+    }
+    try {
+      const decoded = JSON.parse(atob(token.split(".")[1]));
+      if (decoded.exp < Date.now() / 1000) throw new Error("Token expired");
+      return token;
+    } catch {
+      showBootstrap4Modal("errorModal", "Session expired or invalid. Please log in again.");
+      return null;
+    }
+  }
+
+  function secureFetch(url, options = {}) {
+    const token = getToken();
+    if (!token) return Promise.reject({ message: "No valid token" });
+
+    showSpinner();
+    return fetch(url, {
+      ...options,
+      headers: {
+        ...options.headers,
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }).then(async (res) => {
+      let data = {};
+      try {
+        data = await res.json();
+      } catch (e) {
+        data.message = res.statusText || "Unknown error";
+      }
+      hideSpinner();
+      if (!res.ok) {
+        showBootstrap4Modal(
+          "errorModal",
+          data.message || "An error occurred (status " + res.status + ")"
+        );
+        return Promise.reject({
+          status: res.status,
+          message: data.message || "Error occurred",
+          data,
+        });
+      }
+      return data;
+    }).catch(err => {
+      hideSpinner();
+      throw err;
+    });
+  }
+
+  let allRoutes = [];
+  let currentGrantAdminId = null;
+  let currentRemoveAdminId = null;
+  let adminsDataCache = [];
+
+  // Pagination configuration
+  let adminsPaginationConfig = {
+    currentPage: 1,
+    itemsPerPage: 10,
+    totalItems: 0,
+    totalPages: 0
+  };
+
+function fetchAdmins() {
+  let searchInput = document.getElementById("search-admin");
+  if (!searchInput) return;
+
+  // Fetch all admins once, then filter in the browser
+  fetchAndCacheAdmins();
+
+  searchInput.addEventListener("input", function() {
+    adminsPaginationConfig.currentPage = 1; // Reset to first page on search
+    filterAndDisplayAdmins();
+  });
+
+  // Page size selector for admins
+  const itemsPerPageSelector = document.getElementById("admins-items-per-page");
+  if (itemsPerPageSelector) {
+    itemsPerPageSelector.addEventListener("change", function() {
+      adminsPaginationConfig.itemsPerPage = parseInt(this.value);
+      adminsPaginationConfig.currentPage = 1; // Reset to first page
+      filterAndDisplayAdmins();
+    });
+  }
+
+  function fetchAndCacheAdmins() {
+    secureFetch(`/get-admins?search=`)
+      .then((data) => {
+        adminsDataCache = Array.isArray(data.admins) ? data.admins : [];
+        adminsPaginationConfig.currentPage = 1; // Reset to first page
+        filterAndDisplayAdmins();
+      })
+      .catch((error) => {
+        console.error("Error fetching admins:", error);
+        let tableBody = document.getElementById("admin-table");
+        if (tableBody)
+          tableBody.innerHTML =
+            '<tr><td colspan="4" class="text-center">Could not load admins</td></tr>';
+        displayAdminsPaginationInfo(0, 0, 0);
+        displayAdminsPaginationControls();
+      });
+  }
+
+  function filterAndDisplayAdmins() {
+    let search = searchInput.value.trim().toLowerCase();
+    let tableBody = document.getElementById("admin-table");
+    if (!tableBody) return;
+
+    let filtered = !search
+      ? adminsDataCache
+      : adminsDataCache.filter((admin) =>
+          (
+            (admin.first_name + " " + admin.last_name).toLowerCase() +
+            " " +
+            admin.email.toLowerCase() +
+            " " +
+            (admin.role || "").toLowerCase()
+          ).includes(search)
+        );
+
+    // Update pagination config
+    adminsPaginationConfig.totalItems = filtered.length;
+    adminsPaginationConfig.totalPages = Math.ceil(adminsPaginationConfig.totalItems / adminsPaginationConfig.itemsPerPage);
+
+    // Adjust current page if it exceeds total pages
+    if (adminsPaginationConfig.currentPage > adminsPaginationConfig.totalPages && adminsPaginationConfig.totalPages > 0) {
+      adminsPaginationConfig.currentPage = adminsPaginationConfig.totalPages;
+    }
+
+    // Calculate pagination
+    const startIndex = (adminsPaginationConfig.currentPage - 1) * adminsPaginationConfig.itemsPerPage;
+    const endIndex = startIndex + adminsPaginationConfig.itemsPerPage;
+    const paginatedAdmins = filtered.slice(startIndex, endIndex);
+
+    // Clear table
+    tableBody.innerHTML = "";
+
+    if (!paginatedAdmins.length && filtered.length === 0) {
+      tableBody.innerHTML =
+        '<tr><td colspan="4" class="text-center">No admins found</td></tr>';
+      displayAdminsPaginationInfo(0, 0, 0);
+      displayAdminsPaginationControls();
+      return;
+    }
+
+    if (!paginatedAdmins.length && filtered.length > 0) {
+      tableBody.innerHTML =
+        '<tr><td colspan="4" class="text-center">No admins found on this page</td></tr>';
+    } else {
+      paginatedAdmins.forEach((admin) => {
+        let row = `
+<tr>
+  <td>${admin.first_name} ${admin.last_name}</td>
+  <td>${admin.email}</td>
+  <td>${admin.role}</td>
+  <td>
+    <button class="btn btn-success btn-sm" onclick="openGrantModal(${admin.admin_id})">Grant Access</button>
+    <button class="btn btn-danger btn-sm ml-1" onclick="openRemoveModal(${admin.admin_id})">Remove Access</button>
+  </td>
+</tr>
+`;
+        tableBody.innerHTML += row;
+      });
+    }
+
+    // Display pagination info and controls
+    displayAdminsPaginationInfo(startIndex, Math.min(endIndex, filtered.length), filtered.length);
+    displayAdminsPaginationControls();
+  }
+
+  function displayAdminsPaginationInfo(startIndex, endIndex, totalItems) {
+    const showingStart = totalItems > 0 ? startIndex + 1 : 0;
+    const infoContainer = document.getElementById("admins-pagination-info");
+    if (!infoContainer) return;
+
+    const infoHTML = `
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="pagination-info">
+          Showing ${showingStart} to ${endIndex} of ${totalItems} admins
+        </div>
+        <div class="pagination-controls">
+          <label for="admins-items-per-page" class="mr-2 mb-0">Items per page:</label>
+          <select id="admins-items-per-page" class="form-control form-control-sm" style="width: auto; display: inline-block;">
+            <option value="5" ${adminsPaginationConfig.itemsPerPage === 5 ? 'selected' : ''}>5</option>
+            <option value="10" ${adminsPaginationConfig.itemsPerPage === 10 ? 'selected' : ''}>10</option>
+            <option value="25" ${adminsPaginationConfig.itemsPerPage === 25 ? 'selected' : ''}>25</option>
+            <option value="50" ${adminsPaginationConfig.itemsPerPage === 50 ? 'selected' : ''}>50</option>
+            <option value="100" ${adminsPaginationConfig.itemsPerPage === 100 ? 'selected' : ''}>100</option>
+          </select>
+        </div>
+      </div>
+    `;
+    infoContainer.innerHTML = infoHTML;
+
+    // Re-bind the change event since we're recreating the element
+    const newSelector = document.getElementById("admins-items-per-page");
+    if (newSelector) {
+      newSelector.addEventListener("change", function() {
+        adminsPaginationConfig.itemsPerPage = parseInt(this.value);
+        adminsPaginationConfig.currentPage = 1; // Reset to first page
+        filterAndDisplayAdmins();
+      });
+    }
+  }
+
+  function displayAdminsPaginationControls() {
+    const paginationContainer = document.getElementById("admins-pagination-container");
+    if (!paginationContainer) return;
+
+    if (adminsPaginationConfig.totalPages <= 1) {
+      paginationContainer.innerHTML = "";
+      return;
+    }
+
+    let paginationHTML = '<nav aria-label="Admins pagination"><ul class="pagination justify-content-center mb-0">';
+
+    // Previous button
+    if (adminsPaginationConfig.currentPage > 1) {
+      paginationHTML += `
+        <li class="page-item">
+          <a class="page-link" href="#" onclick="goToAdminsPage(${adminsPaginationConfig.currentPage - 1})" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>`;
+    } else {
+      paginationHTML += `
+        <li class="page-item disabled">
+          <span class="page-link" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </span>
+        </li>`;
+    }
+
+    // Page numbers with smart display
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, adminsPaginationConfig.currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(adminsPaginationConfig.totalPages, startPage + maxVisiblePages - 1);
+
+    // Adjust start page if we're near the end
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    // First page and ellipsis
+    if (startPage > 1) {
+      paginationHTML += `
+        <li class="page-item">
+          <a class="page-link" href="#" onclick="goToAdminsPage(1)">1</a>
+        </li>`;
+      if (startPage > 2) {
+        paginationHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+      }
+    }
+
+    // Page numbers
+    for (let i = startPage; i <= endPage; i++) {
+      if (i === adminsPaginationConfig.currentPage) {
+        paginationHTML += `<li class="page-item active"><span class="page-link">${i}</span></li>`;
+      } else {
+        paginationHTML += `<li class="page-item"><a class="page-link" href="#" onclick="goToAdminsPage(${i})">${i}</a></li>`;
+      }
+    }
+
+    // Last page and ellipsis
+    if (endPage < adminsPaginationConfig.totalPages) {
+      if (endPage < adminsPaginationConfig.totalPages - 1) {
+        paginationHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+      }
+      paginationHTML += `
+        <li class="page-item">
+          <a class="page-link" href="#" onclick="goToAdminsPage(${adminsPaginationConfig.totalPages})">${adminsPaginationConfig.totalPages}</a>
+        </li>`;
+    }
+
+    // Next button
+    if (adminsPaginationConfig.currentPage < adminsPaginationConfig.totalPages) {
+      paginationHTML += `
+        <li class="page-item">
+          <a class="page-link" href="#" onclick="goToAdminsPage(${adminsPaginationConfig.currentPage + 1})" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>`;
+    } else {
+      paginationHTML += `
+        <li class="page-item disabled">
+          <span class="page-link" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </span>
+        </li>`;
+    }
+
+    paginationHTML += '</ul></nav>';
+    paginationContainer.innerHTML = paginationHTML;
+  }
+
+  function goToAdminsPage(page) {
+    if (page >= 1 && page <= adminsPaginationConfig.totalPages && page !== adminsPaginationConfig.currentPage) {
+      adminsPaginationConfig.currentPage = page;
+      filterAndDisplayAdmins();
+    }
+  }
+}
+
+  document.addEventListener("DOMContentLoaded", fetchAdmins);
+
+  function openGrantModal(adminId) {
+    currentGrantAdminId = adminId;
+    secureFetch("/routes")
+      .then((data) => {
+        allRoutes = data.routes;
+        populateGrantRouteDropdown();
+        document
+          .getElementById("grantAccessModal")
+          .setAttribute("data-admin-id", adminId);
+        showBootstrap4Modal("grantAccessModal");
+      })
+      .catch((error) => console.error("Error fetching routes:", error));
+  }
+
+  function populateGrantRouteDropdown() {
+    const dropdown = document.getElementById("grant-route-dropdown");
+    dropdown.innerHTML = "";
+    allRoutes.forEach((rt) => {
+      const option = document.createElement("option");
+      option.value = rt.route_id;
+      option.textContent = rt.route_name;
+      option.setAttribute("data-description", rt.description || "");
+      dropdown.appendChild(option);
+    });
+
+    dropdown.onchange = function () {
+      showGrantRouteDescription();
+      onGrantRouteSelect();
+    };
+
+    showGrantRouteDescription();
+    onGrantRouteSelect();
+  }
+
+  function showGrantRouteDescription() {
+    const dropdown = document.getElementById("grant-route-dropdown");
+    const selectedOption = dropdown.options[dropdown.selectedIndex];
+    const descDiv = document.getElementById("grant-route-description");
+    descDiv.textContent =
+      selectedOption.getAttribute("data-description") || "";
+  }
+
+  function onGrantRouteSelect() {
+    const routeId = document.getElementById("grant-route-dropdown").value;
+    if (!routeId) return;
+    const routeObj = allRoutes.find((rt) => rt.route_id == routeId);
+    if (!routeObj) return;
+    secureFetch(
+      `/route-actions/${encodeURIComponent(routeObj.route_name)}`
+    ).then((actionsData) => {
+      secureFetch(
+        `/get-admin-permissions/${currentGrantAdminId}?route=${encodeURIComponent(
+          routeObj.route_name
+        )}`
+      ).then((permData) => {
+        const grantedNames = (permData.granted_actions || []).map(
+          (a) => a.action_name
+        );
+        renderGrantActionCheckboxes(
+          routeId,
+          actionsData.actions,
+          grantedNames
+        );
+      });
+    });
+  }
+
+  function renderGrantActionCheckboxes(
+    routeId,
+    availableActions,
+    grantedActionNames
+  ) {
+    const container = document.getElementById("grant-actions-container");
+    container.innerHTML = "";
+
+    availableActions.forEach((action) => {
+      const group = document.createElement("div");
+      group.className = "form-control d-flex align-items-center";
+
+      const hasAccess = grantedActionNames.includes(action.action_name);
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.className = "form-check-input";
+      checkbox.id = `grant-action-${action.action_id}`;
+      checkbox.value = action.action_id;
+      checkbox.checked = hasAccess;
+      checkbox.disabled = hasAccess;
+
+      const label = document.createElement("label");
+      label.className = "form-check-label ml-2";
+      label.htmlFor = checkbox.id;
+      label.textContent = action.action_name.replace(/_/g, " ");
+
+      if (action.description) {
+        const descSpan = document.createElement("span");
+        descSpan.className = "text-muted small ml-2";
+        descSpan.textContent = `(${action.description})`;
+        label.appendChild(descSpan);
+      }
+
+      if (hasAccess) {
+        const badge = document.createElement("span");
+        badge.className = "badge badge-success ml-2";
+        badge.style = "color : white";
+        badge.textContent = "Already Granted";
+        label.appendChild(badge);
+      }
+
+      group.appendChild(checkbox);
+      group.appendChild(label);
+      container.appendChild(group);
+    });
+  }
+
+  function grantAccess() {
+    let adminId = document
+      .getElementById("grantAccessModal")
+      .getAttribute("data-admin-id");
+    let routeId = document.getElementById("grant-route-dropdown").value;
+    const checkboxes = document.querySelectorAll(
+      "#grant-actions-container input[type='checkbox']"
+    );
+    const selectedActionIds = Array.from(checkboxes)
+      .filter((cb) => cb.checked)
+      .map((cb) => parseInt(cb.value));
+
+    if (!routeId || selectedActionIds.length === 0) {
+      alert("Please select at least one action.");
+      return;
+    }
+
+    secureFetch("/grant_access", {
+      method: "POST",
+      body: JSON.stringify({
+        admin_id: adminId,
+        permissions: [
+          { route_id: parseInt(routeId), actions: selectedActionIds },
+        ],
+      }),
+    })
+      .then((response) => {
+        $("#grantAccessModal").modal("hide");
+        if (response.error) {
+          showBootstrap4Modal(
+            "errorModal",
+            response.message || "An error occurred while granting access."
+          );
+        } else {
+          showBootstrap4Modal(
+            "successModal",
+            response.message || "Access granted successfully."
+          );
+          setTimeout(() => {
+            fetchAdmins();
+            window.location.reload();
+          }, 1500);
+        }
+      })
+      .catch((error) => {
+        $("#grantAccessModal").modal("hide");
+        showBootstrap4Modal(
+          "errorModal",
+          error.message || "An error occurred while granting access."
+        );
+      });
+  }
+
+  function openRemoveModal(adminId) {
+    currentRemoveAdminId = adminId;
+    secureFetch("/routes")
+      .then((data) => {
+        allRoutes = data.routes;
+        populateRemoveRouteDropdown();
+        document
+          .getElementById("removeAccessModal")
+          .setAttribute("data-admin-id", adminId);
+        showBootstrap4Modal("removeAccessModal");
+      })
+      .catch((error) => console.error("Error fetching routes:", error));
+  }
+
+  function populateRemoveRouteDropdown() {
+    const dropdown = document.getElementById("remove-route-dropdown");
+    const container = document.getElementById("remove-actions-container");
+    dropdown.innerHTML = "";
+    secureFetch(
+      `/get-admin-permissions/${currentRemoveAdminId}?route=ALL`
+    ).then((data) => {
+      let grantedRoutes = data.routes || [];
+      grantedRoutes = grantedRoutes.filter(
+        (rt) => rt.granted_actions.length > 0
+      );
+
+      if (grantedRoutes.length === 0) {
+        dropdown.style.display = "none";
+        document.getElementById("remove-route-description").style.display =
+          "none";
+        container.innerHTML = `<div class="alert alert-info mb-0">This admin has no access to any routes or actions.</div>`;
+        return;
+      } else {
+        dropdown.style.display = "";
+        document.getElementById("remove-route-description").style.display =
+          "";
+        container.innerHTML = "";
+      }
+
+      grantedRoutes.forEach((rt) => {
+        const option = document.createElement("option");
+        option.value = rt.route_id;
+        option.textContent = rt.route_name;
+        option.setAttribute("data-description", rt.description || "");
+        dropdown.appendChild(option);
+      });
+
+      dropdown.onchange = function () {
+        showRemoveRouteDescription();
+        onRemoveRouteSelect();
+      };
+
+      showRemoveRouteDescription();
+      onRemoveRouteSelect();
+    });
+  }
+
+  function showRemoveRouteDescription() {
+    const dropdown = document.getElementById("remove-route-dropdown");
+    const selectedOption = dropdown.options[dropdown.selectedIndex];
+    const descDiv = document.getElementById("remove-route-description");
+    descDiv.textContent = selectedOption
+      ? selectedOption.getAttribute("data-description") || ""
+      : "";
+  }
+
+  function onRemoveRouteSelect() {
+    const routeId = document.getElementById("remove-route-dropdown").value;
+    if (!routeId) return;
+    const routeObj = allRoutes.find((rt) => rt.route_id == routeId);
+    if (!routeObj) return;
+    secureFetch(
+      `/get-admin-permissions/${currentRemoveAdminId}?route=${encodeURIComponent(
+        routeObj.route_name
+      )}`
+    ).then((data) => {
+      secureFetch(
+        `/route-actions/${encodeURIComponent(routeObj.route_name)}`
+      ).then((actionsData) => {
+        const grantedNames = (data.granted_actions || []).map(
+          (a) => a.action_name
+        );
+        renderRemoveActionCheckboxes(
+          routeId,
+          actionsData.actions,
+          grantedNames
+        );
+      });
+    });
+  }
+
+  function renderRemoveActionCheckboxes(
+    routeId,
+    availableActions,
+    grantedActionNames
+  ) {
+    const container = document.getElementById("remove-actions-container");
+    container.innerHTML = "";
+
+    availableActions.forEach((action) => {
+      if (!grantedActionNames.includes(action.action_name)) return;
+
+      const group = document.createElement("div");
+      group.className = "form-control d-flex align-items-center";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.className = "form-check-input";
+      checkbox.id = `remove-action-${action.action_id}`;
+      checkbox.value = action.action_id;
+      checkbox.checked = false;
+
+      const label = document.createElement("label");
+      label.className = "form-check-label ml-2";
+      label.htmlFor = checkbox.id;
+      label.textContent = action.action_name.replace(/_/g, " ");
+      if (action.description) {
+        const descSpan = document.createElement("span");
+        descSpan.className = "text-muted small ml-2";
+        descSpan.textContent = `(${action.description})`;
+        label.appendChild(descSpan);
+      }
+
+      const badge = document.createElement("span");
+      badge.className = "badge badge-danger ml-2";
+      badge.style = "color: white";
+      badge.textContent = "Remove";
+      label.appendChild(badge);
+
+      group.appendChild(checkbox);
+      group.appendChild(label);
+      container.appendChild(group);
+    });
+  }
+
+  function removeAccess() {
+    let adminId = document
+      .getElementById("removeAccessModal")
+      .getAttribute("data-admin-id");
+    let routeId = document.getElementById("remove-route-dropdown").value;
+    const checkboxes = document.querySelectorAll(
+      "#remove-actions-container input[type='checkbox']"
+    );
+    const selectedActionIds = Array.from(checkboxes)
+      .filter((cb) => cb.checked && !cb.disabled)
+      .map((cb) => parseInt(cb.value));
+
+    if (!routeId || selectedActionIds.length === 0) {
+      alert("Please select at least one action to remove.");
+      return;
+    }
+
+    secureFetch("/remove-access", {
+      method: "POST",
+      body: JSON.stringify({
+        admin_id: adminId,
+        route_id: parseInt(routeId),
+        actions: selectedActionIds,
+      }),
+    })
+      .then((response) => {
+        $("#removeAccessModal").modal("hide");
+        if (response.error) {
+          showBootstrap4Modal(
+            "errorModal",
+            response.message || "An error occurred while removing access."
+          );
+        } else {
+          showBootstrap4Modal(
+            "successModal",
+            response.message || "Access removed successfully."
+          );
+          if (response.no_actions_left) {
+            setTimeout(() => {
+              showBootstrap4Modal(
+                "warningModal",
+                "This admin now has no access to any action on this page."
+              );
+            }, 100);
+          }
+          setTimeout(() => {
+            fetchAdmins();
+            window.location.reload();
+          }, 1500);
+        }
+      })
+      .catch((error) => {
+        $("#removeAccessModal").modal("hide");
+        showBootstrap4Modal(
+          "errorModal",
+          error.message || "An error occurred while removing access."
+        );
+      });
+  }
+
+  function closeModal(id) {
+    $("#" + id).modal("hide");
+  }
+  function checkAllGrantActions(checked) {
+    const checkboxes = document.querySelectorAll("#grant-actions-container input[type='checkbox']");
+    checkboxes.forEach(cb => {
+      if (!cb.disabled) cb.checked = checked;
+    });
+  }
+  function checkAllRemoveActions(checked) {
+    const checkboxes = document.querySelectorAll("#remove-actions-container input[type='checkbox']");
+    checkboxes.forEach(cb => cb.checked = checked);
+  }
+</script>
+<!-- Script for granting access to admins and removing access from admins for available routes (End) -->
+
+    <!-- Script for logging out (Start) -->
+<script>
+  // ===== Script for logging out (Bootstrap 4, jQuery) =====
+
+// Show the modal on logout button click
+document.querySelector(".logout-btn").addEventListener("click", function () {
+  $("#logoutModal").modal("show");
+  window._logoutModal = $("#logoutModal");
+});
+
+// Confirm logout
+document.getElementById("confirmLogout").addEventListener("click", function () {
+  sessionStorage.removeItem("adminToken");
+  window.location.href = "/admin_login";
+});
+
+// Cancel logout (close modal)
+document.getElementById("cancelLogout").addEventListener("click", function () {
+  $("#logoutModal").modal("hide");
+});
+
+// Also hide modal on "X" close button, if you have one
+var closeBtn = document.getElementById("closeLogoutModal");
+if (closeBtn) {
+  closeBtn.addEventListener("click", function () {
+    $("#logoutModal").modal("hide");
+  });
+}
+</script>
+    <!-- Script for logging out (End) -->
+
+<!-- Script for verifying, rejecting and deleting registrations (Start) -->
+<script>
+
+  let rejectingAdminId = null;
+
+  function showModal(modalId, message) {
+    var $modal = $("#" + modalId);
+    if (message !== undefined) {
+      $modal.find(".modal-body").text(message);
+    }
+    $modal.modal({ backdrop: "static", keyboard: false, show: true });
+    window["_" + modalId] = $modal;
+  }
+
+  function openRejectModal(adminId) {
+    rejectingAdminId = adminId;
+    var $modal = $("#reject-modal");
+    $modal.attr("data-admin-id", adminId);
+    $modal.modal("show");
+    window._rejectModal = $modal;
+  }
+
+  // --- Confirm Rejection Handler ---
+  $("#confirm-rejection").on("click", function () {
+    if (!rejectingAdminId) {
+      console.error("No admin ID set for rejection.");
+      return;
+    }
+
+    const title = $("#reject-title").val().trim();
+    const message = $("#reject-message").val().trim();
+
+    if (!title || !message) {
+      alert("Title and message are required.");
+      return;
+    }
+
+    const requestData = {
+      admin_id: rejectingAdminId,
+      title: title,
+      message: message,
+    };
+
+    showSpinner();
+    fetch("/reject", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": $('meta[name="csrf-token"]').attr("content"),
+        Authorization: "Bearer " + sessionStorage.getItem("adminToken"),
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) =>
+        response.json().then((data) => ({ status: response.status, data }))
+      )
+      .then(({ status, data }) => {
+        hideSpinner();
+        if (status === 403 || data.error) {
+          showModal(
+            "errorModal",
+            data.message || "You are not authorized to perform this action."
+          );
+        } else {
+          // Close the reject modal using Bootstrap 4 API
+          if (window._rejectModal) window._rejectModal.modal("hide");
+          // Show success modal explicitly with message
+          showModal(
+            "successModal",
+            data.message || "Admin rejected successfully."
+          );
+          fetchAndRenderAdmins();
+        }
+      })
+      .catch((error) => {
+        hideSpinner();
+        console.error("Error rejecting admin:", error);
+        showModal("errorModal", "An error occurred while rejecting the admin.");
+      });
+  });
+
+  function openVerifyModal(adminId) {
+    var $modal = $("#verify-modal");
+    $modal.attr("data-admin-id", adminId);
+    $modal.modal("show");
+    window._verifyModal = $modal;
+
+    // Permissions fetch is for display/logging only; spinner not needed here.
+    fetch(`/get-admin-permissions/${adminId}`)
+      .then((response) => response.json())
+      .then((data) => console.log("Fetched permissions data:", data))
+      .catch((error) => console.error("Error fetching permissions:", error));
+  }
+
+  function getAdminId() {
+    return (
+      $("#verify-modal").attr("data-admin-id") ||
+      $("#reject-modal").attr("data-admin-id") ||
+      null
+    );
+  }
+
+  function deleteRegistration(adminId) {
+    var $modal = $("#delete-confirmation-modal");
+    $modal.attr("data-admin-id", adminId);
+    $modal.modal("show");
+    window._deleteConfirmationModal = $modal;
+  }
+
+  // --- Confirm Delete Handler ---
+  $("#confirm-delete-btn").on("click", function () {
+    var $modal = $("#delete-confirmation-modal");
+    const adminId = $modal.attr("data-admin-id");
+    if (!adminId) {
+      console.error("No admin ID set for deletion.");
+      return;
+    }
+
+    showSpinner();
+    fetch("/delete-registration", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": $('meta[name="csrf-token"]').attr("content"),
+        Authorization: "Bearer " + sessionStorage.getItem("adminToken"),
+      },
+      body: JSON.stringify({ admin_id: adminId }),
+    })
+      .then((response) =>
+        response.json().then((data) => ({ status: response.status, data }))
+      )
+      .then(({ status, data }) => {
+        hideSpinner();
+        if (window._deleteConfirmationModal)
+          window._deleteConfirmationModal.modal("hide");
+
+        if (status === 403 || data.error) {
+          showModal(
+            "errorModal",
+            data.message || "You are not authorized to perform this action."
+          );
+        } else {
+          showModal(
+            "successModal",
+            data.message || "Registration deleted successfully."
+          );
+          fetchAndRenderAdmins();
+        }
+      })
+      .catch((error) => {
+        hideSpinner();
+        if (window._deleteConfirmationModal)
+          window._deleteConfirmationModal.modal("hide");
+        console.error("Delete Error:", error);
+        showModal("errorModal", "An error occurred. Please try again.");
+      });
+  });
+
+  // --- Confirm Verification ---
+  $("#confirm-verification").on("click", function () {
+    var $modal = $("#verify-modal");
+    const adminId = $modal.attr("data-admin-id");
+    if (!adminId) {
+      alert("Admin ID is missing! Please try again.");
+      return;
+    }
+
+    showSpinner();
+    fetch("/verify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": $('meta[name="csrf-token"]').attr("content"),
+        Authorization: "Bearer " + sessionStorage.getItem("adminToken"),
+      },
+      body: JSON.stringify({ admin_id: adminId }),
+    })
+      .then((response) =>
+        response.json().then((data) => ({ status: response.status, data }))
+      )
+      .then(({ status, data }) => {
+        hideSpinner();
+        if (status === 403 || data.error) {
+          showModal(
+            "errorModal",
+            data.message || "You are not authorized to perform this action."
+          );
+        } else {
+          showModal("successModal", data.message || "Verification successful.");
+          if (window._verifyModal) window._verifyModal.modal("hide");
+          fetchAndRenderAdmins();
+        }
+      })
+      .catch((error) => {
+        hideSpinner();
+        console.error("Verification Error:", error);
+        showModal("errorModal", "An error occurred. Please try again.");
+      });
+  });
+</script>
+<!-- Script for verifying, rejecting and deleting registrations (End) -->
+
+<!-- Script for displaying the details for the registrations (Start) -->
+<script>
+
+  // ===== Script for displaying the details for the registrations (Bootstrap 4 compatible, refreshable) =====
+
+  function getAdminToken() {
+    return sessionStorage.getItem("adminToken");
+  }
+
+  function makeAuthHeaders() {
+    const token = getAdminToken();
+    return token ? { Authorization: "Bearer " + token } : {};
+  }
+
+  function showModalById(modalId) {
+    var $modal = $("#" + modalId);
+    $modal.modal("show");
+    window["_" + modalId] = $modal;
+  }
+
+  let allPendingAdmins = [];
+
+  // Pagination configuration for registrations
+  let registrationsPaginationConfig = {
+    currentPage: 1,
+    itemsPerPage: 5,
+    totalItems: 0,
+    totalPages: 0
+  };
+
+  function renderAdmins(filter = "") {
+    let filtered = allPendingAdmins.filter((admin) => {
+      let term = filter.toLowerCase();
+      return (
+        admin.first_name.toLowerCase().includes(term) ||
+        admin.last_name.toLowerCase().includes(term) ||
+        admin.email.toLowerCase().includes(term) ||
+        admin.role.toLowerCase().includes(term)
+      );
+    });
+
+    // Update pagination config
+    registrationsPaginationConfig.totalItems = filtered.length;
+    registrationsPaginationConfig.totalPages = Math.ceil(registrationsPaginationConfig.totalItems / registrationsPaginationConfig.itemsPerPage);
+
+    // Adjust current page if it exceeds total pages
+    if (registrationsPaginationConfig.currentPage > registrationsPaginationConfig.totalPages && registrationsPaginationConfig.totalPages > 0) {
+      registrationsPaginationConfig.currentPage = registrationsPaginationConfig.totalPages;
+    }
+
+    // Calculate pagination
+    const startIndex = (registrationsPaginationConfig.currentPage - 1) * registrationsPaginationConfig.itemsPerPage;
+    const endIndex = startIndex + registrationsPaginationConfig.itemsPerPage;
+    const paginatedAdmins = filtered.slice(startIndex, endIndex);
+
+    let adminListHTML = "";
+
+    if (!paginatedAdmins.length && filtered.length === 0) {
+      adminListHTML = "<div class='alert alert-info text-center'>No pending registrations</div>";
+    } else if (!paginatedAdmins.length && filtered.length > 0) {
+      adminListHTML = "<div class='alert alert-warning text-center'>No registrations found on this page</div>";
+    } else {
+      paginatedAdmins.forEach((admin) => {
+        let permissionsList = admin.permissions.length
+          ? admin.permissions.map((p) => `<li>${p}</li>`).join("")
+          : "<li>No access to any routes.</li>";
+
+        let verificationStatus = admin.is_verified
+          ? "Verified"
+          : "Rejected";
+
+        adminListHTML += `
+      <div class="card mb-4">
+        <div class="card-body">
+          <h4 class="card-title">Details of the registration:</h4>
+          <ul class="list-unstyled">
+            <li><strong>First Name:</strong> ${admin.first_name}</li>
+            <li><strong>Last Name:</strong> ${admin.last_name}</li>
+            <li><strong>Email:</strong> ${admin.email}</li>
+            <li><strong>Role:</strong> ${admin.role}</li>
+            <li><strong>Verification Status:</strong> 
+              <span class="badge ${admin.is_verified ? 'badge-success' : 'badge-warning'}">${verificationStatus}</span>
+            </li>
+            <li><strong>Accessed to routes:</strong>
+              <ul class="mt-2">${permissionsList}</ul>
+            </li>
+          </ul>
+          <div class="btn-group-actions">
+            <button class="btn btn-success mr-2" onclick="openVerifyModal('${admin.admin_id}')">
+               <i class="fas fa-check"></i> Verify
+            </button>
+            <button class="btn btn-danger mr-2" onclick="openRejectModal('${admin.admin_id}')">
+               <i class="fas fa-times"></i> Reject
+            </button>
+            <button class="btn btn-warning" onclick="deleteRegistration('${admin.admin_id}')">
+               <i class="fas fa-trash"></i> Delete Registration
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+      });
+    }
+
+    document.getElementById("admin-list").innerHTML = adminListHTML;
+
+    // Display pagination info and controls
+    displayRegistrationsPaginationInfo(startIndex, Math.min(endIndex, filtered.length), filtered.length);
+    displayRegistrationsPaginationControls();
+  }
+
+  function displayRegistrationsPaginationInfo(startIndex, endIndex, totalItems) {
+    const showingStart = totalItems > 0 ? startIndex + 1 : 0;
+    const infoContainer = document.getElementById("registrations-pagination-info");
+    if (!infoContainer) return;
+
+    const infoHTML = `
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="pagination-info">
+          <span class="text-muted">Showing ${showingStart} to ${endIndex} of ${totalItems} registrations</span>
+        </div>
+        <div class="pagination-controls">
+          <label for="registrations-items-per-page" class="mr-2 mb-0">Items per page:</label>
+          <select id="registrations-items-per-page" class="form-control form-control-sm" style="width: auto; display: inline-block;">
+            <option value="3" ${registrationsPaginationConfig.itemsPerPage === 3 ? 'selected' : ''}>3</option>
+            <option value="5" ${registrationsPaginationConfig.itemsPerPage === 5 ? 'selected' : ''}>5</option>
+            <option value="10" ${registrationsPaginationConfig.itemsPerPage === 10 ? 'selected' : ''}>10</option>
+            <option value="25" ${registrationsPaginationConfig.itemsPerPage === 25 ? 'selected' : ''}>25</option>
+            <option value="50" ${registrationsPaginationConfig.itemsPerPage === 50 ? 'selected' : ''}>50</option>
+          </select>
+        </div>
+      </div>
+    `;
+    infoContainer.innerHTML = infoHTML;
+
+    // Re-bind the change event since we're recreating the element
+    const newSelector = document.getElementById("registrations-items-per-page");
+    if (newSelector) {
+      newSelector.addEventListener("change", function() {
+        registrationsPaginationConfig.itemsPerPage = parseInt(this.value);
+        registrationsPaginationConfig.currentPage = 1; // Reset to first page
+        const searchInput = document.getElementById("admin-search-bar");
+        const filter = searchInput ? searchInput.value : "";
+        renderAdmins(filter);
+      });
+    }
+  }
+
+  function displayRegistrationsPaginationControls() {
+    const paginationContainer = document.getElementById("registrations-pagination-container");
+    if (!paginationContainer) return;
+
+    if (registrationsPaginationConfig.totalPages <= 1) {
+      paginationContainer.innerHTML = "";
+      return;
+    }
+
+    let paginationHTML = '<nav aria-label="Registrations pagination"><ul class="pagination justify-content-center mb-0">';
+
+    // Previous button
+    if (registrationsPaginationConfig.currentPage > 1) {
+      paginationHTML += `
+        <li class="page-item">
+          <a class="page-link" href="#" onclick="goToRegistrationsPage(${registrationsPaginationConfig.currentPage - 1})" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>`;
+    } else {
+      paginationHTML += `
+        <li class="page-item disabled">
+          <span class="page-link" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </span>
+        </li>`;
+    }
+
+    // Page numbers with smart display
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, registrationsPaginationConfig.currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(registrationsPaginationConfig.totalPages, startPage + maxVisiblePages - 1);
+
+    // Adjust start page if we're near the end
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    // First page and ellipsis
+    if (startPage > 1) {
+      paginationHTML += `
+        <li class="page-item">
+          <a class="page-link" href="#" onclick="goToRegistrationsPage(1)">1</a>
+        </li>`;
+      if (startPage > 2) {
+        paginationHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+      }
+    }
+
+    // Page numbers
+    for (let i = startPage; i <= endPage; i++) {
+      if (i === registrationsPaginationConfig.currentPage) {
+        paginationHTML += `<li class="page-item active"><span class="page-link">${i}</span></li>`;
+      } else {
+        paginationHTML += `<li class="page-item"><a class="page-link" href="#" onclick="goToRegistrationsPage(${i})">${i}</a></li>`;
+      }
+    }
+
+    // Last page and ellipsis
+    if (endPage < registrationsPaginationConfig.totalPages) {
+      if (endPage < registrationsPaginationConfig.totalPages - 1) {
+        paginationHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+      }
+      paginationHTML += `
+        <li class="page-item">
+          <a class="page-link" href="#" onclick="goToRegistrationsPage(${registrationsPaginationConfig.totalPages})">${registrationsPaginationConfig.totalPages}</a>
+        </li>`;
+    }
+
+    // Next button
+    if (registrationsPaginationConfig.currentPage < registrationsPaginationConfig.totalPages) {
+      paginationHTML += `
+        <li class="page-item">
+          <a class="page-link" href="#" onclick="goToRegistrationsPage(${registrationsPaginationConfig.currentPage + 1})" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>`;
+    } else {
+      paginationHTML += `
+        <li class="page-item disabled">
+          <span class="page-link" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </span>
+        </li>`;
+    }
+
+    paginationHTML += '</ul></nav>';
+    paginationContainer.innerHTML = paginationHTML;
+  }
+
+  function goToRegistrationsPage(page) {
+    if (page >= 1 && page <= registrationsPaginationConfig.totalPages && page !== registrationsPaginationConfig.currentPage) {
+      registrationsPaginationConfig.currentPage = page;
+      const searchInput = document.getElementById("admin-search-bar");
+      const filter = searchInput ? searchInput.value : "";
+      renderAdmins(filter);
+      
+      // Smooth scroll to top of the list
+      const adminList = document.getElementById("admin-list");
+      if (adminList) {
+        adminList.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }
+
+  function fetchAndRenderAdmins() {
+    showSpinner();
+    fetch("/pending-registrations", {
+      headers: {
+        ...makeAuthHeaders(),
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        hideSpinner();
+        allPendingAdmins = data.pending_admins || [];
+        registrationsPaginationConfig.currentPage = 1; // Reset to first page
+        renderAdmins();
+
+        var searchBar = document.getElementById("admin-search-bar");
+        if (searchBar && !searchBar.hasListener) {
+          searchBar.addEventListener("input", function () {
+            registrationsPaginationConfig.currentPage = 1; // Reset to first page on search
+            renderAdmins(this.value);
+          });
+          searchBar.hasListener = true;
+        }
+      })
+      .catch((error) => {
+        hideSpinner();
+        console.error("Error fetching pending registrations:", error);
+        document.getElementById("admin-list").innerHTML = 
+          "<div class='alert alert-danger text-center'>Error loading registrations. Please try again.</div>";
+        displayRegistrationsPaginationInfo(0, 0, 0);
+        displayRegistrationsPaginationControls();
+      });
+  }
+
+  // Enhanced functions for better user experience
+  function openVerifyModal(adminId) {
+    // Store the admin ID for verification
+    window.currentVerifyAdminId = adminId;
+    showModalById("verifyModal");
+  }
+
+  function openRejectModal(adminId) {
+    // Store the admin ID for rejection
+    window.currentRejectAdminId = adminId;
+    showModalById("rejectModal");
+  }
+
+  function deleteRegistration(adminId) {
+    if (confirm("Are you sure you want to delete this registration? This action cannot be undone.")) {
+      showSpinner();
+      fetch(`/delete-registration/${adminId}`, {
+        method: 'DELETE',
+        headers: {
+          ...makeAuthHeaders(),
+        },
+      })
+      .then(response => response.json())
+      .then(data => {
+        hideSpinner();
+        if (data.success) {
+          // Refresh the list while maintaining current page if possible
+          fetchAndRenderAdmins();
+          // Show success message (you might want to implement showSuccessModal)
+          if (typeof showSuccessModal === 'function') {
+            showSuccessModal("Registration deleted successfully.");
+          } else {
+            alert("Registration deleted successfully.");
+          }
+        } else {
+          if (typeof showErrorModal === 'function') {
+            showErrorModal(data.message || "Failed to delete registration.");
+          } else {
+            alert(data.message || "Failed to delete registration.");
+          }
+        }
+      })
+      .catch(error => {
+        hideSpinner();
+        console.error("Error deleting registration:", error);
+        if (typeof showErrorModal === 'function') {
+          showErrorModal("Error deleting registration. Please try again.");
+        } else {
+          alert("Error deleting registration. Please try again.");
+        }
+      });
+    }
+  }
+
+  // Bulk Actions (Optional Enhancement)
+  function selectAllRegistrations() {
+    const checkboxes = document.querySelectorAll('.registration-checkbox');
+    const selectAllCheckbox = document.getElementById('select-all-registrations');
+    
+    checkboxes.forEach(cb => {
+      cb.checked = selectAllCheckbox.checked;
+    });
+  }
+
+  function verifySelected() {
+    const selectedCheckboxes = document.querySelectorAll('.registration-checkbox:checked');
+    if (selectedCheckboxes.length === 0) {
+      if (typeof showErrorModal === 'function') {
+        showErrorModal("Please select at least one registration to verify.");
+      } else {
+        alert("Please select at least one registration to verify.");
+      }
+      return;
+    }
+    
+    if (confirm(`Are you sure you want to verify ${selectedCheckboxes.length} selected registration(s)?`)) {
+      const adminIds = Array.from(selectedCheckboxes).map(cb => cb.dataset.adminId);
+      processBulkVerification(adminIds, 'verify');
+    }
+  }
+
+  function rejectSelected() {
+    const selectedCheckboxes = document.querySelectorAll('.registration-checkbox:checked');
+    if (selectedCheckboxes.length === 0) {
+      if (typeof showErrorModal === 'function') {
+        showErrorModal("Please select at least one registration to reject.");
+      } else {
+        alert("Please select at least one registration to reject.");
+      }
+      return;
+    }
+    
+    if (confirm(`Are you sure you want to reject ${selectedCheckboxes.length} selected registration(s)?`)) {
+      const adminIds = Array.from(selectedCheckboxes).map(cb => cb.dataset.adminId);
+      processBulkVerification(adminIds, 'reject');
+    }
+  }
+
+  async function processBulkVerification(adminIds, action) {
+    showSpinner();
+    try {
+      const promises = adminIds.map(adminId => 
+        fetch(`/${action}-registration/${adminId}`, {
+          method: "POST",
+          headers: {
+            ...makeAuthHeaders(),
+          },
+        })
+      );
+      
+      const results = await Promise.all(promises);
+      const successes = results.filter(res => res.ok).length;
+      const failures = results.length - successes;
+      
+      hideSpinner();
+      
+      if (failures === 0) {
+        if (typeof showSuccessModal === 'function') {
+          showSuccessModal(`Successfully ${action}ed ${successes} registration(s).`);
+        } else {
+          alert(`Successfully ${action}ed ${successes} registration(s).`);
+        }
+      } else {
+        if (typeof showErrorModal === 'function') {
+          showErrorModal(`${action}ed ${successes} registration(s), ${failures} failed.`);
+        } else {
+          alert(`${action}ed ${successes} registration(s), ${failures} failed.`);
+        }
+      }
+      
+      fetchAndRenderAdmins();
+    } catch (err) {
+      hideSpinner();
+      if (typeof showErrorModal === 'function') {
+        showErrorModal(`Failed to ${action} registrations. ${err.message}`);
+      } else {
+        alert(`Failed to ${action} registrations. ${err.message}`);
+      }
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", fetchAndRenderAdmins);
+</script>
+<!-- Script for displaying the details for the registrations (End) -->
+
+<!-- Script for adding new routes (Start) -->
+<script>
+  function getAuthHeaders() {
+    const token = sessionStorage.getItem("adminToken");
+    return token ? { Authorization: "Bearer " + token } : {};
+  }
+
+  function showModalById(modalId) {
+    var $modal = $("#" + modalId);
+    $modal.modal("show");
+    window["_" + modalId] = $modal;
+  }
+
+  function showSuccessModal(message) {
+    $("#successMessage").text(message || "Action completed successfully.");
+    $("#successModal").modal({ backdrop: "static", keyboard: false, show: true });
+    window._successModal = $("#successModal");
+  }
+
+  function showErrorModal(message) {
+    var $errorMsg = $("#errorMessage");
+    if ($errorMsg.length) {
+      $errorMsg.text(message || "You are not authorized to perform this action.");
+    }
+    $("#errorModal").modal({ backdrop: "static", keyboard: false, show: true });
+    window._errorModal = $("#errorModal");
+  }
+
+  // --- Client-side search and pagination additions ---
+  let routesDataCache = [];
+  let paginationConfig = {
+    currentPage: 1,
+    itemsPerPage: 5,
+    totalItems: 0,
+    totalPages: 0
+  };
+
+  $(document).ready(function () {
+    fetchAndDisplayRoutes();
+
+    $("#route-search-bar").on("input", function() {
+      paginationConfig.currentPage = 1; // Reset to first page on new search
+      clientSideFilterAndDisplayRoutes();
+    });
+
+    // Page size selector
+    $("#items-per-page").on("change", function() {
+      paginationConfig.itemsPerPage = parseInt($(this).val());
+      paginationConfig.currentPage = 1; // Reset to first page
+      clientSideFilterAndDisplayRoutes();
+    });
+
+    $("#create-route-form").on("submit", function (e) {
+      e.preventDefault();
+      const name = $("#new-route-name").val().trim();
+      const desc = $("#new-route-description").val().trim();
+      showSpinner();
+      fetch("/manage/routes", {
+        method: "POST",
+        headers: {
+          ...getAuthHeaders(),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ route_name: name, description: desc }),
+      })
+        .then((res) =>
+          res.json().then((data) => ({ status: res.status, data }))
+        )
+        .then(({ status, data }) => {
+          hideSpinner();
+          $("#createRouteModal").modal("hide");
+          $("#create-route-form")[0].reset();
+          if (status === 201 || data.route_id) {
+            showSuccessModal("Route created successfully.");
+            fetchAndDisplayRoutes();
+          } else {
+            showErrorModal(data.error || "Failed to create route.");
+          }
+        })
+        .catch(() => {
+          hideSpinner();
+          showErrorModal("Server error while creating route.");
+        });
+    });
+
+    $("#edit-route-form").on("submit", function (e) {
+      e.preventDefault();
+      const id = $("#edit-route-id").val();
+      const name = $("#edit-route-name").val().trim();
+      const desc = $("#edit-route-description").val().trim();
+      showSpinner();
+      fetch(`/manage/routes/${id}`, {
+        method: "PUT",
+        headers: {
+          ...getAuthHeaders(),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ route_name: name, description: desc }),
+      })
+        .then((res) =>
+          res.json().then((data) => ({ status: res.status, data }))
+        )
+        .then(({ status, data }) => {
+          hideSpinner();
+          $("#editRouteModal").modal("hide");
+          if (status === 200 || data.message === "Route updated") {
+            showSuccessModal("Route updated successfully.");
+            fetchAndDisplayRoutes();
+          } else {
+            showErrorModal(data.error || "Failed to update route.");
+          }
+        })
+        .catch(() => {
+          hideSpinner();
+          showErrorModal("Server error while updating route.");
+        });
+    });
+
+    $("#confirm-delete-route-btn").on("click", function () {
+      const id = $("#delete-route-id").val();
+      showSpinner();
+      fetch(`/manage/routes/${id}`, {
+        method: "DELETE",
+        headers: getAuthHeaders(),
+      })
+        .then((res) =>
+          res.json().then((data) => ({ status: res.status, data }))
+        )
+        .then(({ status, data }) => {
+          hideSpinner();
+          $("#deleteRouteModal").modal("hide");
+          if (status === 200 || data.message === "Route deleted") {
+            showSuccessModal("Route deleted successfully.");
+            fetchAndDisplayRoutes();
+          } else {
+            showErrorModal(data.error || "Failed to delete route.");
+          }
+        })
+        .catch(() => {
+          hideSpinner();
+          showErrorModal("Server error while deleting route.");
+        });
+    });
+
+    $("#create-action-form").on("submit", function (e) {
+      e.preventDefault();
+      const routeId = $("#create-action-route-id").val();
+      const name = $("#new-action-name").val().trim();
+      const desc = $("#new-action-description").val().trim();
+      showSpinner();
+      fetch(`/manage/routes/${routeId}/actions`, {
+        method: "POST",
+        headers: {
+          ...getAuthHeaders(),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ action_name: name, description: desc }),
+      })
+        .then((res) =>
+          res.json().then((data) => ({ status: res.status, data }))
+        )
+        .then(({ status, data }) => {
+          hideSpinner();
+          $("#createActionModal").modal("hide");
+          if (status === 201 || data.action_id) {
+            showSuccessModal("Action created successfully.");
+            fetchAndDisplayRoutes();
+          } else {
+            showErrorModal(data.error || "Failed to create action.");
+          }
+        })
+        .catch(() => {
+          hideSpinner();
+          showErrorModal("Server error while creating action.");
+        });
+    });
+
+    $("#edit-action-form").on("submit", function (e) {
+      e.preventDefault();
+      const routeId = $("#edit-action-route-id").val();
+      const actionId = $("#edit-action-id").val();
+      const name = $("#edit-action-name").val().trim();
+      const desc = $("#edit-action-description").val().trim();
+      showSpinner();
+      fetch(`/manage/routes/${routeId}/actions/${actionId}`, {
+        method: "PUT",
+        headers: {
+          ...getAuthHeaders(),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ action_name: name, description: desc }),
+      })
+        .then((res) =>
+          res.json().then((data) => ({ status: res.status, data }))
+        )
+        .then(({ status, data }) => {
+          hideSpinner();
+          $("#editActionModal").modal("hide");
+          if (status === 200 || data.message === "Action updated") {
+            showSuccessModal("Action updated successfully.");
+            fetchAndDisplayRoutes();
+          } else {
+            showErrorModal(data.error || "Failed to update action.");
+          }
+        })
+        .catch(() => {
+          hideSpinner();
+          showErrorModal("Server error while updating action.");
+        });
+    });
+
+    $("#confirm-delete-action-btn").on("click", function () {
+      const routeId = $("#delete-action-route-id").val();
+      const actionId = $("#delete-action-id").val();
+      showSpinner();
+      fetch(`/manage/routes/${routeId}/actions/${actionId}`, {
+        method: "DELETE",
+        headers: getAuthHeaders(),
+      })
+        .then((res) =>
+          res.json().then((data) => ({ status: res.status, data }))
+        )
+        .then(({ status, data }) => {
+          hideSpinner();
+          $("#deleteActionModal").modal("hide");
+          if (status === 200 || data.message === "Action deleted") {
+            showSuccessModal("Action deleted successfully.");
+            fetchAndDisplayRoutes();
+          } else {
+            showErrorModal(data.error || "Failed to delete action.");
+          }
+        })
+        .catch(() => {
+          hideSpinner();
+          showErrorModal("Server error while deleting action.");
+        });
+    });
+  });
+
+  function fetchAndDisplayRoutes() {
+    showSpinner();
+    fetch("/manage/routes", { headers: getAuthHeaders() })
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+      })
+      .then((data) => {
+        hideSpinner();
+        routesDataCache = data.routes || [];
+        paginationConfig.currentPage = 1; // Reset to first page
+        clientSideFilterAndDisplayRoutes();
+      })
+      .catch((error) => {
+        hideSpinner();
+        console.error("Error fetching routes:", error);
+        $("#route-list").html(
+          "<p class='text-danger'>Could not fetch routes (unauthorized or server error).</p>"
+        );
+        showErrorModal("Could not fetch routes (unauthorized or server error).");
+      });
+  }
+
+  function clientSideFilterAndDisplayRoutes() {
+    let searchTerm = $("#route-search-bar").val().trim().toLowerCase();
+    let filteredRoutes = (routesDataCache || []).filter((route) => {
+      let pageMatch =
+        route.route_name.toLowerCase().includes(searchTerm) ||
+        (route.description &&
+          route.description.toLowerCase().includes(searchTerm));
+      let actionMatch = route.actions.some(
+        (a) =>
+          a.action_name.toLowerCase().includes(searchTerm) ||
+          (a.description &&
+            a.description.toLowerCase().includes(searchTerm))
+      );
+      return !searchTerm || pageMatch || actionMatch;
+    });
+
+    // Update pagination config
+    paginationConfig.totalItems = filteredRoutes.length;
+    paginationConfig.totalPages = Math.ceil(paginationConfig.totalItems / paginationConfig.itemsPerPage);
+
+    // Adjust current page if it exceeds total pages
+    if (paginationConfig.currentPage > paginationConfig.totalPages && paginationConfig.totalPages > 0) {
+      paginationConfig.currentPage = paginationConfig.totalPages;
+    }
+
+    if (filteredRoutes.length === 0) {
+      $("#route-list").html("<p>No routes found.</p>");
+      $("#pagination-container").html("");
+      $("#pagination-info").html("");
+      return;
+    }
+
+    // Calculate pagination
+    const startIndex = (paginationConfig.currentPage - 1) * paginationConfig.itemsPerPage;
+    const endIndex = startIndex + paginationConfig.itemsPerPage;
+    const paginatedRoutes = filteredRoutes.slice(startIndex, endIndex);
+
+    // Display routes
+    displayRoutesHTML(paginatedRoutes, searchTerm);
+
+    // Display pagination controls
+    displayPaginationControls();
+
+    // Display pagination info
+    displayPaginationInfo(startIndex, endIndex, filteredRoutes.length);
+  }
+
+  function displayRoutesHTML(routes, searchTerm) {
+    let routeListHTML = "";
+    routes.forEach((route) => {
+      let pageMatch =
+        route.route_name.toLowerCase().includes(searchTerm) ||
+        (route.description &&
+          route.description.toLowerCase().includes(searchTerm));
+      let filteredActions = route.actions.filter(
+        (a) =>
+          a.action_name.toLowerCase().includes(searchTerm) ||
+          (a.description &&
+            a.description.toLowerCase().includes(searchTerm))
+      );
+      let displayActions;
+      if (searchTerm) {
+        if (pageMatch) {
+          displayActions = route.actions;
+        } else {
+          displayActions = filteredActions;
+        }
+      } else {
+        displayActions = route.actions;
+      }
+
+      let actionsList = displayActions.length
+        ? displayActions
+            .map(
+              (a) => `
+    <li>
+      <span class="font-weight-bold">${a.action_name}</span>
+      <span class="text-muted small">(${
+        a.description || "No description"
+      })</span>
+      <button class="btn btn-sm btn-outline-secondary ml-2" onclick="editAction(${
+        route.route_id
+      }, ${a.action_id}, '${a.action_name.replace(/'/g, "\\'")}', '${(
+                  a.description || ""
+                ).replace(/'/g, "\\'")}')">Edit</button>
+      <button class="btn btn-sm btn-outline-info ml-1" onclick="viewAction(${
+        route.route_id
+      }, ${a.action_id})">View</button>
+      <button class="btn btn-sm btn-outline-danger ml-1" onclick="deleteAction(${
+        route.route_id
+      }, ${a.action_id}, '${a.action_name.replace(
+                  /'/g,
+                  "\\'"
+                )}')">Delete</button>
+    </li>
+  `
+            )
+            .join("")
+        : "<li>No actions for this route.</li>";
+
+      routeListHTML += `
+<div class="card mb-4">
+  <div class="card-body">
+    <h4 class="card-title">Page : <strong>${route.route_name}</strong></h4>
+    <p class="text-muted mb-2">${route.description || "No description"}</p>
+    <strong>Actions in this page :</strong>
+    <ul>
+      ${actionsList}
+    </ul>
+    <button class="btn btn-warning" onclick="editRoute(${
+      route.route_id
+    }, '${route.route_name.replace(/'/g, "\\'")}', '${(
+          route.description || ""
+        ).replace(/'/g, "\\'")}')">Edit Route</button>
+    <button class="btn btn-danger" onclick="deleteRoute(${
+      route.route_id
+    }, '${route.route_name.replace(/'/g, "\\'")}')">Delete Route</button>
+    <button class="btn btn-success" onclick="addAction(${
+      route.route_id
+    })">Add Action</button>
+  </div>
+</div>
+`;
+    });
+
+    $("#route-list").html(routeListHTML);
+  }
+
+  function displayPaginationControls() {
+    if (paginationConfig.totalPages <= 1) {
+      $("#pagination-container").html("");
+      return;
+    }
+
+    let paginationHTML = '<nav aria-label="Routes pagination"><ul class="pagination justify-content-center">';
+
+    // Previous button
+    if (paginationConfig.currentPage > 1) {
+      paginationHTML += `
+        <li class="page-item">
+          <a class="page-link" href="#" onclick="goToPage(${paginationConfig.currentPage - 1})" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>`;
+    } else {
+      paginationHTML += `
+        <li class="page-item disabled">
+          <span class="page-link" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </span>
+        </li>`;
+    }
+
+    // Page numbers with smart display
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, paginationConfig.currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(paginationConfig.totalPages, startPage + maxVisiblePages - 1);
+
+    // Adjust start page if we're near the end
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    // First page and ellipsis
+    if (startPage > 1) {
+      paginationHTML += `
+        <li class="page-item">
+          <a class="page-link" href="#" onclick="goToPage(1)">1</a>
+        </li>`;
+      if (startPage > 2) {
+        paginationHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+      }
+    }
+
+    // Page numbers
+    for (let i = startPage; i <= endPage; i++) {
+      if (i === paginationConfig.currentPage) {
+        paginationHTML += `<li class="page-item active"><span class="page-link">${i}</span></li>`;
+      } else {
+        paginationHTML += `<li class="page-item"><a class="page-link" href="#" onclick="goToPage(${i})">${i}</a></li>`;
+      }
+    }
+
+    // Last page and ellipsis
+    if (endPage < paginationConfig.totalPages) {
+      if (endPage < paginationConfig.totalPages - 1) {
+        paginationHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+      }
+      paginationHTML += `
+        <li class="page-item">
+          <a class="page-link" href="#" onclick="goToPage(${paginationConfig.totalPages})">${paginationConfig.totalPages}</a>
+        </li>`;
+    }
+
+    // Next button
+    if (paginationConfig.currentPage < paginationConfig.totalPages) {
+      paginationHTML += `
+        <li class="page-item">
+          <a class="page-link" href="#" onclick="goToPage(${paginationConfig.currentPage + 1})" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>`;
+    } else {
+      paginationHTML += `
+        <li class="page-item disabled">
+          <span class="page-link" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </span>
+        </li>`;
+    }
+
+    paginationHTML += '</ul></nav>';
+    $("#pagination-container").html(paginationHTML);
+  }
+
+  function displayPaginationInfo(startIndex, endIndex, totalItems) {
+    const actualEndIndex = Math.min(endIndex, totalItems);
+    const showingStart = totalItems > 0 ? startIndex + 1 : 0;
+    const infoHTML = `
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="pagination-info">
+          Showing ${showingStart} to ${actualEndIndex} of ${totalItems} routes
+        </div>
+        <div class="pagination-controls">
+          <label for="items-per-page" class="mr-2">Items per page:</label>
+          <select id="items-per-page" class="form-control form-control-sm" style="width: auto; display: inline-block;">
+            <option value="5" ${paginationConfig.itemsPerPage === 5 ? 'selected' : ''}>5</option>
+            <option value="10" ${paginationConfig.itemsPerPage === 10 ? 'selected' : ''}>10</option>
+            <option value="25" ${paginationConfig.itemsPerPage === 25 ? 'selected' : ''}>25</option>
+            <option value="50" ${paginationConfig.itemsPerPage === 50 ? 'selected' : ''}>50</option>
+          </select>
+        </div>
+      </div>
+    `;
+    $("#pagination-info").html(infoHTML);
+
+    // Re-bind the change event since we're recreating the element
+    $("#items-per-page").on("change", function() {
+      paginationConfig.itemsPerPage = parseInt($(this).val());
+      paginationConfig.currentPage = 1; // Reset to first page
+      clientSideFilterAndDisplayRoutes();
+    });
+  }
+
+  function goToPage(page) {
+    if (page >= 1 && page <= paginationConfig.totalPages && page !== paginationConfig.currentPage) {
+      paginationConfig.currentPage = page;
+      clientSideFilterAndDisplayRoutes();
+    }
+  }
+
+  function editRoute(route_id, route_name, description) {
+    $("#edit-route-id").val(route_id);
+    $("#edit-route-name").val(route_name);
+    $("#edit-route-description").val(description);
+    showModalById("editRouteModal");
+  }
+
+  function deleteRoute(route_id, route_name = "") {
+    $("#delete-route-id").val(route_id);
+    $("#delete-route-name").text(route_name);
+    showModalById("deleteRouteModal");
+  }
+
+  function addAction(route_id) {
+    $("#create-action-route-id").val(route_id);
+    $("#new-action-name").val("");
+    $("#new-action-description").val("");
+    showModalById("createActionModal");
+  }
+
+  function editAction(route_id, action_id, action_name, description) {
+    $("#edit-action-route-id").val(route_id);
+    $("#edit-action-id").val(action_id);
+    $("#edit-action-name").val(action_name);
+    $("#edit-action-description").val(description);
+    showModalById("editActionModal");
+  }
+
+  function viewAction(route_id, action_id) {
+    showSpinner();
+    fetch(`/manage/routes`, { headers: getAuthHeaders() })
+      .then((res) => res.json())
+      .then((data) => {
+        hideSpinner();
+        let route = (data.routes || []).find((r) => r.route_id == route_id);
+        if (!route) {
+          showErrorModal("Route not found.");
+          return;
+        }
+        let action = (route.actions || []).find(
+          (a) => a.action_id == action_id
+        );
+        if (!action) {
+          showErrorModal("Action not found.");
+          return;
+        }
+        $("#view-action-name").text(action.action_name);
+        $("#view-action-description").text(action.description || "No description");
+        showModalById("viewActionModal");
+      })
+      .catch(() => {
+        hideSpinner();
+        showErrorModal("Could not load action details.");
+      });
+  }
+
+  function deleteAction(route_id, action_id, action_name = "") {
+    $("#delete-action-route-id").val(route_id);
+    $("#delete-action-id").val(action_id);
+    $("#delete-action-name").text(action_name);
+    showModalById("deleteActionModal");
+  }
+</script>
+<!-- Script for adding new routes (End) -->
+
+  </body>
+</html

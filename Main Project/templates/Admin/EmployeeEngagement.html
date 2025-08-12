@@ -1,0 +1,4740 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Spica Admin</title>
+    <!-- base:css -->
+    <link
+      rel="stylesheet"
+      href="../../static/Admin/vendors/mdi/css/materialdesignicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../static/Admin/vendors/css/vendor.bundle.base.css"
+    />
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../static/Admin/css/style.css" />
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../static/Admin/images/favicon.png" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+  </head>
+
+  <body>
+    <div class="container-scroller d-flex">
+      <!-- partial:../../partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item sidebar-category">
+            <p>Admin dashboard</p>
+            <span></span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard">
+              <i class="mdi mdi-view-quilt menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+              <div class="badge badge-info badge-pill"></div>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/employeemanagement">
+              <i class="mdi mdi-account-box-outline menu-icon"></i>
+              <span class="menu-title">Employee <br />management</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/attendanceandtimetracking">
+              <i class="mdi mdi-clipboard-text menu-icon"></i>
+              <span class="menu-title">Attendance and <br />Time tracking</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/perfomancemanagement">
+              <i class="mdi mdi-settings menu-icon"></i>
+              <span class="menu-title">Performance <br />management</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/reportingandanalytics">
+              <i class="mdi mdi-chart-pie menu-icon"></i>
+              <span class="menu-title">Reporting <br />and Analytics </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/notificationsandcommunication">
+              <i class="mdi mdi-bell-ring menu-icon"></i>
+              <span class="menu-title"
+                >Notifications <br />and Communication
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/payrollandfinancialmanagement">
+              <i class="mdi mdi-currency-usd menu-icon"></i>
+              <span class="menu-title"
+                >Payroll and <br />Financial Management
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/securityandcompliance">
+              <i class="mdi mdi-security menu-icon"></i>
+              <span class="menu-title"
+                >Security and<br />
+                Compliance
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/systemadministration">
+              <i class="mdi mdi-monitor menu-icon"></i>
+              <span class="menu-title">System <br />Administration </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/traininganddevelopment">
+              <i class="mdi mdi-grease-pencil menu-icon"></i>
+              <span class="menu-title"
+                >Training and<br />
+                Development
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/workflowmanagement">
+              <i class="mdi mdi-lan-connect menu-icon"></i>
+              <span class="menu-title">Workflow <br />Management </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/employeeEngagement">
+              <i class="mdi mdi-human-male menu-icon"></i>
+              <span class="menu-title">Employee <br />Engagement </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dataimportandexport">
+              <i class="mdi mdi-file-document menu-icon"></i>
+              <span class="menu-title">Data Import </span>
+            </a>
+          </li>
+                    <li class="nav-item">
+            <a class="nav-link" href="/verification">
+              <i class="mdi mdi-clipboard-check menu-icon"></i>
+              <span class="menu-title">Access control</span>
+              <div class="badge badge-info badge-pill"></div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-danger logout-btn" style="margin-left: 80px">
+              <i class="la la-power-off"></i>
+              <p>Logout</p>
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+      
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Employee Recognition</h4>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#addRecognitionModal">Add Recognition</button>
+                    <div class="input-group mb-3">
+  <input type="text" class="form-control" id="searchRecognitionInput" placeholder="Search recognition..." style="margin-top: 10px;">
+</div>
+                    <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Employee</th>
+                            <th>Recognition Type</th>
+                            <th>Reason</th>
+                            <th>Date Awarded</th>
+                            <th>Awarded By</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody id="recognitionTableBody">
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Manage surveys</h4>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#createSurveyModal">Create New Survey</button>
+                    <div class="input-group mb-3">
+  <input type="text" class="form-control" id="searchSurveyInput" placeholder="Search surveys..." style="margin-top: 10px;">
+</div>
+                    <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Survey ID</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Created at</th>
+                            <th>Status</th>
+                            <th>Question amount</th>
+                            <th>Response amount</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody id="surveyTableBody">
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">- Event Management</h4>
+<form id="eventForm">
+            <!-- Basic Event Information -->
+            <div class="form-section">
+                <div class="row">
+                    <div class="col-md-8 mb-3">
+                        <label for="title" class="form-label">Event Title *</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-control" id="status" name="status">
+                            <option value="upcoming">Upcoming</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="date" class="form-label">Event Date & Time</label>
+                        <input type="datetime-local" class="form-control" id="date" name="date">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="location" class="form-label">Location *</label>
+                        <input type="text" class="form-control" id="location" name="location" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description *</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="budget" class="form-label">Budget ($)</label>
+                        <input type="number" class="form-control" id="budget" name="budget" step="0.01" min="0">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="recurrence" class="form-label">Recurrence</label>
+                        <select class="form-control" id="recurrence" name="recurrence">
+                            <option value="none">None</option>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Participants Section -->
+            <div class="form-section">
+                <h5 class="section-title">Participants</h5>
+                
+                <!-- Quick Add Options -->
+                <div class="mb-3">
+                    <label class="form-label">Quick Add Groups</label>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <div class="form-control">
+                            <input class="form-check-input" type="checkbox" id="allEmployees">
+                            <label class="form-check-label" for="allEmployees">All Employees (including admins)</label>
+                        </div>
+                        <div class="form-control">
+                            <input class="form-check-input" type="checkbox" id="allTeams">
+                            <label class="form-check-label" for="allTeams">All Teams</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dropdown Selection for Participants -->
+                <div class="mb-3">
+                    <label for="displayType" class="form-label">Select Participant Type</label>
+                    <select class="form-control" id="displayType" name="displayType">
+                        <option value="">-- Select Type --</option>
+                        <option value="employees">Employees</option>
+                        <option value="teams">Teams</option>
+                    </select>
+                </div>
+
+                <!-- Participants List Display -->
+                <div id="participantsList" class="mb-3" style="display: none;">
+                    <label class="form-label">Available Participants</label>
+                    <div id="participantsDropdown" class="participants-dropdown">
+                        <!-- Dynamic content will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Search and Add Individuals -->
+                <div class="mb-3">
+                    <label for="searchInput" class="form-label">Search & Add Individual Participants</label>
+                    <div style="position: relative;">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Type to search employees, admins, or teams...">
+                        <div id="searchResults" class="search-results" style="display: none;"></div>
+                    </div>
+                </div>
+
+                <!-- Selected Participants Display -->
+                <div class="mb-3">
+                    <label class="form-label">Selected Participants</label>
+                    <div id="selectedParticipants" class="border rounded p-3" style="min-height: 80px; background-color: #fafafa;">
+                        <small class="text-muted">No participants selected yet</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <span id="submitText">Create Event</span>
+                    <span id="submitSpinner" class="spinner-border spinner-border-sm ms-2" style="display: none;"></span>
+                </button>
+                <button type="button" class="btn btn-outline-secondary" onclick="resetForm()">Cancel</button>
+            </div>
+        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Event Management</h4>
+                    <p class="card-description">Search Event:</p>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="searchEventInput" placeholder="Search Here..." aria-label="search">
+                    </div>
+                    <p class="card-description">Search event by title, date, location, organizer, etc.</p>
+                    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <thead>
+                                      <tr>
+                                        <th>Event ID</th>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Date</th>
+                                        <th>Location</th>
+                                        <th>Budget</th>
+                                        <th>Status</th>
+                                        <th>Recurrence</th>
+                                        <th>Organizer Email</th>
+                                        <th>Participants</th>
+                                        <th>Teams</th>
+                                        <th>Admins</th>
+                                        <th>Actions</th>
+                                      </tr>
+                                    </thead>
+                                </tr>
+                            </thead>
+                            <tbody id="eventTableBody">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            </div>
+
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Health & Wellness Resources</h4>
+                  <p class="card-description">Manage and share helpful mental health and safety training materials.</p>
+                  <button class="btn btn-primary" onclick="openResourceModal()">Add Resource</button>
+
+                  <!-- Search Input -->
+                  <div class="input-group mb-3" style="margin-top: 10px;">
+                    <input type="text" class="form-control" id="searchResourceInput" placeholder="Search resources by title, category..." aria-label="Search">
+                  </div>
+            
+                  <!-- Optional guidance -->
+                  <p class="card-description">Search by title, description, or category.</p>
+            
+                  <!-- Table -->
+                  <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-bordered">
+                      <thead class="table-light">
+                        <tr>
+                          <th>Title</th>
+                          <th>Category</th>
+                          <th>Description</th>
+                          <th>Link/File</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="resourceTableBody">
+                        <!-- Dynamically populated -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 grid-margin stretch-card">
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Travel Requests</h4>
+    <p class="card-description">Review, approve, or reject employee travel plans and estimated expenses.</p>
+
+    <!-- Search Input -->
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" id="searchTravelInput" placeholder="Search travel requests..." aria-label="Search">
+    </div>
+
+    <p class="card-description">Search by employee name, destination, or status.</p>
+
+    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+      <table class="table table-bordered">
+        <thead class="table-light">
+          <tr>
+            <th>Employee</th>
+            <th>Destination</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Estimated Cost</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="travelRequestTableBody">
+          <!-- Dynamically populated -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+            </div>
+            
+            
+            </div>
+
+    
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html -->
+          <footer class="footer">
+            <div class="card">
+              <div class="card-body">
+                <div
+                  class="d-sm-flex justify-content-center justify-content-sm-between"
+                >
+                  <span
+                    class="text-muted d-block text-center text-sm-left d-sm-inline-block"
+                    >Copyright © bootstrapdash.com 2020</span
+                  >
+                  <span
+                    class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"
+                  >
+                    Free
+                    <a href="https://www.bootstrapdash.com/" target="_blank"
+                      >Bootstrap dashboard templates</a
+                    >
+                    from Bootstrapdash.com</span
+                  >
+                </div>
+              </div>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+
+<!-- View Travel Request Modal (Bootstrap 4) -->
+<div class="modal fade" id="viewTravelRequestModal" tabindex="-1" role="dialog" aria-labelledby="viewTravelRequestModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewTravelRequestModalLabel">Travel Request Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <dl class="row">
+          <dt class="col-sm-3">Request ID</dt>
+          <dd class="col-sm-9" id="detail_request_id"></dd>
+          <dt class="col-sm-3">Employee</dt>
+          <dd class="col-sm-9" id="detail_employee"></dd>
+          <dt class="col-sm-3">Email</dt>
+          <dd class="col-sm-9" id="detail_email"></dd>
+          <dt class="col-sm-3">Destination</dt>
+          <dd class="col-sm-9" id="detail_destination"></dd>
+          <dt class="col-sm-3">Purpose</dt>
+          <dd class="col-sm-9" id="detail_purpose"></dd>
+          <dt class="col-sm-3">Start Date</dt>
+          <dd class="col-sm-9" id="detail_start_date"></dd>
+          <dt class="col-sm-3">End Date</dt>
+          <dd class="col-sm-9" id="detail_end_date"></dd>
+          <dt class="col-sm-3">Estimated Expense</dt>
+          <dd class="col-sm-9" id="detail_estimated_expense"></dd>
+          <dt class="col-sm-3">Status</dt>
+          <dd class="col-sm-9" id="detail_status"></dd>
+          <dt class="col-sm-3">Submission Date</dt>
+          <dd class="col-sm-9" id="detail_submission_date"></dd>
+          <dt class="col-sm-3">Approved By</dt>
+          <dd class="col-sm-9" id="detail_approved_by"></dd>
+          <dt class="col-sm-3">Remarks</dt>
+          <dd class="col-sm-9" id="detail_remarks"></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for viewing survey responses (Bootstrap 4) -->
+<div class="modal fade" id="responsesModal" tabindex="-1" role="dialog" aria-labelledby="responsesModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="responsesModalLabel">Survey Responses</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <div class="d-flex justify-content-between mb-3">
+                  <h6 id="surveyTitleDisplay"></h6>
+                  <div class="dropdown">
+                      <ul class="dropdown-menu" id="questionFilter" aria-labelledby="filterDropdown">
+                          <li><a class="dropdown-item active" href="#" data-question-id="all">All Questions</a></li>
+                          <!-- Questions will be added dynamically -->
+                      </ul>
+                  </div>
+              </div>
+              
+              <div class="table-responsive">
+                  <table class="table table-hover" id="responsesTable">
+                      <thead>
+                          <tr>
+                              <th>Employee</th>
+                              <th>Email</th>
+                              <th>Question</th>
+                              <th>Response</th>
+                              <th>Question type</th>
+                              <th>Date</th>
+                          </tr>
+                      </thead>
+                      <tbody id="responsesTableBody">
+                          <!-- Responses will be loaded here -->
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="exportResponsesBtn">
+                  <i class="bi bi-download"></i> Export to CSV
+              </button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- View Survey Modal (Bootstrap 4) -->
+<div class="modal fade" id="viewSurveyModal" tabindex="-1" role="dialog" aria-labelledby="viewSurveyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewSurveyModalLabel">Survey Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4 id="viewSurveyTitle"></h4>
+        <p id="viewSurveyDescription"></p>
+        <p><strong>Created At:</strong> <span id="viewSurveyCreatedAt"></span></p>
+        <p><strong>Status:</strong> <span id="viewSurveyStatus"></span></p>
+        <!-- Assignment details -->
+        <div id="viewSurveyAssignment"></div>
+        <hr>
+        <h5>Questions:</h5>
+        <div id="viewSurveyQuestions" class="questions-container">
+          <!-- Questions will be inserted here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Survey Modal (Bootstrap 4) -->
+<div class="modal fade" id="deleteSurveyModal" tabindex="-1" role="dialog" aria-labelledby="deleteSurveyModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="deleteSurveyModalLabel">Confirm Deletion</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <p>Are you sure you want to delete this survey?</p>
+              <input type="hidden" id="deleteSurveyId">
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-danger" onclick="deleteSurvey()">Delete</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Edit Survey Modal (Bootstrap 4, Scrollable) -->
+<div class="modal fade" id="editSurveyModal" tabindex="-1" role="dialog" aria-labelledby="editSurveyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editSurveyModalLabel">Edit Survey</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="editSurveyForm">
+          <input type="hidden" id="editSurveyId">
+          
+          <div class="mb-3">
+            <label for="editSurveyTitle" class="form-label">Title</label>
+            <input type="text" class="form-control" id="editSurveyTitle" required>
+          </div>
+          
+          <div class="mb-3">
+            <label for="editSurveyDescription" class="form-label">Description</label>
+            <textarea class="form-control" id="editSurveyDescription" rows="3" required></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="editSurveyStatus" class="form-label">Status</label>
+            <select class="form-control" id="editSurveyStatus">
+              <option value="1">Active</option>
+              <option value="0">Inactive</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <h6>Questions</h6>
+            <div id="editQuestionsContainer" class="question-container">
+              <!-- Questions will be added here dynamically -->
+            </div>
+            <button type="button" class="btn btn-sm btn-success mt-2" id="addEditQuestionBtn">
+              Add Question
+            </button>
+          </div>
+
+          <div class="mb-3">
+            <label for="editAssignmentType" class="form-label">Assign To</label>
+            <select id="editAssignmentType" class="form-control" onchange="fetchEditEmployeesOrTeams()">
+              <option value="">Select Type</option>
+              <option value="team">Team</option>
+              <option value="employee">Employee</option>
+            </select>
+            <select id="editAssignedTo" class="form-control mt-2">
+              <option value="">Select</option>
+            </select>
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Update Survey</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create Survey Modal (Bootstrap 4) -->
+<div class="modal fade" id="createSurveyModal" tabindex="-1" role="dialog" aria-labelledby="surveyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="surveyModalLabel">Create Survey</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="createSurveyForm">
+          <div class="mb-3">
+            <label for="surveyTitle" class="form-label">Survey Title</label>
+            <input type="text" class="form-control" id="surveyTitle" name="title" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="surveyDescription" class="form-label">Description</label>
+            <textarea class="form-control" id="surveyDescription" name="description" rows="3"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="assignment_type" class="form-label">Assign To</label>
+            <select id="assignment_type" name="assignment_type" class="form-control" required>
+              <option value="">-- Select Type --</option>
+              <option value="employee">Employee</option>
+              <option value="team">Team</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label for="assigned_id" class="form-label">Select Assignee</label>
+            <select id="assigned_id" name="assigned_id" class="form-control" required>
+              <option value="">Select</option>
+            </select>
+          </div>
+
+          <hr>
+          <h5>Questions</h5>
+          <div id="questionsContainer" class="question-container">
+            <!-- Dynamically rendered questions will appear here -->
+          </div>          
+          <button type="button" class="btn btn-sm btn-primary mt-3" onclick="addSurveyQuestion()">Add Question</button>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" form="createSurveyForm" class="btn btn-success">Save Survey</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal for survey resubmission (Bootstrap 4) -->
+<div class="modal fade" id="employeeResubmissionModal" tabindex="-1" role="dialog" aria-labelledby="employeeResubmissionModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="employeeResubmissionModalLabel">Survey Assignments & Resubmission</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Employee ID</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Resubmission</th>
+            </tr>
+          </thead>
+          <tbody id="employeeResubmissionTableBody">
+            <!-- dynamically loaded -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for viewing details of health resource (Bootstrap 4) -->
+<div class="modal fade" id="viewResourceModal" tabindex="-1" role="dialog" aria-labelledby="viewResourceModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewResourceModalLabel">Health Resource Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Title:</strong> <span id="view-title"></span></p>
+        <p><strong>Description:</strong> <span id="view-description"></span></p>
+        <p><strong>Category:</strong> <span id="view-category"></span></p>
+        <p><strong>URL:</strong> <a href="#" target="_blank" id="view-url">View Link</a></p>
+        <p><strong>File:</strong> <a href="#" target="_blank" id="view-file" download>Download</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Modal for health resources (Bootstrap 4) -->
+<div class="modal fade" id="resourceModal" tabindex="-1" role="dialog" aria-labelledby="resourceModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form id="resourceForm">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="resourceModalLabel">Add Resource</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="resource_id" id="resource_id">
+          <div class="mb-2">
+            <label>Title</label>
+            <input type="text" class="form-control" name="title" required>
+          </div>
+          <div class="mb-2">
+            <label>Description</label>
+            <textarea class="form-control" name="description"></textarea>
+          </div>
+          <div class="mb-2">
+            <label>Category</label>
+            <select class="form-control" name="category" required>
+              <option value="Mental Health">Mental Health</option>
+              <option value="Safety Training">Safety Training</option>
+            </select>
+          </div>
+          <div class="mb-2">
+            <label>External URL</label>
+            <input type="url" class="form-control" name="url">
+          </div>
+          <div class="mb-2">
+            <label>Upload File</label>
+            <input type="file" class="form-control" name="file">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Save</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal for editing health resource (Bootstrap 4) -->
+<div class="modal fade" id="editResourceModal" tabindex="-1" role="dialog" aria-labelledby="editResourceModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <form id="editResourceForm" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editResourceModalLabel">Edit Resource</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editResourceId" name="resource_id">
+          
+          <div class="mb-3">
+            <label for="editTitle" class="form-label">Title</label>
+            <input type="text" class="form-control" id="editTitle" name="title" required>
+          </div>
+          
+          <div class="mb-3">
+            <label for="editCategory" class="form-label">Category</label>
+            <select class="form-control" id="editCategory" name="category" required>
+              <option value="">Select Category</option>
+              <option value="Mental Health">Mental Health</option>
+              <option value="Safety Training">Safety Training</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="editDescription" class="form-label">Description</label>
+            <textarea class="form-control" id="editDescription" name="description" rows="3"></textarea>
+          </div>
+          
+          <div class="mb-3">
+            <label for="editUrl" class="form-label">URL (optional)</label>
+            <input type="url" class="form-control" id="editUrl" name="url">
+          </div>
+
+          <div class="mb-3" id="currentFileContainer" style="display:none;">
+            <label class="form-label">Current File</label>
+            <div id="currentFilePreview"></div>
+          </div>
+          
+
+          <!-- Display image preview if an image exists -->
+          <div class="mb-3">
+            <label for="editImage" class="form-label">Image (optional)</label>
+            <div id="editImagePreview"></div>
+            <input type="file" class="form-control" id="editFile" name="file">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Update</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for deleting resource (Bootstrap 4) -->
+<div class="modal fade" id="deleteResourceModal" tabindex="-1" role="dialog" aria-labelledby="deleteResourceModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteResourceModalLabel">Confirm Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this resource?</p>
+        <input type="hidden" id="deleteResourceId">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" onclick="confirmDeleteResource()">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Event Modal (Bootstrap 4) -->
+<div id="deleteEventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteEventModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="deleteEventModalLabel">Delete Event</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <p>Are you sure you want to delete this event? This action cannot be undone.</p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger" onclick="deleteEventConfirmed()">Delete</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Modal for deleting recognition (Bootstrap 4) -->
+<div id="deleteRecognitionModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteRecognitionModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteRecognitionModalLabel">Confirm Deletion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this recognition?</p>
+        <input type="hidden" id="deleteRecognitionId">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for editing recognition (Bootstrap 4) -->
+<div id="editRecognitionModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editRecognitionModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editRecognitionModalLabel">Edit Recognition</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="editRecognitionForm">
+          <input type="hidden" id="editRecognitionId">
+
+          <div class="form-group">
+            <label>Employee</label>
+            <select id="editEmployeeDropdown" class="form-control"></select>
+          </div>
+          <div class="form-group">
+            <label>Recognition Type</label>
+            <input type="text" id="editRecognitionType" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Reason</label>
+            <textarea id="editRecognitionReason" class="form-control"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Date Awarded</label>
+            <input type="date" id="editDateAwarded" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Recognition Modal (Bootstrap 4) -->
+<div class="modal fade" id="addRecognitionModal" tabindex="-1" role="dialog" aria-labelledby="addRecognitionModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="addRecognitionModalLabel">Add Employee Recognition</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <form id="addRecognitionForm">
+                  <div class="mb-3">
+                      <label>Employee</label>
+                      <select id="employeeDropdown" class="form-control" required>
+                          <option value="" disabled selected>Select Employee</option>
+                      </select>
+                  </div>
+                  <div class="mb-3">
+                      <label>Recognition Type</label>
+                      <input type="text" id="recognitionType" class="form-control" required>
+                  </div>
+                  <div class="mb-3">
+                      <label>Reason</label>
+                      <textarea id="recognitionReason" class="form-control" required></textarea>
+                  </div>
+                  <div class="mb-3">
+                      <label>Date Awarded</label>
+                      <input type="date" id="dateAwarded" class="form-control" required>
+                  </div>
+                  <!-- <div class="mb-3">
+                      <label>Awarded By</label>
+                      <input type="text" id="awardedBy" class="form-control" required>
+                  </div> -->
+                  <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Success Modal (Bootstrap 4) -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-success">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="successModalLabel">Success</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="successModalMessage">
+        <!-- Message will be injected here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Error Modal (Bootstrap 4) -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="errorModalMessage">
+        <!-- Message will be injected here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Dismiss</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for editing event (Bootstrap 4) -->
+<div id="editEventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editEventModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editEventModalLabel">Edit Event</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="editEventForm">
+          <input type="hidden" id="editEventId" name="event_id">
+
+          <div class="form-group mb-2">
+            <label for="editEventTitle">Title</label>
+            <input type="text" id="editEventTitle" name="title" class="form-control" required>
+          </div>
+          <div class="form-group mb-2">
+            <label for="editEventDescription">Description</label>
+            <textarea id="editEventDescription" name="description" class="form-control"></textarea>
+          </div>
+          <div class="form-group mb-2">
+            <label for="editEventDate">Date</label>
+            <input type="date" id="editEventDate" name="date" class="form-control" required>
+          </div>
+          <div class="form-group mb-2">
+            <label for="editEventTime">Time</label>
+            <input type="time" id="editEventTime" name="time" class="form-control" required>
+          </div>
+          <div class="form-group mb-2">
+            <label for="editEventLocation">Location</label>
+            <input type="text" id="editEventLocation" name="location" class="form-control">
+          </div>
+          <div class="form-group mb-2">
+            <label for="editEventBudget">Budget</label>
+            <input type="number" id="editEventBudget" name="budget" class="form-control">
+          </div>
+          <div class="form-group mb-2">
+            <label for="editEventRecurrence" class="form-label">Recurrence</label>
+            <select class="form-control" id="editEventRecurrence" name="recurrence">
+              <option value="none">None</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="yearly">Yearly</option>
+            </select>
+          </div>
+          <div class="form-group mb-2">
+            <label for="editEventStatus">Status</label>
+            <select id="editEventStatus" name="status" class="form-control">
+              <option value="upcoming">Upcoming</option>
+              <option value="ongoing">Ongoing</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Update Event</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Session Conflict Modal (Bootstrap 4) -->
+<div class="modal fade"
+  id="sessionConflictModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="sessionConflictLabel"
+  aria-hidden="true"
+  data-backdrop="static"
+  data-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content text-center">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="sessionConflictLabel">Session Conflict</h5>
+        <!-- No close button for forced modal -->
+      </div>
+      <div class="modal-body">
+        <p>
+          <strong>
+            Someone has logged into your account from another tab or device.
+          </strong>
+        </p>
+        <p>You will be logged out for security reasons.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-danger" id="confirmLogoutBetweenTabs">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Logout Confirmation Modal (Bootstrap 4) -->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
+        <button type="button" class="close" id="closeLogoutModal" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to logout?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancelLogout" data-dismiss="modal">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-danger" id="confirmLogout">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Access Denied Modal (Bootstrap 4) -->
+<div
+  class="modal fade"
+  id="accessDeniedModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="accessDeniedLabel"
+  aria-hidden="true"
+  data-backdrop="static"
+  data-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="accessDeniedLabel">Access Denied</h5>
+      </div>
+      <div class="modal-body">
+        <p>Only Super Admins are allowed to access this page.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="redirectBtn" type="button" class="btn btn-danger">
+          Go to Dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal (Bootstrap 4) -->
+<div class="modal fade" id="deleteTravelRequestModal" tabindex="-1" role="dialog" aria-labelledby="deleteTravelRequestModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteTravelRequestModalLabel">Confirm Delete</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this travel request? This action cannot be undone.
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteTravelRequestBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading Spinner Modal (Bootstrap 4) -->
+<div class="modal fade" id="loadingSpinnerModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-0 bg-transparent shadow-none">
+      <div class="modal-body text-center">
+        <div class="spinner-border text-white" style="width: 4rem; height: 4rem;" role="status">
+          <span class="sr-only"></span>
+        </div>
+        <div class="mt-3 text-white font-weight-bold">Please wait...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- jQuery first, then Popper.js, then Bootstrap 4 JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Your other plugin and custom scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../../static/Admin/vendors/js/vendor.bundle.base.js"></script>
+<script src="../../static/Admin/js/off-canvas.js"></script>
+<script src="../../static/Admin/js/hoverable-collapse.js"></script>
+<script src="../../static/Admin/js/template.js"></script>
+<script src="../../static/Admin/js/file-upload.js"></script>
+<script src="../../static/Admin/vendors/chart.js/Chart.min.js"></script>
+
+    <!-- Script for spinner logic and displaying success and error (Start) -->
+    <script>
+      window.ModalUtils = (function () {
+        let spinnerVisible = false;
+
+        function showSpinner() {
+          if (spinnerVisible) return;
+          spinnerVisible = true;
+          $("#loadingSpinnerModal").modal({
+            backdrop: "static",
+            keyboard: false,
+            show: true,
+          });
+        }
+
+        function hideSpinner() {
+          spinnerVisible = false;
+          $("#loadingSpinnerModal").modal("hide");
+        }
+
+        function showSuccess(message, onClose) {
+          $("#successModalMessage").html(message);
+          $("#successModal").modal("show");
+          $("#successModal").off("hidden.bs.modal");
+          if (typeof onClose === "function") {
+            const handler = function () {
+              $("#successModal").off("hidden.bs.modal", handler);
+              onClose();
+            };
+            $("#successModal").on("hidden.bs.modal", handler);
+          }
+        }
+
+        function showerror(message, onClose) {
+          $("#errorModalMessage").html(message);
+          $("#errorModal").modal("show");
+          $("#errorModal").off("hidden.bs.modal");
+          if (typeof onClose === "function") {
+            const handler = function () {
+              $("#errorModal").off("hidden.bs.modal", handler);
+              onClose();
+            };
+            $("#errorModal").on("hidden.bs.modal", handler);
+          }
+        }
+
+        function hideSuccess() {
+          $("#successModal").modal("hide");
+        }
+        function hideError() {
+          $("#errorModal").modal("hide");
+        }
+
+        return {
+          showSpinner,
+          hideSpinner,
+          showSuccess,
+          showerror,
+          hideSuccess,
+          hideError,
+        };
+      })();
+    </script>
+    <!-- Script for spinner logic and displaying success and error (End) -->
+
+<!-- Script for inserting,editing and deleting recognition (Start) -->
+<script>
+  // Uses ModalUtils for spinner, success, and error modals
+
+function debugLog(msg, ...args) {
+  if (args.length === 0) {
+    console.log("[RECOGNITION DEBUG]", msg);
+  } else {
+    console.log("[RECOGNITION DEBUG]", msg, ...args);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  debugLog("DOMContentLoaded");
+  fetchRecognitions();
+  fetchEmployees();
+
+  document.getElementById("addRecognitionForm").addEventListener("submit", function (event) {
+    debugLog("submitRecognition form submitted");
+    event.preventDefault();
+    submitRecognition();
+  });
+
+  $(document).on('hidden.bs.modal', function(e) {
+    setTimeout(function () {
+      debugLog('[RECOGNITION DEBUG] Global modal hidden event: cleaning up backdrops');
+      debugLog('[RECOGNITION DEBUG] Backdrops after global cleanup:', $('.modal-backdrop').length, 'body.modal-open:', $('body').hasClass('modal-open'));
+    }, 200);
+  });
+});
+
+document.addEventListener("click", function (event) {
+  if (event.target.classList.contains("edit-btn")) {
+    debugLog("Edit button clicked");
+    let recognitionId = event.target.getAttribute("data-id");
+    let employeeId = event.target.getAttribute("data-employee");
+    let recognitionType = event.target.getAttribute("data-type");
+    let reason = event.target.getAttribute("data-reason");
+    let rawDate = event.target.getAttribute("data-date");
+    let formattedDate = "";
+    if (rawDate) {
+      let parsedDate = new Date(rawDate);
+      if (!isNaN(parsedDate.getTime())) {
+        formattedDate = parsedDate.toISOString().split('T')[0];
+      }
+    }
+    document.getElementById("editRecognitionId").value = recognitionId;
+    document.getElementById("editEmployeeDropdown").value = employeeId;
+    document.getElementById("editRecognitionType").value = recognitionType;
+    document.getElementById("editRecognitionReason").value = reason;
+    document.getElementById("editDateAwarded").value = formattedDate;
+    $("#editRecognitionModal").modal("show");
+  }
+});
+
+document.addEventListener("click", function (event) {
+  if (event.target.classList.contains("delete-btn")) {
+    debugLog("Delete button clicked");
+    let recognitionId = event.target.getAttribute("data-id");
+    document.getElementById("deleteRecognitionId").value = recognitionId;
+    $("#deleteRecognitionModal").modal("show");
+  }
+});
+
+document.getElementById("editRecognitionForm").addEventListener("submit", function (event) {
+  debugLog("updateRecognition form submitted");
+  event.preventDefault();
+  updateRecognition();
+});
+
+document.getElementById("confirmDeleteButton").addEventListener("click", function () {
+  debugLog("confirmDeleteButton clicked");
+  deleteRecognition();
+});
+
+// Modal sequencing utility
+function showModalAfterModalHide(hideSelector, showFunc) {
+  debugLog(`showModalAfterModalHide called for ${hideSelector}`);
+  var $modal = $(hideSelector);
+  if (!$modal.hasClass('show')) {
+    debugLog(`${hideSelector} already hidden, running showFunc immediately`);
+    showFunc();
+    return;
+  }
+  $modal.modal('hide');
+  $modal.one('hidden.bs.modal', function () {
+    debugLog(`${hideSelector} hidden.bs.modal event triggered`);
+    if ($('#loadingSpinnerModal').hasClass('show')) {
+      debugLog("Spinner is visible, hiding spinner modal");
+      ModalUtils.hideSpinner();
+      $('#loadingSpinnerModal').one('hidden.bs.modal', function () {
+        debugLog("Spinner modal hidden, running showFunc");
+        showFunc();
+      });
+    } else {
+      debugLog("Spinner not visible, running showFunc");
+      showFunc();
+    }
+  });
+}
+
+function getAdminToken() {
+  return sessionStorage.getItem("adminToken");
+}
+
+// Submit Recognition
+function submitRecognition() {
+  debugLog("submitRecognition called");
+  const token = getAdminToken();
+  if (!token) {
+    debugLog("No admin token");
+    modalutils.showerror('Missing admin token. Please log in again.');
+    return;
+  }
+  let employee_id = document.getElementById("employeeDropdown").value;
+  let recognition_type = document.getElementById("recognitionType").value;
+  let reason = document.getElementById("recognitionReason").value;
+  let date_awarded = document.getElementById("dateAwarded").value;
+
+  ModalUtils.showSpinner();
+
+  fetch('/add_recognition', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      "X-CSRFToken": document.querySelector('meta[name="csrf-token"]').content
+    },
+    body: JSON.stringify({ employee_id, recognition_type, reason, date_awarded })
+  })
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById("addRecognitionForm").reset();
+    showModalAfterModalHide("#addRecognitionModal", function () {
+      ModalUtils.hideSpinner();
+      if (data && data.message) {
+        ModalUtils.showSuccess(data.message, () => window.location.reload());
+      } else {
+        modalutils.showerror((data && data.error) ? data.error : "Unknown error");
+      }
+    });
+  })
+  .catch(error => {
+    showModalAfterModalHide("#addRecognitionModal", function () {
+      ModalUtils.hideSpinner();
+      modalutils.showerror("Error submitting recognition: " + error.message);
+    });
+  });
+}
+
+// Update Recognition
+function updateRecognition() {
+  debugLog("updateRecognition called");
+  let recognitionId = document.getElementById("editRecognitionId").value;
+  const token = getAdminToken();
+  if (!token) {
+    debugLog("No admin token");
+    modalutils.showerror('Missing admin token. Please log in again.');
+    return;
+  }
+  if (!recognitionId) {
+    debugLog("Recognition ID missing");
+    modalutils.showerror("Recognition ID is missing.");
+    return;
+  }
+  let employee_id = document.getElementById("editEmployeeDropdown").value;
+  let recognition_type = document.getElementById("editRecognitionType").value;
+  let reason = document.getElementById("editRecognitionReason").value;
+  let date_awarded = document.getElementById("editDateAwarded").value;
+
+  ModalUtils.showSpinner();
+
+  fetch(`/edit_recognition/${recognitionId}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      "X-CSRFToken": document.querySelector('meta[name="csrf-token"]').content
+    },
+    body: JSON.stringify({ employee_id, recognition_type, reason, date_awarded })
+  })
+  .then(response => response.text())
+  .then(text => {
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (error) {
+      showModalAfterModalHide("#editRecognitionModal", function () {
+        ModalUtils.hideSpinner();
+        modalutils.showerror("Response is not valid JSON:\n" + text);
+      });
+      return;
+    }
+    showModalAfterModalHide("#editRecognitionModal", function () {
+      ModalUtils.hideSpinner();
+      if (data && data.message) {
+        ModalUtils.showSuccess(data.message, () => window.location.reload());
+      } else {
+        modalutils.showerror((data && data.error) ? data.error : "Unknown error");
+      }
+    });
+  })
+  .catch(error => {
+    showModalAfterModalHide("#editRecognitionModal", function () {
+      ModalUtils.hideSpinner();
+      modalutils.showerror("Error updating recognition: " + error.message);
+    });
+  });
+}
+
+// Delete Recognition
+function deleteRecognition() {
+  debugLog("deleteRecognition called");
+  let recognitionId = document.getElementById("deleteRecognitionId").value;
+  const token = getAdminToken();
+  if (!token) {
+    debugLog("No admin token");
+    modalutils.showerror('Missing admin token. Please log in again.');
+    return;
+  }
+
+  ModalUtils.showSpinner();
+
+  fetch(`/delete_recognition/${recognitionId}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      "X-CSRFToken": document.querySelector('meta[name="csrf-token"]').content
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    showModalAfterModalHide("#deleteRecognitionModal", function () {
+      ModalUtils.hideSpinner();
+      if (data && data.message) {
+        ModalUtils.showSuccess(data.message, () => window.location.reload());
+      } else {
+        modalutils.showerror((data && data.error) ? data.error : "Unknown error");
+      }
+    });
+  })
+  .catch(error => {
+    showModalAfterModalHide("#deleteRecognitionModal", function () {
+      ModalUtils.hideSpinner();
+      modalutils.showerror("Error deleting recognition: " + error.message);
+    });
+  });
+}
+
+function fetchEmployees() {
+  debugLog("fetchEmployees called");
+  const token = getAdminToken();
+  if (!token) {
+    debugLog("No admin token");
+    modalutils.showerror('Missing admin token. Please log in again.');
+    return;
+  }
+  ModalUtils.showSpinner();
+  fetch('/get_employees', {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    ModalUtils.hideSpinner();
+    let addDropdown = document.getElementById("employeeDropdown");
+    let editDropdown = document.getElementById("editEmployeeDropdown");
+    addDropdown.innerHTML = '<option value="" disabled selected>Select Employee</option>';
+    editDropdown.innerHTML = '<option value="" disabled selected>Select Employee</option>';
+    (data || []).forEach(employee => {
+      let option = document.createElement("option");
+      option.value = employee.employee_id;
+      option.textContent = employee.email || `Employee ID: ${employee.employee_id}`;
+      addDropdown.appendChild(option);
+      let editOption = option.cloneNode(true);
+      editDropdown.appendChild(editOption);
+    });
+  })
+  .catch(error => {
+    ModalUtils.hideSpinner();
+    modalutils.showerror("Error fetching employees: " + error.message);
+  });
+}
+
+function renderRecognitionTable(recognitions) {
+  let tableBody = document.getElementById("recognitionTableBody");
+  tableBody.innerHTML = "";
+  (recognitions || []).forEach(recognition => {
+    let row = `<tr>
+      <td>
+        ${recognition.email ? recognition.email : `Employee ID: ${recognition.employee_id}`}
+      </td>
+      <td>${recognition.recognition_type}</td>
+      <td>${recognition.reason}</td>
+      <td>${recognition.date_awarded}</td>
+      <td>${recognition.super_admin || recognition.admin}</td>
+      <td>
+          <button class="btn btn-info edit-btn" data-id="${recognition.recognition_id}" 
+                  data-employee="${recognition.employee_id}" 
+                  data-type="${recognition.recognition_type}" 
+                  data-reason="${recognition.reason}" 
+                  data-date="${recognition.date_awarded}">
+            Edit
+          </button>
+          <button class="btn btn-danger delete-btn" data-id="${recognition.recognition_id}">
+            Delete
+          </button>
+      </td>
+    </tr>`;
+    tableBody.innerHTML += row;
+  });
+}
+
+let allRecognitions = [];
+function fetchRecognitions() {
+  const token = getAdminToken();
+  if (!token) {
+    modalutils.showerror('Missing admin token. Please log in again.');
+    return;
+  }
+  ModalUtils.showSpinner();
+  fetch('/get_recognitions', {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  .then(async response => {
+    let data;
+    try { data = await response.json(); } catch { data = {}; }
+    ModalUtils.hideSpinner();
+    if (response.ok && Array.isArray(data)) {
+      allRecognitions = data;
+      renderRecognitionTable(allRecognitions);
+    } else {
+      const msg = data.message || data.error || `Error ${response.status}: Failed to fetch recognitions.`;
+      allRecognitions = [];
+      renderRecognitionTable([]);
+      modalutils.showerror(msg);
+    }
+  })
+  .catch(error => {
+    ModalUtils.hideSpinner();
+    allRecognitions = [];
+    renderRecognitionTable([]);
+    modalutils.showerror("Error fetching recognitions: " + error.message);
+  });
+}
+
+document.getElementById("searchRecognitionInput").addEventListener("input", function () {
+  const query = this.value.toLowerCase();
+  const filtered = allRecognitions.filter(recognition =>
+    (recognition.email && recognition.email.toLowerCase().includes(query)) ||
+    (recognition.recognition_type && recognition.recognition_type.toLowerCase().includes(query)) ||
+    (recognition.reason && recognition.reason.toLowerCase().includes(query)) ||
+    (recognition.date_awarded && recognition.date_awarded.toLowerCase().includes(query)) ||
+    (recognition.super_admin && recognition.super_admin.toLowerCase().includes(query))
+  );
+  renderRecognitionTable(filtered);
+});
+</script>
+<!-- Script for inserting,editing and deleting recognition (End) -->
+
+<!-- Script for viewing survey responses (Start) -->
+<script>
+  // Uses ModalUtils for spinner, success, and error modals
+console.log("Survey script loaded!");
+let responsesBySurveyId = {};
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    function formatRealLifeDate(dateString) {
+        if (!dateString) return "";
+        const date = new Date(dateString);
+        return date.toLocaleString(undefined, {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true
+        });
+    }
+
+    function getCurrentSurveyId() {
+        let modalSurveyId = document.getElementById('responsesModal')?.getAttribute('data-survey-id');
+        if (modalSurveyId && modalSurveyId !== 'null' && modalSurveyId !== 'undefined') {
+            return modalSurveyId;
+        }
+        let sessionId = sessionStorage.getItem('currentSurveyId');
+        if (sessionId && sessionId !== 'null' && sessionId !== 'undefined') {
+            return sessionId;
+        }
+        return null;
+    }
+
+    function setSurveyId(surveyId) {
+        sessionStorage.setItem('currentSurveyId', surveyId);
+        const modalEl = document.getElementById('responsesModal');
+        if (modalEl) {
+            modalEl.setAttribute('data-survey-id', surveyId);
+        }
+        window.currentActiveSurveyId = surveyId;
+        window.localStorage.setItem('tempSurveyId', surveyId);
+    }
+
+    // Modal sequencing utility
+    function showModalAfterModalHide(hideSelector, showFunc) {
+        var $modal = $(hideSelector);
+        if (!$modal.hasClass('show')) {
+            showFunc();
+            return;
+        }
+        $modal.modal('hide');
+        $modal.one('hidden.bs.modal', function () {
+            if ($('#loadingSpinnerModal').hasClass('show')) {
+                ModalUtils.hideSpinner();
+                $('#loadingSpinnerModal').one('hidden.bs.modal', function () {
+                    showFunc();
+                });
+            } else {
+                showFunc();
+            }
+        });
+    }
+
+    window.viewSurveyResponses = function (surveyId) {
+        if (!surveyId || surveyId === 'undefined' || surveyId === 'null') {
+            modalutils.showerror("Invalid survey ID. Please try again.");
+            return;
+        }
+        setSurveyId(surveyId);
+
+        const modal = new bootstrap.Modal(document.getElementById('responsesModal'));
+        document.getElementById('responsesTableBody').innerHTML = `
+      <tr>
+        <td colspan="5" class="text-center py-4">
+          <div class="spinner-border text-primary"></div>
+          <p class="mt-2">Loading responses...</p>
+        </td>
+      </tr>
+    `;
+
+        const token = sessionStorage.getItem('adminToken');
+        ModalUtils.showSpinner();
+
+        fetch(`/admin/survey/${surveyId}/responses`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.error || 'Failed to fetch') });
+                }
+                return response.json();
+            })
+            .then(data => {
+                responsesBySurveyId[surveyId] = data.responses || [];
+                setSurveyId(surveyId);
+
+                showModalAfterModalHide('#loadingSpinnerModal', function () {
+                    document.getElementById('surveyTitleDisplay').textContent = `Survey: ${data.survey_title}`;
+                    displayFilteredResponses(responsesBySurveyId[surveyId]);
+                    modal.show();
+                });
+            })
+            .catch(error => {
+                showModalAfterModalHide('#loadingSpinnerModal', function () {
+                    document.getElementById('responsesTableBody').innerHTML = `
+          <tr>
+            <td colspan="5" class="text-center text-danger py-4">
+              Failed to load responses: ${error.message}
+            </td>
+          </tr>
+        `;
+                    modal.show();
+                    modalutils.showerror("Failed to load responses: " + error.message);
+                });
+            });
+    };
+
+    function displayFilteredResponses(responses) {
+        const tbody = document.getElementById('responsesTableBody');
+        if (responses.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="text-center py-4">No responses found</td>
+                </tr>
+            `;
+            return;
+        }
+        tbody.innerHTML = responses.map(response => {
+            const name = [response.first_name, response.last_name].filter(Boolean).join(' ').trim() || response.username || 'Anonymous';
+            return `
+                <tr>
+                    <td>${name}</td>
+                    <td>${response.email || ''}</td>
+                    <td>${response.question_text}</td>
+                    <td>${response.response_text}</td>
+                    <td>${response.question_type}</td>
+                    <td>${formatRealLifeDate(response.submitted_at)}</td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    document.getElementById('exportResponsesBtn').addEventListener('click', function (event) {
+        const responsesModal = document.getElementById('responsesModal');
+        const isModalOpen = responsesModal && responsesModal.classList.contains('show');
+
+        if (!isModalOpen) {
+            modalutils.showerror("Please open a survey's responses first, then click export from within the responses view.");
+            return;
+        }
+
+        let surveyId = getCurrentSurveyId();
+
+        if (!surveyId || surveyId === 'unknown') {
+            modalutils.showerror("Unable to determine survey ID for export. Please close and reopen the responses view.");
+            return;
+        }
+
+        const tableBody = document.getElementById('responsesTableBody');
+        const loadingCheck =
+            tableBody.querySelector('.spinner-border') ||
+            tableBody.textContent.includes('Loading responses');
+
+        if (loadingCheck) {
+            modalutils.showerror('Responses are still loading. Please wait a moment and try again.');
+            return;
+        }
+
+        if (
+            tableBody.textContent.includes('No responses found') ||
+            tableBody.textContent.includes('Failed to load responses')
+        ) {
+            modalutils.showerror('No responses available to export');
+            return;
+        }
+
+        let responsesToExport = responsesBySurveyId[surveyId] || [];
+
+        if (!Array.isArray(responsesToExport) || responsesToExport.length === 0) {
+            try {
+                const storedData = sessionStorage.getItem('allResponses');
+                if (storedData) {
+                    const parsed = JSON.parse(storedData);
+                    responsesToExport = Array.isArray(parsed) ? parsed : parsed.responses || [];
+                }
+            } catch (e) {
+                modalutils.showerror("Could not recover responses from sessionStorage: " + e.message);
+                return;
+            }
+        }
+
+        if (!Array.isArray(responsesToExport) || responsesToExport.length === 0) {
+            const dataRows = Array.from(tableBody.querySelectorAll('tr')).filter(row =>
+                row.cells.length === 6 &&
+                !row.textContent.includes('Loading') &&
+                !row.textContent.includes('No responses') &&
+                !row.textContent.includes('Failed')
+            );
+
+            if (dataRows.length === 0) {
+                modalutils.showerror('No responses to export');
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Employee,Email,Question,Response,Type,Date\n";
+
+            dataRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const rowData = [
+                    `"${cells[0].textContent.trim()}"`,
+                    `"${cells[1].textContent.trim()}"`,
+                    `"${cells[2].textContent.trim().replace(/"/g, '""')}"`,
+                    `"${cells[3].textContent.trim().replace(/"/g, '""')}"`,
+                    `"${cells[4].textContent.trim()}"`,
+                    `"${cells[5].textContent.trim()}"`
+                ].join(',');
+                csvContent += rowData + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `survey_${surveyId}_responses_${new Date().toISOString().slice(0, 10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            ModalUtils.showSuccess("Export completed using table data");
+            return;
+        }
+
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "Employee,Email,Question,Response,Type,Date\n";
+
+        responsesToExport.forEach(response => {
+            const name = [response.first_name, response.last_name].filter(Boolean).join(' ').trim() || response.username || 'Anonymous';
+            const row = [
+                `"${name}"`,
+                `"${response.email || ''}"`,
+                `"${(response.question_text || '').replace(/"/g, '""')}"`,
+                `"${(response.response_text || '').replace(/"/g, '""')}"`,
+                `"${response.question_type || ''}"`,
+                `"${formatRealLifeDate(response.submitted_at)}"`
+            ].join(',');
+            csvContent += row + "\n";
+        });
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `survey_${surveyId}_responses_${new Date().toISOString().slice(0, 10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        ModalUtils.showSuccess("Export completed successfully");
+    });
+
+    window.debugSurveyState = function () {
+        console.log("=== DEBUG SURVEY STATE ===");
+        console.log("currentSurveyId:", currentSurveyId);
+        console.log("sessionStorage currentSurveyId:", sessionStorage.getItem('currentSurveyId'));
+        console.log("modal data-survey-id:", document.getElementById('responsesModal')?.getAttribute('data-survey-id'));
+        console.log("window.currentActiveSurveyId:", window.currentActiveSurveyId);
+        console.log("allResponses length:", allResponses?.length || 0);
+        console.log("sessionStorage allResponses:", sessionStorage.getItem('allResponses') ? 'exists' : 'not found');
+        console.log("getCurrentSurveyId():", getCurrentSurveyId());
+
+        const modal = document.getElementById('responsesModal');
+        console.log("Modal state:", {
+            exists: !!modal,
+            isOpen: modal?.classList.contains('show'),
+            classes: modal?.classList.toString()
+        });
+    };
+
+    window.testExportWorkflow = function (surveyId) {
+        if (!surveyId) {
+            document.querySelectorAll('.assignment-btn').forEach(btn => {
+                console.log("Survey ID:", btn.dataset.surveyId);
+            });
+            console.log("Usage: testExportWorkflow(73) or testExportWorkflow(71)");
+            return;
+        }
+
+        window.viewSurveyResponses(surveyId);
+
+        setTimeout(() => {
+            window.debugSurveyState();
+            console.log("You can now test export by clicking the export button in the modal or running:");
+            console.log("   document.getElementById('exportResponsesBtn').click()");
+        }, 1000);
+    };
+
+});
+</script>
+<!-- Script for viewing survey responses (End) -->
+
+<!-- Script for inserting, deleting, editing and displaying health resources (Start) -->
+<script>
+  // Uses ModalUtils for spinner, success, and error modals
+
+let editingId = null;
+let allResources = [];
+
+function getToken() {
+  return sessionStorage.getItem('adminToken');
+}
+
+function openResourceModal() {
+  $('#resourceForm')[0].reset();
+  $('#resourceModal').modal('show');
+}
+
+function openEditResourceModal(resource) {
+  $('#editResourceForm')[0].reset();
+  $('#editResourceId').val(resource.resource_id);
+  $('#editTitle').val(resource.title);
+  $('#editCategory').val(resource.category.trim());
+  $('#editDescription').val(resource.description);
+  $('#editUrl').val(resource.url);
+
+  if (resource.file_path) {
+    const fileUrl = `/static/health_resources/${resource.file_path}`;
+    const fileName = fileUrl.split('/').pop();
+    const isImage = /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(fileName);
+
+    $('#currentFileContainer').show();
+
+    if (isImage) {
+      $('#currentFilePreview').html(`
+        <img src="${fileUrl}" alt="Current Image" style="max-width: 100%; max-height: 300px; display: block; margin-bottom: 10px;">
+        <a href="${fileUrl}" target="_blank" download>${fileName}</a>
+      `);
+    } else {
+      $('#currentFilePreview').html(`<a href="${fileUrl}" target="_blank" download>${fileName}</a>`);
+    }
+  } else {
+    $('#currentFileContainer').hide();
+    $('#currentFilePreview').empty();
+  }
+
+  editingId = resource.resource_id;
+  $('#editResourceModal').modal('show');
+}
+
+function openDeleteModal(resourceId) {
+  $('#deleteResourceId').val(resourceId);
+  $('#deleteResourceModal').modal('show');
+}
+
+// Modal sequencing utility
+function showModalAfterModalHide(hideSelector, showFunc) {
+  var $modal = $(hideSelector);
+  if (!$modal.hasClass('show')) {
+    showFunc();
+    return;
+  }
+  $modal.modal('hide');
+  $modal.one('hidden.bs.modal', function () {
+    if ($('#loadingSpinnerModal').hasClass('show')) {
+      ModalUtils.hideSpinner();
+      $('#loadingSpinnerModal').one('hidden.bs.modal', function () {
+        showFunc();
+      });
+    } else {
+      showFunc();
+    }
+  });
+}
+
+function confirmDeleteResource() {
+  const resourceId = $('#deleteResourceId').val();
+  const token = getToken();
+  if (!token) {
+    modalutils.showerror('Missing admin token. Please log in again.');
+    return;
+  }
+  ModalUtils.showSpinner();
+  $.ajax({
+    url: `/admin/delete_health_resource/${resourceId}`,
+    method: 'DELETE',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    },
+    success: function () {
+      showModalAfterModalHide('#deleteResourceModal', function() {
+        ModalUtils.showSuccess('Resource deleted successfully!', () => window.location.reload());
+        loadResources();
+      });
+    },
+    error: function (xhr) {
+      showModalAfterModalHide('#deleteResourceModal', function() {
+        let msg = 'Error deleting resource.';
+        if (xhr.responseJSON && xhr.responseJSON.error) {
+          msg = xhr.responseJSON.error;
+        }
+        modalutils.showerror(msg);
+      });
+    }
+  });
+}
+
+function renderResources(resources) {
+  const tbody = $('#resourceTableBody');
+  tbody.empty();
+  if (!resources.length) {
+    tbody.append(`<tr><td colspan="5" class="text-center">No matching resources found.</td></tr>`);
+    return;
+  }
+  resources.forEach(r => {
+    const link = r.url 
+      ? `<a href="${r.url}" target="_blank">Link</a>`
+      : r.file_path 
+        ? `<a href="/${r.file_path}" target="_blank">File</a>`
+        : '';
+    tbody.append(`
+      <tr>
+        <td>${r.title}</td>
+        <td>${r.category}</td>
+        <td>${r.description || ''}</td>
+        <td>${link}</td>
+        <td>
+          <button class="btn btn-info btn-sm view-resource-btn" data-id="${r.resource_id}">
+            View
+          </button>
+          <button class="btn btn-sm btn-primary" onclick='openEditResourceModal(${JSON.stringify(r)})'>Edit</button>
+          <button class="btn btn-sm btn-danger" onclick='openDeleteModal(${r.resource_id})'>Delete</button>
+        </td>
+      </tr>
+    `);
+  });
+}
+
+function loadResources() {
+  const token = getToken();
+  if (!token) {
+    modalutils.showerror("Missing token.");
+    return;
+  }
+  ModalUtils.showSpinner();
+  $.ajax({
+    url: '/admin/health_resources',
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    },
+    success: function(data) {
+      ModalUtils.hideSpinner();
+      allResources = data;
+      renderResources(allResources);
+    },
+    error: function(xhr, status, error) {
+      ModalUtils.hideSpinner();
+      modalutils.showerror("Error fetching resources: " + (error || status));
+    }
+  });
+}
+
+function filterResources() {
+  const query = $('#searchResourceInput').val().trim().toLowerCase();
+  if (!query) {
+    renderResources(allResources);
+    return;
+  }
+  const filtered = allResources.filter(r => 
+    (r.title && r.title.toLowerCase().includes(query)) ||
+    (r.category && r.category.toLowerCase().includes(query)) ||
+    (r.description && r.description.toLowerCase().includes(query))
+  );
+  renderResources(filtered);
+}
+
+$(document).on('input', '#searchResourceInput', filterResources);
+
+$('#resourceForm').submit(function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  const token = getToken();
+  if (!token) {
+    modalutils.showerror('Missing admin token. Please log in again.');
+    return;
+  }
+  ModalUtils.showSpinner();
+  $.ajax({
+    url: '/admin/add_health_resource',
+    method: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    headers: {
+      'Authorization': 'Bearer ' + token
+    },
+    success: () => {
+      showModalAfterModalHide('#resourceModal', function() {
+        ModalUtils.showSuccess('Resource added successfully!', () => window.location.reload());
+        loadResources();
+      });
+    },
+    error: function(xhr) {
+      showModalAfterModalHide('#resourceModal', function() {
+        let msg = 'Failed to add resource.';
+        if (xhr.responseJSON && xhr.responseJSON.error) {
+          msg = xhr.responseJSON.error;
+        }
+        modalutils.showerror(msg);
+      });
+    }
+  });
+});
+
+$(document).on('click', '.view-resource-btn', function () {
+  const resourceId = $(this).data('id');
+  const token = getToken();
+  if (!token) {
+    modalutils.showerror('Missing admin token. Please log in again.');
+    return;
+  }
+  ModalUtils.showSpinner();
+  $.ajax({
+    url: `/admin/get_health_resource/${resourceId}`,
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    },
+    success: function (data) {
+      ModalUtils.hideSpinner();
+      $('#view-title').text(data.title || '');
+      $('#view-description').text(data.description || '');
+      $('#view-category').text(data.category || '');
+      $('#view-url').attr('href', data.url || '#').text(data.url || 'N/A');
+      if (data.file_path) {
+        const filename = data.file_path.split('/').pop();
+        const fileUrl = `/static/health_resources/${data.file_path}`;
+        $('#view-file')
+          .attr('href', fileUrl)
+          .attr('download', filename)
+          .text('Download File')
+          .show();
+      } else {
+        $('#view-file').attr('href', '#').text('No File').hide();
+      }
+      $('#viewResourceModal').modal('show');
+    },
+    error: function () {
+      ModalUtils.hideSpinner();
+      modalutils.showerror('Failed to load resource details.');
+    }
+  });
+});
+
+$('#editResourceForm').submit(function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  const resourceId = $('#editResourceId').val();
+  const token = getToken();
+  if (!token) {
+    modalutils.showerror('Missing admin token. Please log in again.');
+    return;
+  }
+  ModalUtils.showSpinner();
+  $.ajax({
+    url: `/admin/edit_health_resource/${resourceId}`,
+    method: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    headers: {
+      'Authorization': 'Bearer ' + token
+    },
+    success: () => {
+      showModalAfterModalHide('#editResourceModal', function() {
+        ModalUtils.showSuccess('Resource updated successfully!', () => window.location.reload());
+        loadResources();
+      });
+    },
+    error: function(xhr) {
+      showModalAfterModalHide('#editResourceModal', function() {
+        let msg = 'Failed to update resource.';
+        if (xhr.responseJSON && xhr.responseJSON.error) {
+          msg = xhr.responseJSON.error;
+        }
+        modalutils.showerror(msg);
+      });
+    }
+  });
+});
+
+$(document).ready(loadResources);
+</script>
+<!-- Script for inserting, deleting, editing and displaying health resources (End) -->
+
+<!-- Helper function for token access -->
+<script>
+function getAdminToken() {
+  return sessionStorage.getItem('adminToken');
+}
+</script>
+
+<!-- Script for traveling request (Start) -->
+<script>
+  // Uses ModalUtils for spinner, success, and error modals
+
+let deleteTravelRequestId = null;
+
+// Modal sequencing utility
+function showModalAfterModalHide(hideSelector, showFunc) {
+  var $modal = $(hideSelector);
+  if (!$modal.hasClass('show')) {
+    showFunc();
+    return;
+  }
+  $modal.modal('hide');
+  $modal.one('hidden.bs.modal', function () {
+    if ($('#loadingSpinnerModal').hasClass('show')) {
+      ModalUtils.hideSpinner();
+      $('#loadingSpinnerModal').one('hidden.bs.modal', function () {
+        showFunc();
+      });
+    } else {
+      showFunc();
+    }
+  });
+}
+
+function openDeleteConfirmationModal(requestId) {
+  deleteTravelRequestId = requestId;
+  $("#deleteTravelRequestModal").modal("show");
+}
+
+function confirmDeleteTravelRequest() {
+  if (!deleteTravelRequestId) {
+    modalutils.showerror("No travel request selected for deletion.");
+    return;
+  }
+
+  const token = getAdminToken();
+  if (!token) {
+    modalutils.showerror('Missing admin token. Please log in again.');
+    return;
+  }
+
+  ModalUtils.showSpinner();
+  fetch(`/admin/travel-requests/${deleteTravelRequestId}/delete`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  })
+  .then((res) => res.json().then(data => ({ res, data })))
+  .then(({ res, data }) => {
+    showModalAfterModalHide('#deleteTravelRequestModal', function() {
+      if (!res.ok || !data.success) {
+        modalutils.showerror(data.message || data.error || 'Failed to delete travel request');
+        throw new Error(data.message || data.error || 'Failed to delete travel request');
+      }
+      ModalUtils.showSuccess('Travel request deleted!', () => window.location.reload());
+      fetchTravelRequests();
+    });
+  })
+  .catch((err) => {
+    showModalAfterModalHide('#deleteTravelRequestModal', function() {
+      console.error("Error deleting travel request:", err);
+      modalutils.showerror("Error deleting travel request.");
+    });
+  })
+  .finally(() => {
+    deleteTravelRequestId = null;
+  });
+}
+
+function fetchTravelRequests() {
+  const token = getAdminToken();
+  if (!token) {
+    modalutils.showerror('Missing admin token. Please log in again.');
+    return;
+  }
+  ModalUtils.showSpinner();
+  fetch('/admin/travel-requests', {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  })
+  .then((res) => {
+    if (!res.ok) {
+      return res.json().then((errorData) => {
+        ModalUtils.hideSpinner();
+        modalutils.showerror(errorData.message || 'Failed to load travel requests');
+        throw new Error(errorData.message || 'Failed to load travel requests');
+      });
+    }
+    return res.json();
+  })
+  .then((requests) => {
+    ModalUtils.hideSpinner();
+    const tbody = document.getElementById('travelRequestTableBody');
+    tbody.innerHTML = "";
+
+    if (requests.length === 0) {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td colspan="7" class="text-center">No travel requests available.</td>`;
+      tbody.appendChild(row);
+      return;
+    }
+
+    function statusBadge(status) {
+      if (!status) return '';
+      const s = status.toLowerCase();
+      if (s === "approved") return '<span class="badge bg-success">Approved</span>';
+      if (s === "rejected") return '<span class="badge bg-danger">Rejected</span>';
+      if (s === "pending") return '<span class="badge bg-warning text-dark">Pending</span>';
+      return `<span class="badge bg-secondary">${status}</span>`;
+    }
+
+    requests.forEach((request) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${request.email}</td>
+        <td>${request.destination}</td>
+        <td>${request.start_date}</td>
+        <td>${request.end_date}</td>
+        <td>${request.estimated_expense} $</td>
+        <td>${statusBadge(request.status)}</td>
+        <td>
+          <button class="btn btn-sm btn-info" onclick='viewTravelRequestDetails(${JSON.stringify(request)})'>View</button>
+          <button class="btn btn-sm btn-success" onclick="approveRequest(${request.request_id})">Approve</button>
+          <button class="btn btn-sm btn-warning" onclick="rejectRequest(${request.request_id})">Reject</button>
+          <button class="btn btn-sm btn-danger" onclick="openDeleteConfirmationModal(${request.request_id})">Delete</button>
+        </td>
+      `;
+      tbody.appendChild(row);
+    });
+  })
+  .catch((err) => {
+    ModalUtils.hideSpinner();
+    console.error("Error loading travel requests:", err);
+    modalutils.showerror("Failed to load travel requests.");
+  });
+}
+
+function viewTravelRequestDetails(request) {
+  if (typeof request === "string") {
+    request = JSON.parse(request);
+  }
+  document.getElementById("detail_request_id").innerText = request.request_id;
+  document.getElementById("detail_employee").innerText = request.employee_id;
+  document.getElementById("detail_email").innerText = request.email;
+  document.getElementById("detail_destination").innerText = request.destination;
+  document.getElementById("detail_purpose").innerText = request.purpose;
+  document.getElementById("detail_start_date").innerText = request.start_date;
+  document.getElementById("detail_end_date").innerText = request.end_date;
+  document.getElementById("detail_estimated_expense").innerText = request.estimated_expense + " $";
+  document.getElementById("detail_status").innerText = request.status;
+  document.getElementById("detail_submission_date").innerText = request.submission_date;
+  document.getElementById("detail_approved_by").innerText = request.approved_by || '-';
+  document.getElementById("detail_remarks").innerText = request.remarks || '-';
+
+  $('#viewTravelRequestModal').modal('show');
+}
+
+function approveRequest(requestId) {
+  const token = getAdminToken();
+  if (!token) {
+    modalutils.showerror('Missing admin token. Please log in again.');
+    return;
+  }
+  ModalUtils.showSpinner();
+  fetch(`/admin/travel-requests/${requestId}/approve`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: '{}' // Always send at least an empty JSON body
+  })
+  .then((res) => {
+    ModalUtils.hideSpinner();
+    if (!res.ok) {
+      return res.json().then((errorData) => {
+        modalutils.showerror(errorData.message || 'Failed to approve travel request');
+        throw new Error(errorData.message || 'Failed to approve travel request');
+      });
+    }
+    ModalUtils.showSuccess('Travel request approved!', () => window.location.reload());
+    fetchTravelRequests();
+  })
+  .catch((err) => {
+    ModalUtils.hideSpinner();
+    console.error("Error approving request:", err);
+    modalutils.showerror("Error approving request.");
+  });
+}
+
+function rejectRequest(requestId) {
+  const token = getAdminToken();
+  if (!token) {
+    modalutils.showerror('Missing admin token. Please log in again.');
+    return;
+  }
+  ModalUtils.showSpinner();
+  fetch(`/admin/travel-requests/${requestId}/reject`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: '{}' // Always send at least an empty JSON body
+  })
+  .then((res) => {
+    ModalUtils.hideSpinner();
+    if (!res.ok) {
+      return res.json().then((errorData) => {
+        modalutils.showerror(errorData.message || 'Failed to reject travel request');
+        throw new Error(errorData.message || 'Failed to reject travel request');
+      });
+    }
+    ModalUtils.showSuccess('Travel request rejected!', () => window.location.reload());
+    fetchTravelRequests();
+  })
+  .catch((err) => {
+    ModalUtils.hideSpinner();
+    console.error("Error rejecting request:", err);
+    modalutils.showerror("Error rejecting request.");
+  });
+}
+
+function searchTravelRequests() {
+  const searchText = document.getElementById('searchTravelInput').value.toLowerCase();
+  const rows = document.querySelectorAll('#travelRequestTableBody tr');
+  rows.forEach((row) => {
+    const cells = row.querySelectorAll('td');
+    const employeeName = cells[0].textContent.toLowerCase();
+    const destination = cells[1].textContent.toLowerCase();
+    const status = cells[5].textContent.toLowerCase();
+    if (employeeName.includes(searchText) || destination.includes(searchText) || status.includes(searchText)) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+}
+
+document.getElementById('searchTravelInput').addEventListener('input', searchTravelRequests);
+
+document.addEventListener('DOMContentLoaded', fetchTravelRequests);
+
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.getElementById('confirmDeleteTravelRequestBtn');
+  if (btn) {
+    btn.addEventListener('click', confirmDeleteTravelRequest);
+  }
+});
+</script>
+<!-- Script for traveling request (End) -->
+
+<!-- Script for creating events (Start) -->
+<script>
+  /**
+ * Event Management Script with Dual-Role User Handling (No Icons)
+ * Current Date and Time (UTC): 2025-08-03 13:03:34
+ * Current User's Login: Ratana3
+ */
+
+function getAdminToken() {
+    return sessionStorage.getItem('adminToken');
+}
+
+// Global state
+let selectedParticipants = { employees: [], admins: [], teams: [] };
+let searchTimeout;
+let allEmployees = [];
+let allAdmins = [];
+let allTeams = [];
+let userEmailToRolesMap = {}; // New map to track user roles by email
+
+document.addEventListener('DOMContentLoaded', function() {
+    setupEventListeners();
+    loadAllParticipants();
+});
+
+function setupEventListeners() {
+    document.getElementById('eventForm').addEventListener('submit', handleFormSubmit);
+
+    if (document.getElementById('searchInput')) {
+        document.getElementById('searchInput').addEventListener('input', handleSearch);
+    }
+    if (document.getElementById('allAdmins')) {
+        document.getElementById('allAdmins').addEventListener('change', (e) => handleQuickAddAll('admins', e.target.checked));
+    }
+    if (document.getElementById('allEmployees')) {
+        document.getElementById('allEmployees').addEventListener('change', (e) => handleQuickAddAll('employees', e.target.checked));
+    }
+    if (document.getElementById('allTeams')) {
+        document.getElementById('allTeams').addEventListener('change', (e) => handleQuickAddAll('teams', e.target.checked));
+    }
+    if (document.getElementById('displayType')) {
+        document.getElementById('displayType').addEventListener('change', handleDisplayTypeChange);
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('#searchInput') && !e.target.closest('#searchResults')) {
+            if (document.getElementById('searchResults')) {
+                document.getElementById('searchResults').style.display = 'none';
+            }
+        }
+    });
+}
+
+async function loadAllParticipants() {
+    const token = getAdminToken();
+    if (!token) {
+        if (typeof ModalUtils !== 'undefined' && ModalUtils.showError) {
+            ModalUtils.showError('Missing admin token. Please log in again.');
+        } else if (typeof modalutils !== 'undefined' && modalutils.showerror) {
+            modalutils.showerror('Missing admin token. Please log in again.');
+        }
+        return;
+    }
+    
+    if (typeof ModalUtils !== 'undefined' && ModalUtils.showSpinner) {
+        ModalUtils.showSpinner();
+    }
+    
+    // Reset the roles map
+    userEmailToRolesMap = {};
+    
+    try {
+        // Load employees
+        try {
+            const employeesResponse = await fetch('/get_employees', {
+                method: 'GET',
+                headers: { 
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (employeesResponse.ok) {
+                const employeesData = await employeesResponse.json();
+                // Handle both array response and {employees: [...]} structure
+                allEmployees = Array.isArray(employeesData) ? employeesData : 
+                              (employeesData && Array.isArray(employeesData.employees)) ? employeesData.employees : [];
+                console.log(`Loaded ${allEmployees.length} employees`);
+                
+                // Build email to role mapping for employees
+                allEmployees.forEach(emp => {
+                    if (emp.email) {
+                        const email = emp.email.toLowerCase();
+                        if (!userEmailToRolesMap[email]) {
+                            userEmailToRolesMap[email] = { roles: [], userData: {} };
+                        }
+                        userEmailToRolesMap[email].roles.push('Employee');
+                        userEmailToRolesMap[email].userData.employee_id = emp.employee_id;
+                        userEmailToRolesMap[email].userData.employee_role = emp.role || '';
+                        userEmailToRolesMap[email].userData.email = emp.email;
+                    }
+                });
+            } else {
+                console.error('Failed to load employees:', employeesResponse.status, employeesResponse.statusText);
+                allEmployees = [];
+            }
+        } catch (empError) {
+            console.error('Error loading employees:', empError);
+            allEmployees = [];
+        }
+
+        // Load admins
+        try {
+            const adminsResponse = await fetch('/get-admins', {
+                method: 'GET',
+                headers: { 
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (adminsResponse.ok) {
+                const adminsData = await adminsResponse.json();
+                // Handle both array response and {admins: [...]} structure
+                allAdmins = Array.isArray(adminsData) ? adminsData : 
+                          (adminsData && Array.isArray(adminsData.admins)) ? adminsData.admins : [];
+                console.log(`Loaded ${allAdmins.length} admins`);
+                
+                // Build email to role mapping for admins
+                allAdmins.forEach(admin => {
+                    if (admin.email) {
+                        const email = admin.email.toLowerCase();
+                        if (!userEmailToRolesMap[email]) {
+                            userEmailToRolesMap[email] = { roles: [], userData: {} };
+                        }
+                        userEmailToRolesMap[email].roles.push('Admin');
+                        userEmailToRolesMap[email].userData.admin_id = admin.admin_id;
+                        userEmailToRolesMap[email].userData.admin_role = admin.role || '';
+                        userEmailToRolesMap[email].userData.email = admin.email;
+                    }
+                });
+            } else {
+                console.error('Failed to load admins:', adminsResponse.status, adminsResponse.statusText);
+                allAdmins = [];
+            }
+        } catch (adminError) {
+            console.error('Error loading admins:', adminError);
+            allAdmins = [];
+        }
+
+        // Load teams
+        try {
+            const teamsResponse = await fetch('/get_teams', {
+                method: 'GET',
+                headers: { 
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (teamsResponse.ok) {
+                const teamsData = await teamsResponse.json();
+                // Handle both array response and {teams: [...]} structure
+                allTeams = Array.isArray(teamsData) ? teamsData : 
+                          (teamsData && Array.isArray(teamsData.teams)) ? teamsData.teams : [];
+                console.log(`Loaded ${allTeams.length} teams`);
+            } else {
+                console.error('Failed to load teams:', teamsResponse.status, teamsResponse.statusText);
+                allTeams = [];
+            }
+        } catch (teamError) {
+            console.error('Error loading teams:', teamError);
+            allTeams = [];
+        }
+        
+        console.log(`Built user role map with ${Object.keys(userEmailToRolesMap).length} unique users`);
+        
+    } catch (error) {
+        console.error('General error loading participants:', error);
+        allEmployees = [];
+        allAdmins = [];
+        allTeams = [];
+        userEmailToRolesMap = {};
+        
+        if (typeof ModalUtils !== 'undefined' && ModalUtils.showError) {
+            ModalUtils.showError('Error loading participants. Please refresh the page.');
+        } else if (typeof modalutils !== 'undefined' && modalutils.showerror) {
+            modalutils.showerror('Error loading participants. Please refresh the page.');
+        }
+    } finally {
+        if (typeof ModalUtils !== 'undefined' && ModalUtils.hideSpinner) {
+            ModalUtils.hideSpinner();
+        }
+    }
+}
+
+function handleDisplayTypeChange(e) {
+    const displayType = e.target.value;
+    const participantsList = document.getElementById('participantsList');
+    const dropdown = document.getElementById('participantsDropdown');
+
+    if (!displayType) {
+        participantsList.style.display = 'none';
+        return;
+    }
+
+    participantsList.style.display = 'block';
+
+    let participants = [];
+    let participantType = '';
+
+    if (displayType === 'employees') {
+        participants = Array.isArray(allEmployees) ? allEmployees : [];
+        participantType = 'employee';
+    } else if (displayType === 'admins') {
+        participants = Array.isArray(allAdmins) ? allAdmins : [];
+        participantType = 'admin';
+    } else if (displayType === 'teams') {
+        participants = Array.isArray(allTeams) ? allTeams : [];
+        participantType = 'team';
+    }
+
+    let html = '';
+    let processedEmails = new Set(); // To avoid duplicates
+
+    participants.forEach(participant => {
+        let id, displayName, email;
+        
+        if (participantType === 'employee') {
+            id = participant.employee_id;
+            displayName = participant.email || 'No email';
+            email = participant.email ? participant.email.toLowerCase() : null;
+        } else if (participantType === 'admin') {
+            id = participant.admin_id;
+            displayName = participant.email || 'No email';
+            email = participant.email ? participant.email.toLowerCase() : null;
+        } else if (participantType === 'team') {
+            id = participant.team_id;
+            displayName = participant.team_name || 'No name';
+            email = null; // Teams don't have emails
+        }
+        
+        // For teams or if we haven't processed this email yet
+        if (participantType === 'team' || !email || !processedEmails.has(email)) {
+            if (email) {
+                processedEmails.add(email);
+            }
+            
+            const isSelected = isParticipantSelected(participantType, id);
+            
+            // For users, show their roles
+            let roleDisplay = '';
+            if (email && userEmailToRolesMap[email]) {
+                const roleInfo = userEmailToRolesMap[email];
+                if (roleInfo.roles.length > 0) {
+                    roleDisplay = ` <small class="text-muted">(${roleInfo.roles.join(', ')})</small>`;
+                }
+            }
+
+            html += `
+                <div class="participant-item ${isSelected ? 'selected' : ''}" 
+                     onclick="toggleParticipantFromList('${participantType}', {
+                         id: ${id}, 
+                         name: '${displayName.replace(/'/g,"&#39;")}',
+                         email: '${email || ''}'
+                     })">
+                    <span>${displayName}${roleDisplay}</span>
+                    ${isSelected ? '<span style="color: #4caf50;">✓</span>' : ''}
+                </div>
+            `;
+        }
+    });
+
+    dropdown.innerHTML = html || '<div class="participant-item text-muted">No participants found</div>';
+}
+
+window.toggleParticipantFromList = function(type, participant) {
+    if (isParticipantSelected(type, participant.id)) {
+        removeParticipant(type, participant.id);
+    } else {
+        addParticipant(type, participant);
+    }
+    handleDisplayTypeChange({ target: { value: document.getElementById('displayType').value } });
+};
+
+async function handleFormSubmit(e) {
+    e.preventDefault();
+    const token = getAdminToken();
+    if (!token) {
+        if (typeof ModalUtils !== 'undefined' && ModalUtils.showError) {
+            ModalUtils.showError('Missing admin token. Please log in again.');
+        } else if (typeof modalutils !== 'undefined' && modalutils.showerror) {
+            modalutils.showerror('Missing admin token. Please log in again.');
+        }
+        return;
+    }
+    const submitBtn = document.querySelector('button[type="submit"]');
+    const submitText = document.getElementById('submitText');
+    const submitSpinner = document.getElementById('submitSpinner');
+    if(submitBtn && submitText && submitSpinner) {
+        submitBtn.disabled = true;
+        submitText.textContent = 'Creating...';
+        submitSpinner.style.display = 'inline-block';
+    }
+    
+    if (typeof ModalUtils !== 'undefined' && ModalUtils.showSpinner) {
+        ModalUtils.showSpinner();
+    }
+    
+    try {
+        const formData = new FormData(e.target);
+        selectedParticipants.employees.forEach(emp => {
+            formData.append('employee_ids[]', emp.id);
+        });
+        selectedParticipants.admins.forEach(admin => {
+            formData.append('admin_ids[]', admin.id);
+        });
+        selectedParticipants.teams.forEach(team => {
+            formData.append('team_ids[]', team.id);
+        });
+        const response = await fetch('/create_event', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        });
+        const data = await response.json();
+        
+        if (typeof ModalUtils !== 'undefined' && ModalUtils.hideSpinner) {
+            ModalUtils.hideSpinner();
+        }
+        
+        if (response.ok) {
+            if (typeof ModalUtils !== 'undefined' && ModalUtils.showSuccess) {
+                ModalUtils.showSuccess('Event created successfully!', () => window.location.reload());
+            }
+            resetForm();
+            if (typeof fetchEvents === 'function') {
+                fetchEvents();
+            }
+        } else {
+            if (typeof ModalUtils !== 'undefined' && ModalUtils.showError) {
+                ModalUtils.showError('Error: ' + (data.error || 'Failed to create event'));
+            } else if (typeof modalutils !== 'undefined' && modalutils.showerror) {
+                modalutils.showerror('Error: ' + (data.error || 'Failed to create event'));
+            }
+            console.error('Backend error:', data);
+        }
+    } catch (error) {
+        if (typeof ModalUtils !== 'undefined' && ModalUtils.hideSpinner) {
+            ModalUtils.hideSpinner();
+        }
+        console.error('Network error:', error);
+        
+        if (typeof ModalUtils !== 'undefined' && ModalUtils.showError) {
+            ModalUtils.showError('Network error occurred while creating the event. Please check your connection and try again.');
+        } else if (typeof modalutils !== 'undefined' && modalutils.showerror) {
+            modalutils.showerror('Network error occurred while creating the event. Please check your connection and try again.');
+        }
+    } finally {
+        if(submitBtn && submitText && submitSpinner) {
+            submitBtn.disabled = false;
+            submitText.textContent = 'Create Event';
+            submitSpinner.style.display = 'none';
+        }
+    }
+}
+
+function handleSearch(e) {
+    const query = e.target.value.trim();
+    const searchResults = document.getElementById('searchResults');
+
+    clearTimeout(searchTimeout);
+
+    if (query.length < 2) {
+        searchResults.style.display = 'none';
+        return;
+    }
+
+    searchTimeout = setTimeout(async () => {
+        try {
+            // Create a deduplicated search list
+            let searchList = [];
+            
+            // Add teams (no duplication issues)
+            if (Array.isArray(allTeams)) {
+                searchList.push(...allTeams.map(team => ({
+                    ...team, 
+                    type: 'team', 
+                    searchField: team.team_name,
+                    displayName: team.team_name || 'No name',
+                    id: team.team_id
+                })));
+            }
+            
+            // Add users with their roles from our map
+            Object.entries(userEmailToRolesMap).forEach(([email, userData]) => {
+                const roles = userData.roles;
+                const userInfo = userData.userData;
+                
+                // Determine which type of user to add
+                if (roles.includes('Employee') && roles.includes('Admin')) {
+                    // Dual role user - add both with proper IDs but only show as one entry
+                    searchList.push({
+                        type: 'admin_employee',
+                        searchField: email,
+                        displayName: userInfo.email || 'No email',
+                        roles: roles,
+                        id: userInfo.admin_id, // Primary ID for display
+                        admin_id: userInfo.admin_id,
+                        employee_id: userInfo.employee_id,
+                        email: email
+                    });
+                } else if (roles.includes('Employee')) {
+                    searchList.push({
+                        type: 'employee',
+                        searchField: email,
+                        displayName: userInfo.email || 'No email',
+                        roles: roles,
+                        id: userInfo.employee_id,
+                        employee_id: userInfo.employee_id,
+                        email: email
+                    });
+                } else if (roles.includes('Admin')) {
+                    searchList.push({
+                        type: 'admin',
+                        searchField: email,
+                        displayName: userInfo.email || 'No email',
+                        roles: roles,
+                        id: userInfo.admin_id,
+                        admin_id: userInfo.admin_id,
+                        email: email
+                    });
+                }
+            });
+
+            // Filter the deduplicated list
+            const filteredResults = searchList.filter(p => 
+                p.searchField && p.searchField.toLowerCase().includes(query.toLowerCase())
+            );
+
+            console.log(`Search found ${filteredResults.length} results for "${query}"`);
+            displaySearchResults(filteredResults);
+        } catch (error) {
+            console.error('Search error:', error);
+            searchResults.innerHTML = '<div class="search-item text-danger">Error searching participants</div>';
+            searchResults.style.display = 'block';
+        }
+    }, 300);
+}
+
+function displaySearchResults(participants) {
+    const searchResults = document.getElementById('searchResults');
+    let html = '';
+
+    participants.forEach(participant => {
+        let type = participant.type;
+        let id = participant.id;
+        let displayName = participant.displayName || 'Unknown';
+        let roleDisplay = '';
+        
+        // For users, show their roles if available
+        if (type !== 'team' && participant.roles && participant.roles.length > 0) {
+            roleDisplay = `<small class="text-muted">(${participant.roles.join(', ')})</small> `;
+        }
+
+        // Check if this participant is already selected in any category
+        let isSelected = false;
+        
+        if (type === 'admin_employee') {
+            // Check both admin and employee lists
+            isSelected = isParticipantSelected('admin', participant.admin_id) || 
+                         isParticipantSelected('employee', participant.employee_id);
+        } else {
+            isSelected = isParticipantSelected(
+                type === 'employee' ? 'employee' : 
+                type === 'admin' ? 'admin' : 'team', 
+                id
+            );
+        }
+
+        if (!isSelected) {
+            // Build the add function parameters based on user type
+            let addFunctionParams;
+            
+            if (type === 'admin_employee') {
+                // For dual-role users, we'll add them as admin by default
+                // (this can be changed to employee if preferred)
+                addFunctionParams = `'admin', {
+                    id: ${participant.admin_id}, 
+                    name: '${displayName.replace(/'/g,"&#39;")}',
+                    email: '${participant.email || ''}'
+                }`;
+            } else {
+                addFunctionParams = `'${type === 'employee' ? 'employee' : 
+                                        type === 'admin' ? 'admin' : 'team'}', {
+                    id: ${id}, 
+                    name: '${displayName.replace(/'/g,"&#39;")}',
+                    email: '${participant.email || ''}'
+                }`;
+            }
+            
+            // Determine class based on type
+            let typeClass = type === 'employee' ? 'text-primary' : 
+                           type === 'admin' ? 'text-success' : 
+                           type === 'admin_employee' ? 'text-info' : 'text-warning';
+            
+            html += `
+                <div class="search-item" onclick="addParticipant(${addFunctionParams})">
+                    <strong class="${typeClass}">${displayName}</strong>
+                    ${roleDisplay ? `<br>${roleDisplay}` : ''}
+                    <small class="text-muted">${
+                        type === 'employee' ? 'Employee' : 
+                        type === 'admin' ? 'Admin' : 
+                        type === 'admin_employee' ? 'Admin & Employee' : 'Team'
+                    }</small>
+                </div>
+            `;
+        }
+    });
+
+    if (html) {
+        searchResults.innerHTML = html;
+        searchResults.style.display = 'block';
+    } else {
+        searchResults.innerHTML = '<div class="search-item text-muted">No new results found</div>';
+        searchResults.style.display = 'block';
+    }
+}
+
+function handleQuickAddAll(type, isChecked) {
+    let participants = [];
+    let participantType = '';
+
+    if (type === 'employees') {
+        participants = Array.isArray(allEmployees) ? allEmployees : [];
+        participantType = 'employee';
+    } else if (type === 'admins') {
+        participants = Array.isArray(allAdmins) ? allAdmins : [];
+        participantType = 'admin';
+    } else if (type === 'teams') {
+        participants = Array.isArray(allTeams) ? allTeams : [];
+        participantType = 'team';
+    }
+
+    if (isChecked) {
+        participants.forEach(participant => {
+            let participantData = {};
+            if (participantType === 'employee') {
+                participantData = {
+                    id: participant.employee_id,
+                    name: participant.email || 'No email',
+                    email: participant.email
+                };
+            } else if (participantType === 'admin') {
+                participantData = {
+                    id: participant.admin_id,
+                    name: participant.email || 'No email',
+                    email: participant.email
+                };
+            } else if (participantType === 'team') {
+                participantData = {
+                    id: participant.team_id,
+                    name: participant.team_name || 'No name'
+                };
+            }
+            if (!isParticipantSelected(participantType, participantData.id)) {
+                addParticipant(participantType, participantData);
+            }
+        });
+    } else {
+        selectedParticipants[type] = [];
+        updateSelectedParticipantsDisplay();
+        updateQuickAddCheckboxes();
+    }
+}
+
+window.addParticipant = function(type, participant) {
+    const targetType = type === 'employee' ? 'employees' : type === 'admin' ? 'admins' : 'teams';
+    if (isParticipantSelected(type, participant.id)) return;
+    
+    // Check if this email is already in another category (for dual-role users)
+    if (participant.email) {
+        const email = participant.email.toLowerCase();
+        
+        // If adding as employee, check if already in admins
+        if (type === 'employee' && selectedParticipants.admins.some(a => a.email && a.email.toLowerCase() === email)) {
+            if (confirm(`This user is already added as an Admin. Would you like to remove from Admins and add as Employee instead?`)) {
+                selectedParticipants.admins = selectedParticipants.admins.filter(a => 
+                    !a.email || a.email.toLowerCase() !== email
+                );
+            } else {
+                return; // User canceled
+            }
+        }
+        
+        // If adding as admin, check if already in employees
+        if (type === 'admin' && selectedParticipants.employees.some(e => e.email && e.email.toLowerCase() === email)) {
+            if (confirm(`This user is already added as an Employee. Would you like to remove from Employees and add as Admin instead?`)) {
+                selectedParticipants.employees = selectedParticipants.employees.filter(e => 
+                    !e.email || e.email.toLowerCase() !== email
+                );
+            } else {
+                return; // User canceled
+            }
+        }
+    }
+    
+    selectedParticipants[targetType].push(participant);
+    updateSelectedParticipantsDisplay();
+    updateQuickAddCheckboxes();
+    if (document.getElementById('searchResults')) {
+        document.getElementById('searchResults').style.display = 'none';
+    }
+    if (document.getElementById('searchInput')) {
+        document.getElementById('searchInput').value = '';
+    }
+};
+
+function removeParticipant(type, id) {
+    const targetType = type === 'employee' ? 'employees' : type === 'admin' ? 'admins' : 'teams';
+    selectedParticipants[targetType] = selectedParticipants[targetType].filter(p => p.id != id);
+    updateSelectedParticipantsDisplay();
+    updateQuickAddCheckboxes();
+}
+
+function isParticipantSelected(type, id) {
+    const targetType = type === 'employee' ? 'employees' : type === 'admin' ? 'admins' : 'teams';
+    return selectedParticipants[targetType].some(p => p.id == id);
+}
+
+function updateSelectedParticipantsDisplay() {
+    const container = document.getElementById('selectedParticipants');
+    const allSelected = [...selectedParticipants.employees, ...selectedParticipants.admins, ...selectedParticipants.teams];
+    if (allSelected.length > 0) {
+        let html = '';
+        selectedParticipants.employees.forEach(participant => {
+            const displayName = participant.name || participant.email || 'No email';
+            // Get role info if available
+            let roleInfo = '';
+            if (participant.email && userEmailToRolesMap[participant.email.toLowerCase()]) {
+                const roles = userEmailToRolesMap[participant.email.toLowerCase()].roles;
+                if (roles.length > 0) {
+                    roleInfo = `<small>(${roles.join(', ')})</small> `;
+                }
+            }
+            
+            html += `
+                <span class="badge bg-primary me-2 mb-2">
+                    ${displayName} ${roleInfo}
+                    <button type="button" class="btn-close btn-close-white ms-1" 
+                            onclick="removeParticipant('employee', ${participant.id})" 
+                            style="font-size: 0.75em;"></button>
+                </span>
+            `;
+        });
+        selectedParticipants.admins.forEach(participant => {
+            const displayName = participant.name || participant.email || 'No email';
+            // Get role info if available
+            let roleInfo = '';
+            if (participant.email && userEmailToRolesMap[participant.email.toLowerCase()]) {
+                const roles = userEmailToRolesMap[participant.email.toLowerCase()].roles;
+                if (roles.length > 0) {
+                    roleInfo = `<small>(${roles.join(', ')})</small> `;
+                }
+            }
+            
+            html += `
+                <span class="badge bg-success me-2 mb-2">
+                    ${displayName} ${roleInfo}
+                    <button type="button" class="btn-close btn-close-white ms-1" 
+                            onclick="removeParticipant('admin', ${participant.id})" 
+                            style="font-size: 0.75em;"></button>
+                </span>
+            `;
+        });
+        selectedParticipants.teams.forEach(participant => {
+            const displayName = participant.name || participant.team_name || 'No name';
+            html += `
+                <span class="badge bg-warning text-dark me-2 mb-2">
+                    ${displayName}
+                    <button type="button" class="btn-close ms-1" 
+                            onclick="removeParticipant('team', ${participant.id})" 
+                            style="font-size: 0.75em;"></button>
+                </span>
+            `;
+        });
+        container.innerHTML = html;
+    } else {
+        container.innerHTML = '<small class="text-muted">No participants selected yet</small>';
+    }
+}
+
+function updateQuickAddCheckboxes() {
+    const allEmployeesSelected = Array.isArray(allEmployees) && allEmployees.length > 0 && 
+        allEmployees.every(emp => isParticipantSelected('employee', emp.employee_id));
+        
+    if(document.getElementById('allEmployees')) {
+        document.getElementById('allEmployees').checked = allEmployeesSelected;
+    }
+
+    const allAdminsSelected = Array.isArray(allAdmins) && allAdmins.length > 0 && 
+        allAdmins.every(admin => isParticipantSelected('admin', admin.admin_id));
+        
+    if(document.getElementById('allAdmins')) {
+        document.getElementById('allAdmins').checked = allAdminsSelected;
+    }
+
+    const allTeamsSelected = Array.isArray(allTeams) && allTeams.length > 0 && 
+        allTeams.every(team => isParticipantSelected('team', team.team_id));
+        
+    if(document.getElementById('allTeams')) {
+        document.getElementById('allTeams').checked = allTeamsSelected;
+    }
+}
+
+function resetForm() {
+    document.getElementById('eventForm').reset();
+    selectedParticipants = { employees: [], admins: [], teams: [] };
+    updateSelectedParticipantsDisplay();
+    if(document.getElementById('allAdmins')) document.getElementById('allAdmins').checked = false;
+    if(document.getElementById('allEmployees')) document.getElementById('allEmployees').checked = false;
+    if(document.getElementById('allTeams')) document.getElementById('allTeams').checked = false;
+    if(document.getElementById('displayType')) document.getElementById('displayType').value = '';
+    if(document.getElementById('participantsList')) document.getElementById('participantsList').style.display = 'none';
+    if(document.getElementById('searchResults')) document.getElementById('searchResults').style.display = 'none';
+    if(document.getElementById('searchInput')) document.getElementById('searchInput').value = '';
+    if (typeof fetchEvents === 'function') {
+        fetchEvents();
+    }
+}
+</script>
+<!-- Script for creating events (End) -->
+
+<!-- Script for displaying details, edit, delete, and searching the events (Start) -->
+<script>
+
+let selectedEventId;
+let allEvents = [];
+
+function getAdminToken() {
+  return sessionStorage.getItem('adminToken');
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  fetchEvents();
+  setupEventSearch();
+});
+
+function fetchEvents() {
+  const token = getAdminToken();
+  if (!token) {
+    modalutils.showerror('Missing admin token. Please log in again.');
+    return;
+  }
+  ModalUtils.showSpinner();
+  fetch('/get_events', {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
+  })
+  .then(response => {
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+    return response.json();
+  })
+  .then(events => {
+    allEvents = events || [];
+    renderEventTable(allEvents);
+    ModalUtils.hideSpinner();
+  })
+  .catch(error => {
+    ModalUtils.hideSpinner();
+    console.error("Error fetching events:", error);
+    modalutils.showerror("Failed to load events.");
+  });
+}
+
+function renderEventTable(events) {
+  const tableBody = document.getElementById("eventTableBody");
+  tableBody.innerHTML = "";
+
+  if (!events.length) {
+    tableBody.innerHTML = `<tr><td colspan="12" class="text-center">No events found.</td></tr>`;
+    return;
+  }
+
+  events.forEach(event => {
+    const row = document.createElement("tr");
+
+    const formatParticipants = (participants) => {
+      if (!participants || participants.length === 0) return '<li>No participants</li>';
+      const employees = participants.filter(p => p.type === 'employee');
+      if (employees.length === 0) return '<li>No employee participants</li>';
+      return employees.map(p =>
+        `<li>ID ${p.employee_id}: ${p.first_name} ${p.last_name} (${p.email})</li>`
+      ).join("");
+    };
+
+    const formatAdminParticipants = (participants) => {
+      if (!participants || participants.length === 0) return '<li>No admin participants</li>';
+      const admins = participants.filter(p => p.type === 'admin');
+      if (admins.length === 0) return '<li>No admin participants</li>';
+      return admins.map(p =>
+        `<li>Admin ID ${p.employee_id}: ${p.first_name} ${p.last_name} (${p.email})</li>`
+      ).join("");
+    };
+
+    row.innerHTML = `
+      <td>${event.event_id}</td>
+      <td>${event.title}</td>
+      <td>${event.description}</td>
+      <td>${event.event_date ? new Date(event.event_date).toLocaleString() : ""}</td>
+      <td>${event.location}</td>
+      <td>${event.budget}</td>
+      <td>${event.status}</td>
+      <td>${event.recurrence}</td>
+      <td>${event.admin_email || event.super_admin_email || ""}</td>
+      <td>
+        <ul>
+          ${formatParticipants(event.participants)}
+        </ul>
+      </td>
+      <td>
+        <ul>
+          ${(event.teams || []).map(t => `<li>Team ID ${t.team_id}: ${t.team_name}</li>`).join("")}
+        </ul>
+      </td>
+      <td>
+        <ul>
+          ${formatAdminParticipants(event.participants)}
+        </ul>
+      </td>
+      <td>
+        <button class="btn btn-info" onclick="openEditEventModal(${event.event_id})">Edit</button>
+        <button class="btn btn-danger" onclick="openDeleteEventModal(${event.event_id})">Delete</button>
+      </td>
+    `;
+    tableBody.appendChild(row);
+  });
+}
+
+function setupEventSearch() {
+  const searchInput = document.getElementById('searchEventInput');
+  if (!searchInput) return;
+  searchInput.addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase().trim();
+    if (!searchTerm) {
+      renderEventTable(allEvents);
+      return;
+    }
+    const filteredEvents = allEvents.filter(event => {
+      const dateStr = event.event_date ? new Date(event.event_date).toLocaleString().toLowerCase() : "";
+      const adminEmail = (event.admin_email || event.super_admin_email || "").toLowerCase();
+      const teamNames = (event.teams || []).map(t => t.team_name && t.team_name.toLowerCase() || '').join(" ");
+      const participants = (event.participants || []).map(p =>
+        [p.first_name, p.last_name, p.email].filter(Boolean).join(" ").toLowerCase()
+      ).join(" ");
+      return (
+        (event.title && event.title.toLowerCase().includes(searchTerm)) ||
+        (event.location && event.location.toLowerCase().includes(searchTerm)) ||
+        (event.status && event.status.toLowerCase().includes(searchTerm)) ||
+        dateStr.includes(searchTerm) ||
+        adminEmail.includes(searchTerm) ||
+        participants.includes(searchTerm) ||
+        teamNames.includes(searchTerm) ||
+        (""+event.event_id).includes(searchTerm)
+      );
+    });
+    renderEventTable(filteredEvents);
+  });
+}
+
+// Open edit modal for a given event and populate fields
+function openEditEventModal(eventId) {
+  const token = getAdminToken();
+  if (!token) {
+    modalutils.showerror('Missing admin token. Please log in again.');
+    return;
+  }
+  ModalUtils.showSpinner();
+  fetch(`/get_event/${eventId}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  .then(response => {
+    if (!response.ok) throw new Error('Failed to fetch event details');
+    return response.json();
+  })
+  .then(eventData => {
+    ModalUtils.hideSpinner();
+    selectedEventId = eventData.event_id;
+    if (document.getElementById('editEventTitle')) {
+      document.getElementById('editEventTitle').value = eventData.title || "";
+    }
+    if (document.getElementById('editEventDescription')) {
+      document.getElementById('editEventDescription').value = eventData.description || "";
+    }
+    if (document.getElementById('editEventDate')) {
+      if (eventData.event_date) {
+        const dateObj = new Date(eventData.event_date);
+        document.getElementById('editEventDate').value = dateObj.toISOString().slice(0,10);
+      } else {
+        document.getElementById('editEventDate').value = "";
+      }
+    }
+    if (document.getElementById('editEventTime')) {
+      if (eventData.event_date) {
+        const dateObj = new Date(eventData.event_date);
+        const hh = String(dateObj.getHours()).padStart(2,'0');
+        const mm = String(dateObj.getMinutes()).padStart(2,'0');
+        document.getElementById('editEventTime').value = `${hh}:${mm}`;
+      } else {
+        document.getElementById('editEventTime').value = "";
+      }
+    }
+    if (document.getElementById('editEventLocation')) {
+      document.getElementById('editEventLocation').value = eventData.location || "";
+    }
+    if (document.getElementById('editEventBudget')) {
+      document.getElementById('editEventBudget').value = eventData.budget || "";
+    }
+    if (document.getElementById('editEventRecurrence')) {
+      document.getElementById('editEventRecurrence').value = eventData.recurrence || "";
+    }
+    if (document.getElementById('editEventStatus')) {
+      document.getElementById('editEventStatus').value = eventData.status || "";
+    }
+    $('#editEventModal').modal('show');
+  })
+  .catch(error => {
+    ModalUtils.hideSpinner();
+    console.error("Error fetching event for edit:", error);
+    modalutils.showerror("Failed to load event details.");
+  });
+}
+
+function openDeleteEventModal(eventId) {
+  selectedEventId = eventId;
+  $('#deleteEventModal').modal('show');
+}
+
+if (document.getElementById("editEventForm")) {
+  document.getElementById("editEventForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const token = getAdminToken();
+    if (!token) {
+      modalutils.showerror('Missing admin token. Please log in again.');
+      return;
+    }
+    const formData = new FormData(this);
+    const date = formData.get('date');
+    const time = formData.get('time');
+    const event_date = date && time ? `${date}T${time}:00` : "";
+
+    const eventData = {
+      title: formData.get('title'),
+      description: formData.get('description'),
+      event_date: event_date,
+      location: formData.get('location'),
+      budget: formData.get('budget'),
+      recurrence: formData.get('recurrence'),
+      status: formData.get('status')
+    };
+
+    ModalUtils.showSpinner();
+    fetch(`/update_event/${selectedEventId}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(eventData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      showModalAfterModalHide('#editEventModal', function() {
+        if (data.message) {
+          ModalUtils.showSuccess("Event updated successfully.",() => window.location.reload());
+          fetchEvents();
+        } else {
+          modalutils.showerror(data.error || "Failed to update event.");
+        }
+      });
+    })
+    .catch(error => {
+      showModalAfterModalHide('#editEventModal', function() {
+        console.error("Update error:", error);
+        modalutils.showerror("An error occurred while updating the event.");
+      });
+    });
+  });
+}
+
+function deleteEventConfirmed() {
+  const token = getAdminToken();
+  if (!selectedEventId || !token) {
+    modalutils.showerror("Missing token or event ID.");
+    return;
+  }
+  ModalUtils.showSpinner();
+  fetch(`/delete_event/${selectedEventId}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    showModalAfterModalHide('#deleteEventModal', function() {
+      if (data.message) {
+        ModalUtils.showSuccess("Event deleted successfully.",() => window.location.reload());
+        fetchEvents();
+      } else {
+        modalutils.showerror(data.error || "Failed to delete event.");
+      }
+    });
+  })
+  .catch(error => {
+    showModalAfterModalHide('#deleteEventModal', function() {
+      console.error("Delete error:", error);
+      modalutils.showerror("An error occurred while deleting the event.");
+    });
+  });
+}
+</script>
+<!-- Script for displaying details, edit, delete, and searching the events (End) -->
+
+<!-- Script for inserting,deleting,editing and viewing details of the survey (Start) -->
+<script>
+  const token = sessionStorage.getItem('adminToken');
+
+
+let allSurveys = []; // Store all surveys for client-side search
+// ====== GLOBAL addSurveyQuestion & getSurveyQuestions =========
+
+function addSurveyQuestion(questionData) {
+    console.debug("addSurveyQuestion called with:", questionData);
+    var container = document.getElementById('questionsContainer');
+    if (!container) {
+        console.warn("addSurveyQuestion: No #questionsContainer found");
+        return;
+    }
+
+    var qIdx = Date.now() + Math.floor(Math.random() * 1000);
+
+    var question = questionData || {
+        question_text: '',
+        question_type: 'text',
+        options: []
+    };
+
+    var block = document.createElement('div');
+    block.className = 'card mb-3';
+    block.setAttribute('data-question-idx', qIdx);
+
+    var html = `
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <strong>Question</strong>
+          <button type="button" class="btn btn-sm btn-danger" onclick="this.closest('.card').remove()">Remove</button>
+        </div>
+        <div class="form-group mt-2">
+          <input type="text" class="form-control question-text" placeholder="Question text" value="${question.question_text || ''}" required>
+        </div>
+        <div class="form-group mt-2">
+          <label>Type</label>
+          <select class="form-control question-type">
+            <option value="text"${question.question_type === 'text' ? ' selected' : ''}>Text</option>
+            <option value="multiple_choice"${question.question_type === 'multiple_choice' ? ' selected' : ''}>Multiple Choice</option>
+            <option value="rating"${question.question_type === 'rating' ? ' selected' : ''}>Rating</option>
+          </select>
+        </div>
+        <div class="options-section mt-2" style="display:${question.question_type === 'multiple_choice' ? 'block' : 'none'}">
+          <label>Options</label>
+          <div class="options-list">
+            ${(question.options||[]).map(opt => `
+              <div class="input-group mb-2">
+                <input type="text" class="form-control option-text" value="${opt.option_text || ''}" placeholder="Option text">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-danger btn-remove-option" type="button">&times;</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-success btn-add-option">Add Option</button>
+        </div>
+      </div>
+    `;
+
+    block.innerHTML = html;
+    container.appendChild(block);
+
+    var typeSelect = block.querySelector('.question-type');
+    var optionsSection = block.querySelector('.options-section');
+    var optionsList = block.querySelector('.options-list');
+    var addOptBtn = block.querySelector('.btn-add-option');
+
+    typeSelect.addEventListener('change', function() {
+        console.debug("Question type changed:", this.value);
+        if (this.value === 'multiple_choice') {
+            optionsSection.style.display = 'block';
+        } else {
+            optionsSection.style.display = 'none';
+        }
+    });
+
+    if (addOptBtn) {
+        addOptBtn.addEventListener('click', function() {
+            var optDiv = document.createElement('div');
+            optDiv.className = 'input-group mb-2';
+            optDiv.innerHTML = `
+                <input type="text" class="form-control option-text" placeholder="Option text">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-danger btn-remove-option" type="button">&times;</button>
+                </div>
+            `;
+            optDiv.querySelector('.btn-remove-option').onclick = function() {
+                optDiv.remove();
+            };
+            optionsList.appendChild(optDiv);
+        });
+    }
+    block.querySelectorAll('.btn-remove-option').forEach(btn => {
+        btn.onclick = function() {
+            btn.closest('.input-group').remove();
+        };
+    });
+}
+
+function getSurveyQuestions(containerSelector) {
+    console.debug("getSurveyQuestions called for:", containerSelector);
+    const questions = [];
+    $(containerSelector).find('.card').each(function() {
+        const qText = $(this).find('.question-text').val();
+        const qType = $(this).find('.question-type').val();
+        let options = [];
+        if (qType === 'multiple_choice') {
+            options = $(this).find('.option-text').map(function() {
+                return { option_text: $(this).val() };
+            }).get().filter(opt => opt.option_text);
+        }
+        questions.push({
+            question_text: qText,
+            question_type: qType,
+            options: options
+        });
+    });
+    console.debug("getSurveyQuestions result:", questions);
+    return questions;
+}
+
+
+// ====== GLOBAL addEditQuestion =========
+function addEditQuestion(questionData) {
+    console.debug("addEditQuestion called with:", questionData);
+    var container = document.getElementById('editQuestionsContainer');
+    if (!container) {
+        console.warn("addEditQuestion: No #editQuestionsContainer found");
+        return;
+    }
+
+    var qIdx = Date.now() + Math.floor(Math.random() * 1000);
+
+    var question = questionData || {
+        question_text: '',
+        question_type: 'text',
+        options: []
+    };
+
+    var block = document.createElement('div');
+    block.className = 'card mb-3';
+    block.setAttribute('data-question-idx', qIdx);
+
+    var html = `
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <strong>Question</strong>
+          <button type="button" class="btn btn-sm btn-danger" onclick="this.closest('.card').remove()">Remove</button>
+        </div>
+        <div class="form-group mt-2">
+          <input type="text" class="form-control question-text" placeholder="Question text" value="${question.question_text || ''}" required>
+        </div>
+        <div class="form-group mt-2">
+          <label>Type</label>
+          <select class="form-control question-type">
+            <option value="text"${question.question_type === 'text' ? ' selected' : ''}>Text</option>
+            <option value="multiple_choice"${question.question_type === 'multiple_choice' ? ' selected' : ''}>Multiple Choice</option>
+            <option value="rating"${question.question_type === 'rating' ? ' selected' : ''}>Rating</option>
+          </select>
+        </div>
+        <div class="options-section mt-2" style="display:${question.question_type === 'multiple_choice' ? 'block' : 'none'}">
+          <label>Options</label>
+          <div class="options-list">
+            ${(question.options||[]).map(opt => `
+              <div class="input-group mb-2">
+                <input type="text" class="form-control option-text" value="${opt.option_text || ''}" placeholder="Option text">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-danger btn-remove-option" type="button">&times;</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-success btn-add-option">Add Option</button>
+        </div>
+      </div>
+    `;
+
+    block.innerHTML = html;
+    container.appendChild(block);
+
+    var typeSelect = block.querySelector('.question-type');
+    var optionsSection = block.querySelector('.options-section');
+    var optionsList = block.querySelector('.options-list');
+    var addOptBtn = block.querySelector('.btn-add-option');
+
+    typeSelect.addEventListener('change', function() {
+        console.debug("Edit question type changed:", this.value);
+        if (this.value === 'multiple_choice') {
+            optionsSection.style.display = 'block';
+        } else {
+            optionsSection.style.display = 'none';
+        }
+    });
+
+    if (addOptBtn) {
+        addOptBtn.addEventListener('click', function() {
+            var optDiv = document.createElement('div');
+            optDiv.className = 'input-group mb-2';
+            optDiv.innerHTML = `
+                <input type="text" class="form-control option-text" placeholder="Option text">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-danger btn-remove-option" type="button">&times;</button>
+                </div>
+            `;
+            optDiv.querySelector('.btn-remove-option').onclick = function() {
+                optDiv.remove();
+            };
+            optionsList.appendChild(optDiv);
+        });
+    }
+    block.querySelectorAll('.btn-remove-option').forEach(btn => {
+        btn.onclick = function() {
+            btn.closest('.input-group').remove();
+        };
+    });
+}
+
+// =============================================================
+
+$(document).ready(function() {
+    // ==================== Survey Management ====================
+
+    setTimeout(() => {
+        console.log("=== FINAL DEBUGGING CHECK ===");
+        console.log("Assignment buttons in DOM:", $('.assignment-btn').length);
+        console.log("Event handlers bound:", $._data(document, "events"));
+        
+        // Test if you can manually trigger the modal
+        console.log("You can test the modal manually by running: testAssignmentModal(1)");
+    }, 3000);
+
+    // Load all surveys on page load
+    loadSurveys();
+
+    // Survey search (client-side)
+   $('#searchSurveyInput').on('input', function() {
+    const searchTerm = $(this).val().toLowerCase().trim();
+    if (!allSurveys) return;
+    if (!searchTerm) {
+        renderSurveyTable(allSurveys);
+        return;
+    }
+    const filtered = allSurveys.filter(survey =>
+        (survey.title && survey.title.toLowerCase().includes(searchTerm)) ||
+        (survey.description && survey.description.toLowerCase().includes(searchTerm)) ||
+        (survey.created_at && new Date(survey.created_at).toLocaleString().toLowerCase().includes(searchTerm))
+    );
+    renderSurveyTable(filtered);
+});
+
+    // --- CREATE SURVEY MODAL: Populate Employees/Teams on Type Change ---
+    $('#assignment_type').change(function() {
+        const type = $(this).val();
+        const $assignedSelect = $('#assigned_id');
+        $assignedSelect.html('<option value="">Select</option>'); // Reset
+        if (!type) return;
+        let endpoint, idField, nameField;
+        if (type === 'employee') {
+            endpoint = '/get_employees';
+            idField = 'employee_id';
+            nameField = 'email';
+        } else if (type === 'team') {
+            endpoint = '/get_teams';
+            idField = 'team_id';
+            nameField = 'team_name';
+        } else {
+            return;
+        }
+        ModalUtils.showSpinner();
+        $.ajax({
+            url: endpoint,
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${token}` },
+            success: function(response) {
+                ModalUtils.hideSpinner();
+                let options = '<option value="">Select</option>';
+                response.forEach(item => {
+                    let displayText = item[nameField] || (type === 'employee' ? 'Employee #' + item[idField] : 'Team #' + item[idField]);
+                    options += `<option value="${item[idField]}">${displayText}</option>`;
+                });
+                $assignedSelect.html(options);
+            },
+            error: function(xhr) {
+                ModalUtils.hideSpinner();
+                modalutils.showerror("Failed to load assignees.");
+            }
+        });
+    });
+
+    $('#editAssignmentType').change(fetchEditEmployeesOrTeams);
+
+    $(document).on('click', '#addEditQuestionBtn', function() {
+        addEditQuestion();
+    });
+
+    $('#editSurveyModal').on('hidden.bs.modal', function() {
+        window.currentAssignment = null;
+    });
+
+    $(document).on('click', '.allow-resubmission-btn', function () {
+        const surveyId = $(this).data('survey-id');
+        const employeeId = $(this).data('employee-id');
+        const btn = $(this);
+        btn.prop('disabled', true).text('Processing...');
+        ModalUtils.showSpinner();
+        $.ajax({
+            url: '/allow_resubmission',
+            method: 'POST',
+            contentType: 'application/json',
+            headers: { 'Authorization': `Bearer ${token}` },
+            data: JSON.stringify({ survey_id: surveyId, employee_id: employeeId })
+        })
+        .done(function (resp) {
+            ModalUtils.hideSpinner();
+            $('#employeeResubmissionModal').modal('hide');
+            ModalUtils.showSuccess('Resubmission enabled for this employee.',() => window.location.reload());
+            btn.text('Allowed!');
+        })
+        .fail(function (xhr) {
+            ModalUtils.hideSpinner();
+            $('#employeeResubmissionModal').modal('hide');
+            modalutils.showerror('Failed to allow resubmission: ' + (xhr.responseJSON?.error || 'Unknown error'));
+            btn.text('Allow Resubmission').prop('disabled', false);
+        });
+    });
+
+$(document).on('click', '.view-survey-btn', function() {
+    const surveyId = $(this).data('survey-id');
+    ModalUtils.showSpinner();
+    $.ajax({
+      url: `/get_survey_details/${surveyId}`,
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${token}` },
+      success: function(response) {
+        ModalUtils.hideSpinner();
+        // --- DEBUG: Log the full response from backend ---
+        console.debug("Survey detail response:", response);
+
+        if (response.error) {
+          ModalUtils.showerror(response.error);
+          return;
+        }
+        $('#viewSurveyTitle').text(response.title);
+        $('#viewSurveyDescription').text(response.description);
+        $('#viewSurveyCreatedAt').text(response.created_at);
+        $('#viewSurveyStatus').text(response.is_active ? 'Active' : 'Inactive');
+
+        // Assignment details rendering
+        let assignmentHtml = '';
+        if (response.assignment_type === 'employee') {
+          console.debug("Assigned Employees:", response.assigned_employees);
+          assignmentHtml += `<p><strong>Assigned Employee(s):</strong> ${
+            response.assigned_employees && response.assigned_employees.length
+              ? response.assigned_employees.map(emp =>
+                  `<span class="badge badge-info mr-1">${emp.email} (ID: ${emp.employee_id})</span>`
+                ).join(' ')
+              : 'None'
+          }</p>`;
+        } else if (response.assignment_type === 'team') {
+          console.debug("Assigned Team:", response.assigned_team);
+          console.debug("Team Members:", response.team_members);
+          assignmentHtml += `<p><strong>Assigned Team:</strong> ${
+            response.assigned_team
+              ? `<span class="badge badge-warning">${response.assigned_team.team_name} (ID: ${response.assigned_team.team_id})</span>`
+              : 'None'
+          }</p>`;
+          assignmentHtml += `<p><strong>Team Members:</strong> ${
+            response.team_members && response.team_members.length
+              ? response.team_members.map(emp =>
+                  `<span class="badge badge-info mr-1">${emp.email} (ID: ${emp.employee_id})</span>`
+                ).join(' ')
+              : 'None'
+          }</p>`;
+        } else {
+          assignmentHtml += `<p><strong>Assignment:</strong> None</p>`;
+        }
+        $('#viewSurveyAssignment').html(assignmentHtml);
+
+        // Questions
+        let questionsHtml = '';
+        response.questions.forEach((question, idx) => {
+          // --- DEBUG: Log each question and options ---
+          console.debug("Question #", idx + 1, question);
+          questionsHtml += `<div class="mb-3 p-3 border rounded">
+              <div class="d-flex justify-content-between">
+                  <strong>${question.question_text}</strong>
+                  <span class="badge bg-secondary">${question.question_type}</span>
+              </div>`;
+          if (question.options && question.options.length > 0) {
+            console.debug("Options for Q#", idx + 1, question.options);
+            questionsHtml += `<div class="mt-2 options-container">`;
+            if (question.question_type === 'multiple_choice') {
+              questionsHtml += `<p class="mb-1"><em>Options:</em></p>`;
+              question.options.forEach(option => {
+                questionsHtml += `<div class="option-item ps-3">
+                  ${option.option_text}${option.is_correct ? '<span class="badge bg-success ms-2">Correct</span>' : ''}
+                </div>`;
+              });
+            } else if (question.question_type === 'rating') {
+              questionsHtml += `<p class="mb-1"><em>Rating Scale: 1-${question.rating_scale || 5}</em></p>`;
+            }
+            questionsHtml += `</div>`;
+          }
+          questionsHtml += `</div>`;
+        });
+        $('#viewSurveyQuestions').html(questionsHtml);
+        $('#viewSurveyModal').modal('show');
+      },
+      error: function(xhr) {
+        ModalUtils.hideSpinner();
+        console.error("View Error:", xhr.responseText);
+        ModalUtils.showerror("Failed to load survey details. See console for details.");
+      }
+    });
+});
+
+    function debugButtonRendering() {
+    setTimeout(() => {
+        console.log("=== DEBUGGING BUTTON RENDERING ===");
+        const assignmentButtons = $('.assignment-btn');
+        console.log("Assignment buttons found:", assignmentButtons.length);
+        
+        assignmentButtons.each(function(index) {
+            console.log(`Button ${index}:`, this);
+            console.log(`Button ${index} HTML:`, this.outerHTML);
+            console.log(`Button ${index} survey-id:`, $(this).data('survey-id'));
+        });
+        
+        // Test if clicking works programmatically
+        if (assignmentButtons.length > 0) {
+            console.log("Testing programmatic click on first button...");
+            // Don't actually click it, just test if we can access it
+        }
+    }, 2000); // Wait 2 seconds for table to render
+}
+
+    $(document).off('click', '.assignment-btn');
+
+$(document).on('click', '.assignment-btn', function(e) {
+    console.log("=== ASSIGNMENT BUTTON CLICKED - NEW HANDLER ===");
+    console.log("Event:", e);
+    console.log("Button:", this);
+    
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const $button = $(this);
+    const surveyId = $button.data('survey-id');
+    
+    console.log("Survey ID:", surveyId);
+    console.log("Button data:", $button.data());
+    
+    if (!surveyId) {
+        console.error("No survey ID found");
+        alert("Error: No survey ID found");
+        return;
+    }
+    
+    // Disable button temporarily to prevent double clicks
+    $button.prop('disabled', true).text('Loading...');
+    
+    try {
+        console.log("Calling openResubmissionModal...");
+        openResubmissionModal(surveyId);
+    } catch (error) {
+        console.error("Error calling openResubmissionModal:", error);
+        alert("Error: " + error.message);
+    } finally {
+        // Re-enable button after a short delay
+        setTimeout(() => {
+            $button.prop('disabled', false).text('Assignments');
+        }, 2000);
+    }
+});
+
+function addDirectClickHandlers() {
+    $('.assignment-btn').each(function() {
+        $(this).off('click.direct'); // Remove any existing direct handlers
+        $(this).on('click.direct', function(e) {
+            console.log("=== DIRECT CLICK HANDLER TRIGGERED ===");
+            const surveyId = $(this).data('survey-id');
+            console.log("Direct handler - Survey ID:", surveyId);
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (surveyId) {
+                openResubmissionModal(surveyId);
+            }
+        });
+    });
+}
+
+    // NEW: View Responses for a survey
+    $(document).on('click', '.view-responses-btn', function() {
+        const surveyId = $(this).data('survey-id');
+        viewSurveyResponses(surveyId);
+    });
+
+function viewSurveyResponses(surveyId) {
+    ModalUtils.showSpinner();
+    $.ajax({
+        url: `/admin/survey/${surveyId}/responses`,
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` },
+        success: function(response) {
+            ModalUtils.hideSpinner();
+            responsesBySurveyId[surveyId] = response.responses || [];
+            $('#responsesModal').attr('data-survey-id', surveyId); // <-- ADD THIS LINE
+            $('#surveyTitleDisplay').text("Survey: " + (response.survey_title || ""));
+            displayFilteredResponses(responsesBySurveyId[surveyId]);
+            $('#responsesModal').modal('show');
+        },
+        error: function() {
+            ModalUtils.hideSpinner();
+            $('#responsesModal').attr('data-survey-id', surveyId); // <-- ADD THIS LINE
+            $('#responsesTableBody').html('<tr><td colspan="5" class="text-danger text-center py-4">Failed to load responses.</td></tr>');
+            $('#responsesModal').modal('show');
+        }
+    });
+}
+
+    function displayFilteredResponses(responses) {
+        const tbody = $('#responsesTableBody');
+        if (!responses.length) {
+            tbody.html('<tr><td colspan="5" class="text-center py-4">No responses found</td></tr>');
+            return;
+        }
+        tbody.html(responses.map(response => {
+            const name = [response.first_name, response.last_name].filter(Boolean).join(' ').trim() || response.username || 'Anonymous';
+            return `
+                <tr>
+                    <td>${name}</td>
+                    <td>${response.email || ''}</td>
+                    <td>${response.question_text}</td>
+                    <td>${response.response_text}</td>
+                    <td>${response.question_type}</td>
+                    <td>${formatDate(response.submitted_at)}</td>
+                </tr>
+            `;
+        }).join(''));
+    }
+   
+    function formatDate(dateString) {
+        if (!dateString) return "";
+        const date = new Date(dateString);
+        return date.toLocaleString(undefined, {
+            year: "numeric", month: "long", day: "numeric",
+            hour: "numeric", minute: "2-digit", hour12: true
+        });
+    }
+    
+function fetchSurveyAssignments(surveyId) {
+        console.log("=== fetchSurveyAssignments called ===");
+        console.log("Survey ID:", surveyId);
+        console.log("Token exists:", !!token);
+        console.log("Token value:", token ? token.substring(0, 10) + "..." : "null");
+        
+        const ajaxSettings = {
+            url: `/survey/${surveyId}/assignments`,
+            method: 'GET',
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            timeout: 30000 // 30 second timeout
+        };
+        
+        console.log("AJAX settings:", ajaxSettings);
+        
+        ModalUtils.showSpinner();
+        
+        return $.ajax(ajaxSettings)
+            .always(function() {
+                console.log("AJAX request completed");
+                ModalUtils.hideSpinner();
+            })
+            .done(function(data, textStatus, xhr) {
+                console.log("✓ AJAX Success:");
+                console.log("Data:", data);
+                console.log("Status:", textStatus);
+                console.log("Response headers:", xhr.getAllResponseHeaders());
+            })
+            .fail(function(xhr, status, error) {
+                console.error("✗ AJAX Error:");
+                console.error("Status code:", xhr.status);
+                console.error("Status text:", xhr.statusText);
+                console.error("Response text:", xhr.responseText);
+                console.error("Error:", error);
+                console.error("Ready state:", xhr.readyState);
+            });
+    }
+
+    window.addEventListener('error', function(e) {
+    console.error('Global error caught:', e.error);
+    console.error('Error message:', e.message);
+    console.error('Error source:', e.filename + ':' + e.lineno);
+});
+
+$(document).ready(function() {
+    // Check if Bootstrap CSS is loaded
+    if (!$('.modal').length || !$('.modal').css('position')) {
+        console.warn("Bootstrap CSS may not be loaded properly");
+    }
+    
+    // Check if there are multiple jQuery versions
+    if (window.$ !== window.jQuery) {
+        console.warn("Multiple jQuery versions detected - this may cause issues");
+    }
+});
+    function fetchEditEmployeesOrTeams() {
+        const type = $('#editAssignmentType').val();
+        const targetSelect = $('#editAssignedTo');
+        if (!type) {
+          targetSelect.html('<option value="">Select</option>');
+          return;
+        }
+        const endpoint = type === 'employee' ? '/get_employees' : '/get_teams';
+        const idField = type === 'employee' ? 'employee_id' : 'team_id';
+        const nameField = type === 'employee' ? 'email' : 'team_name';
+        const token = sessionStorage.getItem("adminToken");
+        ModalUtils.showSpinner();
+        $.ajax({
+          url: endpoint,
+          method: 'GET',
+          headers: { 'Authorization': `Bearer ${token}` },
+          success: function(response) {
+            ModalUtils.hideSpinner();
+            let options = '<option value="">Select</option>';
+            response.forEach(item => {
+              let displayText = item[nameField];
+              if (type === 'employee' && (!displayText || displayText.trim() === '')) {
+                displayText = 'Employee #' + item[idField];
+              }
+              options += `<option value="${item[idField]}">${displayText}</option>`;
+            });
+            targetSelect.html(options);
+            if (window.currentAssignment && window.currentAssignment.assigned_id) {
+              targetSelect.val(window.currentAssignment.assigned_id);
+            }
+          },
+          error: function(xhr) {
+            ModalUtils.hideSpinner();
+            console.error("Error loading assignees:", xhr.responseText);
+            modalutils.showerror("Failed to load assignees. Check console for details.");
+          }
+        });
+      }
+
+    // Edit survey modal
+    $(document).on('click', '.edit-survey-btn', function() {
+        const surveyId = $(this).data('survey-id');
+        ModalUtils.showSpinner();
+        $.ajax({
+          url: `/get_survey_details/${surveyId}`,
+          method: 'GET',
+          headers: { 'Authorization': `Bearer ${token}` },
+          success: function(response) {
+            ModalUtils.hideSpinner();
+            if (response.error) {
+              modalutils.showerror(response.error);
+              return;
+            }
+            window.currentAssignment = {
+              type: response.assignment_type,
+              assigned_id: response.assigned_id
+            };
+            $('#editSurveyId').val(response.survey_id);
+            $('#editSurveyTitle').val(response.title);
+            $('#editSurveyDescription').val(response.description);
+            $('#editSurveyStatus').val(response.is_active ? '1' : '0');
+            $('#editAssignmentType').val(response.assignment_type || '');
+            fetchEditEmployeesOrTeams();
+            $('#editQuestionsContainer').empty();
+            if (response.questions && response.questions.length > 0) {
+              response.questions.forEach(question => {
+                addEditQuestion(question);
+              });
+            } else {
+              addEditQuestion();
+            }
+            $('#editSurveyModal').modal('show');
+          },
+          error: function(xhr) {
+            ModalUtils.hideSpinner();
+            console.error("Edit Error:", xhr.responseText);
+            modalutils.showerror("Failed to load survey details. See console for details.");
+          }
+        });
+    });
+
+    $('#editSurveyForm').submit(function(event) {
+        event.preventDefault();
+        const surveyData = {
+          id: $('#editSurveyId').val(),
+          title: $('#editSurveyTitle').val(),
+          description: $('#editSurveyDescription').val(),
+          status: $('#editSurveyStatus').val(),
+          questions: getSurveyQuestions('#editQuestionsContainer'),
+          assignment_type: $('#editAssignmentType').val(),
+          assigned_id: $('#editAssignedTo').val()
+        };
+        ModalUtils.showSpinner();
+        $.ajax({
+          url: `/edit_survey/${surveyData.id}`,
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "X-CSRFToken": document.querySelector('meta[name="csrf-token"]').content,
+          },
+          data: JSON.stringify(surveyData),
+          success: function(response) {
+            ModalUtils.hideSpinner();
+            if (response.error) {
+              modalutils.showerror(response.error);
+              return;
+            }
+            $('#editSurveyModal').modal('hide');
+            ModalUtils.showSuccess('Survey updated successfully!',() => window.location.reload());
+          },
+          error: function(xhr, status, error) {
+    ModalUtils.hideSpinner();
+    let msg = "Unknown error";
+    try {
+        if (xhr.responseJSON && xhr.responseJSON.error) {
+            msg = xhr.responseJSON.error;
+        } else if (xhr.responseText) {
+            let parsed = JSON.parse(xhr.responseText);
+            if (parsed && parsed.error) {
+                msg = parsed.error;
+            } else {
+                msg = xhr.responseText;
+            }
+        } else if (xhr.statusText) {
+            msg = xhr.statusText;
+        }
+    } catch (e) {
+        if (xhr.responseText) {
+            msg = xhr.responseText;
+        }
+    }
+    modalutils.showerror("Error: " + msg);
+}
+        });
+    });
+
+    let responsesBySurveyId = {};
+
+window.openResubmissionModal = function (surveyId) {
+    console.log("=== openResubmissionModal called ===");
+    console.log("Survey ID:", surveyId);
+    
+    // Simple check
+    const modal = $('#employeeResubmissionModal');
+    if (modal.length === 0) {
+        alert("Modal not found!");
+        return;
+    }
+    
+    // Set loading content and show modal
+    $('#employeeResubmissionTableBody').html('<tr><td colspan="4" class="text-center">Loading assignments...</td></tr>');
+    
+    console.log("Showing modal...");
+    modal.modal('show');
+    
+    // Add event listeners to see if modal actually shows
+    modal.one('shown.bs.modal', function() {
+        console.log("✓ Modal is now visible");
+    });
+    
+    modal.one('show.bs.modal', function() {
+        console.log("✓ Modal show event triggered");
+    });
+    
+    // Load assignments
+    console.log("Loading assignments for survey:", surveyId);
+    
+    // Simplified AJAX call for testing
+    $.ajax({
+        url: `/survey/${surveyId}/assignments`,
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` },
+        timeout: 10000
+    })
+    .done(function(assignments) {
+        console.log("✓ Assignments loaded:", assignments);
+        
+        if (!assignments || !assignments.length) {
+            $('#employeeResubmissionTableBody').html('<tr><td colspan="4" class="text-center">No assignments found.</td></tr>');
+            return;
+        }
+        
+        let html = '';
+        assignments.forEach(assign => {
+            html += `<tr>
+                <td>${assign.employee_id || 'N/A'}</td>
+                <td>${assign.email || 'N/A'}</td>
+                <td>${assign.has_submitted ? '<span class="badge bg-success">Submitted</span>' : '<span class="badge bg-danger">Not yet</span>'}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary allow-resubmission-btn"
+                        data-survey-id="${surveyId}"
+                        data-employee-id="${assign.employee_id}"
+                        ${assign.has_submitted ? '' : 'disabled'}
+                    >Allow Resubmission</button>
+                </td>
+            </tr>`;
+        });
+        
+        $('#employeeResubmissionTableBody').html(html);
+    })
+    .fail(function(xhr) {
+        console.error("✗ Failed to load assignments:", xhr.responseText);
+        $('#employeeResubmissionTableBody').html(`<tr><td colspan="4" class="text-danger text-center">Failed to load assignments: ${xhr.status} ${xhr.statusText}</td></tr>`);
+    });
+};
+
+    $(document).on('click', '.delete-survey-btn', function() {
+        const surveyId = $(this).data('survey-id');
+        $('#deleteSurveyId').val(surveyId);
+        $('#deleteSurveyModal').modal('show');
+    });
+
+window.deleteSurvey = function() {
+    const surveyId = $('#deleteSurveyId').val();
+    ModalUtils.showSpinner();
+    $.ajax({
+      url: `/delete_survey/${surveyId}`,
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "X-CSRFToken": document.querySelector('meta[name="csrf-token"]').content,
+      },
+      success: function(response) {
+        ModalUtils.hideSpinner();
+        if (response.error) {
+          modalutils.showerror(response.error);
+          return;
+        }
+        // Remove cached responses for this survey
+        delete responsesBySurveyId[surveyId];
+
+        // Remove current survey id everywhere if it matches the deleted one
+        const modal = document.getElementById('responsesModal');
+        if (modal && modal.getAttribute('data-survey-id') === surveyId) {
+            modal.setAttribute('data-survey-id', '');
+        }
+        if (sessionStorage.getItem('currentSurveyId') === surveyId) {
+            sessionStorage.removeItem('currentSurveyId');
+        }
+        if (window.currentActiveSurveyId === surveyId) {
+            window.currentActiveSurveyId = null;
+        }
+        if (window.localStorage.getItem('tempSurveyId') === surveyId) {
+            window.localStorage.removeItem('tempSurveyId');
+        }
+        // Optionally close the responses modal if open for this survey
+        if ($('#responsesModal').hasClass('show')) {
+            $('#responsesModal').modal('hide');
+        }
+
+        $('#deleteSurveyModal').modal('hide');
+        ModalUtils.showSuccess('Survey deleted successfully!', () => window.location.reload());
+        loadSurveys();
+      },
+      error: function(xhr, status, error) {
+        ModalUtils.hideSpinner();
+        console.error("Error details:", xhr.responseText);
+        let msg = (xhr.responseJSON && xhr.responseJSON.error) ? xhr.responseJSON.error : (xhr.statusText || "Unknown error");
+        modalutils.showerror("Error: " + msg);
+      }
+    });
+};
+
+// ==================== Survey Creation ====================
+$('#createSurveyForm').submit(function(event) {
+    event.preventDefault();
+    const surveyData = {
+      title: $('#surveyTitle').val(),
+      description: $('#surveyDescription').val(),
+      questions: getSurveyQuestions('#questionsContainer'),
+      assignment_type: $('#assignment_type').val(),
+      assigned_id: $('#assigned_id').val()
+    };
+    ModalUtils.showSpinner();
+
+    $.ajax({
+      url: '/create_survey',
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "X-CSRFToken": document.querySelector('meta[name="csrf-token"]').content,
+      },
+      data: JSON.stringify(surveyData),
+      success: function(response) {
+        ModalUtils.hideSpinner();
+        if (response.error) {
+          ModalUtils.showerror(response.error);
+          return;
+        }
+        $('#createSurveyModal').modal('hide');
+        ModalUtils.showSuccess('Survey created successfully!', () => {
+          window.location.reload();
+          loadSurveys();
+          $('#createSurveyForm')[0].reset();
+          $('#questionsContainer').empty();
+          $('#assigned_id').html('<option value="">Select</option>');
+        });
+      },
+      error: function(xhr, status, error) {
+        ModalUtils.hideSpinner();
+        let msg = "Unknown error";
+        try {
+          if (xhr.responseJSON && xhr.responseJSON.error) {
+            msg = xhr.responseJSON.error;
+          } else if (xhr.responseText) {
+            let parsed = JSON.parse(xhr.responseText);
+            if (parsed && parsed.error) {
+              msg = parsed.error;
+            } else {
+              msg = xhr.responseText;
+            }
+          } else if (xhr.statusText) {
+            msg = xhr.statusText;
+          }
+        } catch (e) {
+          if (xhr.responseText) {
+            msg = xhr.responseText;
+          }
+        }
+        ModalUtils.showerror("Error: " + msg);
+      }
+    });
+});
+
+    // ==================== NEW: Fetch and render all surveys ====================
+function loadSurveys() {
+    console.debug("loadSurveys called");
+    ModalUtils.showSpinner();
+    
+    $.ajax({
+        url: '/get_surveys',
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` },
+        success: function(data) {
+            ModalUtils.hideSpinner();
+            allSurveys = data || [];
+            console.debug("loadSurveys: fetched surveys:", allSurveys);
+            renderSurveyTable(allSurveys);
+            
+            // Add direct click handlers as backup
+            setTimeout(() => {
+                addDirectClickHandlers();
+                console.log("Direct click handlers added");
+            }, 500);
+        },
+        error: function(xhr) {
+            ModalUtils.hideSpinner();
+            console.error("loadSurveys error:", xhr);
+            modalutils.showerror("Failed to fetch surveys: " + (xhr.responseJSON?.error || xhr.statusText || "Unknown error"));
+        }
+    });
+}
+
+window.testAssignmentModal = function(surveyId) {
+    console.log("Testing assignment modal with survey ID:", surveyId || 1);
+    openResubmissionModal(surveyId || 1);
+};
+
+function renderSurveyTable(surveys) {
+    console.debug("renderSurveyTable called with:", surveys.length, "surveys");
+    const tableBody = $('#surveyTableBody');
+    tableBody.empty();
+    
+    if (!surveys.length) {
+        tableBody.append(`<tr><td colspan="8" class="text-center">No surveys found.</td></tr>`);
+        return;
+    }
+    
+    surveys.forEach((survey, index) => {
+        console.debug(`Rendering survey ${index}:`, survey.survey_id, survey);
+        
+        const row = $(`
+            <tr>
+                <td>${survey.survey_id}</td>
+                <td>${survey.title}</td>
+                <td>${survey.description || ''}</td>
+                <td>${survey.created_at ? new Date(survey.created_at).toLocaleString() : ''}</td>
+                <td>${survey.is_active ? 'Active' : 'Inactive'}</td>
+                <td>${survey.question_count || 0}</td>
+                <td>${survey.response_count || 0}</td>
+                <td>
+                    <button class="btn btn-info btn-sm view-survey-btn" data-survey-id="${survey.survey_id}">View</button>
+                    <button class="btn btn-primary btn-sm edit-survey-btn" data-survey-id="${survey.survey_id}">Edit</button>
+                    <button class="btn btn-danger btn-sm delete-survey-btn" data-survey-id="${survey.survey_id}">Delete</button>
+                    <button class="btn btn-secondary btn-sm view-responses-btn" data-survey-id="${survey.survey_id}">View Responses</button>
+                    <button class="btn btn-warning btn-sm assignment-btn" data-survey-id="${survey.survey_id}" id="assignment-btn-${survey.survey_id}">Assignments</button>
+                </td>
+            </tr>
+        `);
+        
+        tableBody.append(row);
+    });
+    
+    // Debug the rendered buttons
+    setTimeout(() => {
+        debugButtonRendering();
+    }, 100);
+}
+
+});
+</script>
+<!-- Script for inserting,deleting,editing and viewing details of the survey (End) -->
+
+<!-- Script for logging out (Start) -->
+<script>
+  document.querySelector(".logout-btn").addEventListener("click", function () {
+    $("#logoutModal").modal("show"); // Show modal using jQuery
+  });
+
+  document.getElementById("confirmLogout").addEventListener("click", function () {
+    ModalUtils.showSpinner();
+    setTimeout(function() {
+      sessionStorage.removeItem("adminToken");
+      window.location.href = "/admin_login";
+    }, 600);
+  });
+
+  document.getElementById("cancelLogout").addEventListener("click", function () {
+    $("#logoutModal").modal("hide");
+  });
+
+  document.getElementById("closeLogoutModal").addEventListener("click", function () {
+    $("#logoutModal").modal("hide");
+  });
+</script>
+<!-- Script for logging out (End) -->
+
+<!-- Script that redirects admin back to login page if the token doesn't exist (Start) -->
+<script>
+  if (!getAdminToken()) {
+    showSpinner && ModalUtils.showSpinner();
+    setTimeout(function() {
+      alert("Not authenticated. Redirecting to login.");
+      window.location.href = "/admin_login";
+    }, 600);
+  }
+</script>
+<!-- Script that redirects admin back to login page if the token doesn't exist (End) -->
+
+<!-- Script for redirect admin back to the login page when someone else logged in from another tab (Start) -->
+<script>
+  function getToken() {
+    return sessionStorage.getItem("adminToken");
+  }
+
+  function checkSessionConflict() {
+    const token = getToken();
+    if (!token) return;
+
+    fetch("/check_jti", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => {
+        if (response.status === 403) {
+          throw new Error("session_conflict");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.error === "session_conflict") {
+          throw new Error("session_conflict");
+        }
+      })
+      .catch((err) => {
+        if (err.message === "session_conflict") {
+          const modal = new bootstrap.Modal(
+            document.getElementById("sessionConflictModal"),
+            {
+              backdrop: "static",
+              keyboard: false,
+            }
+          );
+          modal.show();
+          const logoutBtn = document.getElementById("confirmLogoutBetweenTabs");
+          if (!logoutBtn.dataset.bound) {
+            logoutBtn.addEventListener("click", () => {
+              ModalUtils.showSpinner();
+              setTimeout(function() {
+                sessionStorage.removeItem("adminToken");
+                window.location.href = "/admin_login";
+              }, 600);
+            });
+            logoutBtn.dataset.bound = "true";
+          }
+        }
+      });
+  }
+
+  checkSessionConflict();
+  setInterval(checkSessionConflict, 30000);
+</script>
+<!-- Script for redirect admin back to the login page when someone else logged in from another tab (End) -->
+
+<!-- Script for checking admin if they have access to this page (Start) -->
+<script>
+  const accessDenied = {{ 'true' if access_denied else 'false' }};
+  if (accessDenied) {
+    // Show modal (Bootstrap 4 uses jQuery)
+    $('#accessDeniedModal').modal('show');
+    document.getElementById("forceLogoutBtn").addEventListener("click", function () {
+      ModalUtils.showSpinner();
+      setTimeout(function() {
+        sessionStorage.removeItem("adminToken");
+        window.location.href = "/admin_login";
+      }, 600);
+    });
+  }
+</script>
+<!-- Script for checking admin if they have access to this page (End) -->
+
+  </body>
+</html>

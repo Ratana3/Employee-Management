@@ -1,0 +1,4598 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Spica Admin</title>
+    <!-- base:css -->
+    <link
+      rel="stylesheet"
+      href="../../static/Admin/vendors/mdi/css/materialdesignicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../static/Admin/vendors/css/vendor.bundle.base.css"
+    />
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../static/Admin/css/style.css" />
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../static/Admin/images/favicon.png" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+  </head>
+
+  <body>
+    <div class="container-scroller d-flex">
+      <!-- partial:../../partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item sidebar-category">
+            <p>Admin dashboard</p>
+            <span></span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard">
+              <i class="mdi mdi-view-quilt menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+              <div class="badge badge-info badge-pill"></div>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/employeemanagement">
+              <i class="mdi mdi-account-box-outline menu-icon"></i>
+              <span class="menu-title">Employee <br />management</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/attendanceandtimetracking">
+              <i class="mdi mdi-clipboard-text menu-icon"></i>
+              <span class="menu-title">Attendance and <br />Time tracking</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/perfomancemanagement">
+              <i class="mdi mdi-settings menu-icon"></i>
+              <span class="menu-title">Performance <br />management</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/reportingandanalytics">
+              <i class="mdi mdi-chart-pie menu-icon"></i>
+              <span class="menu-title">Reporting <br />and Analytics </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/notificationsandcommunication">
+              <i class="mdi mdi-bell-ring menu-icon"></i>
+              <span class="menu-title"
+                >Notifications <br />and Communication
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/payrollandfinancialmanagement">
+              <i class="mdi mdi-currency-usd menu-icon"></i>
+              <span class="menu-title"
+                >Payroll and <br />Financial Management
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/securityandcompliance">
+              <i class="mdi mdi-security menu-icon"></i>
+              <span class="menu-title"
+                >Security and<br />
+                Compliance
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/systemadministration">
+              <i class="mdi mdi-monitor menu-icon"></i>
+              <span class="menu-title">System <br />Administration </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/traininganddevelopment">
+              <i class="mdi mdi-grease-pencil menu-icon"></i>
+              <span class="menu-title"
+                >Training and<br />
+                Development
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/workflowmanagement">
+              <i class="mdi mdi-lan-connect menu-icon"></i>
+              <span class="menu-title">Workflow <br />Management </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/employeeEngagement">
+              <i class="mdi mdi-human-male menu-icon"></i>
+              <span class="menu-title">Employee <br />Engagement </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dataimportandexport">
+              <i class="mdi mdi-file-document menu-icon"></i>
+              <span class="menu-title">Data Import </span>
+            </a>
+          </li>
+                    <li class="nav-item">
+            <a class="nav-link" href="/verification">
+              <i class="mdi mdi-clipboard-check menu-icon"></i>
+              <span class="menu-title">Access control</span>
+              <div class="badge badge-info badge-pill"></div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-danger logout-btn" style="margin-left: 80px">
+              <i class="la la-power-off"></i>
+              <p>Logout</p>
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+      
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  
+                    <div class="card-body">
+                      <h4 class="card-title">- Today's absent employees</h4>
+                      <div class="card mb-4">
+  <div class="card-body">
+    <div class="d-flex align-items-center">
+      <div class="me-3">
+        <i class="mdi mdi-account-alert text-danger" style="font-size: 36px;"></i>
+      </div>
+      <div>
+        <h4 class="card-title mb-1">Absent Employees Management</h4>
+        <p class="card-text mb-0">
+          This table shows employees who are marked as absent in the system. You can add them manually into the attendance logs if they 
+          haven't clocked in or alert them to clock in by themselves. In some cases, if they already asked permission not to come to work 
+          you can add them manually and enter the details about their absent.
+        </p>
+        <small class="text-muted">Last updated: <span id="last-updated-time">2025-07-16 08:25:29</span></small>
+      </div>
+    </div>
+  </div>
+</div>
+                      <p class="card-description">Search employee :</p>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          id="absent-search-input"
+                          class="form-control"
+                          placeholder="Search Here..."
+                          aria-label="search"
+                          aria-describedby="search"
+                          style="border: 1px solid black; color: black;"
+                        />
+                      </div>
+                      <p class="card-description">
+                        Search employee by email, name, date, team, etc..
+                      </p>
+                      <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                        <table class="table">
+                          <thead>
+                              <tr>
+                                  <th>Employee ID</th>
+                                  <th>Employee email</th>
+                                  <th>Team Role</th>
+                                  <th>Date</th>
+                                  <th>Clock In</th>
+                                  <th>Clock Out</th>
+                                  <th>Status</th>
+                                  <th>Remarks</th>
+                                  <th>Overtime hours</th>
+                                  <th>Action</th>
+                              </tr>
+                          </thead>
+                          <tbody id="absent-employees-body">
+                          </tbody>
+                      </table>
+                      </div>
+                      <div id="absent-pagination-controls"></div>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-md-12 grid-margin stretch-card">
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">- View Attendance Logs</h4>
+    <p class="card-description">Search employee :</p>
+    <div class="input-group">
+      <input
+        type="text"
+        id="attendance-search-input"
+        class="form-control"
+        placeholder="Search Here..."
+        aria-label="search"
+        aria-describedby="search"
+        style="border: 1px solid black; color: black;"
+      />
+    </div>
+    <p class="card-description">
+      Search employee by email, name, date, team, etc..
+    </p>
+    <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Attendance ID</th>
+            <th>Employee ID</th>
+            <th>Employee Email</th>
+            <th>Date</th>
+            <th>Clock in</th>
+            <th>Clock out</th>
+            <th>Status</th>
+            <th>Remarks</th>
+            <th>Leave type</th>
+            <th>Hours worked</th>
+            <th>Overtime hours</th>
+            <th>Overtime verification</th>
+            <th>Attendance verification status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="attendance-logs-body">
+        </tbody>
+      </table>
+    </div>
+    <div id="attendance-pagination-controls"></div>
+  </div>
+</div>
+
+              </div>
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+  <div class="card-body">
+    <h4 class="card-title">- View Leave Requests</h4>
+    <p class="card-description">Search leave requests:</p>
+    <div class="input-group">
+      <input
+        type="text"
+        id="leave-search-input"
+        class="form-control"
+        placeholder="Search Here..."
+        aria-label="search"
+        aria-describedby="search"
+        style="border: 1px solid black; color: black;"
+      />
+    </div>
+    <p class="card-description">
+      Search by employee, leave type, date, status, etc.
+    </p>
+    <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Request ID</th>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th>Leave Type</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Total Days</th>
+            <th>Status</th>
+            <th>Remarks</th>
+            <th>Verification</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="leave-requests-body">
+        </tbody>
+      </table>
+    </div>
+    <div id="leave-pagination-controls"></div>
+  </div>
+</div>
+              </div>
+              
+            </div>
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">- Shift management</h4>
+                    <button type="button" class="btn btn-info" onclick="openShiftSwapRequestsModal()">View Shift Swap Requests</button>
+                    <p class="card-description">Search user :</p>
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        id="shift-search-input"
+                        class="form-control"
+                        placeholder="Search Here..."
+                        aria-label="search"
+                        aria-describedby="search"
+                        style="border: 1px solid black; color: black;"
+                      />
+                    </div>
+                    <p class="card-description">
+                      Search user by email, name, date, permission, etc..
+                    </p>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addNewShift">Add new shift</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteShiftModal">
+                      Delete Shift
+                  </button>
+                  
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editShiftModal">Edit shift</button>
+
+                    <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Employee ID</th>
+                            <th>Photo</th>
+                            <th>Employee Name</th>
+                            <th>Email</th>
+                            <th>Assigned Shift</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Shift rotation</th>
+                            <th>Action</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody id="shift-employee-body">
+
+                        </tbody>
+                      </table>
+                    </div>
+                    <div id="shift-pagination-controls"></div>
+                  </div>
+                </div>
+                
+              <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                  
+                  <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">- Overtime Tracking</h4>
+                        <p class="card-description">Search user:</p>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search Here..." aria-label="search"
+                                aria-describedby="search" style="border: 1px solid black; color: black;">
+                        </div>
+                        <p class="card-description">Search user by email, name, date, permission, etc..</p>
+                
+                        {% if no_overtime_message %}
+                            <p id="overtime-message" class="text-center text-muted" style="display:none;"></p>
+                        {% else %}
+                            <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Profile</th>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Date</th>
+                                            <th>Overtime Hours</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="overtime-container">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+              
+              
+              </div>
+            </div>
+            
+    
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html -->
+          <footer class="footer">
+            <div class="card">
+              <div class="card-body">
+                <div
+                  class="d-sm-flex justify-content-center justify-content-sm-between"
+                >
+                  <span
+                    class="text-muted d-block text-center text-sm-left d-sm-inline-block"
+                    >Copyright © bootstrapdash.com 2020</span
+                  >
+                  <span
+                    class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"
+                  >
+                    Free
+                    <a href="https://www.bootstrapdash.com/" target="_blank"
+                      >Bootstrap dashboard templates</a
+                    >
+                    from Bootstrapdash.com</span
+                  >
+                </div>
+              </div>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+<!-- Shift Swap Requests Modal -->
+<div class="modal fade" id="shiftSwapRequestsModal" tabindex="-1" role="dialog" aria-labelledby="shiftSwapRequestsLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="shiftSwapRequestsLabel">Shift Swap Requests</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- Add overflow-auto to handle large tables -->
+      <div class="modal-body" style="max-height:70vh; overflow-y:auto;">
+        <table class="table table-striped table-bordered mb-0">
+          <thead>
+            <tr>
+              <th>Sender ID</th>
+              <th>Sender Email</th>
+              <th>Role</th>
+              <th>Subject</th>
+              <th>Message</th>
+              <th>Timestamp</th>
+              <th>Status</th>
+              <th>Approver Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="shiftSwapRequestsBody">
+            <!-- Requests will be loaded here -->
+          </tbody>
+        </table>
+      </div>
+      <!-- Modal footer for general modal actions (e.g., Close button) -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+<!-- Leave Request Details Modal -->
+<div class="modal fade" id="leaveRequestDetailsModal" tabindex="-1" role="dialog" aria-labelledby="leaveRequestDetailsLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="leaveRequestDetailsLabel">Leave Request Details</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="font-size:1.5rem;">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="leave-request-details-body">
+        <!-- Content will be filled by JS -->
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success approve-leave-btn-modal">Approve</button>
+        <button type="button" class="btn btn-danger disapprove-leave-btn-modal">Disapprove</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for deleting attendance logs -->
+<div class="modal fade" id="deleteAttendanceModal">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Confirm Deletion</h5>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+              <p>Are you sure you want to delete this attendance log?</p>
+              <p>Date: <span id="delete-date"></span></p>
+              <p>Status: <span id="delete-status"></span></p>
+              <input type="hidden" id="delete-log-id">
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Modal for editing attendance logs -->
+<div class="modal" id="editModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Attendance</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="editAttendanceForm">
+          <input type="hidden" id="original_date" name="original_date">
+          <input type="hidden" name="employee_id" id="employee_id">
+          <!-- Date Input -->
+          <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" name="date" id="date" class="form-control">
+          </div>
+          
+          <!-- Clock In Time Input -->
+          <div class="form-group">
+            <label for="clock_in_time">Clock In Time:</label>
+            <input type="time" name="clock_in_time" id="clock_in_time" class="form-control">
+          </div>
+          
+          <!-- Clock Out Time Input -->
+          <div class="form-group">
+            <label for="clock_out_time">Clock Out Time:</label>
+            <input type="time" name="clock_out_time" id="clock_out_time" class="form-control">
+          </div>
+          
+          <!-- Status Select -->
+          <div class="form-group">
+            <label for="status">Status:</label>
+            <select name="status" id="status" class="form-control">
+              <option value="Present">Present</option>
+              <option value="Late">Late</option>
+              <option value="Absent">Absent</option>
+              <option value="Early Leave">Early Leave</option>
+            </select>
+          </div>
+          
+          <!-- Remarks Input -->
+          <div class="form-group">
+            <label for="remarks">Remarks:</label>
+            <textarea name="remarks" id="remarks" class="form-control" rows="3"></textarea>
+          </div>
+          
+          <!-- Leave Type Input -->
+          <div class="form-group">
+            <label for="leave_type">Leave Type:</label>
+            <input type="text" name="leave_type" id="leave_type" class="form-control">
+          </div>
+          
+          <!-- Save Changes Button -->
+          <button type="submit" class="btn btn-primary btn-block" id="saveEdit">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Shift Modal with 24-hour input -->
+<div class="modal fade" id="addNewShift" tabindex="-1" role="dialog" aria-labelledby="addShiftModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="addShiftModalLabel">Add New Shift</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="font-size:1.5rem;">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <form id="addShiftForm" autocomplete="off">
+          <div class="form-group">
+            <label for="shift-name">Shift Name</label>
+            <input type="text" class="form-control" id="shift-name" name="shift_name" required>
+          </div>
+          
+          <!-- Start Time with AM/PM Display -->
+          <div class="form-group">
+            <label for="start-time">Start Time (24-hour format)</label>
+            <div class="input-group">
+              <input type="time" class="form-control" id="start-time" name="start_time" required>
+            </div>
+          </div>
+          
+          <!-- End Time with AM/PM Display -->
+          <div class="form-group">
+            <label for="end-time">End Time (24-hour format)</label>
+            <div class="input-group">
+              <input type="time" class="form-control" id="end-time" name="end_time" required>
+            </div>
+          </div>
+          
+          <div class="text-right mt-4">
+            <button type="submit" class="btn btn-success mr-2">Save Shift</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Attendance Details Modal -->
+<div class="modal fade" id="attendanceDetailsModal" tabindex="-1" role="dialog" aria-labelledby="attendanceDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="attendanceDetailsModalLabel">Attendance Details</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="font-size:1.5rem;">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="attendance-details-body">
+        <!-- Details populated by JS -->
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+<!-- Edit Shift Modal with 24-hour input -->
+<div class="modal fade" id="editShiftModal" tabindex="-1" role="dialog" aria-labelledby="editShiftModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="editShiftModalLabel">Edit Shift</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <form id="editShiftForm" method="POST">
+          <input type="hidden" id="edit-shift-id" name="shift_id">
+          
+          <!-- Shift Selection Dropdown -->
+          <div class="form-group">
+            <label for="edit-shift-select">Select Shift</label>
+            <select class="form-control shift-select" id="edit-shift-select" name="shift_id" required>
+              <option value="">Select a Shift</option>
+              <!-- Options are dynamically inserted -->
+            </select>
+          </div>
+
+          <!-- Shift Name -->
+          <div class="form-group">
+            <label for="edit-shift-name">Shift Name</label>
+            <input type="text" class="form-control" id="edit-shift-name" name="shift_name" required>
+          </div>
+
+          <!-- Start Time with AM/PM Display -->
+          <div class="form-group">
+            <label for="edit-start-time">Start Time (24-hour format)</label>
+            <div class="input-group">
+              <input type="time" class="form-control" id="edit-start-time" name="start_time" required>
+            </div>
+          </div>
+          
+          <!-- End Time with AM/PM Display -->
+          <div class="form-group">
+            <label for="edit-end-time">End Time (24-hour format)</label>
+            <div class="input-group">
+              <input type="time" class="form-control" id="edit-end-time" name="end_time" required>
+            </div>
+          </div>
+
+          <div class="text-right mt-4">
+            <button type="submit" class="btn btn-primary mr-2">Update Shift</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for deleting shift (updated styling) -->
+<div class="modal fade" id="deleteShiftModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">Delete Shift</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      
+        <form id="deleteShiftForm">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <input type="hidden" id="delete-shift-id" name="shift_id">
+          
+          <div class="form-group">
+            <label for="delete-shift-select">Select Shift</label>
+            <select class="form-control" id="delete-shift-select" name="shift_id" required>
+              <option value="">Select a Shift</option>
+              <!-- Options will be dynamically populated -->
+            </select>
+          </div>
+
+          <div class="mt-4 p-3 bg-light rounded">
+            <h6 class="font-weight-bold mb-3">Shift Details:</h6>
+            <div class="row mb-2">
+              <div class="col-4 text-muted">Shift Name:</div>
+              <div class="col-8 font-weight-medium" id="delete-shift-name"></div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-4 text-muted">Start Time:</div>
+              <div class="col-8 font-weight-medium" id="delete-start-time"></div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-4 text-muted">End Time:</div>
+              <div class="col-8 font-weight-medium" id="delete-end-time"></div>
+            </div>
+          </div>
+
+          <div class="alert alert-warning mt-3">
+            <i class="fas fa-exclamation-triangle mr-2"></i>
+            Warning: This action cannot be undone. The shift will be permanently deleted.
+          </div>
+
+          <div class="text-right mt-4">
+            <button type="submit" class="btn btn-danger mr-2">Delete Shift</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for assigning shift for specific employee-->
+<div class="modal fade" id="assignShiftModal" tabindex="-1">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Assign Shift</h5>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+              <img id="assign-employee-image" width="50" height="50" class="rounded-circle">
+              <p>Name: <span id="assign-employee-name"></span></p>
+              <p>Email: <span id="assign-employee-email"></span></p>
+
+              <form id="assignShiftForm">
+               
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" id="specific-assign-shift-id" name="shift_id">
+                  <input type="hidden" id="assign-employee-id" name="employee_id">
+                  
+                  <label>Select Shift:</label>
+                  <select id="assign-shift-select" class="form-control"></select>
+                  <div class="form-group">
+                    <label for="location">Shift location :</label>
+                    <input type="text" name="location" id="assign-location-id" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="shift_date">Shift date:</label>
+                    <input type="date" name="shift_date" id="assign-shift-date-id" class="form-control">
+                  </div>
+                  
+                  <input type="checkbox" id="assign-is-rotating" name="is_rotating"> Rotate
+
+                  <p>Start Time: <span id="assign-start-time">N/A</span></p>
+                  <p>End Time: <span id="assign-end-time">N/A</span></p>
+
+                  <button type="submit" class="btn btn-primary">Assign</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Edit Absent Modal (Bootstrap 4) -->
+<div class="modal fade" id="editAbsentModal" tabindex="-1" role="dialog" aria-labelledby="editAbsentModalLabel" aria-hidden="true" style="z-index: 1050;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form id="editAbsentForm">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="editAbsentModalLabel">Add to Attendance Log</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="closeEditAbsentModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="absentEmployeeId" name="employee_id">
+          <input type="hidden" id="absentDate" name="date">
+          
+          <div class="form-group">
+            <label for="absentClockIn">Clock In Time</label>
+            <input type="time" class="form-control" id="absentClockIn" name="clock_in_time" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="absentClockOut">Clock Out Time</label>
+            <input type="time" class="form-control" id="absentClockOut" name="clock_out_time" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="absentStatus">Status</label>
+            <select class="form-control" id="absentStatus" name="status" required>
+              <option value="Present">Present</option>
+              <option value="Late">Late</option>
+              <option value="Early Leave">Early Leave</option>
+              <option value="Absent">Absent</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="absentRemarks">Remarks</label>
+            <select class="form-control" id="absentRemarks" name="remarks">
+              <option value="">None</option>
+              <option value="Sick">Sick</option>
+              <option value="Personal">Personal</option>
+              <option value="Vacation">Vacation</option>
+              <option value="Emergency">Emergency</option>
+              <option value="Unpaid">Unpaid</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="absentLeaveType">Leave Type</label>
+            <select class="form-control" id="absentLeaveType" name="leave_type">
+              <option value="">None</option>
+              <option value="Sick Leave">Sick Leave</option>
+              <option value="Personal Leave">Personal Leave</option>
+              <option value="Vacation Leave">Vacation Leave</option>
+              <option value="Emergency Leave">Emergency Leave</option>
+              <option value="Unpaid Leave">Unpaid Leave</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success" id="submitEditAbsentForm">Add to Attendance</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelEditAbsentForm">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-success">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="successModalLabel">Success</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="successModalMessage">
+        <!-- Message will be injected here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Error Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="errormessage">
+        <!-- Message will be injected here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Dismiss</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Delete Absent Confirmation Modal -->
+<div class="modal fade" id="deleteAbsentModal" tabindex="-1" role="dialog" aria-labelledby="deleteAbsentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteAbsentModalLabel">Confirm Deletion</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to ignore this absent record?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteAbsentBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Verify Leave Request Modal -->
+<div class="modal fade" id="verifyLeaveModal" tabindex="-1" role="dialog" aria-labelledby="verifyLeaveModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-primary">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="verifyLeaveModalLabel">Verify Leave Request</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to verify this leave request?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="confirmVerifyLeaveBtn">Verify</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Disapprove Leave Request Modal -->
+<div class="modal fade" id="disapproveLeaveModal" tabindex="-1" role="dialog" aria-labelledby="disapproveLeaveModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="disapproveLeaveModalLabel">Disapprove Leave Request</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to disapprove this leave request?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDisapproveLeaveBtn">Disapprove</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Verify Attendance Modal -->
+<div class="modal fade" id="verifyAttendanceModal" tabindex="-1" role="dialog" aria-labelledby="verifyAttendanceModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-primary">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="verifyAttendanceModalLabel">Verify Attendance Log</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to verify this attendance log?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="confirmVerifyAttendanceBtn">Verify</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Disapprove Attendance Modal -->
+<div class="modal fade" id="disapproveAttendanceModal" tabindex="-1" role="dialog" aria-labelledby="disapproveAttendanceModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="disapproveAttendanceModalLabel">Disapprove Attendance Log</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to disapprove this attendance log?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDisapproveAttendanceBtn">Disapprove</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for verifying overtime -->
+<div class="modal fade" id="verifyOvertimeModal" tabindex="-1" role="dialog" aria-labelledby="verifyOvertimeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-success">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="verifyOvertimeModalLabel">Verify Overtime</h5>
+        <button type="button" class="close text-white" data-dismiss="modal"><span>&times;</span></button>
+      </div>
+      <div class="modal-body">Are you sure you want to verify this overtime record?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-success" id="confirmVerifyOvertimeBtn">Verify</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for disapproving overtime -->
+<div class="modal fade" id="disapproveOvertimeModal" tabindex="-1" role="dialog" aria-labelledby="disapproveOvertimeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="disapproveOvertimeModalLabel">Disapprove Overtime</h5>
+        <button type="button" class="close text-white" data-dismiss="modal"><span>&times;</span></button>
+      </div>
+      <div class="modal-body">Are you sure you want to disapprove this overtime record?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDisapproveOvertimeBtn">Disapprove</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for deleting assigned shift for a specific employe -->
+<div class="modal fade" id="confirmDeleteShiftModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteShiftModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content rounded-3 shadow">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="confirmDeleteShiftModalLabel">Confirm Shift Deletion</h5>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this assigned shift?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button id="confirmDeleteShiftBtn" type="button" class="btn btn-danger">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Session Conflict Modal -->
+<div
+  class="modal fade"
+  id="sessionConflictModal"
+  tabindex="-1"
+  aria-labelledby="sessionConflictLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="sessionConflictLabel">Session Conflict</h5>
+      </div>
+      <div class="modal-body">
+        <p>
+          <strong
+            >Someone has logged into your account from another tab or
+            device.</strong
+          >
+        </p>
+        <p>You will be logged out for security reasons.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-danger" id="confirmLogoutBetweenTabs">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Logout Confirmation Modal -->
+<div class="modal fade" id="logoutModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Logout</h5>
+        <button type="button" class="close" id="closeLogoutModal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to logout?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancelLogout">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-danger" id="confirmLogout">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Access Denied Modal -->
+<div
+  class="modal fade"
+  id="accessDeniedModal"
+  tabindex="-1"
+  aria-labelledby="accessDeniedLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="accessDeniedLabel">Access Denied</h5>
+      </div>
+      <div class="modal-body">
+        <p>Only Super Admins are allowed to access this page.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="redirectBtn" type="button" class="btn btn-danger">
+          Go to Dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteShiftSwapConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteShiftSwapConfirmLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteShiftSwapConfirmLabel">Confirm Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this shift swap request?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" id="confirmDeleteShiftSwapBtn" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Attendance Confirmation Modal -->
+<div class="modal fade" id="deleteAttendanceConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteAttendanceConfirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteAttendanceConfirmModalLabel">Confirm Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span style="color:white" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this attendance record? This action cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteAttendanceBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading Spinner Modal -->
+<div class="modal fade" id="loadingSpinnerModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-0 bg-transparent shadow-none">
+      <div class="modal-body text-center">
+        <div class="spinner-border text-white" style="width: 4rem; height: 4rem;" role="status">
+          <span class="sr-only"></span>
+        </div>
+        <div class="mt-3 text-white font-weight-bold">Please wait...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Include jQuery (Only once) -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
+
+    <!-- Bootstrap JS (Required for Modals) -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <!-- base:js -->
+    <script src="../../static/Admin/vendors/js/vendor.bundle.base.js"></script>
+    <!-- Include jQuery -->
+  
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="../../static/Admin/js/off-canvas.js"></script>
+    <script src="../../static/Admin/js/hoverable-collapse.js"></script>
+    <script src="../../static/Admin/js/template.js"></script>
+    
+
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="../../static/Admin/js/file-upload.js"></script>
+    <!-- End custom js for this page-->
+
+<script>
+// Override the value setter on time inputs to catch who's changing them
+(function() {
+    // Store the original setter
+    const originalSetter = Object.getOwnPropertyDescriptor(
+        HTMLInputElement.prototype, 'value'
+    ).set;
+    
+    // Create a new setter that logs changes to time inputs
+    Object.defineProperty(HTMLInputElement.prototype, 'value', {
+        set: function(val) {
+            // Only track time inputs
+            if (this.type === 'time') {
+                console.log(`%cVALUE CHANGE DETECTED on ${this.id}`, 'color: red; font-weight: bold');
+                console.log(`Old value: "${this.value}" → New value: "${val}"`);
+                console.trace('Stack trace of who changed the value:');
+            }
+            // Call the original setter
+            originalSetter.call(this, val);
+        },
+        configurable: true
+    });
+})();
+</script>
+
+<!-- Script for deleting, approving and rejecting shift swaps (Start) -->
+<script>
+let shiftSwapDeleteId = null;
+
+function showSpinner() {
+  // Hide all other open modals except the spinner itself and remember the last open one
+  $('.modal.show').each(function() {
+    if (this.id !== 'loadingSpinnerModal') {
+      previouslyVisibleModal = this.id;
+      $(this).modal('hide');
+    }
+  });
+
+  $('#loadingSpinnerModal').modal({
+    backdrop: 'static',
+    keyboard: false
+  });
+}
+
+function hideSpinner() {
+  $('#loadingSpinnerModal').modal('hide');
+  // Restore the previously visible modal, if any
+  if (previouslyVisibleModal) {
+    $('#' + previouslyVisibleModal).modal('show');
+    previouslyVisibleModal = null;
+  }
+}
+
+function showSuccessModal(message) {
+  document.getElementById('successModalMessage').textContent = message;
+  $('#shiftSwapRequestsModal').modal('hide');
+  $('#successModal').one('hidden.bs.modal', function () {
+    openShiftSwapRequestsModal();
+  });
+  setTimeout(function() {
+    $('#successModal').modal('show');
+  }, 300);
+}
+
+function showErrorModal(message) {
+  document.getElementById('errormessage').textContent = message;
+  $('#shiftSwapRequestsModal').modal('hide');
+  $('#errorModal').one('hidden.bs.modal', function () {
+    openShiftSwapRequestsModal();
+  });
+  setTimeout(function() {
+    $('#errorModal').modal('show');
+  }, 300);
+}
+
+function openShiftSwapRequestsModal() {
+  showSpinner();
+  fetch('/api/shift_swap_requests', {
+    headers: {
+      'Authorization': 'Bearer ' + sessionStorage.getItem('adminToken')
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    const tbody = document.getElementById('shiftSwapRequestsBody');
+    tbody.innerHTML = '';
+    if (!data.length) {
+      tbody.innerHTML = `<tr><td colspan="9" class="text-center text-muted">No requests found.</td></tr>`;
+      $('#shiftSwapRequestsModal').modal('show');
+      hideSpinner();
+      return;
+    }
+    data.forEach(req => {
+      const isValidId = req.shift_request_id !== null && req.shift_request_id !== undefined && !isNaN(req.shift_request_id);
+      const approveBtn = `<button class="btn btn-success btn-sm mr-1" ${!isValidId ? 'disabled' : ''} onclick="approveShiftSwapRequest(${isValidId ? req.shift_request_id : ''})">Approve</button>`;
+      const rejectBtn = `<button class="btn btn-warning btn-sm" ${!isValidId ? 'disabled' : ''} onclick="rejectShiftSwapRequest(${isValidId ? req.shift_request_id : ''})">Reject</button>`;
+      const deleteBtn = `<button class="btn btn-danger btn-sm" ${!isValidId ? 'disabled' : ''} onclick="deleteShiftSwapRequest(${isValidId ? req.shift_request_id : ''})">Delete</button>`;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${req.sender_id}</td>
+        <td>${req.sender_email || ''}</td>
+        <td>${req.sender_role}</td>
+        <td>${req.subject}</td>
+        <td>${req.body}</td>
+        <td>${new Date(req.timestamp).toLocaleString()}</td>
+        <td>
+            ${req.is_approved === null 
+                ? '<span class="badge badge-warning">Pending</span>' 
+                : req.is_approved 
+                    ? '<span class="badge badge-success">Approved</span>' 
+                    : '<span class="badge badge-danger">Rejected</span>'
+            }
+        </td>
+        <td>${req.approver_role_name || ''}</td>
+        <td>
+          ${approveBtn}
+          ${rejectBtn}
+          ${deleteBtn}
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+    $('#shiftSwapRequestsModal').modal('show');
+    hideSpinner();
+  })
+  .catch(err => {
+    hideSpinner();
+    showErrorModal('Failed to load requests');
+    console.error(err);
+  });
+}
+
+// New: Delete with confirmation modal
+function deleteShiftSwapRequest(id) {
+  if (!id || isNaN(id)) {
+    showErrorModal('Invalid request ID');
+    return;
+  }
+  shiftSwapDeleteId = id;
+  // First hide the shift swap requests modal
+  $('#shiftSwapRequestsModal').modal('hide');
+  
+  // Then show the confirmation modal after a short delay
+  setTimeout(function() {
+    $('#deleteShiftSwapConfirmModal').modal('show');
+  }, 300);
+}
+
+// Confirm button handler (only bind once)
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.getElementById('confirmDeleteShiftSwapBtn');
+  if (btn) {
+    // Remove any existing event listeners to prevent duplicates
+    btn.removeEventListener('click', confirmDeleteHandler);
+    btn.addEventListener('click', confirmDeleteHandler);
+  }
+});
+
+function confirmDeleteHandler() {
+  if (!shiftSwapDeleteId) return;
+  
+  // Hide the confirmation modal immediately
+  $('#deleteShiftSwapConfirmModal').modal('hide');
+  
+  // Show spinner
+  showSpinner();
+  
+  // Store the ID for use in the API call
+  const idToDelete = shiftSwapDeleteId;
+  
+  // Reset ID immediately to prevent reuse
+  shiftSwapDeleteId = null;
+  
+  // Perform the delete operation
+  fetch(`/api/shift_swap_requests/${idToDelete}/delete`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': 'Bearer ' + sessionStorage.getItem('adminToken')
+    }
+  })
+  .then(async res => {
+    let data;
+    try {
+      data = await res.json();
+    } catch(e) {
+      hideSpinner();
+      showErrorModal('Unexpected server response.');
+      return;
+    }
+    
+    // Hide spinner
+    hideSpinner();
+    
+    // Handle the response
+    if (res.ok) {
+      // Show success modal directly, without reopening confirmation modal
+      showSuccessModal(data.message || 'Request deleted successfully');
+    } else {
+      showErrorModal(data.error || data.message || 'Failed to delete request');
+    }
+  })
+  .catch(err => {
+    hideSpinner();
+    showErrorModal('Failed to delete request');
+    console.error(err);
+  });
+}
+
+function approveShiftSwapRequest(id) {
+  if (!id || isNaN(id)) {
+    showErrorModal('Invalid request ID');
+    return;
+  }
+  showSpinner();
+  fetch(`/api/shift_swap_requests/${id}/approve`, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + sessionStorage.getItem('adminToken'),
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(async res => {
+    let data;
+    try {
+      data = await res.json();
+    } catch(e) {
+      hideSpinner();
+      showErrorModal('Unexpected server response.');
+      return;
+    }
+    hideSpinner();
+    if (res.ok) {
+      showSuccessModal(data.message || 'Request approved');
+    } else {
+      showErrorModal(data.error || data.message || 'Failed to approve request');
+    }
+  })
+  .catch(err => {
+    hideSpinner();
+    showErrorModal('Failed to approve request');
+    console.error(err);
+  });
+}
+
+function rejectShiftSwapRequest(id) {
+  if (!id || isNaN(id)) {
+    showErrorModal('Invalid request ID');
+    return;
+  }
+  showSpinner();
+  fetch(`/api/shift_swap_requests/${id}/reject`, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + sessionStorage.getItem('adminToken'),
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(async res => {
+    let data;
+    try {
+      data = await res.json();
+    } catch(e) {
+      hideSpinner();
+      showErrorModal('Unexpected server response.');
+      return;
+    }
+    hideSpinner();
+    if (res.ok) {
+      showSuccessModal(data.message || 'Request rejected');
+    } else {
+      showErrorModal(data.error || data.message || 'Failed to reject request');
+    }
+  })
+  .catch(err => {
+    hideSpinner();
+    showErrorModal('Failed to reject request');
+    console.error(err);
+  });
+}
+</script>
+<!-- Script for deleting, approving and rejecting shift swap (End) -->
+
+<!-- Script for handling leave request table (Start) -->
+<script>
+// --- Smart Pagination Helper ---
+function renderSmartPaginationControls(options) {
+  // options: { containerId, currentPage, totalPages, onPageChange }
+  const { containerId, currentPage, totalPages, onPageChange } = options;
+  let paginationContainer = document.getElementById(containerId);
+  if (!paginationContainer) {
+    paginationContainer = document.createElement('div');
+    paginationContainer.id = containerId;
+    paginationContainer.className = 'd-flex justify-content-center my-2';
+    // Insert after table if possible
+    const tableDiv = document.querySelector('.table-responsive');
+    if (tableDiv) {
+      tableDiv.parentNode.insertBefore(paginationContainer, tableDiv.nextSibling);
+    } else {
+      document.body.appendChild(paginationContainer);
+    }
+  }
+  paginationContainer.innerHTML = '';
+
+  if (totalPages <= 1) {
+    paginationContainer.style.display = 'none';
+    return;
+  } else {
+    paginationContainer.style.display = 'flex';
+  }
+
+  const windowSize = 2; // number of pages left/right of current
+
+  function createBtn(label, page, disabled = false, active = false) {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-sm mx-1 ' + (active ? 'btn-primary' : 'btn-outline-primary');
+    btn.textContent = label;
+    btn.disabled = disabled;
+    if (!disabled && !active) {
+      btn.onclick = function() {
+        onPageChange(page);
+      };
+    }
+    return btn;
+  }
+
+  // Prev
+  paginationContainer.appendChild(createBtn('Previous', currentPage - 1, currentPage === 1));
+  // Always show first page
+  paginationContainer.appendChild(createBtn('1', 1, false, currentPage === 1));
+  // Left ellipsis
+  if (currentPage - windowSize > 2) {
+    const span = document.createElement('span');
+    span.className = 'mx-1';
+    span.textContent = '...';
+    paginationContainer.appendChild(span);
+  }
+  // Page window
+  for (
+    let i = Math.max(2, currentPage - windowSize);
+    i <= Math.min(totalPages - 1, currentPage + windowSize);
+    i++
+  ) {
+    paginationContainer.appendChild(createBtn(i, i, false, currentPage === i));
+  }
+  // Right ellipsis
+  if (currentPage + windowSize < totalPages - 1) {
+    const span = document.createElement('span');
+    span.className = 'mx-1';
+    span.textContent = '...';
+    paginationContainer.appendChild(span);
+  }
+  // Always show last page
+  if (totalPages > 1)
+    paginationContainer.appendChild(createBtn(totalPages, totalPages, false, currentPage === totalPages));
+  // Next
+  paginationContainer.appendChild(createBtn('Next', currentPage + 1, currentPage === totalPages));
+}
+function showSpinner() {
+  // Hide all other open modals except the spinner itself and remember the last open one
+  $('.modal.show').each(function() {
+    if (this.id !== 'loadingSpinnerModal') {
+      previouslyVisibleModal = this.id;
+      $(this).modal('hide');
+    }
+  });
+
+  $('#loadingSpinnerModal').modal({
+    backdrop: 'static',
+    keyboard: false
+  });
+}
+function hideSpinner() {
+  $('#loadingSpinnerModal').modal('hide');
+  // Restore the previously visible modal, if any
+  if (previouslyVisibleModal) {
+    $('#' + previouslyVisibleModal).modal('show');
+    previouslyVisibleModal = null;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const token = sessionStorage.getItem('adminToken');
+    if (!token) {
+        showError('Unauthorized: No token found.');
+        return;
+    }
+
+    let leaveDataCache = []; // store all data for searching
+
+    // Fetch and display leave requests on load
+    function fetchAndRenderLeaveRequests() {
+        showSpinner();
+        fetch('/leave_requests_data', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to fetch leave requests data');
+            return response.json();
+        })
+        .then(data => {
+            leaveDataCache = data.leave_requests || [];
+            renderLeaveRequests(leaveDataCache);
+            hideSpinner();
+        })
+        .catch(error => {
+            hideSpinner();
+            showError('Something went wrong while fetching leave requests data.');
+        });
+    }
+
+    fetchAndRenderLeaveRequests();
+
+    // Search functionality - search all columns in the table
+    document.getElementById('leave-search-input').addEventListener('input', function() {
+        const term = this.value.trim().toLowerCase();
+        if (!term) {
+            renderLeaveRequests(leaveDataCache);
+            return;
+        }
+        const filtered = leaveDataCache.filter(req => {
+            // Build a string of all searchable fields
+            const allFields = [
+                req.request_id,
+                req.employee_id,
+                req.first_name,
+                req.last_name,
+                req.email,
+                req.leave_type,
+                req.start_date,
+                req.end_date,
+                req.total_days,
+                req.status,
+                req.remarks,
+                (req.verification_status === true || req.verification_status === 'true' ? 'verified' : 'not verified')
+            ]
+            .map(field => (field !== null && field !== undefined) ? field.toString().toLowerCase() : "")
+            .join(" ");
+            return allFields.includes(term);
+        });
+        renderLeaveRequests(filtered);
+    });
+
+    // Handle approve/disapprove/view button clicks using event delegation
+    document.getElementById('leave-requests-body').addEventListener('click', function(event) {
+        const btn = event.target.closest('button');
+        if (!btn) return;
+        const requestId = btn.dataset.requestId;
+
+        if (btn.classList.contains('view-leave-details-btn')) {
+            viewLeaveRequestDetails(requestId);
+        }
+        if (btn.classList.contains('approve-leave-btn')) {
+            handleLeaveAction(requestId, 'approve');
+        }
+        if (btn.classList.contains('disapprove-leave-btn')) {
+            handleLeaveAction(requestId, 'reject');
+        }
+    });
+
+    // Modal approve/disapprove
+    document.querySelector('#leaveRequestDetailsModal .approve-leave-btn-modal').addEventListener('click', function() {
+        const requestId = this.getAttribute('data-request-id');
+        handleLeaveAction(requestId, 'approve', true);
+    });
+    document.querySelector('#leaveRequestDetailsModal .disapprove-leave-btn-modal').addEventListener('click', function() {
+        const requestId = this.getAttribute('data-request-id');
+        handleLeaveAction(requestId, 'reject', true);
+    });
+
+    function getVerificationBadge(value) {
+        const isVerified = value === true || value === 'true' || value === 1 || value === '1';
+        const label = isVerified ? 'Verified' : 'Not Verified';
+        const badgeClass = isVerified ? 'badge-success' : 'badge-danger';
+        return `<label class="badge ${badgeClass}">${label}</label>`;
+    }
+    function getStatusBadge(value) {
+        if (value === "active") return `<span class="badge badge-success">Active</span>`;
+        if (value === "inactive") return `<span class="badge badge-danger">Inactive</span>`;
+        return `<span class="badge badge-light">${value || '-'}</span>`;
+    }
+
+    function showSuccess(msg) {
+        $('#successModalMessage').text(msg);
+        $('#successModal').modal('show');
+    }
+    function showError(msg) {
+        $('#errormessage').text(msg);
+        $('#errorModal').modal('show');
+    }
+
+// Pagination constants for leave requests
+const LEAVE_PAGE_SIZE = 5;
+let leaveCurrentPage = 1;
+let globalLeaveRequests = [];
+
+// Pagination controls for leave requests
+// Smart pagination version
+function renderLeavePaginationControls(totalPages) {
+  renderSmartPaginationControls({
+    containerId: 'leave-pagination-controls',
+    currentPage: leaveCurrentPage,
+    totalPages,
+    onPageChange: function(newPage) {
+      leaveCurrentPage = newPage;
+      renderLeaveRequests(globalLeaveRequests);
+    }
+  });
+}
+
+// Main rendering function with pagination applied
+function renderLeaveRequests(leaveRequests) {
+  const tbody = document.getElementById('leave-requests-body');
+  if (!tbody) {
+    console.error("Element with ID 'leave-requests-body' not found.");
+    return;
+  }
+
+  // Save to global for paging
+  globalLeaveRequests = leaveRequests;
+
+  tbody.innerHTML = '';
+
+  if (!leaveRequests || !Array.isArray(leaveRequests) || leaveRequests.length === 0) {
+    const row = document.createElement('tr');
+    row.innerHTML = '<td colspan="11" class="text-center">No leave requests found</td>';
+    tbody.appendChild(row);
+    renderLeavePaginationControls(0);
+    return;
+  }
+
+  const totalPages = Math.ceil(leaveRequests.length / LEAVE_PAGE_SIZE);
+  if (leaveCurrentPage > totalPages) leaveCurrentPage = totalPages;
+  if (leaveCurrentPage < 1) leaveCurrentPage = 1;
+
+  const startIdx = (leaveCurrentPage - 1) * LEAVE_PAGE_SIZE;
+  const endIdx = startIdx + LEAVE_PAGE_SIZE;
+  const pagedList = leaveRequests.slice(startIdx, endIdx);
+
+  pagedList.forEach(req => {
+    const verificationBadge = getVerificationBadge(req.verification_status);
+    const statusBadge = getStatusBadge(req.status);
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${req.request_id}</td>
+      <td>${req.employee_id}</td>
+      <td>${(req.first_name || '') + ' ' + (req.last_name || '')} <br><small>${req.email || ''}</small></td>
+      <td>${req.leave_type}</td>
+      <td>${req.start_date}</td>
+      <td>${req.end_date}</td>
+      <td>${req.total_days || '-'}</td>
+      <td>${statusBadge}</td>
+      <td>${req.remarks || '-'}</td>
+      <td>${verificationBadge}</td>
+      <td>
+        <button type="button" class="btn btn-info btn-sm view-leave-details-btn" data-request-id="${req.request_id}">
+          View
+        </button>
+        <button type="button" class="btn btn-success btn-sm approve-leave-btn" data-request-id="${req.request_id}">
+          Approve
+        </button>
+        <button type="button" class="btn btn-danger btn-sm disapprove-leave-btn" data-request-id="${req.request_id}">
+          Disapprove
+        </button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  renderLeavePaginationControls(totalPages);
+}
+
+    // View details modal
+    function viewLeaveRequestDetails(requestId) {
+        const token = sessionStorage.getItem('adminToken');
+        showSpinner();
+        $.ajax({
+            url: '/get_leave_request_details',
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + token },
+            data: { request_id: requestId },
+            success: function(res) {
+                hideSpinner();
+                if (res.success) {
+                    let html = `
+                      <div class="row">
+                        <div class="col-md-6">
+                          <strong>Request ID:</strong> ${res.request_id || '-'}<br>
+                          <strong>Employee ID:</strong> ${res.employee_id || '-'}<br>
+                          <strong>Name:</strong> ${res.first_name || ''} ${res.last_name || ''}<br>
+                          <strong>Email:</strong> ${res.email || ''}<br>
+                          <strong>Leave Type:</strong> ${res.leave_type || '-'}<br>
+                          <strong>Start Date:</strong> ${res.start_date || '-'}<br>
+                          <strong>End Date:</strong> ${res.end_date || '-'}<br>
+                          <strong>Total Days:</strong> ${res.total_days || '-'}<br>
+                        </div>
+                        <div class="col-md-6">
+                          <strong>Status:</strong> ${getStatusBadge(res.status)}<br>
+                          <strong>Remarks:</strong> ${res.remarks || '-'}<br>
+                          <strong>Verification:</strong> ${getVerificationBadge(res.verification)}<br>
+                          <strong>Created At:</strong> ${res.created_at || '-'}<br>
+                        </div>
+                      </div>
+                    `;
+                    $('#leave-request-details-body').html(html);
+
+                    // Set request-id on modal buttons
+                    $('#leaveRequestDetailsModal .approve-leave-btn-modal').attr('data-request-id', res.request_id);
+                    $('#leaveRequestDetailsModal .disapprove-leave-btn-modal').attr('data-request-id', res.request_id);
+
+                    $('#leaveRequestDetailsModal').modal('show');
+                } else {
+                    showError(res.message || "Could not load details.");
+                }
+            },
+            error: function() {
+                hideSpinner();
+                showError("Error loading details.");
+            }
+        });
+    }
+
+    // Approve/Disapprove leave request
+    function handleLeaveAction(requestId, action, fromModal = false) {
+        const token = sessionStorage.getItem('adminToken');
+        showSpinner();
+        $.ajax({
+            url: `/manage_leave/${requestId}/${action}`,
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + token },
+            data: action === "reject" ? { rejection_reason: "" } : {},
+            success: function(res) {
+                hideSpinner();
+                if (fromModal) $('#leaveRequestDetailsModal').modal('hide');
+                // *** Check if backend reported success, not just if call succeeded ***
+                if (res.success) {
+                    showSuccess(`Leave request ${action === 'approve' ? 'approved' : 'rejected'} successfully!`);
+                    setTimeout(() => {
+                        $('#successModal').modal('hide');
+                        fetchAndRenderLeaveRequests();
+                    }, 1500);
+                } else {
+                    // Show the error from the backend
+                    showError(res.error || `Error ${action === 'approve' ? 'approving' : 'rejecting'} leave request.`);
+                }
+            },
+            error: function() {
+                hideSpinner();
+                showError(`Error ${action === 'approve' ? 'approving' : 'rejecting'} leave request.`);
+            }
+        });
+    }
+
+});
+</script>
+<!-- Script for handling leave request table (End) -->
+
+<!-- Script for logging out (Start) -->
+<script>
+let previouslyVisibleModal = null;
+
+function showSpinner() {
+  // Hide all other open modals except the spinner itself and remember the last open one
+  $('.modal.show').each(function() {
+    if (this.id !== 'loadingSpinnerModal') {
+      previouslyVisibleModal = this.id;
+      $(this).modal('hide');
+    }
+  });
+
+  $('#loadingSpinnerModal').modal({
+    backdrop: 'static',
+    keyboard: false
+  });
+}
+function hideSpinner() {
+  $('#loadingSpinnerModal').modal('hide');
+  // Restore the previously visible modal, if any
+  if (previouslyVisibleModal) {
+    $('#' + previouslyVisibleModal).modal('show');
+    previouslyVisibleModal = null;
+  }
+}
+
+document
+  .querySelector(".logout-btn")
+  .addEventListener("click", function () {
+    $("#logoutModal").modal("show");
+  });
+
+document
+  .getElementById("confirmLogout")
+  .addEventListener("click", function () {
+    showSpinner();
+    setTimeout(function() {
+      sessionStorage.removeItem("adminToken");
+      window.location.href = "/admin_login";
+    }, 600); // Short delay for spinner visibility
+  });
+
+document
+  .getElementById("cancelLogout")
+  .addEventListener("click", function () {
+    $("#logoutModal").modal("hide");
+  });
+
+document
+  .getElementById("closeLogoutModal")
+  .addEventListener("click", function () {
+    $("#logoutModal").modal("hide");
+  });
+</script>
+<!-- Script for logging out (End) -->
+
+<!-- Script that redirects admin back to login page if the token doesn't exist (Start) -->
+<script>
+  const token = sessionStorage.getItem("adminToken")
+  if (!token) {
+    showSpinner && showSpinner();
+    setTimeout(function() {
+      alert("Not authenticated. Redirecting to login.");
+      window.location.href = "/admin_login";
+    }, 600);
+  }
+</script>
+<!-- Script that redirects admin back to login page if the token doesn't exist (End) -->
+
+<!-- Script for redirect admin back to the login page when someone else logged in from another tab  (Start) -->
+<script>
+  function getToken() {
+    return sessionStorage.getItem("adminToken");
+  }
+
+  function checkSessionConflict() {
+    const token = getToken();
+    if (!token) return;
+
+    fetch("/check_jti", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => {
+        if (response.status === 403) {
+          throw new Error("session_conflict");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.error === "session_conflict") {
+          throw new Error("session_conflict");
+        }
+      })
+      .catch((err) => {
+        if (err.message === "session_conflict") {
+          // Show modal (Bootstrap 5 fallback for Bootstrap 4)
+          if (window.bootstrap && window.bootstrap.Modal) {
+            const modal = new bootstrap.Modal(
+              document.getElementById("sessionConflictModal"),
+              {
+                backdrop: "static",
+                keyboard: false,
+              }
+            );
+            modal.show();
+          } else {
+            $('#sessionConflictModal').modal({
+              backdrop: 'static',
+              keyboard: false
+            });
+          }
+
+          // Attach event listener only once
+          const logoutBtn = document.getElementById("confirmLogoutBetweenTabs");
+          if (!logoutBtn.dataset.bound) {
+            logoutBtn.addEventListener("click", () => {
+              showSpinner && showSpinner();
+              setTimeout(function() {
+                sessionStorage.removeItem("adminToken");
+                window.location.href = "/admin_login";
+              }, 600);
+            });
+            logoutBtn.dataset.bound = "true";
+          }
+        }
+      });
+  }
+
+  // Initial check + every 30 seconds
+  checkSessionConflict();
+  setInterval(checkSessionConflict, 30000);
+</script>
+<!-- Script for redirect admin back to the login page when someone else logged in from another tab (End) -->
+
+<!-- Script to search for a specific employee in "Shift management" table (Start) -->
+<script>
+  document.getElementById("shift-search-input").addEventListener("input", function () {
+    const searchTerm = this.value.toLowerCase();
+    const rows = document.querySelectorAll("#shift-employee-body tr");
+
+    rows.forEach(row => {
+      const rowText = row.textContent.toLowerCase();
+      row.style.display = rowText.includes(searchTerm) ? "" : "none";
+    });
+  });
+</script>
+<!-- Script to search for a specific employee in "Shift management" table (End) -->
+
+<!-- Script to search for a specific employee in "View Attendance Logs" table (Start) -->
+<script>
+  document.getElementById("attendance-search-input").addEventListener("input", function () {
+    const searchTerm = this.value.toLowerCase();
+    const rows = document.querySelectorAll("#attendance-logs-body tr");
+
+    rows.forEach(row => {
+      const rowText = row.textContent.toLowerCase();
+      row.style.display = rowText.includes(searchTerm) ? "" : "none";
+    });
+  });
+</script>
+<!-- Script to search for a specific employee in "View Attendance Logs" table (End) -->
+
+
+<!-- Script to search for a specific employee in "Today's absent employees" table (Start) -->
+<script>
+  document.getElementById("absent-search-input").addEventListener("input", function () {
+    const searchTerm = this.value.toLowerCase();
+    const rows = document.querySelectorAll("#absent-employees-body tr");
+
+    rows.forEach(row => {
+      const rowText = row.textContent.toLowerCase();
+      row.style.display = rowText.includes(searchTerm) ? "" : "none";
+    });
+  });
+</script>
+<!-- Script to search for a specific employee in "Today's absent employees" table (End) -->
+
+
+<!-- Script for displaying success and error message for modals (Start) -->
+<script>
+
+function showSpinner() {
+  // Hide all other open modals except the spinner itself and remember the last open one
+  $('.modal.show').each(function() {
+    if (this.id !== 'loadingSpinnerModal') {
+      previouslyVisibleModal = this.id;
+      $(this).modal('hide');
+    }
+  });
+
+  $('#loadingSpinnerModal').modal({
+    backdrop: 'static',
+    keyboard: false
+  });
+}
+
+function hideSpinner() {
+  $('#loadingSpinnerModal').modal('hide');
+  // Restore the previously visible modal, if any
+  if (previouslyVisibleModal) {
+    $('#' + previouslyVisibleModal).modal('show');
+    previouslyVisibleModal = null;
+  }
+}
+
+// Script for displaying success and error message for modals (Bootstrap 4)
+function showSuccess(message) {
+    $('#successModalMessage').text(message);
+    $('#successModal').modal('show');
+
+    // Remove any previous event handler to avoid stacking
+    $('#successModal').off('hidden.bs.modal');
+
+    // If OK/Close button is clicked, hide the modal
+    $('#successModal .btn-ok').off('click').on('click', function() {
+        $('#successModal').modal('hide');
+    });
+
+    // Reload only after the modal is fully hidden (user clicks OK or closes)
+    $('#successModal').on('hidden.bs.modal', function () {
+        // Clean up any leftover modal-backdrop just in case
+        $('.modal-backdrop').remove();
+        location.reload();
+    });
+}
+
+function showError(message) {
+    $('#errormessage').text(message);
+    $('#errorModal').modal('show');
+
+    // Optional: Ensure close button hides the modal
+    $('#errorModal .btn-close, #errorModal .btn-ok').off('click').on('click', function() {
+        $('#errorModal').modal('hide');
+    });
+}
+</script>
+<!-- Script for displaying success and error message for modals (End) -->
+
+<!-- Script for handling attendance logs table (Start) -->
+<script>
+  // Scroll position management
+let lastScrollPosition = 0;
+let shouldRefreshAfterModalClose = false;
+
+// Define a refresh function in the global scope
+function refreshData() {
+  console.log("Manual refresh triggered at " + new Date().toISOString());
+  // We need to find the correct scope for our functions
+  // This will trigger the document ready function to reload data
+  $(document).trigger('refreshAttendanceData');
+}
+
+function saveScrollPosition() {
+  lastScrollPosition = window.scrollY || window.pageYOffset;
+}
+
+function restoreScrollPosition() {
+  setTimeout(() => {
+    window.scrollTo({
+      top: lastScrollPosition,
+      behavior: 'instant'
+    });
+  }, 100);
+}
+
+// Improved modal management functions
+function closeAllModals() {
+  // Hide all modals using jQuery
+  $('.modal').modal('hide');
+  
+  // Remove all modal backdrops
+  $('.modal-backdrop').remove();
+  
+  // Remove modal-related classes and styles from body
+  $('body').removeClass('modal-open').css('padding-right', '');
+}
+
+function showSuccessMessage(message) {
+  console.log("Showing success modal with message:", message);
+  
+  // First, make sure all modals are closed
+  closeAllModals();
+  
+  // Wait for modals to fully close
+  setTimeout(() => {
+    // Set the success message text
+    if (document.getElementById('successModalMessage')) {
+      document.getElementById('successModalMessage').textContent = message;
+      
+      // Force show the success modal
+      $('#successModal').modal({
+        backdrop: 'static',
+        keyboard: false,
+        show: true
+      });
+      
+      console.log("Success modal displayed");
+
+      // Remove any existing event handlers
+      $('#successModal').off('hidden.bs.modal');
+      
+      // Add direct call to window.location.reload when modal is closed
+      $('#successModal').on('hidden.bs.modal', function() {
+        console.log("Success modal closed, refreshing page...");
+        window.location.reload(); // Force a full page reload
+      });
+    } else {
+      console.error("Could not find element with ID 'successModalMessage'");
+    }
+  }, 400);
+}
+
+function showErrorMessage(message) {
+  console.log("Showing error modal with message:", message);
+  
+  // First, make sure all modals are closed
+  closeAllModals();
+  
+  // Wait for modals to fully close
+  setTimeout(() => {
+    // Set the error message text
+    if (document.getElementById('errormessage')) {
+      document.getElementById('errormessage').textContent = message;
+      
+      // Force show the error modal
+      $('#errorModal').modal({
+        backdrop: 'static',
+        keyboard: false,
+        show: true
+      });
+      
+      console.log("Error modal displayed");
+    } else {
+      console.error("Could not find element with ID 'errormessage'");
+    }
+  }, 400);
+}
+
+// Improved response handling function
+function handleApiResponse(data) {
+  hideSpinner();
+  
+  // Debug the response
+  console.log("API Response:", data);
+  
+  // Check if this appears to be a success response, either by:
+  // 1. Having a truthy 'success' property
+  // 2. Having a message that contains words like 'success' or 'successfully'
+  const hasSuccessProperty = !!data.success;
+  const hasSuccessMessage = typeof data.message === 'string' && 
+                          (data.message.toLowerCase().includes('success') || 
+                           data.message.toLowerCase().includes('approved') ||
+                           data.message.toLowerCase().includes('verified') ||
+                           data.message.toLowerCase().includes('added') ||
+                           data.message.toLowerCase().includes('deleted'));
+  
+  if (hasSuccessProperty || hasSuccessMessage) {
+    // Get the success message from either success or message property
+    const successMessage = typeof data.success === 'string' ? data.success : 
+                         (data.message || 'Operation completed successfully');
+    
+    console.log("Handling as SUCCESS:", successMessage);
+    
+    // Show success message
+    showSuccessMessage(successMessage);
+  } else {
+    // Get the error message
+    const errorMessage = data.error || data.message || 'Operation failed';
+    
+    console.log("Handling as ERROR:", errorMessage);
+    showErrorMessage(errorMessage);
+    restoreScrollPosition();
+  }
+}
+
+function getBadge(value) {
+  let badgeClass = 'badge-secondary';
+  if (value === 'Late') badgeClass = 'badge-warning';
+  else if (value === 'Present') badgeClass = 'badge-success';
+  else if (value === 'Early Leave') badgeClass = 'badge-danger';
+  return `<label class="badge ${badgeClass}">${value || '-'}</label>`;
+}
+
+function getVerificationBadge(value) {
+  const isVerified = value === true || value === 'True' || value === 'true';
+  const label = isVerified ? 'Verified' : 'Not yet verified';
+  const badgeClass = isVerified ? 'badge-success' : 'badge-danger';
+  return `<label class="badge ${badgeClass}">${label}</label>`;
+}
+
+// Add global refresh function that can be called from anywhere
+window.refreshAttendanceData = function() {
+  console.log("Global refresh function called");
+  window.location.reload(); // Simple full page reload
+};
+
+document.addEventListener("DOMContentLoaded", function () {
+  const token = sessionStorage.getItem('adminToken');
+  if (!token) {
+    // Use error modal instead of alert
+    showErrorMessage('Unauthorized: No token found.');
+    return;
+  }
+
+  // Set up custom event listener for refreshing data
+  $(document).on('refreshAttendanceData', function() {
+    console.log("Refresh event triggered");
+    loadAttendanceData();
+  });
+
+  // Initial data load
+  loadAttendanceData();
+
+  // Set up event handlers for all attendance action buttons
+  setupEventHandlers();
+
+  function loadAttendanceData() {
+    console.log("Loading attendance data at " + new Date().toISOString());
+    showSpinner();
+    fetch('/attendanceandtimetracking_data', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch attendance data');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log("Data loaded successfully at " + new Date().toISOString());
+      renderOvertimeData(data.overtime_data);
+      renderAttendanceLogs(data.attendance_logs);
+      renderAbsentEmployees(data.absent_employees);
+      renderEmployeeShiftData(data.employee_data);
+
+      if (data.no_overtime_message) {
+        const messageEl = document.getElementById('overtime-message');
+        if (messageEl) {
+          messageEl.textContent = data.no_overtime_message;
+          messageEl.style.display = 'block';
+        }
+      }
+      hideSpinner();
+      
+      // Restore scroll position if it was saved
+      if (lastScrollPosition > 0) {
+        restoreScrollPosition();
+      }
+      
+      // Ensure event handlers are set up after rendering
+      setupEventHandlers();
+    })
+    .catch(error => {
+      hideSpinner();
+      console.error('Error:', error);
+      showErrorMessage('Failed to load attendance data.');
+    });
+  }
+
+  function setupEventHandlers() {
+    console.log("Setting up event handlers");
+    
+    // First remove any existing handlers to prevent duplicates
+    $(document).off('click', '.approve-overtime-btn');
+    $(document).off('click', '.reject-overtime-btn');
+    $(document).off('click', '.verify-attendance');
+    $(document).off('click', '.disapprove_attendance');
+    $(document).off('click', '.verify-overtime');
+    $(document).off('click', '.disapprove_overtime');
+    $(document).off('click', '.delete-attendance');
+    $(document).off('click', '.view-details-btn');
+    
+    // Overtime approval/rejection
+    $(document).on('click', '.approve-overtime-btn', function(e) {
+      e.preventDefault();
+      console.log("Approve overtime button clicked");
+      saveScrollPosition();
+      
+      const employeeId = $(this).data('employee-id');
+      const date = $(this).data('date');
+      
+      showSpinner();
+      fetch('/approve_overtime', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ employee_id: employeeId, date: date })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Use the improved response handler
+        handleApiResponse(data);
+      })
+      .catch(error => {
+        hideSpinner();
+        showErrorMessage('Error processing request.');
+        restoreScrollPosition();
+      });
+    });
+
+    $(document).on('click', '.reject-overtime-btn', function(e) {
+      e.preventDefault();
+      console.log("Reject overtime button clicked");
+      saveScrollPosition();
+      
+      const employeeId = $(this).data('employee-id');
+      const date = $(this).data('date');
+      
+      showSpinner();
+      fetch('/reject_overtime', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ employee_id: employeeId, date: date })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Use the improved response handler
+        handleApiResponse(data);
+      })
+      .catch(error => {
+        hideSpinner();
+        showErrorMessage('Error processing request.');
+        restoreScrollPosition();
+      });
+    });
+
+    // Attendance verification/disapproval
+    $(document).on('click', '.verify-attendance', function(e) {
+      e.preventDefault();
+      console.log("Verify attendance button clicked");
+      saveScrollPosition();
+      
+      const logId = $(this).data('log-id');
+      
+      showSpinner();
+      fetch('/verify_attendance_admin', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ log_id: logId })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Use the improved response handler
+        handleApiResponse(data);
+      })
+      .catch(error => {
+        hideSpinner();
+        showErrorMessage('Error processing request.');
+        restoreScrollPosition();
+      });
+    });
+
+    $(document).on('click', '.disapprove_attendance', function(e) {
+      e.preventDefault();
+      console.log("Disapprove attendance button clicked");
+      saveScrollPosition();
+      
+      const logId = $(this).data('log-id');
+      
+      showSpinner();
+      fetch('/disapprove_attendance', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ log_id: logId })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Use the improved response handler
+        handleApiResponse(data);
+      })
+      .catch(error => {
+        hideSpinner();
+        showErrorMessage('Error processing request.');
+        restoreScrollPosition();
+      });
+    });
+
+    // Overtime verification/disapproval
+    $(document).on('click', '.verify-overtime', function(e) {
+      e.preventDefault();
+      console.log("Verify overtime button clicked");
+      saveScrollPosition();
+      
+      const logId = $(this).data('log-id');
+      
+      showSpinner();
+      fetch('/verify_overtime', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ log_id: logId })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Use the improved response handler
+        handleApiResponse(data);
+      })
+      .catch(error => {
+        hideSpinner();
+        showErrorMessage('Error processing request.');
+        restoreScrollPosition();
+      });
+    });
+
+    $(document).on('click', '.disapprove_overtime', function(e) {
+      e.preventDefault();
+      console.log("Disapprove overtime button clicked");
+      saveScrollPosition();
+      
+      const logId = $(this).data('log-id');
+      
+      showSpinner();
+      fetch('/disapprove_overtime', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ log_id: logId })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Use the improved response handler
+        handleApiResponse(data);
+      })
+      .catch(error => {
+        hideSpinner();
+        showErrorMessage('Error processing request.');
+        restoreScrollPosition();
+      });
+    });
+
+    // Delete attendance
+    let deleteLogId = null; // Store the log id to delete
+
+$(document).on('click', '.delete-attendance', function(e) {
+  e.preventDefault();
+  saveScrollPosition();
+  
+  deleteLogId = $(this).data('log-id');
+  // Show the confirmation modal
+  $('#deleteAttendanceConfirmModal').modal('show');
+});
+
+// Handle confirmation button click
+$(document).on('click', '#confirmDeleteAttendanceBtn', function() {
+  if (!deleteLogId) return;
+  $('#deleteAttendanceConfirmModal').modal('hide');
+  showSpinner();
+  fetch('/delete_attendance', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ log_id: deleteLogId })
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Use the improved response handler
+    handleApiResponse(data);
+    deleteLogId = null; // Reset after use
+  })
+  .catch(error => {
+    hideSpinner();
+    showErrorMessage('Error processing request.');
+    restoreScrollPosition();
+    deleteLogId = null; // Reset after use
+  });
+});
+
+    // View attendance details
+    $(document).on('click', '.view-details-btn', function(e) {
+      e.preventDefault();
+      console.log("View details button clicked");
+      saveScrollPosition();
+      
+      const logId = $(this).data('log-id');
+      
+      showSpinner();
+      $.ajax({
+        url: '/get_attendance_details',
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token
+        },
+        data: { log_id: logId },
+        success: function(res) {
+          hideSpinner();
+          
+          // Close any open modals first
+          closeAllModals();
+          
+          setTimeout(() => {
+            if (res.success) {
+              // Build the details HTML
+              let html = `
+                <div class="row">
+                  <div class="col-md-6">
+                    <strong>Attendance ID:</strong> ${res.log_id || '-'}<br>
+                    <strong>Employee ID:</strong> ${res.employee_id || '-'}<br>
+                    <strong>Date:</strong> ${res.date || '-'}<br>
+                    <strong>Clock In:</strong> ${res.clock_in_time || '-'}<br>
+                    <strong>Clock Out:</strong> ${res.clock_out_time || '-'}<br>
+                    <strong>Status:</strong> ${res.status || '-'}<br>
+                    <strong>Hours Worked:</strong> ${res.hours_worked || '-'}<br>
+                    <strong>Shift ID:</strong> ${res.shift_id || '-'}<br>
+                  </div>
+                  <div class="col-md-6">
+                    <strong>Overtime Hours:</strong> ${res.overtime_hours || '-'}<br>
+                    <strong>Is Overtime:</strong> ${res.is_overtime ? 'Yes' : 'No'}<br>
+                    <strong>Remarks:</strong> ${res.remarks || '-'}<br>
+                    <strong>Leave Type:</strong> ${res.leave_type || '-'}<br>
+                    <strong>Attendance Verified:</strong> ${res.attendance_verified || '-'}<br>
+                  </div>
+                </div>
+              `;
+
+              // --- Breaks Section ---
+              if (Array.isArray(res.breaks) && res.breaks.length > 0) {
+                html += `
+                  <hr>
+                  <h5 class="mt-3">Breaks</h5>
+                  <div class="table-responsive">
+                    <table class="table table-sm table-bordered mb-0">
+                      <thead class="thead-light">
+                        <tr>
+                          <th>#</th>
+                          <th>Type</th>
+                          <th>Start</th>
+                          <th>End</th>
+                          <th>Duration (min)</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                `;
+                res.breaks.forEach((br, idx) => {
+                  html += `
+                    <tr>
+                      <td>${idx + 1}</td>
+                      <td>${br.break_type || '-'}</td>
+                      <td>${br.break_start || '-'}</td>
+                      <td>${br.break_end || '-'}</td>
+                      <td>${br.break_duration_seconds != null ? (br.break_duration_seconds/60).toFixed(2) : '-'}</td>
+                      <td>${br.break_status || '-'}</td>
+                    </tr>
+                  `;
+                });
+                html += `
+                      </tbody>
+                    </table>
+                  </div>
+                `;
+              } else {
+                html += `<hr><div class="text-muted">No breaks recorded for this attendance log.</div>`;
+              }
+
+              $('#attendance-details-body').html(html);
+              
+              // Remove any existing event handlers
+              $('#attendanceDetailsModal').off('hidden.bs.modal');
+              
+              // Set up new event handler for when modal is closed
+              $('#attendanceDetailsModal').on('hidden.bs.modal', function() {
+                restoreScrollPosition();
+              });
+              
+              // Show the modal
+              $('#attendanceDetailsModal').modal('show');
+            } else {
+              $('#attendance-details-body').html(`<div class="alert alert-danger">${res.message || "Could not load details."}</div>`);
+              
+              // Remove any existing event handlers
+              $('#attendanceDetailsModal').off('hidden.bs.modal');
+              
+              // Set up new event handler for when modal is closed
+              $('#attendanceDetailsModal').on('hidden.bs.modal', function() {
+                restoreScrollPosition();
+              });
+              
+              // Show the modal
+              $('#attendanceDetailsModal').modal('show');
+            }
+          }, 300);
+        },
+        error: function(xhr) {
+          hideSpinner();
+          closeAllModals();
+          
+          setTimeout(() => {
+            $('#attendance-details-body').html(`<div class="alert alert-danger">Error loading details.</div>`);
+            
+            // Remove any existing event handlers
+            $('#attendanceDetailsModal').off('hidden.bs.modal');
+            
+            // Set up new event handler for when modal is closed
+            $('#attendanceDetailsModal').on('hidden.bs.modal', function() {
+              restoreScrollPosition();
+            });
+            
+            // Show the modal
+            $('#attendanceDetailsModal').modal('show');
+          }, 300);
+        }
+      });
+    });
+    
+    // Also set up the button events for the other UI elements
+    setupDeleteAbsentHandler();
+    setupEditAbsentFormHandler();
+  }
+
+  function setupDeleteAbsentHandler() {
+    // Remove any existing handlers
+    $(document).off('click', '#confirmDeleteAbsentBtn');
+    
+    // Set up the confirmation button for delete absent
+    $(document).on('click', '#confirmDeleteAbsentBtn', function() {
+      const deleteEmployeeId = sessionStorage.getItem('deleteEmployeeId');
+      const deleteDate = sessionStorage.getItem('deleteDate');
+      
+      if (!deleteEmployeeId || !deleteDate) {
+        showErrorMessage("Missing employee or date information.");
+        return;
+      }
+      
+      // Close the confirmation modal
+      closeAllModals();
+      
+      // Show spinner
+      showSpinner();
+      
+      // Create FormData for the request
+      const formData = new FormData();
+      formData.append('employee_id', deleteEmployeeId);
+      formData.append('date', deleteDate);
+      
+      // Call the API to delete the absent record
+      fetch('/delete_absent', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token
+        },
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Use the improved response handler
+        handleApiResponse(data);
+        
+        // Clear stored values
+        sessionStorage.removeItem('deleteEmployeeId');
+        sessionStorage.removeItem('deleteDate');
+      })
+      .catch(error => {
+        hideSpinner();
+        console.error('Error:', error);
+        showErrorMessage('Error processing request. Please try again.');
+        
+        // Clear stored values
+        sessionStorage.removeItem('deleteEmployeeId');
+        sessionStorage.removeItem('deleteDate');
+      });
+    });
+  }
+
+  function setupEditAbsentFormHandler() {
+    // Remove any existing handlers
+    $(document).off('submit', '#editAbsentForm');
+    
+    // Set up form submission for edit absent
+    $(document).on('submit', '#editAbsentForm', function(e) {
+      e.preventDefault();
+      
+      // Close the edit modal
+      closeAllModals();
+      
+      // Show spinner
+      showSpinner();
+      
+      const formData = new FormData(this);
+      
+      // Call the API to add attendance
+      fetch('/mark_absent', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token
+        },
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Use the improved response handler
+        handleApiResponse(data);
+      })
+      .catch(error => {
+        hideSpinner();
+        console.error('Error:', error);
+        showErrorMessage('Error processing request. Please try again.');
+      });
+    });
+  }
+
+  // Make sure modals are properly closed when their close buttons are clicked
+  $(document).off('click', '[data-dismiss="modal"]');
+  $(document).on('click', '[data-dismiss="modal"]', function() {
+    closeAllModals();
+  });
+
+  function renderOvertimeData(overtimeData) {
+    const container = document.getElementById('overtime-container');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    if (!overtimeData || !Array.isArray(overtimeData) || overtimeData.length === 0) {
+      const row = document.createElement('tr');
+      row.innerHTML = '<td colspan="7" class="text-center">No overtime data available</td>';
+      container.appendChild(row);
+      return;
+    }
+    
+    overtimeData.forEach(emp => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>
+          <img src="data:image/jpeg;base64,${emp.profile_image || ''}" alt="Profile" width="50" height="50" class="rounded-circle">
+        </td>
+        <td>${emp.employee_id}</td>
+        <td>${emp.first_name} ${emp.last_name}</td>
+        <td>${emp.date}</td>
+        <td>${emp.overtime_hours} hrs</td>
+        <td>
+          <span class="badge ${emp.is_overtime_approved ? 'badge-success' : 'badge-warning'}">
+            ${emp.is_overtime_approved ? 'Approved' : 'Pending'}
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-primary approve-overtime-btn"
+                  data-employee-id="${emp.employee_id}"
+                  data-date="${emp.date}"
+                  ${emp.is_overtime_approved ? 'disabled' : ''}>
+            Approve
+          </button>
+          <button class="btn btn-sm btn-danger reject-overtime-btn"
+                  data-employee-id="${emp.employee_id}"
+                  data-date="${emp.date}"
+                  ${emp.is_overtime_approved ? 'disabled' : ''}>
+            Reject
+          </button>
+        </td>
+      `;
+      container.appendChild(row);
+    });
+  }
+
+// Page pagination for Attendance Logs
+const ATTENDANCE_PAGE_SIZE = 40; // Number of logs per page
+let attendanceCurrentPage = 1;
+let globalAttendanceLogs = [];
+
+// Helper to create pagination controls for attendance logs
+// --- Smart Pagination Helpers ---
+function renderSmartPaginationControls(options) {
+  // options: { containerId, currentPage, totalPages, onPageChange }
+  const { containerId, currentPage, totalPages, onPageChange } = options;
+  let paginationContainer = document.getElementById(containerId);
+  if (!paginationContainer) {
+    paginationContainer = document.createElement('div');
+    paginationContainer.id = containerId;
+    paginationContainer.className = 'd-flex justify-content-center my-2';
+    // Try to insert after the first .table-responsive
+    const tableDiv = document.querySelector('.table-responsive');
+    if (tableDiv) {
+      tableDiv.parentNode.insertBefore(paginationContainer, tableDiv.nextSibling);
+    } else {
+      document.body.appendChild(paginationContainer);
+    }
+  }
+  paginationContainer.innerHTML = '';
+
+  if (totalPages <= 1) {
+    paginationContainer.style.display = 'none';
+    return;
+  } else {
+    paginationContainer.style.display = 'flex';
+  }
+
+  const windowSize = 2; // How many pages left/right of current
+
+  // Helper to create buttons
+  function createBtn(label, page, disabled = false, active = false) {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-sm mx-1 ' + (active ? 'btn-primary' : 'btn-outline-primary');
+    btn.textContent = label;
+    btn.disabled = disabled;
+    if (!disabled && !active) {
+      btn.onclick = function() {
+        onPageChange(page);
+      };
+    }
+    return btn;
+  }
+
+  // Prev
+  paginationContainer.appendChild(createBtn('Previous', currentPage - 1, currentPage === 1));
+  // Always show first page
+  paginationContainer.appendChild(createBtn('1', 1, false, currentPage === 1));
+  // Left ellipsis
+  if (currentPage - windowSize > 2) {
+    const span = document.createElement('span');
+    span.className = 'mx-1';
+    span.textContent = '...';
+    paginationContainer.appendChild(span);
+  }
+  // Page window
+  for (
+    let i = Math.max(2, currentPage - windowSize);
+    i <= Math.min(totalPages - 1, currentPage + windowSize);
+    i++
+  ) {
+    paginationContainer.appendChild(createBtn(i, i, false, currentPage === i));
+  }
+  // Right ellipsis
+  if (currentPage + windowSize < totalPages - 1) {
+    const span = document.createElement('span');
+    span.className = 'mx-1';
+    span.textContent = '...';
+    paginationContainer.appendChild(span);
+  }
+  // Always show last page
+  if (totalPages > 1)
+    paginationContainer.appendChild(createBtn(totalPages, totalPages, false, currentPage === totalPages));
+  // Next
+  paginationContainer.appendChild(createBtn('Next', currentPage + 1, currentPage === totalPages));
+}
+
+function renderAttendancePaginationControls(totalPages) {
+  renderSmartPaginationControls({
+    containerId: 'attendance-pagination-controls',
+    currentPage: attendanceCurrentPage,
+    totalPages,
+    onPageChange: function(newPage) {
+      attendanceCurrentPage = newPage;
+      renderAttendanceLogs(globalAttendanceLogs);
+    }
+  });
+}
+
+// Main rendering function with pagination
+function renderAttendanceLogs(logs) {
+  const tbody = document.getElementById('attendance-logs-body');
+  if (!tbody) {
+    console.error("Element with ID 'attendance-logs-body' not found.");
+    return;
+  }
+
+  globalAttendanceLogs = logs;
+
+  tbody.innerHTML = '';
+
+  if (!logs || !Array.isArray(logs) || logs.length === 0) {
+    const row = document.createElement('tr');
+    row.innerHTML = '<td colspan="15" class="text-center">No attendance logs available</td>';
+    tbody.appendChild(row);
+    renderAttendancePaginationControls(0);
+    return;
+  }
+
+  const totalPages = Math.ceil(logs.length / ATTENDANCE_PAGE_SIZE);
+  if (attendanceCurrentPage > totalPages) attendanceCurrentPage = totalPages;
+  if (attendanceCurrentPage < 1) attendanceCurrentPage = 1;
+
+  const startIdx = (attendanceCurrentPage - 1) * ATTENDANCE_PAGE_SIZE;
+  const endIdx = startIdx + ATTENDANCE_PAGE_SIZE;
+  const pagedLogs = logs.slice(startIdx, endIdx);
+
+  pagedLogs.forEach(log => {
+    const statusBadge = getBadge(log.status);
+    const remarksBadge = getBadge(log.remarks);
+    const attendanceVerified = getVerificationBadge(log.attendance_verified);
+    const overtimeVerified = getVerificationBadge(log.is_overtime_approved);
+
+    const isAttVerified = log.attendance_verified === true || log.attendance_verified === 'True' || log.attendance_verified === 'true';
+    const isOTVerified = log.is_overtime_approved === true || log.is_overtime_approved === 'True' || log.is_overtime_approved === 'true';
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${log.log_id}</td>
+      <td>${log.employee_id}</td>
+      <td>${log.email}</td>
+      <td>${log.role_name || '-'}</td>
+      <td>${log.date}</td>
+      <td>${log.clock_in_time || '-'}</td>
+      <td>${log.clock_out_time || '-'}</td>
+      <td>${statusBadge}</td>
+      <td>${remarksBadge}</td>
+      <td>${log.leave_type || '-'}</td>
+      <td>${log.hours_worked || '0'}</td>
+      <td>${log.overtime_hours || '0'}</td>
+      <td>${overtimeVerified}</td>
+      <td>${attendanceVerified}</td>
+      <td>
+        <button class="btn btn-warning btn-sm disapprove_attendance" data-log-id="${log.log_id}" ${!isAttVerified ? 'disabled' : ''}>
+          Disapprove attendance
+        </button>
+        <button class="btn btn-success btn-sm verify-attendance" data-log-id="${log.log_id}" ${isAttVerified ? 'disabled' : ''}>
+          Verify attendance
+        </button>
+        <button class="btn btn-outline-primary btn-sm verify-overtime" data-log-id="${log.log_id}" ${isOTVerified ? 'disabled' : ''}>
+          Verify overtime
+        </button>
+        <button class="btn btn-outline-danger btn-sm disapprove_overtime" data-log-id="${log.log_id}" ${!isOTVerified ? 'disabled' : ''}>
+          Disapprove overtime
+        </button>
+        <button class="btn btn-danger btn-sm delete-attendance"
+                data-log-id="${log.log_id}"
+                data-date="${log.date}"
+                data-status="${log.clock_out_time}">
+          Delete
+        </button>
+        <button class="btn btn-success btn-sm edit-attendance"
+                data-employee-id="${log.employee_id}"
+                data-date="${log.date}"
+                data-clock-in="${log.clock_in_time}"
+                data-clock-out="${log.clock_out_time}"
+                data-status="${log.status}"
+                data-remarks="${log.remarks}"
+                data-leave-type="${log.leave_type}">
+          Edit
+        </button>
+        <button class="btn btn-info btn-sm view-details-btn" data-log-id="${log.log_id}">
+          View Details
+        </button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  renderAttendancePaginationControls(totalPages);
+}
+
+// Pagination constants
+const PAGE_SIZE = 40;
+let currentPage = 1;
+
+// Helper to create pagination controls
+function renderPaginationControls(totalPages) {
+  const paginationContainer = document.getElementById('absent-pagination-controls');
+  if (!paginationContainer) {
+    paginationContainer = document.createElement('div');
+    paginationContainer.id = paginationContainerId;
+    paginationContainer.className = 'd-flex justify-content-center my-2';
+    // Insert after table
+    const tableDiv = document.querySelector('.table-responsive');
+    if (tableDiv) {
+      tableDiv.parentNode.insertBefore(paginationContainer, tableDiv.nextSibling);
+    } else {
+      document.body.appendChild(paginationContainer);
+    }
+  }
+  paginationContainer.innerHTML = '';
+
+  if (totalPages <= 1) {
+    paginationContainer.style.display = 'none';
+    return;
+  } else {
+    paginationContainer.style.display = 'flex';
+  }
+
+  // Previous button
+  const prevBtn = document.createElement('button');
+  prevBtn.className = 'btn btn-secondary btn-sm mx-1';
+  prevBtn.textContent = 'Previous';
+  prevBtn.disabled = currentPage === 1;
+  prevBtn.onclick = function() {
+    if (currentPage > 1) {
+      currentPage--;
+      renderAbsentEmployees(globalAbsentList);
+    }
+  };
+  paginationContainer.appendChild(prevBtn);
+
+  // Page numbers
+  for (let i = 1; i <= totalPages; i++) {
+    const pageBtn = document.createElement('button');
+    pageBtn.className = 'btn btn-sm mx-1 ' + (currentPage === i ? 'btn-primary' : 'btn-outline-primary');
+    pageBtn.textContent = i;
+    pageBtn.onclick = function() {
+      currentPage = i;
+      renderAbsentEmployees(globalAbsentList);
+    };
+    paginationContainer.appendChild(pageBtn);
+  }
+
+  // Next button
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'btn btn-secondary btn-sm mx-1';
+  nextBtn.textContent = 'Next';
+  nextBtn.disabled = currentPage === totalPages;
+  nextBtn.onclick = function() {
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderAbsentEmployees(globalAbsentList);
+    }
+  };
+  paginationContainer.appendChild(nextBtn);
+}
+
+// --- ABSENT EMPLOYEES Smart Pagination ---
+const ABSENT_PAGE_SIZE = 40;
+let absentCurrentPage = 1;
+let globalAbsentList = [];
+
+function renderAbsentPaginationControls(totalPages) {
+  renderSmartPaginationControls({
+    containerId: 'absent-pagination-controls',
+    currentPage: absentCurrentPage,
+    totalPages,
+    onPageChange: function(newPage) {
+      absentCurrentPage = newPage;
+      renderAbsentEmployees(globalAbsentList);
+    }
+  });
+}
+
+function renderAbsentEmployees(absentList) {
+  const tbody = document.getElementById('absent-employees-body');
+  if (!tbody) {
+    console.error("Element with ID 'absent-employees-body' not found.");
+    return;
+  }
+
+  globalAbsentList = absentList;
+
+  tbody.innerHTML = '';
+
+  if (!absentList || !Array.isArray(absentList) || absentList.length === 0) {
+    const row = document.createElement('tr');
+    row.innerHTML = '<td colspan="10" class="text-center">No absent employees found</td>';
+    tbody.appendChild(row);
+    renderAbsentPaginationControls(0);
+    return;
+  }
+
+  const totalPages = Math.ceil(absentList.length / ABSENT_PAGE_SIZE);
+  if (absentCurrentPage > totalPages) absentCurrentPage = totalPages;
+  if (absentCurrentPage < 1) absentCurrentPage = 1;
+
+  const startIdx = (absentCurrentPage - 1) * ABSENT_PAGE_SIZE;
+  const endIdx = startIdx + ABSENT_PAGE_SIZE;
+  const pagedList = absentList.slice(startIdx, endIdx);
+
+  pagedList.forEach(emp => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${emp.employee_id}</td>
+      <td>${emp.email}</td>
+      <td>${emp.role || '-'}</td>
+      <td>${emp.date || '-'}</td>
+      <td>${emp.clock_in || '-'}</td>
+      <td>${emp.clock_out || '-'}</td>
+      <td>
+        <label class="badge badge-danger" style="margin-top: 4px;">
+          ${emp.status || 'Absent'}
+        </label>
+      </td>
+      <td>${emp.remarks || '-'}</td>
+      <td>${emp.overtime_hours || '0'}</td>
+      <td>
+        <button class="btn btn-success btn-sm edit-absent-btn" data-employee-id="${emp.employee_id}" data-date="${emp.date}">
+          Add to attendance log
+        </button>
+        <button class="btn btn-danger btn-sm delete-absent-btn" data-employee-id="${emp.employee_id}" data-date="${emp.date}">
+          Delete from attendance log
+        </button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  renderAbsentPaginationControls(totalPages);
+
+  // Set up click handlers for the buttons we just created
+  $('.edit-absent-btn').off('click').on('click', function() {
+    const employeeId = $(this).data('employee-id');
+    const date = $(this).data('date');
+    editAbsent(employeeId, date);
+  });
+
+  $('.delete-absent-btn').off('click').on('click', function() {
+    const employeeId = $(this).data('employee-id');
+    const date = $(this).data('date');
+    deleteAbsent(employeeId, date);
+  });
+}
+
+// --- EMPLOYEE SHIFT Smart Pagination ---
+const SHIFT_PAGE_SIZE = 40;
+let shiftCurrentPage = 1;
+let globalEmployeeData = [];
+
+// Render pagination controls for employee shift table
+function renderShiftPaginationControls(totalPages) {
+  renderSmartPaginationControls({
+    containerId: 'shift-pagination-controls',
+    currentPage: shiftCurrentPage,
+    totalPages,
+    onPageChange: function(newPage) {
+      shiftCurrentPage = newPage;
+      renderEmployeeShiftData(globalEmployeeData);
+    }
+  });
+}
+
+// Main rendering function with pagination applied
+function renderEmployeeShiftData(employeeData) {
+  const tbody = document.getElementById('shift-employee-body');
+  if (!tbody) return;
+
+  globalEmployeeData = employeeData;
+
+  tbody.innerHTML = '';
+
+  if (!employeeData || !Array.isArray(employeeData) || employeeData.length === 0) {
+    const row = document.createElement('tr');
+    row.innerHTML = '<td colspan="9" class="text-center">No employee shift data available</td>';
+    tbody.appendChild(row);
+    renderShiftPaginationControls(0);
+    return;
+  }
+
+  const totalPages = Math.ceil(employeeData.length / SHIFT_PAGE_SIZE);
+  if (shiftCurrentPage > totalPages) shiftCurrentPage = totalPages;
+  if (shiftCurrentPage < 1) shiftCurrentPage = 1;
+
+  const startIdx = (shiftCurrentPage - 1) * SHIFT_PAGE_SIZE;
+  const endIdx = startIdx + SHIFT_PAGE_SIZE;
+  const pagedList = employeeData.slice(startIdx, endIdx);
+
+  pagedList.forEach(emp => {
+    const rotatingBadge = emp.is_rotating
+      ? '<span class="badge badge-success">Rotating</span>'
+      : '<span class="badge badge-danger">Not Rotating</span>';
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${emp.employee_id}</td>
+      <td>
+        <img src="${emp.image_src}" alt="" width="50" height="50" class="rounded-circle">
+      </td>
+      <td>${emp.first_name} ${emp.last_name}</td>
+      <td>${emp.email}</td>
+      <td>${emp.shift_name}</td>
+      <td>${emp.start_time}</td>
+      <td>${emp.end_time}</td>
+      <td>${rotatingBadge}</td>
+      <td>
+        <button class="btn btn-success btn-sm assign-shift-button" 
+            data-assigned-employee-id="${emp.employee_id}"
+            data-employee-fullname="${emp.first_name} ${emp.last_name}"
+            data-employee-fullemail="${emp.email}"
+            data-profileimage-src="${emp.image_src}"
+            data-shift-id="${emp.shift_id}"
+            data-shift-name="${emp.shift_name}">
+            Assign Shift
+        </button>
+        <button class="btn btn-danger btn-sm delete-shift-button" 
+            data-assigned-employee-id="${emp.employee_id}"
+            data-employee-name="${emp.first_name} ${emp.last_name}"
+            data-employee-email="${emp.email}"
+            data-shift-name="${emp.shift_name}"
+            data-location="${emp.location || ''}"
+            data-shift-date="${emp.shift_date || ''}"
+            data-start-time="${emp.start_time || ''}"
+            data-end-time="${emp.end_time || ''}"
+            data-image-src="${emp.image_src}"
+            data-shift-id="${emp.shift_id || ''}">
+            Delete Current Shift
+        </button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  renderShiftPaginationControls(totalPages);
+}
+
+  // Make these functions available to window scope
+  window.editAbsent = function(employeeId, date) {
+    // Close any open modals first
+    closeAllModals();
+    
+    setTimeout(() => {
+      // Populate the form with employee data
+      $('#absentEmployeeId').val(employeeId);
+      $('#absentDate').val(date);
+      $('#absentRemarks').val('');
+      
+      // Set default values for clock in/out times if these elements exist
+      if ($('#absentClockIn').length) {
+          $('#absentClockIn').val('09:00');
+      }
+      
+      if ($('#absentClockOut').length) {
+          $('#absentClockOut').val('17:00');
+      }
+      
+      // Set default status as Present if element exists
+      const statusSelect = document.getElementById('absentStatus');
+      if (statusSelect) {
+          for (let i = 0; i < statusSelect.options.length; i++) {
+              if (statusSelect.options[i].value === 'Present') {
+                  statusSelect.selectedIndex = i;
+                  break;
+              }
+          }
+      }
+      
+      // Show the modal
+      $('#editAbsentModal').modal('show');
+    }, 300);
+  };
+
+  window.deleteAbsent = function(employeeId, date) {
+    // Close any open modals first
+    closeAllModals();
+    
+    setTimeout(() => {
+      sessionStorage.setItem('deleteEmployeeId', employeeId);
+      sessionStorage.setItem('deleteDate', date);
+      $('#deleteAbsentModal').modal('show');
+    }, 300);
+  };
+});
+</script>
+<!-- Script for handling attendance logs table (End) -->
+
+<!-- Script for assigning shift to a specific employee (Start) -->
+<script>
+$(document).ready(function () {
+    // Get formatted date/time in exactly the requested format
+    function getFormattedDateTime() {
+        const now = new Date();
+        const year = now.getUTCFullYear();
+        const month = (now.getUTCMonth() + 1).toString().padStart(2, '0');
+        const day = now.getUTCDate().toString().padStart(2, '0');
+        const hours = now.getUTCHours().toString().padStart(2, '0');
+        const minutes = now.getUTCMinutes().toString().padStart(2, '0');
+        const seconds = now.getUTCSeconds().toString().padStart(2, '0');
+        
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+    
+    // Preserve scroll position during page reload
+    function reloadPagePreservingPosition() {
+        // Store current scroll position
+        localStorage.setItem('scrollPosition', window.scrollY || document.documentElement.scrollTop);
+        
+        // Reload the page
+        window.location.reload();
+    }
+    
+    // Restore scroll position after reload (run on page load)
+    if (localStorage.getItem('scrollPosition')) {
+        // Wait for page to fully load before scrolling
+        setTimeout(function() {
+            window.scrollTo(0, parseInt(localStorage.getItem('scrollPosition')));
+            localStorage.removeItem('scrollPosition');
+        }, 100);
+    }
+    
+    // Update date/time when modal opens
+    $("#assignShiftModal").on("show.bs.modal", function() {
+        $(".date-time-display").text(getFormattedDateTime());
+        $(".username-display").text(sessionStorage.getItem("username") || "Ratana3");
+    });
+
+    $(document).on("click", ".assign-shift-button", function () {
+        let employeeId = $(this).data("assigned-employee-id");
+        let employeeName = $(this).data("employee-fullname");
+        let employeeEmail = $(this).data("employee-fullemail");
+        let imageSrc = $(this).data("profileimage-src");
+
+        $("#assign-employee-id").val(employeeId);
+        $("#assign-employee-name").text(employeeName);
+        $("#assign-employee-email").text(employeeEmail);
+        $("#assign-employee-image").attr("src", imageSrc);
+
+        $("#assignShiftModal").modal("show");
+        fetchAvailableShifts();
+    });
+
+    function formatTime(timeStr) {
+        if (!timeStr) return "N/A";
+        let [hours, minutes] = timeStr.split(":");
+        let ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12 || 12;
+        return `${hours}:${minutes} ${ampm}`;
+    }
+
+    function fetchAvailableShifts() {
+        const token = sessionStorage.getItem("adminToken");
+        if (!token) {
+            showError("Admin token missing. Please log in again.");
+            return;
+        }
+        showSpinner();
+        $.ajax({
+            url: "/get_shifts",
+            method: "GET",
+            dataType: "json",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+            success: function (response) {
+                hideSpinner();
+                let shiftDropdown = $("#assign-shift-select");
+                shiftDropdown.empty();
+                shiftDropdown.append('<option value="">Select a shift</option>');
+
+                if (response.length === 0) {
+                    shiftDropdown.append('<option value="">No shifts available</option>');
+                    return;
+                }
+
+                response.forEach(shift => {
+                    let startTimeFormatted = formatTime(shift.start_time);
+                    let endTimeFormatted = formatTime(shift.end_time);
+                    let option = `<option value="${shift.shift_id}" 
+                                    data-start-time="${shift.start_time}" 
+                                    data-end-time="${shift.end_time}">
+                                    ${shift.shift_name} (${startTimeFormatted} - ${endTimeFormatted})
+                                  </option>`;
+                    shiftDropdown.append(option);
+                });
+            },
+            error: function (xhr, status, error) {
+                hideSpinner();
+                console.error("Error fetching shifts:", error);
+                showError("Unable to load shifts. Please try again.");
+            }
+        });
+    }
+
+    $("#assign-shift-select").change(function () {
+        let selectedShift = $(this).find(":selected");
+        let startTime = selectedShift.data("start-time");
+        let endTime = selectedShift.data("end-time");
+
+        if (startTime && endTime) {
+            // Format times for display
+            $("#assign-start-time").text(formatTime(startTime));
+            $("#assign-end-time").text(formatTime(endTime));
+        } else {
+            $("#assign-start-time").text("N/A");
+            $("#assign-end-time").text("N/A");
+        }
+    });
+
+    $("#assignShiftForm").submit(function (e) {
+        e.preventDefault();
+        
+        // Validate form
+        const shiftId = $("#assign-shift-select").val();
+        const shiftDate = $("#assign-shift-date-id").val();
+        const location = $("#assign-location-id").val();
+        
+        if (!shiftId) {
+            showError("Please select a shift.");
+            return;
+        }
+        
+        if (!shiftDate) {
+            showError("Please select a shift date.");
+            return;
+        }
+        
+        if (!location) {
+            showError("Please enter a location.");
+            return;
+        }
+
+        const token = sessionStorage.getItem("adminToken");
+        if (!token) {
+            showError("Admin token missing. Please log in again.");
+            return;
+        }
+
+        const payload = {
+            employee_id: $("#assign-employee-id").val(),
+            shift_id: shiftId,
+            location: location,
+            shift_date: shiftDate,
+            is_rotating: $("#assign-is-rotating").is(":checked") ? 1 : 0
+        };
+
+        console.log("Assigning shift with data:", payload);
+        
+        // Close the assign modal first
+        $("#assignShiftModal").modal("hide");
+        
+        // Wait for modal to close, then show spinner
+        setTimeout(function() {
+            showSpinner();
+            
+            $.ajax({
+                url: "/assign_shift",
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                data: JSON.stringify(payload),
+                success: function (response) {
+                    hideSpinner();
+                    
+                    // Only show success modal if operation was successful
+                    if (response.success === true || response.status === "success" || response.message) {
+                        // Show success modal with the message from the response
+                        showSuccess(response.message || "Shift assigned successfully.");
+                        
+                        // Reload page preserving position when success modal is closed
+                        $('#successModal').off('hidden.bs.modal').on('hidden.bs.modal', function() {
+                            reloadPagePreservingPosition();
+                        });
+                    } else {
+                        // Even though request was successful, the server operation might not have been
+                        console.log("Response did not indicate success:", response);
+                        showError("Server response did not confirm successful operation.");
+                    }
+                },
+                error: function (xhr) {
+                    hideSpinner();
+                    const errorMsg = xhr.responseJSON?.error || xhr.responseText || "Error assigning shift.";
+                    showError(errorMsg);
+                    console.error("Assign Shift Error:", xhr.responseText);
+                }
+            });
+        }, 300);
+    });
+});
+</script>
+<!-- Script for assigning shift to a specific employee (End) -->
+
+<!-- Script for deleting assigned shift from a specific employee (START) -->
+<script>
+let pendingShiftDelete = { employeeId: null, shiftId: null };
+
+// Helper for position-preserving reload
+function reloadPagePreservingPosition() {
+    localStorage.setItem('scrollPosition', window.scrollY || document.documentElement.scrollTop);
+    window.location.reload();
+}
+// Restore scroll position after reload (run on page load)
+if (localStorage.getItem('scrollPosition')) {
+    setTimeout(function() {
+        window.scrollTo(0, parseInt(localStorage.getItem('scrollPosition')));
+        localStorage.removeItem('scrollPosition');
+    }, 100);
+}
+
+$(document).on('click', '.delete-shift-button', function () {
+    const employeeId = $(this).data('assigned-employee-id');
+    const shiftId = $(this).data('shift-id');
+    const token = sessionStorage.getItem("adminToken");
+
+    if (!token) {
+        showError("Unauthorized: Admin token missing.");
+        return;
+    }
+
+    if (!employeeId || !shiftId) {
+        showError("Missing employee or shift ID.");
+        return;
+    }
+
+    pendingShiftDelete.employeeId = employeeId;
+    pendingShiftDelete.shiftId = shiftId;
+
+    $('#confirmDeleteShiftModal').modal('show');
+});
+
+$('#confirmDeleteShiftBtn').on('click', function () {
+    const token = sessionStorage.getItem("adminToken");
+
+    if (!token) {
+        showError("Unauthorized: Admin token missing.");
+        return;
+    }
+
+    const { employeeId, shiftId } = pendingShiftDelete;
+
+    if (!employeeId || !shiftId) {
+        showError("Missing employee or shift ID.");
+        return;
+    }
+
+    // Hide confirmation modal immediately
+    $('#confirmDeleteShiftModal').modal('hide');
+    showSpinner();
+
+    $.ajax({
+        url: '/delete_Assignedshift',
+        type: 'POST',
+        contentType: 'application/json',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        },
+        data: JSON.stringify({ employee_id: employeeId, shift_id: shiftId }),
+        success: function (response) {
+            hideSpinner();
+            if (response.success) {
+                showSuccess("Assigned shift deleted successfully.");
+                // Only reload the page when the success modal is closed, preserving position
+                $('#successModal').off('hidden.bs.modal').on('hidden.bs.modal', function() {
+                    reloadPagePreservingPosition();
+                });
+            } else {
+                showError(response.error || 'Failed to delete shift.');
+            }
+        },
+        error: function (xhr) {
+            hideSpinner();
+            console.error("Delete Assigned Shift Error:", xhr.responseText);
+            showError(xhr.responseJSON?.error || 'Something went wrong. Please try again.');
+        }
+    });
+});
+</script>
+<!-- Script for deleting assigned shift from a specific employee (END) -->
+
+<!-- Script for logging out (Start) -->
+<script>
+document
+  .querySelector(".logout-btn")
+  .addEventListener("click", function () {
+    $("#logoutModal").modal("show");
+  });
+
+document
+  .getElementById("confirmLogout")
+  .addEventListener("click", function () {
+    showSpinner();
+    setTimeout(function() {
+      sessionStorage.removeItem("adminToken");
+      window.location.href = "/admin_login";
+    }, 600);
+  });
+
+document
+  .getElementById("cancelLogout")
+  .addEventListener("click", function () {
+    $("#logoutModal").modal("hide");
+  });
+
+document
+  .getElementById("closeLogoutModal")
+  .addEventListener("click", function () {
+    $("#logoutModal").modal("hide");
+  });
+</script>
+<!-- Script for logging out (End) -->
+
+<!-- Spinner logic: showSpinner/hideSpinner that hides/restores any other open modal (Start) -->
+<script>
+function showSpinner() {
+  $('.modal.show').each(function() {
+    if (this.id !== 'loadingSpinnerModal') {
+      previouslyVisibleModal = this.id;
+      $(this).modal('hide');
+    }
+  });
+  $('#loadingSpinnerModal').modal({
+    backdrop: 'static',
+    keyboard: false
+  });
+}
+
+function hideSpinner() {
+  $('#loadingSpinnerModal').modal('hide');
+  if (previouslyVisibleModal) {
+    $('#' + previouslyVisibleModal).modal('show');
+    previouslyVisibleModal = null;
+  }
+}
+</script>
+<!-- Spinner logic (End) -->
+
+<!-- Script for the 3 buttons (delete,edit,details)  (View attendance logs table ) (START) -->
+<script>
+$(document).ready(function () {
+    function getJWTToken() {
+        return sessionStorage.getItem("adminToken");
+    }
+
+    // APPROVE LEAVE REQUEST
+    let verifyRequestID = null;
+    let verifyEmployeeID = null;
+
+    $(document).on("click", ".verify-leave_request", function () {
+        verifyRequestID = $(this).data("request-id");
+        verifyEmployeeID = $(this).data("employee-id");
+        if (!verifyRequestID) {
+            showError("Missing request ID.");
+            return;
+        }
+        $('#verifyLeaveModal').modal('show');
+    });
+
+    document.getElementById("confirmVerifyLeaveBtn").addEventListener("click", function () {
+        const token = getJWTToken();
+        if (!token) {
+            $('#verifyLeaveModal').modal('hide');
+            showError("Session expired or not logged in.");
+            return;
+        }
+
+        showSpinner();
+        $.ajax({
+            url: "/verify_leaverequests",
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+                "Authorization": "Bearer " + token,
+            },
+            data: JSON.stringify({ request_id: verifyRequestID, employee_id: verifyEmployeeID }),
+            success: function (response) {
+                hideSpinner();
+                $('#verifyLeaveModal').modal('hide');
+                showSuccess(response.message || "Leave request verified.");
+                setTimeout(() => location.reload(), 2000);
+            },
+            error: function () {
+                hideSpinner();
+                $('#verifyLeaveModal').modal('hide');
+                showError("Verification failed.");
+            }
+        });
+    });
+
+    // DISAPPROVE LEAVE REQUEST
+    let disaaproveRequestID = null;
+    let disapproveEmployeeID = null;
+
+    $(document).on("click", ".disapprove_leave_request", function () {
+        disapproveEmployeeID = $(this).data("employee-id");
+        disaaproveRequestID = $(this).data("request-id");
+        if (!disaaproveRequestID) {
+            showError("Missing request ID.");
+            return;
+        }
+        $('#disapproveLeaveModal').modal('show');
+    });
+
+    document.getElementById("confirmDisapproveLeaveBtn").addEventListener("click", function () {
+        const token = getJWTToken();
+        if (!token) {
+            $('#disapproveLeaveModal').modal('hide');
+            showError("Session expired or not logged in.");
+            return;
+        }
+
+        showSpinner();
+        $.ajax({
+            url: "/disapprove_leaverequests",
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+                "Authorization": "Bearer " + token,
+            },
+            data: JSON.stringify({ employee_id: disapproveEmployeeID, request_id: disaaproveRequestID }),
+            success: function (response) {
+                hideSpinner();
+                $('#disapproveLeaveModal').modal('hide');
+                showSuccess(response.message || "Leave request disapproved.");
+                setTimeout(() => location.reload(), 2000);
+            },
+            error: function () {
+                hideSpinner();
+                $('#disapproveLeaveModal').modal('hide');
+                showError("Disapproval failed.");
+            }
+        });
+    });
+
+    // Convert a date string like "Sat, 17 May 2025 00:00:00 GMT" to "YYYY-MM-DD"
+    function convertToDateInputFormat(dateString) {
+        const date = new Date(dateString);
+        if (isNaN(date)) return "";
+        return date.toISOString().split('T')[0];
+    }
+
+    // Convert a time string to "HH:MM"
+    function convertToTimeInputFormat(timeString) {
+        if (!timeString) return "";
+        const parts = timeString.split(":");
+        if (parts.length >= 2) {
+            return `${parts[0].padStart(2, '0')}:${parts[1].padStart(2, '0')}`;
+        }
+        return "";
+    }
+
+    // Show modal and populate fields
+    $(document).on("click", ".edit-attendance", function () {
+        const rawDate = $(this).data('date');
+        $('#employee_id').val($(this).data('employee-id') || "");
+        $('#date').val(convertToDateInputFormat(rawDate));
+        $('#original_date').val(convertToDateInputFormat(rawDate));
+        $('#clock_in_time').val(convertToTimeInputFormat($(this).data('clock-in')));
+        $('#clock_out_time').val(convertToTimeInputFormat($(this).data('clock-out')));
+        $('#status').val($(this).data('status') || "");
+        $('#remarks').val($(this).data('remarks') || "");
+        $('#leave_type').val($(this).data('leave-type') || "");
+        $('#editModal').modal('show');
+    });
+
+    // Submit updated info
+    $(document).on("submit", "#editAttendanceForm", function (e) {
+        e.preventDefault();
+
+        const token = getJWTToken();
+        if (!token) {
+            showError("Session expired or not logged in.");
+            return;
+        }
+
+        const data = {
+            employee_id: $('#employee_id').val().trim(),
+            date: $('#date').val().trim(),
+            original_date: $('#original_date').val().trim(),
+            clock_in_time: $('#clock_in_time').val().trim(),
+            clock_out_time: $('#clock_out_time').val().trim(),
+            status: $('#status').val().trim(),
+            remarks: $('#remarks').val().trim(),
+            leave_type: $('#leave_type').val().trim()
+        };
+
+        showSpinner();
+        $.ajax({
+            url: "/edit_attendance",
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+                "Authorization": "Bearer " + token,
+            },
+            data: JSON.stringify(data),
+            success: function (response) {
+                hideSpinner();
+                $('#editModal').modal('hide');
+                showSuccess(response.message || "Attendance updated successfully.");
+                setTimeout(() => location.reload(), 2000);
+            },
+            error: function (xhr) {
+                hideSpinner();
+                let errMsg = "Edit failed.";
+                try {
+                    const res = JSON.parse(xhr.responseText);
+                    if (res.error) errMsg = res.error;
+                } catch (e) {}
+                showError(errMsg);
+                console.error("Edit Error:", xhr.responseText);
+            }
+        });
+    });
+
+    // Format Converters
+    function convertTo24Hour(timeStr) {
+        if (!timeStr || timeStr === "None") return "";
+        let [time, period] = timeStr.split(" ");
+        let [hours, minutes] = time.split(":");
+        hours = parseInt(hours, 10);
+        if (period === "PM" && hours < 12) hours += 12;
+        if (period === "AM" && hours === 12) hours = 0;
+        return `${String(hours).padStart(2, "0")}:${minutes}`;
+    }
+
+    function convertTo12Hour(timeStr) {
+        if (!timeStr || timeStr === "None") return "N/A";
+        let [hours, minutes] = timeStr.split(":");
+        hours = parseInt(hours, 10);
+        const ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12 || 12;
+        return `${hours}:${minutes} ${ampm}`;
+    }
+});
+</script>
+<!-- Script for the 3 buttons (delete,edit,details)  (View attendance logs table ) (END) -->
+
+<!-- Script for adding and edit shift (START) -->
+<script>
+$(document).ready(function() {
+    // Debug flag - set to true to see detailed logs
+    const DEBUG = true;
+    
+    function log(message, data) {
+        if (DEBUG) {
+            if (data) {
+                console.log(message, data);
+            } else {
+                console.log(message);
+            }
+        }
+    }
+    
+    // Convert 24-hour format to AM/PM for display only
+    function formatToAMPM(timeString) {
+        if (!timeString) return '';
+        
+        // Parse the time
+        let [hours, minutes] = timeString.split(':').map(part => parseInt(part, 10));
+        if (isNaN(hours) || isNaN(minutes)) return '';
+        
+        // Convert to 12-hour format
+        const period = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12; // Convert 0 to 12 for 12 AM
+        
+        return `${hours}:${minutes.toString().padStart(2, '0')} ${period}`;
+    }
+    
+    // Format time to ensure it's in valid HH:MM format for input fields
+    function formatToValidTimeInput(timeString) {
+        if (!timeString) return '';
+        
+        // Remove any seconds and ensure proper format
+        if (timeString.includes(':')) {
+            const parts = timeString.split(':');
+            if (parts.length >= 2) {
+                const hours = parseInt(parts[0], 10).toString().padStart(2, '0');
+                const minutes = parseInt(parts[1], 10).toString().padStart(2, '0');
+                return `${hours}:${minutes}`;
+            }
+        }
+        return timeString;
+    }
+    
+    // Initialize the add shift modal
+    $('#addNewShift').on('show.bs.modal', function() {
+        // Clear inputs
+        $(this).find('#shift-name, #start-time, #end-time').val('');
+        $(this).find('.time-ampm-display, #start-time-ampm, #end-time-ampm').text('');
+        
+        // Update date/time display
+        updateDateTimeDisplay();
+    });
+    
+    // Initialize the edit shift modal
+    $('#editShiftModal').on('show.bs.modal', function() {
+        // Update date/time display
+        updateDateTimeDisplay();
+        // Fetch shifts for dropdown
+        fetchEditShifts();
+    });
+    
+    // Update the current date/time display in all modals
+    function updateDateTimeDisplay() {
+        // Get current date and time in UTC
+        const now = new Date();
+        const year = now.getUTCFullYear();
+        const month = (now.getUTCMonth() + 1).toString().padStart(2, '0');
+        const day = now.getUTCDate().toString().padStart(2, '0');
+        const hours = now.getUTCHours().toString().padStart(2, '0');
+        const minutes = now.getUTCMinutes().toString().padStart(2, '0');
+        const seconds = now.getUTCSeconds().toString().padStart(2, '0');
+        
+        const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        
+        // Get username from session or localStorage
+        const username = sessionStorage.getItem('username') || 'Ratana3';
+        
+        // Update in all modals
+        $('.modal .date-time-display').text(formattedDate);
+        $('.modal .username-display').text(username);
+    }
+    
+    // Update AM/PM display when time inputs change - DISPLAY ONLY
+    $(document).on('input', 'input[type="time"]', function() {
+        const timeValue = this.value;
+        log('Time input changed to: ' + timeValue);
+        
+        if (timeValue) {
+            // Get the target display span
+            const displayId = this.id + '-ampm';
+            // Update ONLY the display span with formatted AM/PM time
+            $('#' + displayId).text(formatToAMPM(timeValue));
+        } else {
+            // Clear the display if input is empty
+            const displayId = this.id + '-ampm';
+            $('#' + displayId).text('');
+        }
+    });
+    
+    // Form submission handler for add shift
+    $('#addShiftForm').submit(function(event) {
+        event.preventDefault();
+        
+        const startTime = $('#start-time').val();
+        const endTime = $('#end-time').val();
+        const shiftName = $('#shift-name').val();
+        
+        log('Form submission - Time values:', { 
+            start: startTime, 
+            end: endTime, 
+            name: shiftName 
+        });
+        
+        // Validate before proceeding
+        if (!startTime || !endTime) {
+            showError("Please enter both start and end times.");
+            return false;
+        }
+        
+        if (!shiftName) {
+            showError("Please enter a shift name.");
+            return false;
+        }
+
+        const token = sessionStorage.getItem('adminToken');
+        if (!token) {
+            showError("You are not authenticated.");
+            return false;
+        }
+
+        // Hide modal
+        $('#addNewShift').modal('hide');
+
+        // Add seconds for database format
+        const dbStartTime = startTime + ':00';
+        const dbEndTime = endTime + ':00';
+        
+        // Prepare data
+        const shiftData = {
+            shift_name: shiftName,
+            start_time: dbStartTime,
+            end_time: dbEndTime
+        };
+        
+        log("Sending shift data:", shiftData);
+
+        // Send data after modal closes
+        setTimeout(function() {
+            showSpinner();
+            
+            $.ajax({
+                type: 'POST',
+                url: '/add_shift',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                data: JSON.stringify(shiftData),
+                dataType: "json",
+                success: function(response) {
+                    hideSpinner();
+                    showSuccess(response.message || "Shift added successfully.");
+                    
+                    $('#successModal').off('hidden.bs.modal').on('hidden.bs.modal', function() {
+                        location.reload();
+                    });
+                },
+                error: function(xhr) {
+                    hideSpinner();
+                    const errorMsg = xhr.responseJSON && xhr.responseJSON.error
+                        ? xhr.responseJSON.error
+                        : "Error adding shift.";
+                    showError(errorMsg);
+                    log("Add Shift Error:", xhr.responseText);
+                }
+            });
+        }, 300);
+    });
+    
+    // EDIT SHIFT FUNCTIONALITY - Improved to properly populate inputs
+    function fetchEditShifts() {
+        const token = sessionStorage.getItem("adminToken");
+        if (!token) {
+            showError("Admin token missing. Please log in again.");
+            return;
+        }
+        showSpinner();
+        $.ajax({
+            url: '/get_shifts',
+            method: 'GET',
+            dataType: "json",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+            success: function(data) {
+                log("Received shift data:", data);
+                
+                const editSelect = $('#edit-shift-select');
+                editSelect.empty().append('<option value="">Select a Shift</option>');
+
+                data.forEach(shift => {
+                    // Format for AM/PM display
+                    const formattedStartTime = formatToAMPM(shift.start_time);
+                    const formattedEndTime = formatToAMPM(shift.end_time);
+                    
+                    // Extract just HH:MM for input value (remove seconds) and ensure proper format
+                    let startTime24 = formatToValidTimeInput(shift.start_time);
+                    let endTime24 = formatToValidTimeInput(shift.end_time);
+                    
+                    log(`Shift ${shift.shift_name} times:`, {
+                        original: { start: shift.start_time, end: shift.end_time },
+                        formatted: { start: formattedStartTime, end: formattedEndTime },
+                        forInput: { start: startTime24, end: endTime24 }
+                    });
+                    
+                    const option = `
+                        <option value="${shift.shift_id}" 
+                                data-name="${shift.shift_name}" 
+                                data-start="${startTime24}" 
+                                data-end="${endTime24}"
+                                data-start-ampm="${formattedStartTime}"
+                                data-end-ampm="${formattedEndTime}">
+                            ${shift.shift_name} (${formattedStartTime} - ${formattedEndTime})
+                        </option>`;
+
+                    editSelect.append(option);
+                });
+                hideSpinner();
+            },
+            error: function(xhr, status, error) {
+                hideSpinner();
+                showError("Error fetching shifts. Please try again.");
+                console.error("Error fetching shifts:", error);
+            }
+        });
+    }
+    
+    // Improved: When a shift is selected in the edit dropdown
+    $('#edit-shift-select').change(function() {
+        const selected = $(this).find('option:selected');
+        if (selected.val()) {
+            log("Selected shift data:", {
+                id: selected.val(),
+                name: selected.data('name'),
+                start: selected.data('start'),
+                end: selected.data('end'),
+                startAMPM: selected.data('start-ampm'),
+                endAMPM: selected.data('end-ampm')
+            });
+            
+            // Set the shift name
+            $('#edit-shift-name').val(selected.data('name'));
+            
+            // IMPROVED: Ensure proper time format and directly set values using DOM
+            const startTime = formatToValidTimeInput(selected.data('start'));
+            const endTime = formatToValidTimeInput(selected.data('end'));
+            
+            // Set values using DOM directly
+            document.getElementById('edit-start-time').value = startTime;
+            document.getElementById('edit-end-time').value = endTime;
+            
+            log("Setting time inputs to:", { start: startTime, end: endTime });
+            
+            // Update the AM/PM displays
+            $('#edit-start-time-ampm').text(selected.data('start-ampm'));
+            $('#edit-end-time-ampm').text(selected.data('end-ampm'));
+            
+            // Store the shift ID
+            $('#edit-shift-id').val(selected.val());
+            
+            // Manually trigger input event to ensure displays are updated
+            $('#edit-start-time, #edit-end-time').trigger('input');
+            
+            log("Edit modal times set. Inputs now contain:", { 
+                startVal: $('#edit-start-time').val(), 
+                endVal: $('#edit-end-time').val() 
+            });
+        } else {
+            // Clear all fields
+            $('#edit-shift-name, #edit-start-time, #edit-end-time').val('');
+            $('#edit-start-time-ampm, #edit-end-time-ampm').text('');
+            $('#edit-shift-id').val('');
+        }
+    });
+    
+    // Handle edit form submission
+    $('#editShiftForm').submit(function(event) {
+        event.preventDefault();
+
+        const csrfToken = document.querySelector('input[name="csrf_token"]')?.value;
+        const token = sessionStorage.getItem("adminToken");
+
+        if (!token) {
+            showError("Admin token missing. Please log in again.");
+            return false;
+        }
+
+        // Get form values - use DOM directly to avoid potential jQuery issues
+        const shiftId = document.getElementById('edit-shift-id').value;
+        const shiftName = document.getElementById('edit-shift-name').value;
+        const startTime = document.getElementById('edit-start-time').value;
+        const endTime = document.getElementById('edit-end-time').value;
+        
+        log('Edit form submission - Time values:', { 
+            start: startTime, 
+            end: endTime, 
+            name: shiftName,
+            id: shiftId
+        });
+        
+        if (!startTime || !endTime) {
+            showError("Please enter both start and end times.");
+            return false;
+        }
+        
+        // Convert to database format (HH:MM:SS)
+        const dbStartTime = startTime + ':00';
+        const dbEndTime = endTime + ':00';
+
+        const shiftData = {
+            shift_id: shiftId,
+            shift_name: shiftName,
+            start_time: dbStartTime,
+            end_time: dbEndTime
+        };
+        
+        log("Updating shift data:", shiftData);
+
+        // Close the edit modal first
+        $('#editShiftModal').modal('hide');
+        
+        // Wait for modal to close
+        setTimeout(function() {
+            showSpinner();
+            $.ajax({
+                type: 'POST',
+                url: '/update_shift',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                    ...(csrfToken ? {'X-CSRFToken': csrfToken} : {})
+                },
+                data: JSON.stringify(shiftData),
+                success: function(response) {
+                    hideSpinner();
+                    showSuccess(response.message || "Shift updated successfully.");
+                    
+                    // Set up page reload when success modal is closed
+                    $('#successModal').off('hidden.bs.modal').on('hidden.bs.modal', function() {
+                        location.reload();
+                    });
+                },
+                error: function(xhr) {
+                    hideSpinner();
+                    const errorMessage = xhr.responseJSON?.error || xhr.responseText || "Error updating shift.";
+                    showError(errorMessage);
+                    log("Update error:", xhr.responseText);
+                }
+            });
+        }, 300);
+    });
+});
+</script>
+<!-- Script for adding and edit shift (END) -->
+
+<!-- Script for deleting shift (START)-->
+<script>
+
+  function showSpinner() {
+    $('.modal.show').each(function() {
+      if (this.id !== 'loadingSpinnerModal') {
+        previouslyVisibleModal = this.id;
+        $(this).modal('hide');
+      }
+    });
+    $('#loadingSpinnerModal').modal({
+      backdrop: 'static',
+      keyboard: false
+    });
+  }
+
+  function hideSpinner() {
+    $('#loadingSpinnerModal').modal('hide');
+    if (previouslyVisibleModal) {
+      $('#' + previouslyVisibleModal).modal('show');
+      previouslyVisibleModal = null;
+    }
+  }
+
+  // Enhanced format function to guarantee AM/PM display
+  function formatTimeToAMPM(timeString) {
+    if (!timeString) return '';
+    
+    // Clean up the time string to handle various formats
+    // Remove any seconds component if present
+    if (timeString.includes(':')) {
+      const parts = timeString.split(':');
+      if (parts.length >= 2) {
+        // Use only hours and minutes
+        timeString = parts[0] + ':' + parts[1];
+      }
+    }
+    
+    // If already includes AM/PM, return as is
+    if (timeString.toLowerCase().includes('am') || timeString.toLowerCase().includes('pm')) {
+      return timeString;
+    }
+    
+    // Parse the time components
+    let hours, minutes;
+    if (timeString.includes(':')) {
+      [hours, minutes] = timeString.split(':').map(part => parseInt(part, 10));
+    } else {
+      return timeString; // Can't parse, return as is
+    }
+    
+    if (isNaN(hours) || isNaN(minutes)) return timeString;
+    
+    // Convert to 12-hour format with AM/PM
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const hours12 = hours % 12 || 12; // Convert 0 to 12 for 12 AM
+    
+    // Format as H:MM AM/PM without leading zeros for hours
+    return `${hours12}:${minutes.toString().padStart(2, '0')} ${period}`;
+  }
+
+  // Convert time to database format
+  function convertToDBTimeFormat(timeString) {
+    if (!timeString) return '';
+    
+    // Check if time is already in 24-hour format with seconds
+    if (timeString.match(/^\d{1,2}:\d{2}:\d{2}$/)) {
+      return timeString; // Already in correct format
+    }
+    
+    // Check if time is in 24-hour format without seconds
+    if (timeString.match(/^\d{1,2}:\d{2}$/)) {
+      return timeString + ":00"; // Add seconds
+    }
+    
+    // Extract time parts from string with AM/PM
+    const timeParts = timeString.match(/(\d+):(\d+)\s*(AM|PM|am|pm)/i);
+    if (!timeParts) {
+      // If no AM/PM found but has valid time format, add seconds
+      if (timeString.match(/^\d{1,2}:\d{2}$/)) {
+        return timeString + ":00"; 
+      }
+      return timeString; // Return as is if unrecognized format
+    }
+    
+    hours = parseInt(timeParts[1], 10);
+    minutes = parseInt(timeParts[2], 10);
+    period = timeParts[3].toUpperCase();
+    
+    // Convert hours based on AM/PM
+    if (period === 'PM' && hours < 12) hours += 12;
+    if (period === 'AM' && hours === 12) hours = 0;
+    
+    // Format with leading zeros
+    const formattedHours = hours.toString().padStart(2, '0');
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    
+    // Return in HH:MM:SS format for database
+    return `${formattedHours}:${formattedMinutes}:00`;
+  }
+
+  $(document).ready(function () {
+    // Direct fix for displaying times in the delete modal
+    function updateDeleteModalTimes() {
+      // Force update any displayed times to include AM/PM
+      if ($("#delete-start-time").length) {
+        const startRaw = $("#delete-start-time").text();
+        if (startRaw && startRaw.includes(':')) {
+          const formattedStart = formatTimeToAMPM(startRaw);
+          $("#delete-start-time").text(formattedStart);
+        }
+      }
+      
+      if ($("#delete-end-time").length) {
+        const endRaw = $("#delete-end-time").text();
+        if (endRaw && endRaw.includes(':')) {
+          const formattedEnd = formatTimeToAMPM(endRaw);
+          $("#delete-end-time").text(formattedEnd);
+        }
+      }
+    }
+
+    // Fetch and populate the delete dropdown when the modal is opened
+    $("#deleteShiftModal").on("show.bs.modal", function () {
+      fetchDeleteShifts();
+    });
+
+    // Extra event to ensure times are formatted after modal is shown
+    $("#deleteShiftModal").on("shown.bs.modal", function() {
+      setTimeout(updateDeleteModalTimes, 100);
+    });
+
+    function fetchDeleteShifts() {
+      showSpinner();
+      fetch("/get_shifts", {
+        headers: {
+          'Authorization': 'Bearer ' + sessionStorage.getItem("adminToken")
+        }
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Failed to fetch shifts.");
+          }
+          return response.json();
+        })
+        .then(data => {
+          let select = $("#delete-shift-select");
+          select.empty(); // Clear existing options
+          select.append('<option value="">Select a Shift</option>');
+
+          if (data.length === 0) {
+            hideSpinner();
+            return;
+          }
+
+          data.forEach(shift => {
+            // Format times for display with explicit AM/PM
+            const formattedStartTime = formatTimeToAMPM(shift.start_time);
+            const formattedEndTime = formatTimeToAMPM(shift.end_time);
+            
+            let option = `<option value="${shift.shift_id}" 
+                data-name="${shift.shift_name}" 
+                data-start="${shift.start_time}" 
+                data-end="${shift.end_time}"
+                data-start-formatted="${formattedStartTime}"
+                data-end-formatted="${formattedEndTime}">
+                ${shift.shift_name} (${formattedStartTime} - ${formattedEndTime})
+              </option>`;
+            select.append(option);
+          });
+          hideSpinner();
+        })
+        .catch(error => {
+          hideSpinner();
+          showError("Error fetching shifts: " + error.message);
+        });
+    }
+
+    // Better handling when a shift is selected in delete modal
+    $("#delete-shift-select").change(function () {
+      let selectedOption = $(this).find(":selected");
+
+      if (selectedOption.val()) {
+        // Set shift name
+        $("#delete-shift-name").text(selectedOption.data("name"));
+        
+        // Get and format times with guaranteed AM/PM display
+        const startRaw = selectedOption.data("start");
+        const endRaw = selectedOption.data("end");
+        
+        // Format with definite AM/PM
+        const startFormatted = formatTimeToAMPM(startRaw);
+        const endFormatted = formatTimeToAMPM(endRaw);
+        
+        // Set formatted times to display elements
+        $("#delete-start-time").text(startFormatted);
+        $("#delete-end-time").text(endFormatted);
+        
+        // Store ID for form submission
+        $("#delete-shift-id").val(selectedOption.val());
+        
+        // Extra check after a short delay to ensure formatting took effect
+        setTimeout(updateDeleteModalTimes, 50);
+        
+        console.log("Delete modal times set to:", startFormatted, endFormatted);
+      } else {
+        $("#delete-shift-name, #delete-start-time, #delete-end-time").text("");
+        $("#delete-shift-id").val("");
+      }
+    });
+
+    // Handle form submission for deleting the shift
+    $('#deleteShiftForm').submit(function (event) {
+      event.preventDefault();
+
+      var shiftId = $('#delete-shift-id').val();
+
+      if (!shiftId) {
+        showError("Please select a valid shift.");
+        return;
+      }
+
+      // First close the delete shift modal
+      $('#deleteShiftModal').modal('hide');
+
+      // Wait for the modal to close completely before proceeding
+      setTimeout(function() {
+        showSpinner();
+        $.ajax({
+          url: "/delete_shift",
+          type: "POST",
+          headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem("adminToken")
+          },
+          data: { shift_id: shiftId },
+          success: function (response) {
+            hideSpinner();
+            showSuccess(response.message || "Shift deleted successfully.");
+            
+            // Set up page reload when success modal is closed
+            $('#successModal').off('hidden.bs.modal').on('hidden.bs.modal', function() {
+              location.reload();
+            });
+          },
+          error: function (xhr) {
+            hideSpinner();
+            const errorMessage = xhr.responseJSON?.error || xhr.responseText || "Error deleting shift.";
+            showError(errorMessage);
+          }
+        });
+      }, 300); // Delay to ensure modal is closed
+    });
+
+    // FIXED: Better time input handling - only update the display span, not the input itself
+    $('#start-time, #end-time, #edit-start-time, #edit-end-time').on('input', function() {
+      const inputVal = $(this).val();
+      
+      if (inputVal && inputVal.includes(':')) {
+        // Get the corresponding AM/PM display span
+        const displayId = this.id + '-ampm';
+        
+        // Update ONLY the display span with AM/PM format, leave input as-is
+        $('#' + displayId).text(formatTimeToAMPM(inputVal));
+      } else {
+        // Clear the display if input is empty
+        const displayId = this.id + '-ampm';
+        $('#' + displayId).text('');
+      }
+    });
+
+    // Enhanced success message function
+    window.showSuccess = function(message) {
+      // Make sure we can find the success modal
+      const successModal = $('#successModal');
+      const successMessageElement = $('#successModalMessage');
+      
+      if (!successModal.length || !successMessageElement.length) {
+        console.error("Success modal elements not found");
+        alert(message); // Fallback to alert if modal not available
+        return;
+      }
+      
+      // Set the message
+      successMessageElement.text(message);
+      
+      // Show the modal
+      successModal.modal({
+        backdrop: 'static',
+        keyboard: false,
+        show: true
+      });
+      
+      console.log("Success modal displayed with message:", message);
+    }
+
+    // Enhanced error message function
+    window.showError = function(message) {
+      // Make sure we can find the error modal
+      const errorModal = $('#errorModal');
+      const errorMessageElement = $('#errormessage');
+      
+      if (!errorModal.length || !errorMessageElement.length) {
+        console.error("Error modal elements not found");
+        alert("Error: " + message); // Fallback to alert if modal not available
+        return;
+      }
+      
+      // Set the message
+      errorMessageElement.text(message);
+      
+      // Show the modal
+      errorModal.modal({
+        backdrop: 'static',
+        keyboard: false,
+        show: true
+      });
+      
+      console.log("Error modal displayed with message:", message);
+    }
+  });
+</script>
+<!-- Script for deleting shift (END) -->
+
+  </body>
+</html>

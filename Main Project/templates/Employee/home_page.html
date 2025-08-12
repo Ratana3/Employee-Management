@@ -1,0 +1,3010 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>Ready Bootstrap Dashboard</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+	<link rel="stylesheet" href="../../static/Employee/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+	<link rel="stylesheet" href="../../static/Employee/assets/css/ready.css">
+	<link rel="stylesheet" href="../../static/Employee/assets/css/demo.css">
+	<meta name="csrf-token" content="{{ csrf_token() }}">	
+	<!-- Styling the logging you out spinner -->	
+	<style>
+        /* Make modal-body scrollable in Bootstrap 4 */
+.inbox-scrollable {
+  max-height: 60vh;   /* Adjust height as needed */
+  overflow-y: auto;
+}
+    /* Make modal-body scrollable in Bootstrap 4 */
+.inbox-scrollable {
+  max-height: 60vh;   /* Adjust height as needed */
+  overflow-y: auto;
+}
+		/* Basic styling for spinner container */
+    .spinner-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Spinner Animation (Circular Progress) */
+    .spinner {
+        border: 4px solid transparent;
+        border-top: 4px solid #007bff; /* Blue color for the spinner */
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        animation: spin 1.5s linear infinite;
+    }
+		/* CSS for spinner animation */
+		@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .spinner-border {
+        animation: spin 2s linear infinite;
+    }
+	</style>
+	<!-- Styling the logging you out spinner -->	
+	 
+</head>
+<body>
+	<div class="wrapper">
+		<div class="main-header">
+			<div class="logo-header">
+				<a href="#" class="logo" data-toggle="modal" data-target="#modalUpdate">
+					Contact Details
+				</a>
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+			</div>
+			
+			<nav class="navbar navbar-header navbar-expand-lg">
+				<div class="container-fluid">
+					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+						<!-- Message Dropdown -->
+<li class="nav-item dropdown hidden-caret">
+	<a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  <i class="la la-envelope"></i>
+	</a>
+	<ul class="dropdown-menu notif-box msg-box" aria-labelledby="messageDropdown">
+	  <li>
+		<div class="dropdown-title d-flex justify-content-between align-items-center">
+		  Messages
+		  <a href="javascript:void(0);" onclick="openComposeMessageModal()">Compose</a>
+		</div>
+	  </li>
+	  <li>
+		<div class="message-notif-scroll" style="max-height: 250px; overflow-y: auto;">
+		  <div id="messagePreviewContainer" class="notif-center">
+			<!-- JS will insert message previews here -->
+		  </div>
+		</div>
+	  </li>
+	  <li>
+		<a class="see-all" href="javascript:void(0);" onclick="openMessageInboxModal()"> <strong>View Inbox</strong> <i class="la la-angle-right"></i> </a>
+	  </li>
+	</ul>
+  </li>
+  
+  <!-- Notification Dropdown -->
+  <li class="nav-item dropdown hidden-caret">
+	<a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  <i class="la la-bell"></i>
+	  <span class="notification" id="unreadCountBadge" style="display:none;"></span>
+	</a>
+	<ul class="dropdown-menu notif-box" aria-labelledby="notificationDropdown">
+	  <li>
+		<div class="dropdown-title">You have <span id="notificationTitleCount">0</span> new notification(s)</div>
+	  </li>
+	  <li>
+		<div class="notif-center" id="notificationList">
+		  <!-- JS will insert notifications here -->
+		</div>
+	  </li>
+	</ul>
+  </li>  
+						<li class="nav-item dropdown">
+							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img alt="user-img" width="36" class="img-circle" id="profile-picture-dropdown"><span id="user-name"></span></span> </a>
+							<ul class="dropdown-menu dropdown-user">
+								<li>
+									<div class="user-box">
+										<div class="u-img"><img alt="user" id="profile-picture-box"></div>
+										<div class="u-text">
+											<h4 id="user-name"></h4>
+											<p class="text-muted" id="user-email-dropdown"></p>
+											<a href="/profile" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+										</div>
+										</div>
+									</li>
+								</ul>
+								<!-- /.dropdown-user -->
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="sidebar">
+				<div class="scrollbar-inner sidebar-wrapper">
+					<div class="user">
+						<div class="photo">
+							<img id="profile-picture-sidebar">
+						</div>
+						<div class="info">
+							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+								<span>
+									<span id="user-name"></span> (Your ID: <span id="user-id"></span>)
+									<span class="user-level" id="user-position"></span>
+									<span class="caret"></span>
+								</span>
+							</a>
+							<div class="clearfix"></div>
+
+							<div class="collapse in" id="collapseExample" aria-expanded="true" >
+								<ul class="nav">
+									<li>
+										
+											<span class="link-collapse" style="color: black;">Department : <span id="user-department"></span></span>
+										
+									</li>
+									<li>
+										
+										<span class="link-collapse" style="color: black;">Hired since : <span id="user-date-hired"></span></span>
+									
+								</li>
+								<li>
+										
+									<span class="link-collapse" style="color: black;">Team : <span id="user-team_name"></span></span>
+								
+							</li>
+							
+									
+								</ul>
+							</div>
+						</div>
+					</div>
+          					<ul class="nav">
+						<li class="nav-item active">
+							<a href="/user">
+								<i class="la la-dashboard"></i>
+								<p>Dashboard</p>
+							</a>
+						</li>
+						<li class="nav-item ">
+							<a href="/payroll">
+								<i class="la la-cc-mastercard"></i>
+								<p>Payroll information</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/goals">
+								<i class="
+								la la-crosshairs"></i>
+								<p>Your goals</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/workandproductivity">
+								<i class="
+								la la-file-text-o"></i>
+								<p>Your tasks</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/notifications">
+								<i class="la la-bell"></i>
+								<p>Notifications</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/trainings">
+								<i class="la la-mortar-board"></i>
+								<p>Training and Development</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/feedbackandsupport">
+								<i class="la la-weixin"></i>
+								<p>Feedback and support</p>
+							</a>
+						</li>
+						<li class="nav-item ">
+							<a href="/financialmanagement">
+								<i class="la la-usd"></i>
+								<p>Financial management</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/AdministrativeTools">
+								<i class="la la-gear"></i>
+								<p>Administrative Tools</p>
+							</a>
+						</li>
+						
+						<li class="nav-item update-pro">
+							<button class="btn btn-danger" data-toggle="modal" data-target="#logoutModal">
+								<i class="la la-power-off"></i>
+								<p>Logout</p>
+							</button>
+						</li>
+
+						<li class="nav-item update-pro">
+						<button id="viewDevicesBtn" class="btn btn-warning">
+							🖥️ View Recent Devices
+						</button>
+					</li>
+					</ul>
+				</div>
+			</div>
+			<div class="main-panel">
+				<div class="content">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="container my-5">
+									<h2 class="mb-4">📊 Work Hours Insights</h2>
+								
+									<div class="d-flex justify-content-end mb-3">
+										<select id="rangeSelector" class="form-control w-auto">
+											<option value="7">Last 7 Days</option>
+											<option value="30">Last 30 Days</option>
+											<option value="90">Last 90 Days</option>
+										</select>
+
+										<select id="chartTypeSelector" class="form-control w-auto">
+											<option value="bar">Bar Chart</option>
+											<option value="line">Line Chart</option>
+										</select>
+									</div>
+								
+									<div class="card">
+										<div class="card-body">
+											<h5>Total Hours Worked: <span id="totalHours">-</span> hrs</h5>
+											<canvas id="workHoursChart" style="height: 300px;"></canvas>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card ">
+								<div class="container my-5">
+								  <h2 class="mb-4">🎯 Goal Tracking</h2>
+							  
+								  <div class="card">
+									<div class="card-body">
+									  <h5 id="goalName">Goal: Loading...</h5>
+									  <h6 id="goalStatus">Current: -- hours (--%)</h6>
+							  
+									  <div class="progress mt-3" style="height: 30px;">
+										<div id="goalProgressBar" class="progress-bar progress-bar-striped progress-bar-animated" 
+											 role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+										  0%
+										</div>
+									  </div>
+									</div>
+								  </div>
+								</div>
+							  </div>
+							  <div class="card">
+								<div class="container my-5">
+								  <h2 class="mb-4">👥 Team Comparison</h2>
+							  
+								  <div class="d-flex justify-content-end mb-3">
+									<select id="teamRangeSelector" class="form-control w-auto">
+									  <option value="7">Last 7 Days</option>
+									  <option value="30" selected>Last 30 Days</option>
+									  <option value="90">Last 90 Days</option>
+									</select>
+								  </div>
+							  
+								  <div class="card">
+									<div class="card-body text-center">
+									  <canvas id="teamComparisonChart" style="height: 300px;"></canvas>
+									  <div id="performanceBadge" class="mt-3"></div> <!-- ⭐️ Here’s the badge -->
+									</div>
+								  </div>
+								</div>
+							  </div>							  
+							  							  
+						</div>
+						<div class="col-md-12">
+							<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">Clock in and Clock out</h4>
+    <p class="card-category">Clock in when you start working and clock out when you leave! Hope you have a nice day!</p>
+  </div>
+  <div class="card-body">
+    <button class="btn btn-success" onclick="clockIn()">
+      Clock in
+    </button>
+    <button class="btn btn-danger" onclick="clockOut()">
+      Clock out
+    </button>
+    <!-- Break Buttons -->
+    <button class="btn btn-warning" id="startBreakBtn" onclick="startBreak()" style="margin-left: 8px;">
+      Start Break
+    </button>
+    <button class="btn btn-primary" id="endBreakBtn" onclick="endBreak()" style="margin-left: 8px;" disabled>
+      End Break
+    </button>
+    <button class="btn btn-info" onclick="fetchAttendanceLogs()" style="margin-left: 8px;">
+      View your attendance history
+    </button>
+  </div>
+</div>
+						</div>
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+    <h4 class="card-title">Leave Balance</h4>
+    <p class="card-category">Vacation leave remaining: <span id="leave-vacation"></span></p>
+    <p class="card-category">Sick leave remaining: <span id="leave-sick"></span></p>
+    <p class="card-category">Personal leave remaining: <span id="leave-personal"></span></p>
+    <p class="card-category">Unpaid leave remaining: <span id="leave-unpaid"></span></p>
+</div>
+								<div class="card-body">
+									<button class="btn btn-warning" onclick="markLeave()">
+										Apply for leave
+									</button>
+									<button class="btn btn-info" onclick="fetchLeaveRequests()">View your leave requests</button>
+
+									
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<h4 class="card-title">Shift Schedule :</h4>
+									<button type="button" class="btn btn-primary" onclick="openViewOnlyShiftSwapRequestsModal()">
+  View Shift Swap Requests
+</button>
+									<p class="card-category">
+										Check your shift details below 
+									</p>
+								</div>
+								<div class="card-body">
+									<div id="shift-info" class="shift-details">
+										<p>Loading shift details...</p>
+									</div>
+									
+								</div>
+								<div class="card-body">
+									<button class="btn btn-success" onclick="openRequestModal('Shift Swap')">Request Shift Swap</button>
+<button class="btn btn-danger" onclick="openRequestModal('Time Off')">Request Time Off</button>
+<button class="btn btn-warning" onclick="openRequestModal('Compensation')">Request Compensation</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="card">
+							  <div class="card-header d-flex justify-content-between align-items-center">
+								<div>
+								  <h4 class="card-title">Health Resources</h4>
+								  <p class="card-category mb-0">Browse wellness guides, safety manuals, and more</p>
+								</div>
+								<div class="form-inline">
+								  <input id="searchInputResource" type="text" class="form-control mr-2" placeholder="Search resources...">
+								  <select id="filterResourceCategory" class="form-control mr-2">
+									<option value="all">All Categories</option>
+									<option value="Mental Health">Mental Health</option>
+									<option value="Safety Training">Safety Training</option>
+								  </select>
+								</div>
+							  </div>
+						  
+							  <div class="card-body">
+								<div class="row" id="employeeResourcesContainer">
+								  <!-- Cards dynamically inserted here -->
+								</div>
+							  </div>
+							</div>
+						  </div>	
+              <div class="col-md-12">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <div>
+        <h4 class="card-title">Your Recognitions</h4>
+        <p class="card-category mb-0">See awards, recognitions, and positive feedback you've earned</p>
+      </div>
+      <div class="form-inline">
+        <input id="searchInputRecognition" type="text" class="form-control mr-2" placeholder="Search recognitions...">
+        <select id="filterRecognitionType" class="form-control mr-2">
+          <option value="all">All Types</option>
+          <!-- Options will be dynamically loaded -->
+        </select>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row" id="employeeRecognitionContainer">
+        <!-- Recognition cards will be inserted here -->
+      </div>
+    </div>
+  </div>
+</div>					  
+					</div>
+				</div>
+				<footer class="footer">
+					<div class="container-fluid">
+						<nav class="pull-left">
+							<ul class="nav">
+								<li class="nav-item">
+									<a class="nav-link" href="http://www.themekita.com">
+										ThemeKita
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">
+										Help
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="https://themewagon.com/license/#free-item">
+										Licenses
+									</a>
+								</li>
+							</ul>
+						</nav>
+						<div class="copyright ml-auto">
+							2018, made with <i class="la la-heart heart text-danger"></i> by <a href="http://www.themekita.com">ThemeKita</a>
+						</div>				
+					</div>
+				</footer>
+			</div>
+		</div>
+	</div>
+
+<!-- Compose Message Modal -->
+<div class="modal fade" id="composeMessageModal" tabindex="-1" role="dialog" aria-labelledby="composeMessageLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="composeMessageLabel">Compose Message</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+		  <form id="composeForm">
+			<div class="form-group">
+			  <label for="roleSelect">Select Role</label>
+			  <select id="roleSelect" class="form-control">
+				<!-- Options will be dynamically loaded, e.g.:
+				<option value="Admin">Admin</option>
+				<option value="Employee">Employee</option>
+				-->
+			  </select>
+			</div>
+			<div class="form-group">
+			  <label for="receiverSelect">Select Receiver</label>
+			  <select id="receiverSelect" class="form-control">
+				<!-- Dynamically filtered based on role -->
+				<!-- Example:
+				<option value="1" data-email="admin@example.com">Admin One</option>
+				-->
+			  </select>
+			</div>
+			<div class="form-group">
+			  <label for="messageText">Message</label>
+			  <textarea class="form-control" id="messageText" rows="4" placeholder="Write your message..."></textarea>
+			</div>
+		  </form>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		  <button type="button" id="sendButton" class="btn btn-primary">Send Message</button>
+		</div>
+	  </div>
+	</div>
+  </div>
+  
+<!-- Inbox Modal -->
+<div class="modal fade" id="inboxModal" tabindex="-1" role="dialog" aria-labelledby="inboxLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="inboxLabel">Inbox</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body inbox-scrollable" id="inboxMessages">
+        <!-- Messages are dynamically inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+	<!-- Modal for displaying leave requests histories -->
+	<div class="modal fade" id="leaveHistoryModal" tabindex="-1" role="dialog" aria-labelledby="leaveHistoryModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="leaveHistoryModalLabel">Leave Request History</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span>&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+			  <table class="table table-bordered table-hover">
+				<thead>
+				  <tr>
+					<th>Date Range</th>
+					<th>Type</th>
+					<th>Status</th>
+					<th>Remarks</th>
+					<th>Verified</th>
+				  </tr>
+				</thead>
+				<tbody id="leaveHistoryTableBody">
+				  <!-- Data will be populated here -->
+				</tbody>
+			  </table>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  
+	  <!-- Modal for requesting shift swap and time off -->
+<div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="requestModalLabel">Submit Request</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form id="requestForm" onsubmit="submitRequest(event)">
+					<div class="form-group">
+						<label for="requestSubject">Subject</label>
+						<input type="text" class="form-control" id="requestSubject" readonly>
+					</div>
+					<div class="form-group">
+						<label for="requestMessage">Message</label>
+						<textarea class="form-control" id="requestMessage" rows="4" required></textarea>
+					</div>
+					<button type="submit" class="btn btn-success">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Leave Type Modal -->
+<div class="modal fade" id="leaveTypeModal" tabindex="-1" role="dialog" aria-labelledby="leaveTypeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+	<div class="modal-content">
+	  <div class="modal-header bg-warning text-dark">
+		<h5 class="modal-title" id="leaveTypeModalLabel">Apply for Leave</h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		  <span aria-hidden="true">&times;</span>
+		</button>
+	  </div>
+	  <div class="modal-body">
+		<form id="leaveForm">
+		  <div class="form-group">
+			<label for="leaveType">Select Leave Type:</label>
+			<select class="form-control" id="leaveType" required>
+			  <option value="">-- Choose --</option>
+			  <option value="Sick Leave">Sick Leave</option>
+			  <option value="Vacation Leave">Vacation Leave</option>
+			  <option value="Personal Leave">Personal Leave</option>
+			  <option value="Unpaid Leave">Unpaid Leave</option>
+			</select>
+		  </div>
+
+		  <div class="form-group mt-3">
+			<label for="leaveDays">Number of Days:</label>
+			<input type="number" class="form-control" id="leaveDays" min="1" required placeholder="Enter number of days">
+		  </div>
+
+		  <div class="text-right mt-4">
+			<button type="submit" class="btn btn-warning">Submit Request</button>
+		  </div>
+		</form>
+	  </div>
+	</div>
+  </div>
+</div>
+
+
+	<!-- Modal for contact details -->
+	<div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h6 class="modal-title"><i class="la la-phone-square"></i> Contact <span id="user-name"></span></h6>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">									
+					<p>Phone number : <b><span id="user-phone"></span></b></p>
+					<p>Email : <b><span id="user-email-modal"></span></b></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<!-- Modal for displaying attendance logs -->
+<style>
+  /* Custom wider modal */
+  .modal-xxl {
+    max-width: 95vw !important;
+    width: 95vw !important;
+  }
+</style>
+<div class="modal fade" id="attendanceHistoryModal" tabindex="-1" role="dialog" aria-labelledby="attendanceHistoryModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xxl" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="attendanceHistoryModalLabel">Attendance History</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<!-- Date Filter -->
+				<div class="form-group row mb-4">
+					<label for="attendanceDateFilter" class="col-sm-2 col-form-label">Filter by Date:</label>
+					<div class="col-sm-6">
+						<input type="text" id="attendanceDateFilter" class="form-control" placeholder="Enter year / month / day (e.g. 2024 or 05 or 2024-05)" oninput="fetchAttendanceLogs()" />
+					</div>
+				</div>
+				<!-- Responsive Table -->
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover">
+						<thead class="thead-light">
+							<tr>
+								<th>Date</th>
+								<th>Clock In</th>
+								<th>Clock Out</th>
+								<th>Status</th>
+								<th>Hours Worked</th>
+								<th>Overtime</th>
+								<th>Overtime Status</th>
+								<th>Remarks</th>
+								<th>Break Details</th>
+							</tr>
+						</thead>
+						<tbody id="attendanceHistoryTableBody">
+							<!-- Data will be populated here -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal for displaying the recent devices -->
+<div class="modal fade" id="recentDevicesModal" tabindex="-1" aria-labelledby="recentDevicesLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="recentDevicesLabel">Recent Devices</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+		  <table class="table table-striped" id="devicesTable">
+			<thead>
+			  <tr>
+				<th>Device</th>
+				<th>OS</th>
+				<th>Browser</th>
+				<th>IP Address</th>
+				<th>Last Seen</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <!-- Devices will be injected here -->
+			</tbody>
+		  </table>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+	 <!-- Logout Confirmation Modal -->
+	 <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
+			  <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+			  Are you sure you want to logout?
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+			  <!-- Replace the form with a plain button -->
+			<button type="button" class="btn btn-danger" id="confirmLogoutBtnCurrentUser">Logout</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+
+<!-- Logging you out modal -->
+<div id="loadingModalCurrentUser" class="modal" style="display: none; position: fixed; z-index: 1050; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
+    <div class="modal-dialog modal-lg" style="max-width: 600px;">
+        <div class="modal-content">
+            <div class="modal-body text-center" style="padding: 30px;">
+                <h4 style="font-size: 2rem; font-weight: 600; color: #007bff;">Logging you out... 🔄</h4>
+                <p style="font-size: 1.2rem; color: #6c757d; margin-top: 10px;">Please wait while we log you out from your account.</p>
+                <div class="spinner-container" style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Token Invalid Modal -->
+<div class="modal fade" id="sessionExpiredModal" tabindex="-1" aria-labelledby="sessionExpiredLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center">
+      <div class="modal-header">
+        <h5 class="modal-title w-100" id="sessionExpiredLabel">Session Expired</h5>
+      </div>
+      <div class="modal-body">
+        Your session has ended due to another login or token expiration.
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-danger" id="redirectToLogin">Go to Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Account Deactivated Modal -->
+    <div
+      class="modal fade"
+      id="accountDeactivatedModal"
+      tabindex="-1"
+      aria-hidden="true"
+	  data-backdrop="static" data-keyboard="false"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-danger border-3 shadow">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title">Account Deactivated</h5>
+          </div>
+          <div class="modal-body fw-semibold text-danger text-center">
+            Your account has been <strong>deactivated</strong> by the
+            administrator. Please contact support for assistance.
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Account Terminated Modal -->
+    <div
+      class="modal fade"
+      id="accountTerminatedModal"
+      tabindex="-1"
+      aria-hidden="true"
+	  data-backdrop="static" data-keyboard="false"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div
+          class="modal-content bg-dark text-white border-light border-2 shadow"
+        >
+          <div class="modal-header border-0">
+            <h5 class="modal-title">Account Terminated</h5>
+          </div>
+          <div class="modal-body text-center fw-semibold">
+            Your account has been <strong>terminated</strong>. Access is no
+            longer available.
+          </div>
+          <div class="modal-footer border-0">
+          </div>
+        </div>
+      </div>
+    </div>
+
+	<!-- Modal for Success and Error Messages -->
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" id="messageModalHeader">
+        <h5 class="modal-title" id="messageModalLabel">Message</h5>
+        
+      </div>
+      <div class="modal-body" id="messageModalBody"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="messageModalCloseBtn">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Only Shift Swap Requests Modal -->
+<div class="modal fade" id="viewOnlyShiftSwapRequestsModal" tabindex="-1" role="dialog" aria-labelledby="viewOnlyShiftSwapRequestsLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewOnlyShiftSwapRequestsLabel">Your Shift Swap Requests</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body inbox-scrollable">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Sender</th>
+              <th>Role</th>
+              <th>Subject</th>
+              <th>Message</th>
+              <th>Timestamp</th>
+              <th>Status</th>
+              <th>Approver Role</th>
+            </tr>
+          </thead>
+          <tbody id="viewOnlyShiftSwapRequestsBody">
+            <!-- Requests will be loaded here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Break Type Modal -->
+<div class="modal fade" id="breakTypeModal" tabindex="-1" role="dialog" aria-labelledby="breakTypeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form id="breakTypeForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="breakTypeModalLabel">Select Break Type</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="breakTypeSelect">Break Type</label>
+            <select class="form-control" id="breakTypeSelect" name="break_type" required>
+              <option value="" disabled selected>Select type...</option>
+              <option value="lunch">Lunch</option>
+              <option value="short">Short</option>
+              <option value="personal">Personal</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-warning">Start Break</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal (Bootstrap 4 Compatible) -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger" id="confirmDeleteModalHeader">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this message?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+	<!-- Spinner Modal (Bootstrap 4) -->
+<div class="modal fade" id="employeeSpinnerModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="background: rgba(255,255,255,0.90); border: none; box-shadow: none;">
+      <div class="modal-body d-flex flex-column justify-content-center align-items-center" style="min-height: 170px;">
+        <div style="
+          width: 3.5rem;
+          height: 3.5rem;
+          border: 0.5rem solid #e3e6ef;
+          border-top: 0.5rem solid #007bff;
+          border-radius: 50%;
+          animation: employee-spin 0.8s linear infinite;
+          margin-bottom: 16px;
+          ">
+        </div>
+        <div class="spinner-message" style="color: #007bff; font-weight: 600; font-size: 1.15rem; letter-spacing: 0.02em;">
+          Loading...
+        </div>
+        <style>
+          @keyframes employee-spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+          }
+        </style>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+<!-- Use full version of jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Include jsPDF from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- Chart.js (if needed) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../../static/Employee/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/chartist/chartist.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/chart-circle/circles.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="../../static/Employee/assets/js/ready.min.js"></script>
+<script src="../../static/Employee/assets/js/demo.js"></script>
+
+
+<!-- Script for checking 2FA (Start) -->
+<script>
+(function () {
+  const modalId = 'employeeSpinnerModal';
+  let _spinnerOpen = false;
+  let _eventAttached = false;
+  let _forceHideTimeoutId = null;
+
+  function getModalElement() {
+    return document.getElementById(modalId);
+  }
+
+  function showEmployeeSpinner() {
+    const modalElement = getModalElement();
+    if (!modalElement || typeof jQuery === "undefined") return;
+
+    if (!_eventAttached) {
+      jQuery(modalElement).off('hidden.bs.modal', spinnerHiddenHandler);
+      jQuery(modalElement).on('hidden.bs.modal', spinnerHiddenHandler);
+      _eventAttached = true;
+    }
+
+    if (!_spinnerOpen) {
+      jQuery(modalElement).modal({
+        backdrop: 'static',
+        keyboard: false,
+        show: true
+      });
+      _spinnerOpen = true;
+      _forceHideTimeoutId = setTimeout(forceHideSpinner, 30000); // fallback
+    }
+  }
+
+  function hideEmployeeSpinner() {
+    const modalElement = getModalElement();
+    if (!modalElement || typeof jQuery === "undefined") return;
+
+    if (_spinnerOpen) {
+      jQuery(modalElement).modal('hide');
+      _spinnerOpen = false;
+      setTimeout(forceHideSpinner, 2000);
+    }
+  }
+
+  function spinnerHiddenHandler() {
+    _spinnerOpen = false;
+    if (_forceHideTimeoutId) clearTimeout(_forceHideTimeoutId);
+
+    // Check for other active modals
+    const hasOtherModals = checkForOtherActiveModals();
+
+    if (!hasOtherModals) {
+      removeAllBackdrops();
+      document.body.classList.remove('modal-open');
+      document.body.style.paddingRight = '';
+    }
+  }
+
+  function forceHideSpinner() {
+    const modalElement = getModalElement();
+    if (!modalElement) return;
+
+    jQuery(modalElement).modal('hide');
+    jQuery(modalElement).hide();
+    _spinnerOpen = false;
+    if (_forceHideTimeoutId) clearTimeout(_forceHideTimeoutId);
+
+    const hasOtherModals = checkForOtherActiveModals();
+    if (!hasOtherModals) {
+      removeAllBackdrops();
+      document.body.classList.remove('modal-open');
+      document.body.style.paddingRight = '';
+    }
+  }
+
+  function checkForOtherActiveModals() {
+    const allModals = document.querySelectorAll('.modal');
+    for (let modal of allModals) {
+      if (modal.id !== modalId && (modal.classList.contains('show') || jQuery(modal).hasClass('show'))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function removeAllBackdrops() {
+    const backdrops = document.querySelectorAll('.modal-backdrop');
+    backdrops.forEach(el => el.parentNode && el.parentNode.removeChild(el));
+  }
+
+  function isSpinnerVisible() {
+    const modalElement = getModalElement();
+    if (!modalElement) return false;
+    return _spinnerOpen || 
+           modalElement.classList.contains('show') ||
+           jQuery(modalElement).hasClass('show') ||
+           jQuery(modalElement).is(':visible');
+  }
+
+  function waitForSpinnerHide(callback) {
+    if (!isSpinnerVisible()) {
+      setTimeout(callback, 100);
+      return;
+    }
+
+    const modalElement = getModalElement();
+    if (modalElement) {
+      jQuery(modalElement).one('hidden.bs.modal', function() {
+        setTimeout(callback, 150);
+      });
+    }
+
+    let attempts = 0;
+    const maxAttempts = 50;
+    const checkHidden = () => {
+      attempts++;
+      if (!isSpinnerVisible() || attempts >= maxAttempts) {
+        setTimeout(callback, 150);
+      } else {
+        setTimeout(checkHidden, 100);
+      }
+    };
+    setTimeout(checkHidden, 100);
+  }
+
+  window.showEmployeeSpinner = showEmployeeSpinner;
+  window.hideEmployeeSpinner = hideEmployeeSpinner;
+  window.waitForSpinnerHide = waitForSpinnerHide;
+  window.isSpinnerVisible = isSpinnerVisible;
+})();
+
+function employeeSecureFetch(url, options = {}) {
+  options.headers = options.headers || {};
+  const token = sessionStorage.getItem('employeeToken');
+  if (token) options.headers['Authorization'] = 'Bearer ' + token;
+  options.headers['X-Requested-With'] = 'XMLHttpRequest';
+
+  const showSpinner = options.showSpinner !== false;
+  let didRedirect = false;
+
+  if (showSpinner) {
+    showEmployeeSpinner();
+  }
+
+  const finalize = async () => {
+    if (!didRedirect && showSpinner) {
+      hideEmployeeSpinner();
+      await new Promise(resolve => waitForSpinnerHide(resolve));
+    }
+  };
+
+  return fetch(url, options)
+    .then(async res => {
+      let data;
+      try { data = await res.clone().json(); } catch { data = {}; }
+      if (res.status === 403 && data?.error === "2FA_REQUIRED" && data.redirect) {
+        didRedirect = true;
+        window.location.href = data.redirect;
+        return Promise.reject("2FA required, redirecting");
+      }
+      if ((res.status === 401 || res.status === 403) && data.redirect) {
+        didRedirect = true;
+        window.location.href = data.redirect;
+        return Promise.reject(data.error || "Unauthorized, redirecting");
+      }
+      if (!res.ok) {
+        throw new Error(data.error || data.message || "An error occurred");
+      }
+      if (options.showSuccessMessage) {
+        // Use your preferred success modal logic here
+      }
+      return data;
+    })
+    .catch(err => {
+      if (!didRedirect && !options.suppressErrorModal) {
+        // Use your preferred error modal logic here
+      }
+      throw err;
+    })
+    .finally(finalize);
+}
+
+</script>
+<!-- Script for checking 2FA (End) -->
+
+<!-- Script for displaying employee's recognition (Start) -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  const container = document.getElementById('employeeRecognitionContainer');
+  const searchInput = document.getElementById('searchInputRecognition');
+  const filterType = document.getElementById('filterRecognitionType');
+  let allRecognitions = [];
+
+  // Fetch recognitions from backend
+  function fetchRecognitions() {
+    let url = '/employee/recognitions';
+    const params = [];
+    if (searchInput.value.trim()) params.push('search=' + encodeURIComponent(searchInput.value.trim()));
+    if (filterType.value && filterType.value !== 'all') params.push('type=' + encodeURIComponent(filterType.value));
+    if (params.length) url += '?' + params.join('&');
+
+    // No need to manually set token headers; employeeSecureFetch does it
+    employeeSecureFetch(url)
+      .then(data => {
+        allRecognitions = data;
+        renderRecognitionCards(allRecognitions);
+        populateRecognitionTypes(allRecognitions);
+      })
+      .catch(() => {
+        // Only show a message in the container; error modal already shown by employeeSecureFetch
+        container.innerHTML = `<div class="col-12 text-center text-danger py-4">Could not load recognitions.</div>`;
+      });
+  }
+
+  // Render recognition cards
+  function renderRecognitionCards(recs) {
+    if (!recs.length) {
+      container.innerHTML = `<div class="col-12 text-center py-4">No recognitions found.</div>`;
+      return;
+    }
+    container.innerHTML = recs.map(rec => `
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">${rec.recognition_type}</h5>
+            <p class="card-text">${rec.reason}</p>
+            <span class="badge badge-info">${formatDate(rec.date_awarded)}</span>
+          </div>
+          <div class="card-footer d-flex justify-content-between align-items-center small">
+            <span>
+              <i class="fa fa-trophy text-warning mr-1"></i>
+              Awarded by: 
+              ${rec.awarded_by_super_admin ? 'Super Admin' : (rec.awarded_by_admin ? 'Admin' : 'System')}
+            </span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Populate the recognition type filter dropdown
+  function populateRecognitionTypes(recs) {
+    const types = Array.from(new Set(recs.map(r => r.recognition_type))).filter(Boolean);
+    filterType.innerHTML = `<option value="all">All Types</option>` +
+      types.map(t => `<option value="${t}">${t}</option>`).join('');
+  }
+
+  // Format date
+  function formatDate(dt) {
+    const d = new Date(dt);
+    return d.toLocaleDateString(undefined, {year: 'numeric', month: 'short', day: 'numeric'});
+  }
+
+  // Event listeners
+  searchInput.addEventListener('input', fetchRecognitions);
+  filterType.addEventListener('change', fetchRecognitions);
+
+  // Initial load
+  fetchRecognitions();
+});
+</script>
+ <!-- Script for displaying employee's recognition (End) -->
+
+<!-- Script for viewing shift requests (Start) -->
+<script>
+  // Enhanced version using EmployeeModals for robust spinner and modal management
+
+/**
+ * Opens the View Only Shift Swap Requests Modal with robust spinner and error handling.
+ * Uses employeeSecureFetch for spinner and error modals.
+ */
+function openViewOnlyShiftSwapRequestsModal() {
+  // Use employeeSecureFetch for robust spinner and modal management
+  employeeSecureFetch('/api/view_only_shift_swap_requests', { method: 'GET' })
+    .then(data => {
+      const tbody = document.getElementById('viewOnlyShiftSwapRequestsBody');
+      tbody.innerHTML = '';
+
+      if (!data.length) {
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No requests found.</td></tr>`;
+        $('#viewOnlyShiftSwapRequestsModal').modal('show');
+        return;
+      }
+
+      data.forEach(req => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${req.sender_id}</td>
+          <td>${req.sender_role}</td>
+          <td>${req.subject}</td>
+          <td>${req.body}</td>
+          <td>${new Date(req.timestamp).toLocaleString()}</td>
+          <td>
+              ${req.is_approved === null 
+                  ? '<span class="badge badge-warning">Pending</span>' 
+                  : req.is_approved 
+                      ? '<span class="badge badge-success">Approved</span>' 
+                      : '<span class="badge badge-danger">Rejected</span>'
+              }
+          </td>
+          <td>${req.approver_role_name || ''}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      $('#viewOnlyShiftSwapRequestsModal').modal('show');
+    })
+    .catch(err => {
+      // Error modal is already shown by employeeSecureFetch; you might show an inline message if desired
+      console.error(err);
+    });
+}
+</script>
+<!-- Script for viewing shift requests (End) -->
+
+<!-- Script for checking if the account is terminated or deactivated (Start) -->
+<script>
+  // Robust periodic account status checker (relies on employeeSecureFetch for spinner and error modal logic)
+
+/**
+ * Periodically checks the user's employee account status.
+ * If the account is deactivated or terminated, shows the appropriate modal and cleans up all backdrops.
+ */
+function checkAccountStatusPeriodically() {
+  async function checkStatus() {
+    try {
+      // Use the secure fetch (no spinner; error modal shown automatically)
+      await employeeSecureFetch('/api/employee_status', { showSpinner: false });
+      // If fetch succeeds, account is active: do nothing
+    } catch (err) {
+      // If error is a string from employeeSecureFetch (e.g., redirect message), ignore (handled already)
+      if (typeof err === 'string') return;
+
+      try {
+        // Fallback: direct fetch in case of edge errors
+        const res = await fetch('/api/employee_status', {
+          headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('employeeToken') || ''}`,
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        });
+
+        if (res.status === 401 || res.status === 403) {
+          let data;
+          try {
+            data = await res.json();
+          } catch {
+            data = {};
+          }
+          const status = data.status?.toLowerCase();
+
+          let modalId = '';
+          if (status === 'deactivated') {
+            modalId = '#accountDeactivatedModal';
+          } else if (status === 'terminated') {
+            modalId = '#accountTerminatedModal';
+          }
+          if (modalId) {
+            // Show modal with static backdrop, no keyboard dismissal
+            $(modalId).modal({ backdrop: 'static', keyboard: false, show: true });
+          }
+
+          setTimeout(function () {
+            sessionStorage.clear();
+            sessionStorage.clear();
+            // Clean up stray backdrops just in case
+            if (window.EmployeeModals && typeof window.EmployeeModals._removeStrayBackdrops === 'function') {
+              window.EmployeeModals._removeStrayBackdrops();
+            }
+            window.location.href = '/';
+          }, 5000);
+        }
+      } catch (modalErr) {
+        console.error('Modal error:', modalErr);
+        if (window.EmployeeModals && typeof window.EmployeeModals._removeStrayBackdrops === 'function') {
+          window.EmployeeModals._removeStrayBackdrops();
+        }
+      }
+    }
+  }
+
+  checkStatus();
+  setInterval(checkStatus, 10000);
+}
+
+document.addEventListener('DOMContentLoaded', checkAccountStatusPeriodically);
+</script>
+<!-- Script for checking if the account is terminated or deactivated (End) -->
+
+<!-- Script for redirecting the employee back to login page when the token is blacklisted or overwritten (Start) -->
+<script>
+  // Seamless session expiry checker (spinner and error modal logic handled by employeeSecureFetch)
+
+/**
+ * Checks token validity using employeeSecureFetch.
+ * If invalid, triggers the session expired modal.
+ */
+function checkTokenValidity() {
+  employeeSecureFetch('/validate_token', { method: 'GET', showSpinner: false })
+    .catch(() => {
+      showExpiredModal();
+    });
+}
+
+/**
+ * Shows the session expired modal,
+ * ensuring backdrops are cleared and input is blocked outside the modal.
+ */
+function showExpiredModal() {
+  // Robustly remove any stray backdrops or spinner artifacts
+  if (window.EmployeeModals && typeof window.EmployeeModals._removeStrayBackdrops === 'function') {
+    window.EmployeeModals._removeStrayBackdrops();
+  }
+
+  // Show modal with static backdrop
+  $('#sessionExpiredModal').modal({
+    backdrop: 'static',
+    keyboard: false,
+    show: true
+  });
+
+  // Ensure modal-open class for scrolling lock
+  document.body.classList.add("modal-open");
+
+  // Disable all interactive elements outside the modal
+  document.querySelectorAll('button, a, input, select, textarea').forEach(el => {
+    if (!el.closest('#sessionExpiredModal')) {
+      el.setAttribute('disabled', 'disabled');
+    }
+  });
+
+  // Attach click handler for login redirect
+  const loginBtn = document.getElementById('redirectToLogin');
+  if (loginBtn) {
+    loginBtn.addEventListener('click', () => {
+      sessionStorage.removeItem('employeeToken');
+      window.location.href = '/';
+    });
+  }
+}
+
+// Periodically check token validity
+setInterval(checkTokenValidity, 10000);
+</script>
+<!-- Script for redirecting the employee back to login page when the token is blacklisted or overwritten (End) -->
+
+<!-- Script for loading user data from API routes (Start) -->
+<script>
+  // Seamless user profile info loader using employeeSecureFetch for spinner and feedback
+
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("📦 DOM fully loaded and parsed.");
+
+  // Use employeeSecureFetch for robust spinner and error handling
+  employeeSecureFetch("/api/profile-info", { method: "GET" })
+    .then(data => {
+      console.log("📄 Parsed response data:", data);
+
+      const user = data.user;
+      const userRole = data.employee_role;
+
+      if (!user) {
+        throw new Error("User data not found in response");
+      }
+
+      console.log("👤 Populating UI with user data:", user);
+
+      const displayValue = (val) =>
+        val === null || val === undefined || val === "" ? "N/A" : val;
+
+      const safeSet = (id, value, prop = "textContent") => {
+        const el = document.getElementById(id);
+        if (el) {
+          if (prop === "src") el.src = value;
+          else el.textContent = displayValue(value);
+          console.log(`✅ Set #${id} →`, value);
+        }
+      };
+
+      let cacheBustedUrl = "";
+      if (user.profile_picture_url) {
+        cacheBustedUrl =
+          user.profile_picture_url +
+          (user.profile_picture_url.includes("?") ? "&" : "?") +
+          "v=" +
+          Date.now();
+      }
+
+      safeSet("profile-picture", cacheBustedUrl || "N/A", "src");
+      safeSet("profile-picture-dropdown", cacheBustedUrl || "N/A", "src");
+      safeSet("profile-picture-box", cacheBustedUrl || "N/A", "src");
+      safeSet("profile-picture-sidebar", cacheBustedUrl || "N/A", "src");
+
+      safeSet("user-email-dropdown", user.email);
+      safeSet("user-id", user.employee_id);
+      safeSet("user-position", user.role_name);
+      safeSet("user-name", user.first_name + " " + user.last_name);
+      safeSet("user-department", user.department);
+      safeSet("user-date-hired", user.date_hired);
+      safeSet("user-team_name", user.team_name);
+      safeSet("user-phone", user.phone_number);
+      safeSet("user-email-modal", user.email);
+
+      if (typeof initMessagingFeatures === "function") {
+        console.log("📬 Initializing messaging features...");
+        initMessagingFeatures({
+          user: user,
+          employee_role: userRole,
+        });
+      } else {
+        console.log("ℹ️ initMessagingFeatures() not found, skipping messaging setup.");
+      }
+    })
+    .catch(error => {
+      // Error modal is already shown by employeeSecureFetch, but you can log or show an inline message here
+      console.error("❌ Error loading profile info:", error);
+    });
+});
+</script>
+<!-- Script for loading user data from API routes (End) -->
+
+<!-- Script for messages and notifications (Start) -->
+<script>
+  // Employee Messaging Module - Fixed version with proper userData handling
+
+// Globals
+let previousUnreadCount = 0;
+let messageIdToDelete = null;
+let userData = null;
+
+/**
+ * Get current user data with fallback mechanisms
+ */
+function getCurrentUserData() {
+  // Try to get from global userData first
+  if (userData && userData.user && userData.user.employee_id) {
+    return {
+      employee_id: userData.user.employee_id,
+      employee_role: userData.employee_role
+    };
+  }
+  
+  // Fallback: try to get from sessionStorage/localStorage
+  const employeeId = sessionStorage.getItem('employee_id') || 
+                    localStorage.getItem('employee_id') ||
+                    sessionStorage.getItem('CURRENT_USER_ID') ||
+                    localStorage.getItem('CURRENT_USER_ID');
+                    
+  const employeeRole = sessionStorage.getItem('employee_role') || 
+                       localStorage.getItem('employee_role') ||
+                       sessionStorage.getItem('CURRENT_USER_ROLE') ||
+                       localStorage.getItem('CURRENT_USER_ROLE') ||
+                       'employee';
+  
+  if (employeeId) {
+    console.log("🔄 Using fallback user data:", { employeeId, employeeRole });
+    return {
+      employee_id: parseInt(employeeId),
+      employee_role: employeeRole
+    };
+  }
+  
+  // Last resort: try to decode from JWT token
+  try {
+    const token = sessionStorage.getItem('employeeToken') || 
+                  localStorage.getItem('employeeToken') ||
+                  sessionStorage.getItem('token') ||
+                  localStorage.getItem('token');
+                  
+    if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const empId = payload.employee_id || payload.user_id || payload.id;
+      const empRole = payload.employee_role || payload.role || 'employee';
+      
+      if (empId) {
+        console.log("🔄 Using JWT decoded user data:", { empId, empRole });
+        return {
+          employee_id: parseInt(empId),
+          employee_role: empRole
+        };
+      }
+    }
+  } catch (e) {
+    console.error("❌ Failed to decode JWT token:", e);
+  }
+  
+  console.error("❌ No user data available");
+  return null;
+}
+
+/**
+ * Fetches messages from inbox.
+ * @returns {Promise<Array>}
+ */
+function fetchMessages(url = '/employee/messages/inbox') {
+  return employeeSecureFetch(url, { method: 'GET' })
+    .then(messages => {
+      if (Array.isArray(messages)) return messages;
+      if (Array.isArray(messages.messages)) return messages.messages;
+      return [];
+    });
+}
+
+/**
+ * Opens the compose message modal, fetching roles.
+ */
+function openComposeMessageModal() {
+  // Ensure we have user data
+  const currentUser = getCurrentUserData();
+  if (!currentUser) {
+    showMessageModal("User session not found. Please refresh the page.", false);
+    return;
+  }
+  
+  employeeSecureFetch("/employee/roles", { method: 'GET' })
+    .then(roleData => {
+      $('#composeMessageModal').modal('show');
+      
+      const roleSelect = document.getElementById("roleSelect");
+      roleSelect.innerHTML = '<option disabled selected>Select a role</option>';
+      
+      if (Array.isArray(roleData)) {
+        roleData.forEach(role => {
+          if (role && role.role_id && role.role_name) {
+            const option = document.createElement("option");
+            option.value = role.role_id;
+            option.textContent = role.role_name;
+            roleSelect.appendChild(option);
+          }
+        });
+        
+        console.log("✅ Roles loaded:", roleData.length);
+        
+        // Clear receiver dropdown
+        const receiverSelect = document.getElementById("receiverSelect");
+        if (receiverSelect) {
+          receiverSelect.innerHTML = '<option disabled selected>First select a role</option>';
+        }
+        
+        // Force event listener re-attachment
+        roleSelect.removeEventListener("change", handleRoleChange);
+        roleSelect.addEventListener("change", handleRoleChange);
+        
+        console.log("✅ Event listener re-attached to role select");
+      } else {
+        console.log("❌ Invalid role data received:", roleData);
+      }
+    })
+    .catch(err => {
+      console.error("[openComposeMessageModal] Error:", err);
+      showMessageModal("Failed to load compose modal.", false);
+    });
+}
+
+/**
+ * Opens the message inbox modal and populates messages.
+ */
+function openMessageInboxModal() {
+  fetchMessages()
+    .then(messages => {
+      const container = document.getElementById('inboxMessages');
+      container.innerHTML = '';
+      if (!messages || messages.length === 0) {
+        container.innerHTML = '<p class="text-muted">No messages found.</p>';
+      } else {
+        messages.forEach(msg => {
+          const card = createMessageCard(msg);
+          container.appendChild(card);
+        });
+      }
+      $('#inboxModal').modal('show');
+    })
+    .catch(err => {
+      console.error("[openMessageInboxModal] Error:", err);
+      showMessageModal("Failed to load inbox messages.", false);
+    });
+}
+
+/**
+ * Creates a DOM card for a message.
+ * @param {Object} msg
+ * @returns {HTMLElement}
+ */
+function createMessageCard(msg) {
+  const card = document.createElement('div');
+  card.className = 'card mb-2';
+  card.innerHTML = `
+    <div class="card-body">
+      <h6 class="card-subtitle mb-1 text-muted">
+        From ${msg.sender_role?.toUpperCase() || ''} (User ID: ${msg.sender_id})
+      </h6>
+      <p class="card-text">${msg.content || msg.body || 'No content'}</p>
+      <small class="text-muted">${new Date(msg.timestamp).toLocaleString()}</small>
+      ${!msg.is_read ? `<button class="btn btn-sm btn-outline-primary float-right ml-2" onclick="markAsRead(${msg.message_id})">Mark as Read</button>` : ''}
+      <button class="btn btn-sm btn-outline-danger float-right" onclick="showDeleteConfirmModal(${msg.message_id})">Delete</button>
+    </div>`;
+  return card;
+}
+
+/**
+ * Shows the delete confirm modal for a message.
+ * @param {number} messageId
+ */
+function showDeleteConfirmModal(messageId) {
+  messageIdToDelete = messageId;
+  $('#confirmDeleteModal').modal('show');
+}
+
+// Confirm delete handler
+document.addEventListener('DOMContentLoaded', function() {
+  const deleteBtn = document.getElementById('confirmDeleteBtn');
+  if (deleteBtn) {
+    deleteBtn.onclick = function() {
+      if (messageIdToDelete !== null) {
+        actuallyDeleteMessage(messageIdToDelete);
+        messageIdToDelete = null;
+        $('#confirmDeleteModal').modal('hide');
+      }
+    };
+  }
+});
+
+/**
+ * Deletes a message with proper error handling.
+ * @param {number} messageId
+ */
+function actuallyDeleteMessage(messageId) {
+  const currentUser = getCurrentUserData();
+  if (!currentUser) {
+    console.error("[deleteMessage] No user data available");
+    showMessageModal("User session not found. Please refresh the page.", false);
+    return;
+  }
+  
+  employeeSecureFetch(`/employee/messages/delete/${messageId}`, { method: 'DELETE' })
+    .then(response => {
+      showMessageModal("Message deleted successfully.", true);
+      openMessageInboxModal();
+      
+      // Use current user data instead of userData
+      loadMessageNotifications(currentUser.employee_id, currentUser.employee_role);
+    })
+    .catch(err => {
+      console.error("[deleteMessage] Error:", err);
+      showMessageModal("Failed to delete message.", false);
+    });
+}
+
+/**
+ * Marks a message as read with proper error handling.
+ * @param {number} messageId
+ */
+function markAsRead(messageId) {
+  const currentUser = getCurrentUserData();
+  if (!currentUser) {
+    console.error("[markAsRead] No user data available");
+    showMessageModal("User session not found. Please refresh the page.", false);
+    return;
+  }
+  
+  employeeSecureFetch(`/employee/messages/read/${messageId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': document.querySelector('meta[name="csrf-token"]')?.content || ''
+    },
+    body: JSON.stringify({})
+  })
+    .then(() => {
+      openMessageInboxModal();
+      
+      // Use current user data instead of userData
+      loadMessageNotifications(currentUser.employee_id, currentUser.employee_role);
+    })
+    .catch(err => {
+      console.error("[markAsRead] Error:", err);
+      showMessageModal("Failed to mark message as read.", false);
+    });
+}
+
+/**
+ * Loads unread message count and updates UI.
+ * @param {string|number} userId
+ * @param {string} role
+ */
+function loadMessageNotifications(userId, role) {
+  // Validate parameters
+  if (!userId || !role) {
+    const currentUser = getCurrentUserData();
+    if (!currentUser) {
+      console.error("[loadMessageNotifications] No user data available");
+      return;
+    }
+    userId = currentUser.employee_id;
+    role = currentUser.employee_role;
+  }
+  
+  const url = `/employee/messages/unread-count?user_id=${userId}&role=${role}`;
+  employeeSecureFetch(url, { method: 'GET', showSpinner: false })
+    .then(data => {
+      const unreadCount = data.unread_count || 0;
+      updateUnreadCountBadge(unreadCount);
+      updateNotificationList(unreadCount);
+      
+      if (unreadCount > previousUnreadCount) {
+        playNotificationSound();
+        showNewMessageNotification(unreadCount - previousUnreadCount);
+      }
+      previousUnreadCount = unreadCount;
+    })
+    .catch(error => {
+      console.error("[loadMessageNotifications] Error:", error);
+      // Don't show error modal for background notifications
+    });
+}
+
+/**
+ * Updates the unread badge in the UI.
+ * @param {number} count
+ */
+function updateUnreadCountBadge(count) {
+  const badge = document.getElementById('unreadCountBadge');
+  if (!badge) return;
+  badge.innerText = count;
+  badge.style.display = count === 0 ? 'none' : 'inline-block';
+}
+
+/**
+ * Updates the notification dropdown.
+ * @param {number} count
+ */
+function updateNotificationList(count) {
+  const list = document.getElementById('notificationList');
+  if (!list) return;
+  list.innerHTML = count > 0
+    ? `<a class="dropdown-item preview-item" href="#" onclick="openMessageInboxModal()">
+        <div class="preview-thumbnail">
+          <div class="preview-icon bg-warning">
+            <i class="mdi mdi-email-alert text-white"></i>
+          </div>
+        </div>
+        <div class="preview-item-content">
+          <h6 class="preview-subject font-weight-normal">You have ${count} unread message${count > 1 ? 's' : ''}</h6>
+          <p class="font-weight-light small-text text-muted mb-0">Check your inbox</p>
+        </div>
+      </a>`
+    : '<p class="px-3 text-muted">Empty</p>';
+}
+
+/**
+ * Shows a notification for new messages.
+ * @param {number} newCount
+ */
+function showNewMessageNotification(newCount) {
+  if (Notification.permission === 'granted') {
+    new Notification(`New Message${newCount > 1 ? 's' : ''}`, {
+      body: `You have ${newCount} new unread message${newCount > 1 ? 's' : ''}.`,
+      icon: '/path/to/your/message-icon.png'
+    });
+  }
+}
+
+/**
+ * Plays a notification sound.
+ */
+function playNotificationSound() {
+  const audio = document.getElementById('messageSound');
+  if (audio) {
+    audio.play().catch(err => console.error("[playNotificationSound] Play error:", err));
+  }
+}
+
+/**
+ * Handles a role change in the compose message modal.
+ */
+function handleRoleChange() {
+  const roleSelect = document.getElementById("roleSelect");
+  const roleId = roleSelect.value;
+  
+  console.log("🔍 Employee Role Change Debug:");
+  console.log("Selected roleId:", roleId);
+  
+  if (!roleId) {
+    console.log("❌ No roleId selected");
+    return;
+  }
+  
+  console.log("Making request to:", `/employee/users/by_role/${roleId}`);
+  
+  const url = `/employee/users/by_role/${roleId}`;
+  employeeSecureFetch(url, { method: 'GET' })
+    .then(users => {
+      console.log("✅ Response received:", users);
+      console.log("Response type:", typeof users);
+      console.log("Is array:", Array.isArray(users));
+      console.log("Users length:", users ? users.length : 'null/undefined');
+      
+      const receiverSelect = document.getElementById("receiverSelect");
+      receiverSelect.innerHTML = '';
+      
+      // Filter out null/undefined users and validate user objects
+      const validUsers = users ? users.filter(user => {
+        if (!user) {
+          console.log("⚠️ Filtering out null/undefined user");
+          return false;
+        }
+        if (!user.user_id || !user.email) {
+          console.log("⚠️ Filtering out incomplete user:", user);
+          return false;
+        }
+        return true;
+      }) : [];
+      
+      console.log("👥 Valid users after filtering:", validUsers);
+      
+      if (!validUsers || validUsers.length === 0) {
+        console.log("❌ No valid users found");
+        const noUsersOption = document.createElement("option");
+        noUsersOption.disabled = true;
+        noUsersOption.selected = true;
+        noUsersOption.textContent = "No users available";
+        receiverSelect.appendChild(noUsersOption);
+      } else {
+        console.log("👥 Processing valid users:", validUsers.length);
+        
+        // Add default option
+        const defaultOption = document.createElement("option");
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        defaultOption.value = "";
+        defaultOption.textContent = "Select a receiver";
+        receiverSelect.appendChild(defaultOption);
+        
+        // Add user options
+        validUsers.forEach((user, index) => {
+          console.log(`User ${index}:`, user);
+          
+          // Extra validation before creating option
+          if (user && user.user_id && user.email) {
+            const option = document.createElement("option");
+            option.value = user.user_id;
+            option.setAttribute("data-email", user.email);
+            option.textContent = `${user.email} (${user.role_type || 'Unknown'})`;
+            receiverSelect.appendChild(option);
+          } else {
+            console.log(`⚠️ Skipping invalid user at index ${index}:`, user);
+          }
+        });
+        
+        console.log("✅ Dropdown populated with", receiverSelect.options.length - 1, "users");
+      }
+    })
+    .catch(err => {
+      console.error("❌ [handleRoleChange] Error:", err);
+      
+      // Clear dropdown and show error
+      const receiverSelect = document.getElementById("receiverSelect");
+      receiverSelect.innerHTML = '<option disabled selected>Error loading users</option>';
+      
+      showMessageModal("Failed to load users for the selected role.", false);
+    });
+}
+
+/**
+ * Sends a message from the compose modal.
+ */
+function sendMessage() {
+  const currentUser = getCurrentUserData();
+  if (!currentUser) {
+    showMessageModal("User session not found. Please refresh the page.", false);
+    return;
+  }
+  
+  const receiverSelect = document.getElementById("receiverSelect");
+  const selectedOption = receiverSelect.options[receiverSelect.selectedIndex];
+  if (!selectedOption || selectedOption.disabled) {
+    showMessageModal("Please select a valid receiver.", false);
+    return;
+  }
+  
+  const receiverId = parseInt(selectedOption.value);
+  const receiverEmail = selectedOption.getAttribute("data-email");
+  const receiverRoleText = document.getElementById("roleSelect").selectedOptions[0]?.text || "Unknown";
+  const message = document.getElementById("messageText").value;
+  
+  if (!message.trim()) {
+    showMessageModal("Please enter a message.", false);
+    return;
+  }
+  
+  const payload = {
+    sender_id: currentUser.employee_id,
+    sender_role: currentUser.employee_role,
+    receiver_id: receiverId,
+    receiver_email: receiverEmail,
+    receiver_role: receiverRoleText,
+    subject: "No Subject",
+    body: message
+  };
+  
+  employeeSecureFetch('/employee/messages/send', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': document.querySelector('meta[name="csrf-token"]')?.content || ''
+    },
+    body: JSON.stringify(payload)
+  })
+    .then(response => {
+      showMessageModal("Message sent!", true);
+      $('#composeMessageModal').modal('hide');
+      
+      // Clear the form
+      document.getElementById("messageText").value = '';
+      document.getElementById("roleSelect").selectedIndex = 0;
+      document.getElementById("receiverSelect").innerHTML = '<option disabled selected>First select a role</option>';
+    })
+    .catch(err => {
+      console.error("[sendMessage] Error:", err);
+      showMessageModal('Failed to send message.', false);
+    });
+}
+
+/**
+ * Shows a message modal (success or error) using EmployeeModals utility.
+ * @param {string} message
+ * @param {boolean} isSuccess
+ */
+function showMessageModal(message, isSuccess = true) {
+  if (window.EmployeeModals) {
+    window.EmployeeModals.showMessage(isSuccess ? 'success' : 'error', message);
+  } else {
+    alert(message);
+  }
+}
+
+/**
+ * Initializes messaging features with enhanced user data handling.
+ * @param {Object} data
+ */
+function initMessagingFeatures(data) {
+  console.log("🚀 Initializing messaging features with data:", data);
+  
+  // Store user data globally
+  userData = data;
+  
+  // Also store in sessionStorage as backup
+  if (data && data.user && data.user.employee_id) {
+    sessionStorage.setItem('employee_id', data.user.employee_id);
+    sessionStorage.setItem('employee_role', data.employee_role || 'employee');
+    console.log("✅ User data stored in sessionStorage");
+  }
+  
+  // Remove existing event listeners to prevent duplicates
+  const roleSelect = document.getElementById("roleSelect");
+  const sendButton = document.getElementById("sendButton");
+  
+  if (roleSelect) {
+    // Remove existing listeners
+    roleSelect.removeEventListener("change", handleRoleChange);
+    // Add new listener
+    roleSelect.addEventListener("change", handleRoleChange);
+    console.log("✅ Role select event listener attached");
+  } else {
+    console.log("❌ Role select element not found");
+  }
+  
+  if (sendButton) {
+    // Remove existing listeners  
+    sendButton.removeEventListener("click", sendMessage);
+    // Add new listener
+    sendButton.addEventListener("click", sendMessage);
+    console.log("✅ Send button event listener attached");
+  } else {
+    console.log("❌ Send button element not found");
+  }
+  
+  // Initialize other features with proper user data
+  const currentUser = getCurrentUserData();
+  if (currentUser) {
+    fetchMessages();
+    loadMessageNotifications(currentUser.employee_id, currentUser.employee_role);
+    setInterval(() => {
+      const user = getCurrentUserData();
+      if (user) {
+        loadMessageNotifications(user.employee_id, user.employee_role);
+      }
+    }, 30000);
+    
+    console.log("✅ Messaging features initialized successfully");
+  } else {
+    console.error("❌ Failed to initialize messaging - no user data");
+  }
+
+  // Request notification permission
+  if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+    Notification.requestPermission().then(permission => {
+      console.log("[initMessagingFeatures] Notification permission:", permission);
+    });
+  }
+}
+</script>
+<!-- Script for messages and notifications (End) -->
+
+<!-- Script for checking token in sessionStorage (Start) -->
+<script>
+	// Sync session token to cookie if it's missing
+	const token = sessionStorage.getItem("employeeToken");
+	console.log("Token length:", token.length);
+	console.log("Token parts:", token.split('.').length);
+
+	if (token && !document.cookie.includes("user_token")) {
+	  document.cookie = `user_token=${token}; path=/; SameSite=Strict`;
+	}
+  </script>  
+<!-- Script for checking token in sessionStorage (End) -->
+
+<!-- Script for displaying progress comparing with employee's team (Start) -->
+<script>
+  // Team Comparison Chart logic using employeeSecureFetch for robust spinner & error handling
+
+document.addEventListener('DOMContentLoaded', function () {
+  const teamRangeSelector = document.getElementById('teamRangeSelector');
+  const teamCtx = document.getElementById('teamComparisonChart').getContext('2d');
+  const performanceBadge = document.getElementById('performanceBadge');
+  let teamComparisonChart;
+
+  async function fetchTeamComparison(range) {
+    try {
+      // Use employeeSecureFetch for spinner and error modal management
+      const data = await employeeSecureFetch(`/team-average?range=${range}`, { method: 'GET' });
+
+      const yourHours = data.your_hours;
+      const teamAverage = data.team_average_hours;
+
+      const yourColor = yourHours >= teamAverage ? 'rgba(75, 192, 192, 0.8)' : 'rgba(255, 99, 132, 0.8)';
+      const teamColor = 'rgba(54, 162, 235, 0.8)';
+
+      if (teamComparisonChart) {
+        teamComparisonChart.destroy();
+      }
+
+      teamComparisonChart = new Chart(teamCtx, {
+        type: 'bar',
+        data: {
+          labels: ['You', 'Team Average'],
+          datasets: [{
+            label: 'Hours Worked',
+            data: [yourHours, teamAverage],
+            backgroundColor: [yourColor, teamColor],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          animation: {
+            duration: 800,
+            easing: 'easeInOutQuart'
+          },
+          scales: {
+            y: { beginAtZero: true }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  return context.dataset.label + ': ' + context.parsed.y + ' hours';
+                }
+              }
+            }
+          }
+        }
+      });
+
+      performanceBadge.innerHTML = yourHours >= teamAverage
+        ? `<span class="badge bg-success">🏆 Above Team Avg!</span>`
+        : `<span class="badge bg-warning text-dark">🚀 Below Team Avg - Keep pushing!</span>`;
+
+    } catch (error) {
+      // Error modal shown by employeeSecureFetch automatically, but you may log or show inline errors here
+      console.error('Error fetching team comparison data:', error);
+    }
+  }
+
+  fetchTeamComparison(teamRangeSelector.value);
+  teamRangeSelector.addEventListener('change', function () {
+    fetchTeamComparison(this.value);
+  });
+});
+</script>
+<!-- Script for displaying progress comparing with employee's team (End) -->
+
+<!-- Script for displaying goal progress (Start) -->
+<script>
+  // Goal Progress Loader - Seamless spinner and error handling using employeeSecureFetch
+
+document.addEventListener('DOMContentLoaded', function() {
+  async function fetchGoalProgress() {
+    try {
+      // Use employeeSecureFetch for spinner and error modal management
+      const data = await employeeSecureFetch('/goals-progress', { method: 'GET' });
+
+      const { goal_name, target_hours, current_hours } = data;
+      const percentage = Math.min((current_hours / target_hours) * 100, 100).toFixed(1);
+      document.getElementById('goalName').textContent = `Goal: ${goal_name}`;
+      document.getElementById('goalStatus').textContent = `Current: ${current_hours} hours (${percentage}%)`;
+      const progressBar = document.getElementById('goalProgressBar');
+      progressBar.style.width = `${percentage}%`;
+      progressBar.setAttribute('aria-valuenow', percentage);
+      progressBar.textContent = `${percentage}%`;
+    } catch (error) {
+      // Error modal is automatically shown by employeeSecureFetch, but you can log or show inline errors here
+      console.error('Error fetching goal progress:', error);
+    }
+  }
+
+  fetchGoalProgress();
+});
+</script>
+<!-- Script for displaying goal progress (End) -->
+
+<!-- Work Hours Insights Script (Start) -->
+<script>
+  // Work Hours Chart Module - Seamless spinner and error handling using employeeSecureFetch
+
+document.addEventListener('DOMContentLoaded', function() {
+  const totalHoursElement = document.getElementById('totalHours');
+  const rangeSelector = document.getElementById('rangeSelector');
+  const chartTypeSelector = document.getElementById('chartTypeSelector');
+  const ctx = document.getElementById('workHoursChart').getContext('2d');
+
+  let workHoursChart;
+  let currentChartType = 'bar';
+  let cachedData = null;
+
+  function drawChart(data) {
+    const labels = data.daily_breakdown.map(item => item.date);
+    const hoursWorked = data.daily_breakdown.map(item => item.hours_worked);
+    const overtimeHours = data.daily_breakdown.map(item => item.overtime_hours);
+
+    if (workHoursChart) {
+      workHoursChart.destroy();
+    }
+
+    workHoursChart = new Chart(ctx, {
+      type: currentChartType,
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Regular Hours',
+            data: hoursWorked,
+            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            fill: currentChartType === 'line' ? false : true
+          },
+          {
+            label: 'Approved Overtime',
+            data: overtimeHours,
+            backgroundColor: 'rgba(255, 99, 132, 0.7)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            fill: currentChartType === 'line' ? false : true
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        animation: {
+          duration: 800,
+          easing: 'easeInOutQuart'
+        },
+        plugins: {
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          },
+          legend: {
+            position: 'top',
+          }
+        },
+        scales: {
+          x: {
+            stacked: currentChartType === 'bar'
+          },
+          y: {
+            stacked: currentChartType === 'bar',
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+
+  async function fetchWorkHours(range) {
+    try {
+      // Use employeeSecureFetch for spinner and error modal management
+      const data = await employeeSecureFetch(`/work-hours-summary?range=${range}`, { method: 'GET' });
+
+      cachedData = data;
+      totalHoursElement.textContent = cachedData.total_hours;
+      drawChart(cachedData);
+    } catch (error) {
+      // Error modal is automatically shown by employeeSecureFetch, but you can log or show inline errors here
+      console.error('Error fetching data:', error);
+    }
+  }
+
+  fetchWorkHours(rangeSelector.value);
+
+  rangeSelector.addEventListener('change', function() {
+    fetchWorkHours(this.value);
+  });
+
+  chartTypeSelector.addEventListener('change', function () {
+    currentChartType = this.value;
+    if (cachedData) {
+      drawChart(cachedData);
+    }
+  });
+});
+</script>
+<!-- Work Hours Insights Script (End) -->
+
+<!-- Script for displaying health and wellness resources (Start) -->
+<script>
+  // Seamless resource UI: robust spinner, success, and error handling with employeeSecureFetch
+
+$(document).ready(function () {
+  const descriptions = {
+    'Safety Training': 'Access resources about safety protocols and emergency procedures.',
+    'Mental Health': 'Find resources that support your emotional and psychological well-being.',
+    'Skill Development': 'Explore content to grow your professional and personal skills.',
+    'all': 'Browse all learning resources available to support your development.'
+  };
+
+  function updateDescription(category) {
+    const desc = descriptions[category] || '';
+    $('#resourceCategoryDescription').text(desc);
+  }
+
+  async function fetchAndDisplayResources() {
+    const search = $('#searchInputResource').val().toLowerCase();
+    const sort = $('#sortResource').val();
+    const category = $('#filterResourceCategory').val();
+
+    try {
+      // Use employeeSecureFetch for spinner and error modal management
+      const resources = await employeeSecureFetch('/employee/health_resources', { method: 'GET' });
+
+      let filtered = resources;
+
+      if (category !== 'all') {
+        filtered = filtered.filter(r => r.category === category);
+      }
+      if (search) {
+        filtered = filtered.filter(r =>
+          r.title.toLowerCase().includes(search) ||
+          r.description.toLowerCase().includes(search)
+        );
+      }
+      if (sort === 'asc') {
+        filtered.sort((a, b) => a.resource_id - b.resource_id);
+      } else {
+        filtered.sort((a, b) => b.resource_id - a.resource_id);
+      }
+
+      renderResources(filtered);
+    } catch (error) {
+      // Error modal is already shown by employeeSecureFetch, but you can log or show inline errors here
+      $('#employeeResourcesContainer').html('<div class="col-12 text-center text-danger">Failed to load resources.</div>');
+      console.error('Failed to load resources.');
+    }
+  }
+
+  function renderResources(resources) {
+    const container = $('#employeeResourcesContainer');
+    container.empty();
+
+    if (resources.length === 0) {
+      container.append('<div class="col-12 text-center text-muted">No resources found.</div>');
+      return;
+    }
+
+    resources.forEach(resource => {
+      const imageUrl = resource.file_path
+        ? `/static/health_resources/${resource.file_path}`
+        : '/static/default_resource.png';
+
+      const card = `
+        <div class="col-md-4 mb-3">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+              <img src="${imageUrl}" alt="${resource.title}" class="mb-3" style="width: 60px; height: 60px;">
+              <h5 class="card-title">${resource.title}</h5>
+              <p class="card-text small">${resource.description}</p>
+              ${resource.url ? `<a href="${resource.url}" target="_blank" class="btn btn-sm btn-outline-primary">View Resource</a>` : ''}
+            </div>
+          </div>
+        </div>`;
+      container.append(card);
+    });
+  }
+
+  $('#searchInputResource, #sortResource').on('input change', fetchAndDisplayResources);
+  $('#filterResourceCategory').on('change', function () {
+    const selectedCategory = $(this).val();
+    updateDescription(selectedCategory);
+    fetchAndDisplayResources();
+  });
+
+  // Initial setup
+  updateDescription('all');
+  fetchAndDisplayResources();
+});
+</script>
+<!-- Script for displaying health and wellness resources (End) -->
+
+<!-- Script for handling requesting shift swap and time off (Start) -->
+<script>
+  // Seamless request modal submission: robust spinner, success, and error handling with employeeSecureFetch
+
+/**
+ * Show a success/error message modal using EmployeeModals if available, otherwise falls back to legacy modal logic.
+ * @param {string} message
+ * @param {boolean} isSuccess
+ */
+function showMessageModal(message, isSuccess = true) {
+  if (window.EmployeeModals && typeof window.EmployeeModals.showMessage === 'function') {
+    window.EmployeeModals.showMessage(isSuccess ? 'success' : 'error', message);
+  } else {
+    const header = document.getElementById('messageModalHeader');
+    const label = document.getElementById('messageModalLabel');
+    const body = document.getElementById('messageModalBody');
+    label.textContent = isSuccess ? 'Success' : 'Error';
+    body.textContent = message;
+    header.classList.remove('bg-danger', 'bg-success');
+    header.classList.add(isSuccess ? 'bg-success' : 'bg-danger');
+    $('#messageModal').modal('show');
+    setTimeout(() => {
+      if ($('#messageModal').hasClass('show')) {
+        document.body.classList.add('modal-open');
+      }
+    }, 100);
+  }
+}
+
+/**
+ * Opens the request modal and initializes the subject.
+ * @param {string} type
+ */
+function openRequestModal(type) {
+  document.getElementById('requestSubject').value = type;
+  document.getElementById('requestMessage').value = '';
+  $('#requestModal').modal('show');
+}
+
+/**
+ * Handles request form submission and displays success/error feedback.
+ * @param {Event} event
+ */
+function submitRequest(event) {
+  event.preventDefault();
+
+  const subject = document.getElementById('requestSubject').value;
+  const message = document.getElementById('requestMessage').value;
+
+  employeeSecureFetch('/send_request', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ subject, message })
+  })
+  .then(data => {
+    if (!data || data.error) {
+      showMessageModal(`Error: ${data?.error || 'Failed to submit request.'}`, false);
+    } else {
+      $('#requestModal').modal('hide');
+      showMessageModal('Request submitted successfully!', true);
+    }
+  })
+  .catch(error => {
+    showMessageModal('Session expired or unauthorized. Please login again.', false);
+    document.getElementById('messageModalCloseBtn').onclick = () => window.location.href = '/';
+  });
+}
+</script>
+<!-- Script for handling requesting shift swap and time off (End) -->
+	
+
+<!-- Script for displaying attendance histories (Start) -->
+<script>
+  // Attendance History Loader - Seamless spinner logic, success, and error display using employeeSecureFetch
+
+/**
+ * Helper to format seconds as HH:MM:SS
+ */
+function formatSecondsToHMS(seconds) {
+  if (seconds == null) return '-';
+  seconds = Math.floor(seconds);
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  return [h, m, s].map(unit => unit.toString().padStart(2, '0')).join(':');
+}
+
+/**
+ * Render a list of breaks for a log (supports multiple breaks per log)
+ */
+function renderBreaksList(breaks) {
+  if (!breaks || breaks.length === 0) {
+    return '<span class="text-muted">No breaks</span>';
+  }
+  return breaks.map(breakObj => `
+    <div class="mb-2 border-bottom pb-2">
+      <strong>Type:</strong> ${breakObj.break_type || '-'}<br>
+      <strong>Start:</strong> ${breakObj.break_start ? breakObj.break_start.replace('T', ' ').slice(0, 19) : '-'}<br>
+      <strong>End:</strong> ${breakObj.break_end ? breakObj.break_end.replace('T', ' ').slice(0, 19) : '-'}<br>
+      <strong>Duration:</strong> ${breakObj.break_duration !== null ? formatSecondsToHMS(breakObj.break_duration) : '-'}<br>
+      <strong>Status:</strong> ${breakObj.break_status || '-'}
+    </div>
+  `).join('');
+}
+
+/**
+ * Fetches and displays attendance logs with robust spinner and error handling.
+ */
+async function fetchAttendanceLogs() {
+  const selectedDate = document.getElementById('attendanceDateFilter').value;
+  let url = '/attendance_logs';
+  if (selectedDate) url += `?date=${selectedDate}`;
+
+  try {
+    // Use employeeSecureFetch for spinner and error modal management
+    const data = await employeeSecureFetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    const tableBody = document.getElementById('attendanceHistoryTableBody');
+    tableBody.innerHTML = '';
+
+    if (data.error) {
+      tableBody.innerHTML = `<tr><td colspan="9" class="text-danger">${data.error}</td></tr>`;
+    } else if (data.length === 0) {
+      tableBody.innerHTML = '<tr><td colspan="9">No attendance records found.</td></tr>';
+    } else {
+      data.forEach(log => {
+        // Use log.breaks (array of breaks per attendance log)
+        const breaksCell = renderBreaksList(log.breaks || []);
+        const row = `<tr>
+          <td>${log.date}</td>
+          <td>${log.clock_in_time || '-'}</td>
+          <td>${log.clock_out_time || '-'}</td>
+          <td>${log.status}</td>
+          <td>${log.hours_worked || '-'}</td>
+          <td>${log.overtime_status === 'Verified' ? 'Yes (Approved)' : 'No / Rejected'}</td>
+          <td>${log.verified}</td>
+          <td>${log.remarks || '-'}</td>
+          <td>${breaksCell}</td>
+        </tr>`;
+        tableBody.innerHTML += row;
+      });
+    }
+
+    // Show the attendance modal after table is updated
+    $('#attendanceHistoryModal').modal('show');
+    setTimeout(() => {
+      if ($('#attendanceHistoryModal').hasClass('show')) {
+        document.body.classList.add('modal-open');
+      }
+    }, 100);
+
+  } catch (error) {
+    console.error('Error fetching attendance logs:', error);
+    const tableBody = document.getElementById('attendanceHistoryTableBody');
+    tableBody.innerHTML = '<tr><td colspan="9" class="text-danger">Failed to load attendance history.</td></tr>';
+    $('#attendanceHistoryModal').modal('show');
+    setTimeout(() => {
+      if ($('#attendanceHistoryModal').hasClass('show')) {
+        document.body.classList.add('modal-open');
+      }
+    }, 100);
+  }
+}
+</script>
+<!-- Script for displaying attendance histories (End) -->
+
+<!-- Script for displaying leave requests histories (Start) -->
+<script>
+  // Leave History Loader - Seamless spinner, success, and error feedback using employeeSecureFetch
+
+/**
+ * Fetches and displays leave requests with robust spinner and error handling.
+ */
+async function fetchLeaveRequests() {
+  try {
+    // Use employeeSecureFetch for spinner and error modal management
+    const data = await employeeSecureFetch('/leave_requests', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    const tableBody = document.getElementById('leaveHistoryTableBody');
+    tableBody.innerHTML = '';
+
+    if (data.error) {
+      tableBody.innerHTML = `<tr><td colspan="5" class="text-danger">${data.error}</td></tr>`;
+    } else if (data.length === 0) {
+      tableBody.innerHTML = '<tr><td colspan="5">No leave requests found.</td></tr>';
+    } else {
+      data.forEach(req => {
+        const dateRange = `${req.start_date} to ${req.end_date}`;
+        const row = `<tr>
+          <td>${dateRange}</td>
+          <td>${req.leave_type}</td>
+          <td>${req.status}</td>
+          <td>${req.remarks}</td>
+          <td>${req.verified}</td>
+        </tr>`;
+        tableBody.innerHTML += row;
+      });
+    }
+
+    // Show the leave history modal after table updated
+    $('#leaveHistoryModal').modal('show');
+    setTimeout(() => {
+      if ($('#leaveHistoryModal').hasClass('show')) {
+        document.body.classList.add('modal-open');
+      }
+    }, 100);
+
+  } catch (error) {
+    console.error('Error fetching leave history:', error);
+    const tableBody = document.getElementById('leaveHistoryTableBody');
+    tableBody.innerHTML = '<tr><td colspan="5" class="text-danger">Failed to load leave history.</td></tr>';
+    $('#leaveHistoryModal').modal('show');
+    setTimeout(() => {
+      if ($('#leaveHistoryModal').hasClass('show')) {
+        document.body.classList.add('modal-open');
+      }
+    }, 100);
+  }
+}
+</script>
+<!-- Script for displaying leave requests histories (End) -->
+
+<!-- Script for displaying employee shift (START)-->
+<script>
+  // Seamless shift info loader with robust spinner, success, and error handling using employeeSecureFetch
+
+document.addEventListener("DOMContentLoaded", async function () {
+  try {
+    // Use employeeSecureFetch for spinner and error modal management
+    const data = await employeeSecureFetch('/employee-shift', { method: 'GET' });
+
+    const shiftInfoDiv = document.getElementById("shift-info");
+    if (!data.shift_assigned || !data.shift_details) {
+      shiftInfoDiv.innerHTML = `<p>${data.message || "No shift assigned."}</p>`;
+    } else {
+      const shift = data.shift_details;
+      shiftInfoDiv.innerHTML = `
+        <p><strong>Your Current Shift:</strong> ${shift.shift_name} (${shift.shift_time})</p>
+        <p><strong>Shift Date:</strong> ${shift.shift_date}</p>
+        <p><strong>Location:</strong> ${shift.location}</p>
+      `;
+    }
+  } catch (error) {
+    console.error('Error fetching shift data:', error);
+    document.getElementById("shift-info").innerHTML = `<p>Failed to load shift details.</p>`;
+  }
+});
+</script>
+<!-- Script for displaying employee shift (END)-->
+
+<!-- Script for attendance (clock in, clock out, breaks, mark leave) (START) -->
+<script>
+  // Enhanced attendance UX with robust spinner, success, and error handling using employeeSecureFetch
+
+/**
+ * Map backend errors to user-friendly messages.
+ */
+function getProfessionalErrorMessage(rawMessage) {
+  if (!rawMessage) return "An unexpected error occurred. Please try again, or contact HR if the problem persists.";
+  const msg = rawMessage.toLowerCase();
+  if (msg.includes("already clocked in")) return "You have already clocked in for today.";
+  if (msg.includes("already clocked out")) return "You have already clocked out for today.";
+  if (msg.includes("unauthorized")) return "Your session has expired or is invalid. Please log in again.";
+  if (msg.includes("need to clock in first") || msg.includes("clock in time missing")) return "You must clock in before you can clock out.";
+  if (msg.includes("cannot take a break after clocking out")) return "You cannot take a break after you have clocked out.";
+  if (msg.includes("you already have an ongoing break")) return "You are already on a break. Please end your current break before starting a new one.";
+  if (msg.includes("no ongoing break found")) return "No ongoing break found to end.";
+  if (msg.includes("invalid break_type")) return "Invalid break type selected. Please choose a valid break type.";
+  if (msg.includes("invalid action")) return "Invalid action requested. Please try again.";
+  if (msg.includes("internal server error")) return "We are experiencing technical difficulties. Please try again later.";
+  return rawMessage.charAt(0).toUpperCase() + rawMessage.slice(1);
+}
+
+/**
+ * Show a success/error message modal.
+ * Uses EmployeeModals if available, otherwise falls back to legacy modal logic.
+ * @param {string} message
+ * @param {boolean} isSuccess
+ */
+function showMessageModal(message, isSuccess = true) {
+  if (window.EmployeeModals && typeof window.EmployeeModals.showMessage === 'function') {
+    window.EmployeeModals.showMessage(isSuccess ? 'success' : 'error', message);
+  } else {
+    const header = document.getElementById('messageModalHeader');
+    const label = document.getElementById('messageModalLabel');
+    const body = document.getElementById('messageModalBody');
+    label.textContent = isSuccess ? 'Success' : 'Error';
+    body.textContent = message;
+    header.classList.remove('bg-danger', 'bg-success');
+    header.classList.add(isSuccess ? 'bg-success' : 'bg-danger');
+    $('#messageModal').modal('show');
+  }
+}
+
+// --- Attendance Actions ---
+
+let onBreak = false;
+
+function clockIn() {
+  employeeSecureFetch('/clock_in', { method: 'POST' })
+    .then(data => {
+      showMessageModal(data.message || "Clocked in successfully.", true);
+      resetBreakButtons();
+      onBreak = false;
+    })
+    .catch(err => {
+      showMessageModal(getProfessionalErrorMessage(err?.error || err?.message), false);
+    });
+}
+
+function clockOut() {
+  if (onBreak) {
+    showMessageModal("You must end your break before clocking out.", false);
+    return;
+  }
+  employeeSecureFetch('/clock_out', { method: 'POST' })
+    .then(data => {
+      showMessageModal(data.message || "Clocked out successfully.", true);
+      document.getElementById('startBreakBtn').disabled = true;
+      document.getElementById('endBreakBtn').disabled = true;
+      onBreak = false;
+    })
+    .catch(err => {
+      showMessageModal(getProfessionalErrorMessage(err?.error || err?.message), false);
+    });
+}
+
+function startBreak() {
+  $('#breakTypeModal').modal('show');
+}
+
+function submitBreakStart(breakType) {
+  if (!breakType) {
+    showMessageModal("Please select a break type.", false);
+    $('#breakTypeModal').modal('hide');
+    return;
+  }
+  employeeSecureFetch('/break', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      action: "start",
+      break_type: breakType
+    })
+  })
+  .then(data => {
+    showMessageModal(data.message || "Break started.", true);
+    $('#breakTypeModal').modal('hide');
+    onBreak = true;
+    document.getElementById('startBreakBtn').disabled = true;
+    document.getElementById('endBreakBtn').disabled = false;
+  })
+  .catch(err => {
+    showMessageModal(getProfessionalErrorMessage(err?.error || err?.message), false);
+    $('#breakTypeModal').modal('hide');
+  });
+}
+
+function endBreak() {
+  employeeSecureFetch('/break', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: "end" })
+  })
+  .then(data => {
+    showMessageModal(data.message || "Break ended.", true);
+    onBreak = false;
+    document.getElementById('startBreakBtn').disabled = false;
+    document.getElementById('endBreakBtn').disabled = true;
+  })
+  .catch(err => {
+    showMessageModal(getProfessionalErrorMessage(err?.error || err?.message), false);
+  });
+}
+
+function resetBreakButtons() {
+  document.getElementById('startBreakBtn').disabled = false;
+  document.getElementById('endBreakBtn').disabled = true;
+  onBreak = false;
+}
+
+// --- Leave logic ---
+
+function markLeave() {
+  $('#leaveTypeModal').modal('show');
+}
+
+async function reloadLeaveBalances() {
+  try {
+    const data = await employeeSecureFetch("/api/user-info", { method: "GET" });
+    if (data && data.leave_balances) {
+      updateLeaveBalances(data.leave_balances);
+    }
+  } catch (e) {
+    showMessageModal("Error reloading leave balances.", false);
+    console.error("Error reloading leave balances:", e);
+  }
+}
+
+function updateLeaveBalances(balances) {
+  if (!balances) return;
+  const keys = ['sick_leave', 'vacation_leave', 'personal_leave', 'unpaid_leave'];
+  keys.forEach(key => {
+    const el = document.getElementById(`leave-${key.split('_')[0]}`);
+    if (el && balances[key] !== undefined) el.textContent = balances[key];
+  });
+}
+
+function submitLeave(leaveType, leaveDays) {
+  if (!leaveType) {
+    showMessageModal("Please select a leave type.", false);
+    $('#leaveTypeModal').modal('hide');
+    return;
+  }
+  if (!leaveDays || leaveDays < 1) {
+    showMessageModal("Please enter a valid number of leave days.", false);
+    $('#leaveTypeModal').modal('hide');
+    return;
+  }
+  employeeSecureFetch('/mark_leave', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      leave_type: leaveType,
+      leave_days: leaveDays
+    })
+  })
+  .then(data => {
+    showMessageModal(data.message || "Leave marked successfully.", true);
+    $('#leaveTypeModal').modal('hide');
+    reloadLeaveBalances();
+  })
+  .catch(err => {
+    showMessageModal(getProfessionalErrorMessage(err?.error || err?.message), false);
+    $('#leaveTypeModal').modal('hide');
+  });
+}
+
+// --- Event Listeners ---
+document.addEventListener("DOMContentLoaded", function () {
+  // Break type form handler
+  const breakTypeForm = document.getElementById("breakTypeForm");
+  if (breakTypeForm) {
+    breakTypeForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const breakTypeSelect = document.getElementById("breakTypeSelect");
+      const breakType = breakTypeSelect ? breakTypeSelect.value : null;
+      submitBreakStart(breakType);
+    });
+  }
+
+  // Leave form handler
+  const leaveForm = document.getElementById('leaveForm');
+  if (leaveForm) {
+    leaveForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const leaveType = document.getElementById('leaveType')?.value;
+      const leaveDaysRaw = document.getElementById('leaveDays')?.value;
+      const leaveDays = leaveDaysRaw ? parseInt(leaveDaysRaw) : 0;
+      submitLeave(leaveType, leaveDays);
+    });
+  }
+
+  // Initial setup
+  reloadLeaveBalances();
+  resetBreakButtons();
+});
+</script>
+<!-- Script for attendance (clock in, clock out, breaks, mark leave) (END) -->
+
+<!-- Script for displaying the recent devices that is logged in (Start) -->
+<script>
+  // Loading and feedback for viewing recent devices (spinner only, no success/error modals)
+
+$('#viewDevicesBtn').on('click', async function () {
+  try {
+    const data = await employeeSecureFetch('/recent-devices', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    waitForSpinnerHide(() => {
+      const tableBody = $('#devicesTable tbody');
+      tableBody.empty();
+
+      if (data.success && data.devices && data.devices.length > 0) {
+        data.devices.forEach(device => {
+          const row = `
+            <tr>
+              <td>${device.device_name}</td>
+              <td>${device.device_os}</td>
+              <td>${device.browser_name}</td>
+              <td>${device.ip_address}</td>
+              <td>${device.issued_at}</td>
+            </tr>`;
+          tableBody.append(row);
+        });
+      } else if (data.success) {
+        tableBody.html('<tr><td colspan="5" class="text-center">No devices found.</td></tr>');
+      } else {
+        tableBody.html('<tr><td colspan="5" class="text-center text-danger">Failed to load recent devices.</td></tr>');
+      }
+
+      $('#recentDevicesModal').modal('show');
+      setTimeout(() => {
+        if ($('#recentDevicesModal').hasClass('show')) {
+          document.body.classList.add('modal-open');
+        }
+      }, 100);
+    });
+
+  } catch (error) {
+    waitForSpinnerHide(() => {
+      const tableBody = $('#devicesTable tbody');
+      tableBody.empty();
+      tableBody.html('<tr><td colspan="5" class="text-center text-danger">Failed to load recent devices.</td></tr>');
+
+      $('#recentDevicesModal').modal('show');
+      setTimeout(() => {
+        if ($('#recentDevicesModal').hasClass('show')) {
+          document.body.classList.add('modal-open');
+        }
+      }, 100);
+    });
+  }
+});
+
+</script>
+<!-- Script for displaying the recent devices that is logged in (End) -->
+
+<!-- Script for handling logout confirmation (Current User) (Start) -->
+<script>
+  // Token validity polling: no spinner, no success, no error modals for /validate_token
+
+let tokenCheckIntervalId = null;
+
+function checkTokenValidity() {
+  // Do NOT show spinner, success, or error modal for this route
+  employeeSecureFetch('/validate_token', { method: 'GET', showSpinner: false })
+    .catch(err => {
+      showExpiredModal();
+    });
+}
+
+function showExpiredModal() {
+  $('#sessionExpiredModal').modal({
+    backdrop: 'static',
+    keyboard: false
+  });
+
+  $('#sessionExpiredModal').modal('show');
+
+  document.body.classList.add("modal-open");
+  document.querySelectorAll('button, a, input, select, textarea').forEach(el => {
+    if (!el.closest('#sessionExpiredModal')) {
+      el.setAttribute('disabled', 'disabled');
+    }
+  });
+
+  document.getElementById('redirectToLogin').addEventListener('click', () => {
+    sessionStorage.removeItem('employeeToken');
+    window.location.href = '/';
+  });
+}
+
+tokenCheckIntervalId = setInterval(checkTokenValidity, 10000);
+
+document.addEventListener('DOMContentLoaded', function () {
+  const logoutBtn = document.getElementById('confirmLogoutBtnCurrentUser');
+  if (!logoutBtn) return;
+
+  logoutBtn.addEventListener('click', function () {
+    clearInterval(tokenCheckIntervalId);
+
+    const token = sessionStorage.getItem("employeeToken"); // 👈 Read BEFORE removing
+
+    $('#loadingModalCurrentUser').modal('show');
+    $('#logoutModal').modal('hide');
+
+    fetch("{{ url_for('login_bp.logout') }}", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`  // 👈 Add token to header
+      }
+    })
+    .then(res => {
+      sessionStorage.removeItem("employeeToken"); // 👈 Now safe to remove
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 3000);
+    })
+    .catch(err => {
+      sessionStorage.removeItem("employeeToken");
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 3000);
+    });
+  });
+});
+</script>
+<!-- Script for handling logout confirmation (Current User (End) -->
+
+</html>

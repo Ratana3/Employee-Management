@@ -1,0 +1,4550 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Spica Admin</title>
+    <!-- base:css -->
+    <link
+      rel="stylesheet"
+      href="../../static/Admin/vendors/mdi/css/materialdesignicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../static/Admin/vendors/css/vendor.bundle.base.css"
+    />
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../static/Admin/css/style.css" />
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../static/Admin/images/favicon.png" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+  </head>
+
+  <body>
+    <div class="container-scroller d-flex">
+      <!-- partial:../../partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item sidebar-category">
+            <p>Admin dashboard</p>
+            <span></span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard">
+              <i class="mdi mdi-view-quilt menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+              <div class="badge badge-info badge-pill"></div>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/employeemanagement">
+              <i class="mdi mdi-account-box-outline menu-icon"></i>
+              <span class="menu-title">Employee <br />management</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/attendanceandtimetracking">
+              <i class="mdi mdi-clipboard-text menu-icon"></i>
+              <span class="menu-title">Attendance and <br />Time tracking</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/perfomancemanagement">
+              <i class="mdi mdi-settings menu-icon"></i>
+              <span class="menu-title">Performance <br />management</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/reportingandanalytics">
+              <i class="mdi mdi-chart-pie menu-icon"></i>
+              <span class="menu-title">Reporting <br />and Analytics </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/notificationsandcommunication">
+              <i class="mdi mdi-bell-ring menu-icon"></i>
+              <span class="menu-title"
+                >Notifications <br />and Communication
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/payrollandfinancialmanagement">
+              <i class="mdi mdi-currency-usd menu-icon"></i>
+              <span class="menu-title"
+                >Payroll and <br />Financial Management
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/securityandcompliance">
+              <i class="mdi mdi-security menu-icon"></i>
+              <span class="menu-title"
+                >Security and<br />
+                Compliance
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/systemadministration">
+              <i class="mdi mdi-monitor menu-icon"></i>
+              <span class="menu-title">System <br />Administration </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/traininganddevelopment">
+              <i class="mdi mdi-grease-pencil menu-icon"></i>
+              <span class="menu-title"
+                >Training and<br />
+                Development
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/workflowmanagement">
+              <i class="mdi mdi-lan-connect menu-icon"></i>
+              <span class="menu-title">Workflow <br />Management </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/employeeEngagement">
+              <i class="mdi mdi-human-male menu-icon"></i>
+              <span class="menu-title">Employee <br />Engagement </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dataimportandexport">
+              <i class="mdi mdi-file-document menu-icon"></i>
+              <span class="menu-title">Data Import </span>
+            </a>
+          </li>
+                    <li class="nav-item">
+            <a class="nav-link" href="/verification">
+              <i class="mdi mdi-clipboard-check menu-icon"></i>
+              <span class="menu-title">Access control</span>
+              <div class="badge badge-info badge-pill"></div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-danger logout-btn" style="margin-left: 80px">
+              <i class="la la-power-off"></i>
+              <p>Logout</p>
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+      
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+    <div class="card-body">
+        <h4 class="card-title">- Salary Processing</h4>
+
+        <!-- Admin Note -->
+        <div class="alert alert-info mb-4" role="alert">
+            <strong>Note:</strong> Admin can only generate the payroll reports for employees that are available inside the payment management table. </br>
+            <strong>Must do:</strong> When done filling all the forms before submitting the payroll, admin must generate it as PDF first before clicking submit payroll. 
+            PDF payroll documents will be the payroll history for company to store.
+        </div>
+        
+        <form id="salaryForm">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+            <!-- First Dropdown: Select Type -->
+            <div class="form-group">
+                <label for="employeeDropdown">Select Payroll Type:</label>
+                <select id="employeeDropdown" class="form-control" name="employee_type" required>
+                    <option value="">-- Select an option --</option>
+                    <option value="specific_employee">Generate payroll for employee</option>
+                    <option value="all_employees">Generate payroll report for all employees</option>
+                </select>
+            </div>
+
+            <!-- Second Dropdown: Employee List -->
+            <div class="form-group" id="specificEmployeeDropdown" style="display: none;">
+                <label for="employeeSelect">Select Employee:</label>
+                <select id="employeeSelect" class="form-control" name="selected_employee">
+                  <!-- Options will be populated dynamically -->
+                </select>
+            </div>
+
+            <!-- Employee Details -->
+            <div id="employeeDetails" style="display: none;">
+                <div class="form-group">
+                    <label for="employeeID">Employee ID</label>
+                    <input type="text" class="form-control" id="employeeID" name="employee_id" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="hoursWorked">Hours Worked</label>
+                    <input type="number" class="form-control" id="hoursWorked" name="hours_worked" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="overtimeHours">Overtime Hours</label>
+                    <input type="number" class="form-control" id="overtimeHours" name="overtime_hours" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="bonuses">Bonuses ($)</label>
+                    <input type="number" class="form-control" id="bonuses" name="bonuses" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="taxRate">Tax Rate (%)</label>
+                    <input type="number" class="form-control" id="taxRate" name="tax_rate" min="0" max="100">
+                </div>
+                <div class="form-group">
+                    <label for="taxAmount">Tax Amount ($)</label>
+                    <input type="text" class="form-control" id="taxAmount" name="tax_amount" readonly>
+                </div>
+            </div>
+
+            <!-- Report Button (for all employees) -->
+            <div id="reportActions" style="display: none;">
+                <button id="generateReportButton" type="button" class="btn btn-secondary">
+                  Generate Report as PDF
+                </button>
+            </div>
+
+            <!-- Submit Button (only for specific employee) -->
+            <div id="submitActions" style="display: none;" class="mt-3">
+                <button type="submit" class="btn btn-primary mr-2" id="submitButton">Submit Payroll</button>
+            </div>
+
+            <!-- Cancel Always Visible -->
+            <div class="form-group mt-3">
+                <button type="reset" class="btn btn-light">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+            </div>
+            </div>
+            <div class="row">
+                          <div class="col-md-12 grid-margin stretch-card">
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">- Payroll Management</h4>
+        <p class="card-description">Search Payroll:</p>
+        <div class="input-group">
+            <input type="text" class="form-control" id="payrollSearchInput" placeholder="Search Here..." aria-label="search"
+                aria-describedby="search" style="border: 1px solid black; color: black;">
+        </div>
+        <p class="card-description">
+            Search payroll by employee, month, status, etc.
+        </p>
+        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Payroll ID</th>
+                        <th>Employee ID</th>
+                        <th>Month</th>
+                        <th>Net Salary</th>
+                        <th>Payment Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="payrollTableBody">
+                    <!-- Data will be dynamically populated here -->
+                </tbody>
+            </table>
+        </div>
+        <div id="payroll-pagination-controls"></div>
+    </div>
+</div>
+            </div>
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">- Expense Claims Management </h4>
+                        <h4 class="card-title">Search User:</h4>
+                        <div class="input-group">
+                           <input type="text" id="expenseSearchInput" class="form-control" placeholder="Search Here..." aria-label="search"
+       aria-describedby="search" style="border: 1px solid black; color: black;">
+                        </div>
+                        <p class="card-description">
+                            Search user by email, name, date, permission, etc.
+                        </p>
+            
+                        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                      <th>Claim ID</th>
+                                      <th>Employee ID</th>
+                                      <th>Amount</th>
+                                      <th>Description</th>
+                                      <th>Receipt</th>
+                                      <th>Status</th>
+                                      <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="expenseTableBody">
+                                  <!-- Data will be dynamically populated here -->
+                              </tbody>
+                            </table>
+                        </div>
+                        <div id="expense-pagination-controls"></div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+            <div class="col-md-12 grid-margin stretch-card">
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Generate Tax Document</h4>
+        <p class="card-description">Tax Document Management</p>
+
+        <form id="taxForm" class="forms-sample">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Employee</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="TaxemployeeDropdown" required>
+                        <option value="">-- Select Employee --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Employee ID</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="employeeIDTaxForm" readonly required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Tax Year</label>
+                <select class="form-control" id="taxYear" required>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Gross Income (USD)</label>
+                <input type="number" class="form-control" id="grossIncome" step="0.01" min="0" required>
+            </div>
+            <div class="form-group">
+                <label>Document Type</label>
+                <select class="form-control" id="formType" required>
+                    <option value="Cambodian Payroll Tax Report">Cambodian Payroll Tax Report</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary mr-2">Generate</button>
+            <button type="reset" class="btn btn-light">Cancel</button>
+        </form>
+        <br>
+        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+            <h4 class="card-title">Generated Tax Documents</h4>
+            <div class="mb-3">
+                <input type="text" id="taxDocumentSearch" class="form-control" placeholder="Search tax documents...">
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Tax Year</th>
+                        <th>Form Type</th>
+                        <th>Gross Income</th>
+                        <th>Tax Deducted</th>
+                        <th>Net Income</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="taxDocumentsDetailsTable">
+                    <!-- Tax documents will be loaded here dynamically -->
+                </tbody>
+            </table>
+        </div>
+        <div id="tax-documents-pagination-controls"></div>
+    </div>
+</div>
+          </div>
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">- Bonus and Incentives Management</h4>
+                <button type="button" class="btn btn-success mb-3" id="openAddBonusBtn">
+                  Add Bonus
+                </button>               
+                <h4 class="card-title">Search User:</h4>
+                <div class="input-group">
+                  <input type="text" id="bonusSearchInput" class="form-control" placeholder="Search Here..." aria-label="search"
+                    aria-describedby="search" style="border: 1px solid black; color: black;">
+                </div>
+                <p class="card-description">
+                  Search user by name, date, amount, description, or type.
+                </p>
+          
+                <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Employee ID</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th>Type</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="bonusTableBody">
+                      <!-- Data will be dynamically populated here -->
+                    </tbody>
+                  </table>
+                </div>
+                <div id="bonus-pagination-controls"></div>
+              </div>
+            </div>           
+    
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html -->
+          <footer class="footer">
+            <div class="card">
+              <div class="card-body">
+                <div
+                  class="d-sm-flex justify-content-center justify-content-sm-between"
+                >
+                  <span
+                    class="text-muted d-block text-center text-sm-left d-sm-inline-block"
+                    >Copyright © bootstrapdash.com 2020</span
+                  >
+                  <span
+                    class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"
+                  >
+                    Free
+                    <a href="https://www.bootstrapdash.com/" target="_blank"
+                      >Bootstrap dashboard templates</a
+                    >
+                    from Bootstrapdash.com</span
+                  >
+                </div>
+              </div>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <div>
+                <button class="btn btn-primary mb-3" id="openCreatePlanBtn">+ New Plan</button>
+                <div class="card border-info mb-4">
+  <div class="card-body">
+    <h5 class="card-title text-info">What is a Savings Plan?</h5>
+    <p>
+      A <strong>Savings Plan</strong> is a way for employees to save money for the future with help from their employer. Usually, some money is taken from the employee’s salary each month and put into a special account. Sometimes, the company also adds extra money.
+    </p>
+    <p>
+      <strong>Why is it good for employees?</strong>
+      <ul>
+        <li>Helps you save money for retirement or emergencies</li>
+        <li>Your employer may add extra money to your savings</li>
+        <li>Some savings plans are required by law</li>
+        <li>It’s a safe and easy way to save</li>
+      </ul>
+    </p>
+    <h6 class="mt-3 text-info">Types of Savings Plans</h6>
+    <ul>
+      <li>
+        <strong>NSSF (National Social Security Fund):</strong><br>
+        This is a government program in Cambodia. Both you and your employer must put in money. It helps pay for things like retirement and medical care.
+      </li>
+      <li>
+        <strong>Provident Fund:</strong><br>
+        This plan is managed by your company. Both you and your employer add money. You get the money when you retire or leave the company.
+      </li>
+      <li>
+        <strong>Voluntary Savings:</strong><br>
+        This is an extra savings plan you can join if you want. You can choose how much to save, and sometimes the company will help by adding money.
+      </li>
+      <li>
+        <strong>Other:</strong><br>
+        Any other savings plan not listed above. Ask your manager if you’re not sure.
+      </li>
+    </ul>
+    <p class="mb-0 text-muted">
+      <strong>Tip:</strong> Choose the plan type that is right for you and ask if you have questions!
+    </p>
+  </div>
+</div>
+                <h4 class="card-title">Savings Plan Requests</h4>
+                <p class="card-category mb-0">Review and manage change requests submitted by employees</p>
+              </div>
+              
+            </div>
+        
+            <div class="card-body">
+              <h4 class="card-title">Search User:</h4>
+                        <div class="input-group">
+                          <input type="text" id="savingsPlansSearch" class="form-control" 
+                          placeholder="Search plans..." aria-label="Search">
+                        </div>
+              <div class="table-responsive">
+                <table class="table table-bordered" id="savingsPlansTable">
+  <thead class="table-light">
+    <tr>
+      <th>Employee</th>
+      <th>Type</th>
+      <th>Provider</th>
+      <th>Contribution</th>
+      <th>Employer Match</th>
+      <th>Status</th>
+      <th>Start Date</th>
+      <th>Notes</th>
+      <th>Document</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+              </div>
+              <div id="savings-plans-pagination-controls"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+
+<!-- Details Modal -->
+<div class="modal fade" id="payrollDetailsModal" tabindex="-1" aria-labelledby="payrollDetailsLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="payrollDetailsLabel">Payroll Details</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="payrollDetailsBody">
+        <!-- Details will be loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editPayrollModal" tabindex="-1" aria-labelledby="editPayrollLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form class="modal-content" id="editPayrollForm">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editPayrollLabel">Edit Payroll</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="editPayrollBody">
+        <!-- Edit form fields will be loaded here -->
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deletePayrollModal" tabindex="-1" aria-labelledby="deletePayrollLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deletePayrollLabel">Delete Confirmation</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="deletePayrollBody">
+        Are you sure you want to delete this payroll record?
+      </div>
+      <div class="modal-footer">
+        <button id="confirmDeleteBtn" type="button" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+            
+<!-- Reject Modal (Bootstrap 4) -->
+<div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rejectModalLabel">Reject Expense Claim</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label for="rejectReason">Reason for rejection:</label>
+        <textarea id="rejectReason" class="form-control" rows="3" placeholder="Enter reason..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" onclick="rejectClaim()">Reject</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+          <!-- Edit Tax Modal -->
+<div class="modal fade" id="editTaxModal" tabindex="-1" role="dialog" aria-labelledby="editTaxModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form id="editTaxForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editTaxModalLabel">Edit Tax Document</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeEditModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editDocumentId">
+        <div class="form-group">
+          <label for="editTaxYear">Tax Year</label>
+          <input type="number" class="form-control" id="editTaxYear" required>
+        </div>
+        <div class="form-group">
+          <label for="editDocumentType">Document Type</label>
+          <input type="text" class="form-control" id="editDocumentType" required>
+        </div>
+        <div class="form-group">
+          <label for="editFilePath">File Path</label>
+          <input type="text" class="form-control" id="editFilePath" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeEditModal()">Close</button>
+        <button type="button" class="btn btn-primary" onclick="submitEditTaxDocument()">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+        
+
+<!-- Success/Error Modal -->
+<div class="modal fade" id="customAlertModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content border-0">
+      <div class="modal-header">
+        <h5 class="modal-title" id="customAlertTitle">Notice</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="closeEditModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="customAlertMessage"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal fade" id="customConfirmModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content border-0">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm</h5>
+      </div>
+      <div class="modal-body" id="customConfirmMessage"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" id="confirmYesBtn">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Modal for responding to the request -->
+<div class="modal fade" id="responseRequestModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Respond to Request</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="responseForm">
+        <div class="modal-body">
+          <input type="hidden" id="responseRequestId">
+          <div class="mb-3">
+            <label class="form-label">Request Status</label>
+            <select class="form-control" id="responseStatus" required>
+              <option value="">Select Status</option>
+              <option value="Approved">Approve</option>
+              <option value="Rejected">Reject</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Response Message</label>
+            <textarea class="form-control" id="responseMessage" rows="4" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit Response</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Plan Requests Modal -->
+<div class="modal fade" id="planRequestsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Plan Change Requests</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="planRequestsModalBody">
+        <!-- Requests will be inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Request History Modal -->
+<div class="modal fade" id="requestHistoryModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Change Request History</h5>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-hover" id="requestsTable">
+            <thead>
+              <tr>
+                <th>Plan Type</th>
+                <th>Status</th>
+                <th>Submitted</th>
+                <th>Reviewed</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Will be populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Response View Modal -->
+<div class="modal fade" id="responseModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Request Details</h5>
+      </div>
+      <div class="modal-body">
+        <div class="card mb-4">
+          <div class="card-header bg-light">
+            <h6 class="mb-0">Request Information</h6>
+          </div>
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <strong>Plan Type:</strong>
+                <span id="responsePlanType">Loading...</span>
+              </div>
+              <div class="col-md-6">
+                <strong>Provider:</strong>
+                <span id="responseProvider">Loading...</span>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <strong>Contribution %:</strong>
+                <span id="responseContribution">Loading...</span>
+              </div>
+              <div class="col-md-6">
+                <strong>Status:</strong>
+                <span id="responseStatusView" class="badge">Loading...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-header bg-light">
+            <h6 class="mb-0">Request & Response</h6>
+          </div>
+          <div class="card-body">
+            <div class="mb-4">
+              <h6 class="border-bottom pb-2">Employee Request:</h6>
+              <div id="requestMessage" class="p-3 bg-light rounded-3"></div>
+              <div class="text-end mt-2 text-muted small">
+                Submitted: <span id="submittedAt"></span>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <h6 class="border-bottom pb-2">Admin Response:</h6>
+              <div id="adminResponse" class="p-3 bg-light rounded-3"></div>
+              <div class="d-flex justify-content-between mt-2">
+                <div class="text-muted small">
+                  Reviewed by: <span id="reviewerInfo"></span>
+                </div>
+                <div class="text-muted small">
+                  Reviewed at: <span id="reviewedAt"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Reply to Request Modal -->
+<div class="modal fade" id="replyRequestModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="replyRequestForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Reply to Request</h5>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="replyRequestId">
+        <div class="mb-3">
+          <label for="replyStatus" class="form-label">Status</label>
+          <select class="form-control" id="replyStatus" required>
+            <option value="" disabled>-- Select an option --</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+            <option value="Pending">Pending</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="replyText" class="form-label">Response</label>
+          <textarea class="form-control" id="replyText" rows="3" required></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Send Reply</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- 🔸 Edit Saving Plan Modal (UPDATED for amount/unit & percent) -->
+<div class="modal fade" id="editPlanModal" tabindex="-1" aria-labelledby="editPlanModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form id="editPlanForm" enctype="multipart/form-data" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editPlanModalLabel">Edit Savings Plan</h5>
+        <button type="button" class="close text-black" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body row g-3">
+        <input type="hidden" id="hiddenPlanData" value="">
+        <input type="hidden" name="plan_id" id="editPlanId">
+
+        <div class="col-md-6">
+          <label for="editPlanEmployee" class="form-label">Employee</label>
+          <select class="form-control" id="editPlanEmployee" name="employee_id">
+            <option value="">Select Employee</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+  <label class="form-label">Plan Type</label>
+  <select name="plan_type" class="form-control" required>
+    <option value="">Select Type</option>
+    <option value="NSSF">NSSF</option>
+    <option value="Provident Fund">Provident Fund</option>
+    <option value="Voluntary Savings">Voluntary Savings</option>
+    <option value="Other">Other</option>
+  </select>
+</div>
+
+        <div class="col-md-6">
+          <label class="form-label">Provider</label>
+          <input type="text" name="provider" class="form-control" />
+        </div>
+
+        <!-- Updated Contribution: Amount + Unit + (optional percent for legacy) -->
+        <div class="col-md-6">
+          <label class="form-label">Contribution</label>
+          <div class="input-group">
+            <input type="number" name="contribution_amount" class="form-control" placeholder="e.g., 40000" min="0" />
+            <select name="contribution_unit" class="form-control">
+              <option value="">Select Unit</option>
+              <option value="KHR">KHR</option>
+              <option value="USD">USD</option>
+              <option value="% of salary">% of salary</option>
+            </select>
+          </div>
+          <small class="text-muted">If percentage-based, use % of salary and fill percent below</small>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Contribution % (optional, legacy)</label>
+          <input type="number" name="contribution_percent" class="form-control" placeholder="e.g., 5" min="0" max="100" />
+        </div>
+
+        <!-- Employer Match (amount + unit + percent) -->
+        <div class="col-md-6">
+          <label class="form-label">Employer Match (optional)</label>
+          <div class="input-group">
+            <input type="number" name="employer_match_amount" class="form-control" placeholder="e.g., 40000" min="0" />
+            <select name="employer_match_unit" class="form-control">
+              <option value="">Select Unit</option>
+              <option value="KHR">KHR</option>
+              <option value="USD">USD</option>
+              <option value="% of salary">% of salary</option>
+            </select>
+          </div>
+          <small class="text-muted">If percentage-based, use % of salary and fill percent below</small>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Employer Match % (optional, legacy)</label>
+          <input type="number" name="employer_match_percent" class="form-control" placeholder="e.g., 5" min="0" max="100" />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Status</label>
+          <select name="status" class="form-control">
+            <option value="Active">Active</option>
+            <option value="Paused">Paused</option>
+            <option value="Ended">Ended</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Start Date</label>
+          <input type="date" name="edit_start_date" class="form-control" />
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Notes</label>
+          <textarea name="notes" class="form-control"></textarea>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Document (PDF)</label>
+          <input type="file" name="document" class="form-control" />
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Current Document</label><br>
+          <img id="currentImage" src="" alt="Current Image" class="img-fluid mb-2 border rounded" style="max-height: 200px; display: none;">
+          <a id="currentPdfLink" href="#" target="_blank" class="btn btn-outline-primary" style="display: none;">View Current PDF</a>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- 🔹 Create Savings Plan Modal -->
+<div class="modal fade" id="createPlanModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <form id="createPlanForm" enctype="multipart/form-data" class="modal-content">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+      <div class="modal-header">
+        <h5 class="modal-title">Create New Savings Plan</h5>
+        <button type="button" class="close text-black" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body row g-3">
+        <!-- Cambodian Example Card -->
+        <div class="col-12 mb-4">
+          <div class="card border-primary">
+            <div class="card-body">
+              <h5 class="card-title text-primary">Savings Plan Example (Cambodia):</h5>
+              <p><strong>Employee:</strong> John doe (JohnDoe@gmail.com)</p>
+              <p><strong>Plan Type:</strong> NSSF</p>
+              <p><strong>Provider:</strong> NSSF Cambodia</p>
+              <p><strong>Contribution:</strong> KHR 40,000/month (employee), KHR 40,000/month (employer)</p>
+              <p><strong>Status:</strong> Active</p>
+              <p><strong>Start Date:</strong> 2025-01-01</p>
+              <p><strong>Notes:</strong> Standard company policy</p>
+              <p><strong>Document:</strong> <em>nssf_terms_2025.pdf</em></p>
+              <small class="text-muted">Tip: Check NSSF eligibility before enrollment</small>
+            </div>
+          </div>
+        </div>
+        <!-- Form Fields -->
+        <div class="col-md-6">
+          <label for="createPlanEmployee">Employee</label>
+          <select class="form-control" id="createPlanEmployee" name="employee_id" required>
+            <option value="">Select Employee</option>
+          </select>
+        </div>          
+        <div class="col-md-6">
+          <label class="form-label">Plan Type</label>
+          <select name="plan_type" class="form-control" required>
+            <option value="">Select Type</option>
+            <option value="NSSF">NSSF</option>
+            <option value="Provident Fund">Provident Fund</option>
+            <option value="Voluntary Savings">Voluntary Savings</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Provider</label>
+          <input type="text" name="provider" class="form-control" placeholder="e.g., NSSF, ACLEDA, ABA, Canadia" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Contribution</label>
+          <div class="input-group">
+            <input type="number" name="contribution_amount" class="form-control" placeholder="e.g., 40000" min="0" required />
+            <select name="contribution_unit" class="form-control">
+              <option value="KHR">KHR</option>
+              <option value="USD">USD</option>
+              <option value="% of salary">% of salary</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Employer Match (optional)</label>
+          <div class="input-group">
+            <input type="number" name="employer_match_amount" class="form-control" min="0" placeholder="e.g., 40000" />
+            <select name="employer_match_unit" class="form-control">
+              <option value="KHR">KHR</option>
+              <option value="USD">USD</option>
+              <option value="% of salary">% of salary</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Status</label>
+          <select name="status" class="form-control">
+            <option value="Active">Active</option>
+            <option value="Paused">Paused</option>
+            <option value="Ended">Ended</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Start Date</label>
+          <input type="date" name="start_date" class="form-control" required />
+        </div>
+        <div class="col-12">
+          <label class="form-label">Notes</label>
+          <textarea name="notes" class="form-control" placeholder="Optional details about plan features or special conditions"></textarea>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Document (PDF)</label>
+          <input type="file" name="document" class="form-control" accept=".pdf" />
+          <small class="text-muted">Upload plan terms or enrollment forms</small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Create Plan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+    <!-- Modal for adding bonus -->
+    <div class="modal fade" id="addBonusModal" tabindex="-1" role="dialog" aria-labelledby="addBonusModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <form id="addBonusForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addBonusModalLabel">Add Bonus</h5>
+            </div>
+      
+            <div class="modal-body">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      
+              <div class="form-group">
+                <label for="bonusEmployee">Select Employee</label>
+                <select class="form-control" id="bonusEmployee" name="employee_id" required>
+                  <option value="">-- Select an employee --</option>
+                  <!-- Options will be added via JavaScript -->
+                </select>
+              </div>
+      
+              <div class="form-group">
+                <label for="bonusAmount">Amount ($)</label>
+                <input type="number" class="form-control" id="bonusAmount" name="amount" step="0.01" required>
+              </div>
+      
+              <div class="form-group">
+                <label for="bonusType">Type</label>
+                <select class="form-control" id="bonusType" name="type" required>
+                  <option value="">Select Type</option>
+                  <option value="Bonus">Bonus</option>
+                  <option value="Incentive">Incentive</option>
+                  <option value="Referral Reward">Referral Reward</option>
+                </select>
+              </div>
+      
+              <div class="form-group">
+                <label for="bonusDescription">Description</label>
+                <textarea class="form-control" id="bonusDescription" name="description" rows="3"></textarea>
+              </div>
+    
+              <div id="bonusSubmitStatus" class="mt-2 text-center"></div>
+            </div>
+      
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Add Bonus</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+<!-- View Bonus Modal -->
+<div class="modal fade" id="viewBonusModal" tabindex="-1" role="dialog" aria-labelledby="viewBonusModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-black">
+        <h5 class="modal-title" id="viewBonusModalLabel">Bonus Details</h5>
+        <button type="button" class="close text-black" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><strong>ID:</strong> <span id="viewBonusId"></span></p>
+        <p><strong>Employee ID:</strong> <span id="viewEmployeeId"></span></p>
+        <p><strong>Employee Email :</strong> <span id="viewEmployeeEmail"></span></p>
+        <p><strong>Amount ($):</strong> <span id="viewAmount"></span></p>
+        <p><strong>Description:</strong> <span id="viewDescription"></span></p>
+        <p><strong>Type:</strong> <span id="viewType"></span></p>
+        <p><strong>Awarded Date:</strong> <span id="viewAwardedDate"></span></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Bonus Modal -->
+<div class="modal fade" id="editBonusModal" tabindex="-1" role="dialog" aria-labelledby="editBonusModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form id="editBonusForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Bonus</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editBonusId" name="bonus_id">
+          <div class="form-group">
+            <label for="editAmount">Amount</label>
+            <input type="number" class="form-control" id="editAmount" name="amount" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label for="editDescription">Description</label>
+            <textarea class="form-control" id="editDescription" name="description" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="editType">Type</label>
+            <select class="form-control" id="editType" name="type" required>
+              <option value="Bonus">Bonus</option>
+              <option value="Incentive">Incentive</option>
+              <option value="Referral Reward">Referral Reward</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Update Bonus</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Delete Bonus Modal -->
+<div class="modal fade" id="deleteBonusModal" tabindex="-1" role="dialog" aria-labelledby="deleteBonusModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-black">
+        <h5 class="modal-title" id="deleteBonusModalLabel">Delete Bonus</h5>
+        <button type="button" class="close text-black" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this bonus? This action cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" id="deleteBonusId">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" onclick="confirmDeleteBonus()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for viewing saving plan details -->
+<div class="modal fade" id="viewSavingPlanModal" tabindex="-1" aria-labelledby="viewSavingPlanModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Savings Plan Details</h5>
+      </div>
+      <div class="modal-body">
+        <dl class="row">
+          <dt class="col-sm-4">Plan Name:</dt>
+          <dd class="col-sm-8" id="viewPlanName"></dd>
+
+          <dt class="col-sm-4">Contribution :</dt>
+          <dd class="col-sm-8" id="viewContribution"></dd>
+
+          <dt class="col-sm-4">Start Date:</dt>
+          <dd class="col-sm-8" id="viewStartDate"></dd>
+
+          <dt class="col-sm-4">Status:</dt>
+          <dd class="col-sm-8" id="viewStatus"></dd>
+
+          <dt class="col-sm-4">Notes:</dt>
+          <dd class="col-sm-8" id="viewNotes"></dd>
+
+          <dt class="col-sm-4">Document:</dt>
+          <dd class="col-sm-8" id="viewDocumentLink"></dd>
+
+          <dt class="col-sm-4">Employee:</dt>
+          <dd class="col-sm-8" id="viewEmployeeInfo"></dd>
+
+        </dl>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteConfirmLabel">Confirm Deletion</h5>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this item? This action cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" id="confirmDeleteBtn" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal (Expense claims)-->
+<div class="modal fade" id="deleteConfirmModalExpense" tabindex="-1" aria-labelledby="deleteConfirmLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteConfirmLabel">Confirm Deletion</h5>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this item? This action cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" id="confirmDeleteBtnExpense" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal (Expense claims)-->
+<div class="modal fade" id="deleteConfirmModalTaxDocument" tabindex="-1" aria-labelledby="deleteConfirmLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteConfirmLabel">Confirm Deletion</h5>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this item? This action cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" id="confirmDeleteBtnTaxDocument" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-success">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="successModalLabel">Success</h5>
+      </div>
+      <div class="modal-body" id="successModalMessage">
+        <!-- Message will be injected here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal" id="successModalOkBtn">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Error Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+      </div>
+      <div class="modal-body" id="errorModalMessage">
+        <!-- Message will be injected here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Dismiss</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Session Conflict Modal -->
+<div
+  class="modal fade"
+  id="sessionConflictModal"
+  tabindex="-1"
+  aria-labelledby="sessionConflictLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="sessionConflictLabel">Session Conflict</h5>
+      </div>
+      <div class="modal-body">
+        <p>
+          <strong
+            >Someone has logged into your account from another tab or
+            device.</strong
+          >
+        </p>
+        <p>You will be logged out for security reasons.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-danger" id="confirmLogoutBetweenTabs">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Logout Confirmation Modal -->
+<div class="modal fade" id="logoutModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Logout</h5>
+        <button type="button" class="close" id="closeLogoutModal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to logout?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancelLogout">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-danger" id="confirmLogout">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Access Denied Modal -->
+<div
+  class="modal fade"
+  id="accessDeniedModal"
+  tabindex="-1"
+  aria-labelledby="accessDeniedLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="accessDeniedLabel">Access Denied</h5>
+      </div>
+      <div class="modal-body">
+        <p>Only Super Admins are allowed to access this page.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="redirectBtn" type="button" class="btn btn-danger">
+          Go to Dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Savings Plan Request Response Modal (Bootstrap 4) -->
+<div class="modal fade" id="respondRequestModal" tabindex="-1" role="dialog" aria-labelledby="respondRequestModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form class="modal-content" id="respondRequestForm">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="respondRequestModalLabel">Respond to Savings Plan Request</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="allResponsesList"></div>
+        <hr>
+        <div class="mb-3">
+          <label for="responseTextSavings" class="form-label">Response</label>
+          <textarea class="form-control" id="responseTextSavings" name="response" required rows="4"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="responseStatusSavings" class="form-label">Status</label>
+          <select class="form-control" id="responseStatusSavings" name="status" required>
+            <option value="Approved">Approve</option>
+            <option value="Rejected">Reject</option>
+            <option value="Pending">Pending</option>
+          </select>
+        </div>
+        <input type="hidden" id="respondRequestId" name="request_id">
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Submit Response</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal (Bootstrap 4) -->
+<div class="modal fade" id="deleteRequestConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteRequestConfirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteRequestConfirmModalLabel">
+          <span class="fa fa-exclamation-triangle"></span> Confirm Delete
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-0">
+          Are you sure you want to <strong>permanently delete</strong> this request change?<br>
+          This action cannot be undone.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteRequestBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Loading Spinner Modal -->
+    <div
+      class="modal fade"
+      id="loadingSpinnerModal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+      data-backdrop="static"
+      data-keyboard="false"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 bg-transparent shadow-none">
+          <div class="modal-body text-center">
+            <div
+              class="spinner-border text-white"
+              style="width: 4rem; height: 4rem"
+              role="status"
+            >
+              <span class="sr-only"></span>
+            </div>
+            <div class="mt-3 text-white font-weight-bold">Please wait...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- container-scroller -->
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- base:js -->
+    <script src="../../static/Admin/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="../../static/Admin/js/off-canvas.js"></script>
+    <script src="../../static/Admin/js/hoverable-collapse.js"></script>
+    <script src="../../static/Admin/js/template.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="../../static/Admin/js/file-upload.js"></script>
+    <!-- End custom js for this page-->
+     <!-- plugin js for this page -->
+    <script src="../../static/Admin/vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+
+<!-- Spinner logic (add once, for all modals and actions) -->
+<script>
+let previouslyVisibleModal = null;
+function showSpinner() {
+  $('.modal.show').each(function() {
+    if (this.id !== 'loadingSpinnerModal') {
+      previouslyVisibleModal = this.id;
+      $(this).modal('hide');
+    }
+  });
+  $('#loadingSpinnerModal').modal({
+    backdrop: 'static',
+    keyboard: false
+  });
+}
+function hideSpinner() {
+  $('#loadingSpinnerModal').modal('hide');
+  if (previouslyVisibleModal) {
+    $('#' + previouslyVisibleModal).modal('show');
+    previouslyVisibleModal = null;
+  }
+}
+</script>
+
+<!-- Script for handling 2FA (Start) -->
+<script>
+function secureFetch(url, options = {}) {
+  options.headers = options.headers || {};
+  options.headers["X-Requested-With"] = "XMLHttpRequest";
+  return fetch(url, options)
+    .then(async res => {
+      let data;
+      try { data = await res.json(); } catch { data = {}; }
+      if (res.status === 403 && data.error === "2FA_REQUIRED" && data.redirect) {
+        window.location.href = data.redirect;
+        return Promise.reject("2FA required, redirecting");
+      }
+      if ((res.status === 401 || res.status === 403) && data.redirect) {
+        window.location.href = data.redirect;
+        return Promise.reject(data.error || "Auth error, redirecting");
+      }
+      if (!res.ok) throw new Error(data.message || "An error occurred");
+      return data;
+    });
+}
+</script>
+<!-- Script for handling 2FA (End) -->
+
+<!-- Script for handling payroll table (Start) -->
+<script>
+function getToken() {
+  return localStorage.getItem('employeeToken');
+}
+
+function showSuccessModal(message) {
+  $('#successModalMessage').html(message);
+  $('#editPayrollModal').modal('hide');
+  $('#deletePayrollModal').modal('hide');
+  setTimeout(function () {
+    $('#successModal').modal({ backdrop: 'static', keyboard: false, show: true });
+  }, 400);
+}
+
+function showErrorModal(message) {
+  $('#errorModalMessage').html(message);
+  $('#successModal').modal('hide');
+  $('#editPayrollModal').modal('hide');
+  $('#deletePayrollModal').modal('hide');
+  setTimeout(function () {
+    $('#errorModal').modal({ backdrop: 'static', keyboard: false, show: true });
+  }, 400);
+}
+
+function formatDateForInput(dateString) {
+  if (!dateString) return "";
+  let isoString = dateString.replace(" ", "T");
+  let d = new Date(isoString);
+  if (!isNaN(d.getTime())) {
+    return d.toISOString().slice(0, 10);
+  }
+  return dateString.slice(0, 10);
+}
+
+async function updatePaymentStatusPaid(payroll_id, reloadDetails = false) {
+  const token = getToken();
+  showSpinner();
+  try {
+    const result = await secureFetch(`/update_payment_status/paid/${payroll_id}`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    hideSpinner();
+    if (result.status === "Success") {
+      fetchPayrolls();
+      if (reloadDetails) {
+        handleViewPayrollDetails(payroll_id, true);
+      }
+      showSuccessModal(result.message);
+    } else {
+      showErrorModal(result.message || "Failed to update payment status to Paid.");
+    }
+  } catch (error) {
+    hideSpinner();
+    showErrorModal("Error updating payment status to Paid.");
+  }
+}
+
+async function updatePaymentStatusNotYetPaid(payroll_id, reloadDetails = false) {
+  const token = getToken();
+  showSpinner();
+  try {
+    const result = await secureFetch(`/update_payment_status/not_yet_paid/${payroll_id}`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    hideSpinner();
+    if (result.status === "Success") {
+      fetchPayrolls();
+      if (reloadDetails) {
+        handleViewPayrollDetails(payroll_id, true);
+      }
+      showSuccessModal(result.message);
+    } else {
+      showErrorModal(result.message || "Failed to update payment status to Not Yet Paid.");
+    }
+  } catch (error) {
+    hideSpinner();
+    showErrorModal("Error updating payment status to Not Yet Paid.");
+  }
+}
+
+let allPayrollData = [];
+
+// --- Pagination constants and state ---
+const PAYROLL_PAGE_SIZE = 40;
+let payrollCurrentPage = 1;
+
+// --- Smart Pagination Helper ---
+function renderSmartPaginationControls(options) {
+  const { containerId, currentPage, totalPages, onPageChange } = options;
+  let container = document.getElementById(containerId);
+  if (!container) {
+    container = document.createElement('div');
+    container.id = containerId;
+    container.className = 'd-flex justify-content-center my-2';
+    const tableDiv = document.querySelector('.table-responsive');
+    if (tableDiv) {
+      tableDiv.parentNode.insertBefore(container, tableDiv.nextSibling);
+    } else {
+      document.body.appendChild(container);
+    }
+  }
+  container.innerHTML = "";
+  if (totalPages <= 1) {
+    container.style.display = "none";
+    return;
+  } else {
+    container.style.display = "flex";
+  }
+  const windowSize = 2;
+  function createBtn(label, page, disabled = false, active = false) {
+    const btn = document.createElement("button");
+    btn.className = "btn btn-sm mx-1 " + (active ? "btn-primary" : "btn-outline-primary");
+    btn.textContent = label;
+    btn.disabled = disabled;
+    if (!disabled && !active) {
+      btn.onclick = function () {
+        onPageChange(page);
+      };
+    }
+    return btn;
+  }
+  // Previous
+  container.appendChild(createBtn("Previous", currentPage - 1, currentPage === 1));
+  // Always show first page
+  container.appendChild(createBtn("1", 1, false, currentPage === 1));
+  // Left ellipsis
+  if (currentPage - windowSize > 2) {
+    const span = document.createElement("span");
+    span.className = "mx-1";
+    span.textContent = "...";
+    container.appendChild(span);
+  }
+  // Window
+  for (
+    let i = Math.max(2, currentPage - windowSize);
+    i <= Math.min(totalPages - 1, currentPage + windowSize);
+    i++
+  ) {
+    container.appendChild(createBtn(i, i, false, currentPage === i));
+  }
+  // Right ellipsis
+  if (currentPage + windowSize < totalPages - 1) {
+    const span = document.createElement("span");
+    span.className = "mx-1";
+    span.textContent = "...";
+    container.appendChild(span);
+  }
+  // Always show last page
+  if (totalPages > 1)
+    container.appendChild(createBtn(totalPages, totalPages, false, currentPage === totalPages));
+  // Next
+  container.appendChild(createBtn("Next", currentPage + 1, currentPage === totalPages));
+}
+
+// --- Updated renderPayrollTable function with smart pagination ---
+function renderPayrollTable(data) {
+  const tbody = document.getElementById("payrollTableBody");
+  tbody.innerHTML = "";
+  if (!data || data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="text-center">No records found</td></tr>`;
+    renderPayrollPaginationControls(0);
+    return;
+  }
+  const totalPages = Math.ceil(data.length / PAYROLL_PAGE_SIZE);
+  if (payrollCurrentPage > totalPages) payrollCurrentPage = totalPages;
+  if (payrollCurrentPage < 1) payrollCurrentPage = 1;
+  const startIdx = (payrollCurrentPage - 1) * PAYROLL_PAGE_SIZE;
+  const endIdx = startIdx + PAYROLL_PAGE_SIZE;
+  const pagedList = data.slice(startIdx, endIdx);
+  pagedList.forEach(p => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${p.payroll_id}</td>
+        <td>${p.employee_display}</td>
+        <td>${p.month}</td>
+        <td>${p.net_salary?.toLocaleString?.() ?? p.net_salary}</td>
+        <td>${p.payment_status}</td>
+        <td>
+          <button class="btn btn-sm btn-info mr-1" onclick="handleViewPayrollDetails(${p.payroll_id})">Details</button>
+          <button class="btn btn-sm btn-warning mr-1" onclick="handleEditPayroll(${p.payroll_id})">Edit</button>
+          <button class="btn btn-sm btn-danger mr-1" onclick="handleDeletePayroll(${p.payroll_id})">Delete</button>
+          <button class="btn btn-sm btn-success mr-1" onclick="updatePaymentStatusPaid(${p.payroll_id})">Mark as Paid</button>
+          <button class="btn btn-sm btn-secondary" onclick="updatePaymentStatusNotYetPaid(${p.payroll_id})">Mark as Not Yet Paid</button>
+        </td>
+      </tr>
+    `;
+  });
+  renderPayrollPaginationControls(totalPages);
+}
+
+// --- Smart pagination control renderer ---
+function renderPayrollPaginationControls(totalPages) {
+  renderSmartPaginationControls({
+    containerId: "payroll-pagination-controls",
+    currentPage: payrollCurrentPage,
+    totalPages,
+    onPageChange: function (page) {
+      payrollCurrentPage = page;
+      renderPayrollTable(allPayrollData);
+    }
+  });
+}
+
+async function fetchPayrolls() {
+  const token = getToken();
+  showSpinner();
+  try {
+    const url = `/payrolls`;
+    const result = await secureFetch(url, {
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    hideSpinner();
+    if (result.status === "success") {
+      allPayrollData = result.data || [];
+      renderPayrollTable(allPayrollData);
+    } else {
+      allPayrollData = [];
+      renderPayrollTable([]);
+      showErrorModal(result.message || "Failed to fetch payrolls.");
+    }
+  } catch (error) {
+    hideSpinner();
+    allPayrollData = [];
+    renderPayrollTable([]);
+    showErrorModal("Error fetching payrolls.");
+  }
+}
+
+// --- CLIENT SIDE SEARCH ---
+function filterPayrollTable(searchTerm) {
+  if (!allPayrollData || allPayrollData.length === 0) {
+    renderPayrollTable([]);
+    return;
+  }
+  payrollCurrentPage = 1; // reset to first page on search
+  if (!searchTerm) { // If search bar is empty, show all data
+    renderPayrollTable(allPayrollData);
+    return;
+  }
+  const lower = searchTerm.toLowerCase();
+  const filtered = allPayrollData.filter(row =>
+    (row.payroll_id && row.payroll_id.toString().toLowerCase().includes(lower)) ||
+    (row.employee_display && row.employee_display.toLowerCase().includes(lower)) ||
+    (row.month && row.month.toLowerCase().includes(lower)) ||
+    (row.net_salary && row.net_salary.toString().toLowerCase().includes(lower)) ||
+    (row.payment_status && row.payment_status.toLowerCase().includes(lower))
+  );
+  renderPayrollTable(filtered);
+}
+
+async function handleViewPayrollDetails(payroll_id, alreadyOpen = false) {
+  const token = getToken();
+  const detailsBody = document.getElementById('payrollDetailsBody');
+  detailsBody.innerHTML = `<div class="text-center">Loading...</div>`;
+  showSpinner();
+  try {
+    const result = await secureFetch(`/payroll/${payroll_id}`, {
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    hideSpinner();
+    if (result.status === "Success") {
+      const d = result.data;
+      let html = `<table class="table table-bordered">
+        <tbody>
+          <tr><th>Payroll ID</th><td>${d.payroll_id}</td></tr>
+          <tr><th>Employee ID</th><td>${d.employee_id}</td></tr>
+          <tr><th>Month</th><td>${d.month}</td></tr>
+          <tr><th>Base Salary</th><td>${d.base_salary}</td></tr>
+          <tr><th>Hours Worked</th><td>${d.hours_worked}</td></tr>
+          <tr><th>Overtime Hours</th><td>${d.overtime_hours}</td></tr>
+          <tr><th>Overtime Pay</th><td>${d.overtime_pay}</td></tr>
+          <tr><th>Bonuses</th><td>${d.bonuses}</td></tr>
+          <tr><th>Tax Rate</th><td>${d.tax_rate}</td></tr>
+          <tr><th>Deductions</th><td>${d.deductions}</td></tr>
+          <tr><th>Net Salary</th><td>${d.net_salary}</td></tr>
+          <tr><th>Payment Status</th><td>${d.payment_status}</td></tr>
+          <tr><th>Payment Date</th><td>${d.payment_date ? formatDateForInput(d.payment_date) : ""}</td></tr>
+        </tbody>
+      </table>
+      <div class="mt-3">
+        <button class="btn btn-success btn-sm mr-2" onclick="updatePaymentStatusPaid(${d.payroll_id}, true)">Mark as Paid</button>
+        <button class="btn btn-secondary btn-sm" onclick="updatePaymentStatusNotYetPaid(${d.payroll_id}, true)">Mark as Not Yet Paid</button>
+      </div>`;
+      detailsBody.innerHTML = html;
+    } else {
+      detailsBody.innerHTML = `<div class="text-danger">${result.message || "Failed to fetch payroll details."}</div>`;
+      showErrorModal(result.message || "Failed to fetch payroll details.");
+    }
+  } catch (error) {
+    hideSpinner();
+    detailsBody.innerHTML = `<div class="text-danger">Error loading payroll details.</div>`;
+    showErrorModal("Error loading payroll details.");
+  }
+  if (!alreadyOpen) {
+    $('#payrollDetailsModal').modal({ backdrop: 'static', keyboard: true, show: true });
+  }
+}
+
+async function handleEditPayroll(payroll_id) {
+  const token = getToken();
+  const body = document.getElementById('editPayrollBody');
+  body.innerHTML = `<div class="text-center">Loading...</div>`;
+  showSpinner();
+  try {
+    const result = await secureFetch(`/payroll/${payroll_id}`, {
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    hideSpinner();
+    if (result.status === "Success") {
+      const d = result.data;
+      body.innerHTML = `
+        <input type="hidden" name="payroll_id" value="${d.payroll_id}">
+        <div class="mb-2"><label>Base Salary</label>
+          <input type="number" class="form-control" name="base_salary" value="${d.base_salary ?? ""}">
+        </div>
+        <div class="mb-2"><label>Hours Worked</label>
+          <input type="number" class="form-control" name="hours_worked" value="${d.hours_worked ?? ""}">
+        </div>
+        <div class="mb-2"><label>Overtime Hours</label>
+          <input type="number" class="form-control" name="overtime_hours" value="${d.overtime_hours ?? ""}">
+        </div>
+        <div class="mb-2"><label>Overtime Pay</label>
+          <input type="number" class="form-control" name="overtime_pay" value="${d.overtime_pay ?? ""}">
+        </div>
+        <div class="mb-2"><label>Bonuses</label>
+          <input type="number" class="form-control" name="bonuses" value="${d.bonuses ?? ""}">
+        </div>
+        <div class="mb-2"><label>Tax Rate</label>
+          <input type="number" class="form-control" name="tax_rate" value="${d.tax_rate ?? ""}">
+        </div>
+        <div class="mb-2"><label>Deductions</label>
+          <input type="number" class="form-control" name="deductions" value="${d.deductions ?? ""}">
+        </div>
+        <div class="mb-2"><label>Payment Status</label>
+          <input type="text" class="form-control" name="payment_status" value="${d.payment_status ?? ""}">
+        </div>
+        <div class="mb-2"><label>Payment Date</label>
+          <input type="date" class="form-control" name="payment_date" value="${formatDateForInput(d.payment_date)}">
+        </div>
+      `;
+    } else {
+      body.innerHTML = `<div class="text-danger">${result.message || "Failed to load payroll data."}</div>`;
+      showErrorModal(result.message || "Failed to load payroll data.");
+    }
+  } catch (error) {
+    hideSpinner();
+    body.innerHTML = `<div class="text-danger">Error loading payroll data.</div>`;
+    showErrorModal("Error loading payroll data.");
+  }
+  $('#editPayrollModal').modal({ backdrop: 'static', keyboard: true, show: true });
+}
+
+document.getElementById('editPayrollForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const token = getToken();
+  const form = e.target;
+  const payroll_id = form.payroll_id.value;
+  const allowedFields = [
+    'base_salary', 'hours_worked', 'overtime_hours', 'overtime_pay', 'bonuses',
+    'tax_rate', 'deductions', 'payment_status', 'payment_date'
+  ];
+  const data = {};
+  allowedFields.forEach(f => {
+    if (form[f] && form[f].value !== undefined) data[f] = form[f].value;
+  });
+  showSpinner();
+  try {
+    const result = await secureFetch(`/edit_payroll/${payroll_id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(data)
+    });
+    hideSpinner();
+    if (result.status === "Success") {
+      fetchPayrolls();
+      $('#editPayrollModal').modal('hide');
+      showSuccessModal(result.message);
+    } else {
+      showErrorModal(result.message || "Failed to update payroll.");
+    }
+  } catch (error) {
+    hideSpinner();
+    showErrorModal("Error updating payroll.");
+  }
+});
+
+let payrollIdToDelete = null;
+function handleDeletePayroll(payroll_id) {
+  payrollIdToDelete = payroll_id;
+  document.getElementById('deletePayrollBody').innerHTML = `Are you sure you want to delete payroll ID <b>${payroll_id}</b>?`;
+  setTimeout(function() {
+    $('#deletePayrollModal').modal({ backdrop: 'static', keyboard: true });
+    $('#deletePayrollModal').modal('show');
+  }, 200);
+}
+
+$('#confirmDeleteBtn').off('click').on('click', async function () {
+  if (!payrollIdToDelete) return;
+  const token = getToken();
+  showSpinner();
+  try {
+    const result = await secureFetch(`/delete_payroll/${payrollIdToDelete}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    hideSpinner();
+    if (result.status === "Success") {
+      fetchPayrolls();
+      $('#deletePayrollModal').modal('hide');
+      showSuccessModal(result.message);
+    } else {
+      $('#deletePayrollModal').modal('hide');
+      showErrorModal(result.message || "Failed to delete payroll.");
+    }
+  } catch (error) {
+    hideSpinner();
+    $('#deletePayrollModal').modal('hide');
+    showErrorModal("Error deleting payroll.");
+  }
+  payrollIdToDelete = null;
+});
+
+$('#errorModal').on('hidden.bs.modal', function () {
+  payrollIdToDelete = null;
+});
+
+// --- CLIENT SIDE SEARCH ---
+document.getElementById('payrollSearchInput').addEventListener('input', function () {
+  const searchTerm = this.value.trim().toLowerCase();
+  payrollCurrentPage = 1; // Always reset to first page on new search
+  if (!searchTerm) {
+    // Show all data if search bar is empty
+    renderPayrollTable(allPayrollData);
+    return;
+  }
+  const filtered = allPayrollData.filter(row =>
+    (row.payroll_id && row.payroll_id.toString().toLowerCase().includes(searchTerm)) ||
+    (row.employee_display && row.employee_display.toLowerCase().includes(searchTerm)) ||
+    (row.month && row.month.toLowerCase().includes(searchTerm)) ||
+    (row.net_salary && row.net_salary.toString().toLowerCase().includes(searchTerm)) ||
+    (row.payment_status && row.payment_status.toLowerCase().includes(searchTerm))
+  );
+  renderPayrollTable(filtered);
+});
+document.addEventListener("DOMContentLoaded", function () {
+  fetchPayrolls();
+});
+</script>
+<!-- Script for handling payroll table (End) -->
+
+<!-- Script for adding new savings plan (Start) -->
+<script>
+$(function() {
+  const y = sessionStorage.getItem('scrollY');
+  if (y !== null) {
+    window.scrollTo(0, parseInt(y, 10));
+    sessionStorage.removeItem('scrollY');
+  }
+});
+
+$(document).ready(function() {
+  $(document).on('hidden.bs.modal', '.modal', function () {
+    setTimeout(function() {
+      if ($('.modal.show').length > 0) {
+        $('body').addClass('modal-open');
+      }
+    }, 10);
+  });
+});
+
+$(document).ready(function () {
+  const token = sessionStorage.getItem("adminToken");
+
+  // Open Create Plan Modal via JS trigger
+  $('#openCreatePlanBtn').on('click', function() {
+    $('#createPlanModal').modal('show');
+  });
+
+  // Show success modal and flag for post-close refresh
+  function showSuccess(message, refreshPage = false) {
+    $("#successModalMessage").text(message);
+    $('#successModal').data('refresh-page', !!refreshPage);
+    $('#successModal').modal('show');
+  }
+  function showError(message) {
+    $("#errorModalMessage").text(message);
+    $('#errorModal').modal('show');
+  }
+
+  $('#createPlanModal').on('shown.bs.modal', function () {
+    const employeeSelect = document.getElementById("createPlanEmployee");
+    employeeSelect.innerHTML = '<option value="">Select Employee</option>';
+    showSpinner();
+    secureFetch('/admin/employees/all', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(data => {
+      hideSpinner();
+      data.forEach(emp => {
+        const option = document.createElement("option");
+        option.value = emp.employee_id;
+        option.textContent = emp.email || `Employee's ID: ${emp.employee_id}`;
+        employeeSelect.appendChild(option);
+      });
+    })
+    .catch(err => {
+      hideSpinner();
+      console.error("Failed to load employees", err);
+      showError("Error loading employees.");
+    });
+  });
+
+  $("#createPlanForm").on("submit", function (e) {
+    e.preventDefault();
+    const form = this;
+    const formData = new FormData(form);
+    if (
+      !formData.get('employer_match_amount') &&
+      !formData.get('employer_match_unit')
+    ) {
+      formData.delete('employer_match_amount');
+      formData.delete('employer_match_unit');
+    }
+    showSpinner();
+    secureFetch("/admin/create_savings_plan", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      body: formData
+    })
+    .then(result => {
+      hideSpinner();
+      if (result.message) {
+        $('#createPlanModal').modal('hide');
+        $(form)[0].reset();
+        // Show success modal, and when closed, refresh the page
+        showSuccess("Plan created successfully!", true);
+      } else {
+        showError("Error: " + (result.error || "Unknown error"));
+      }
+    })
+    .catch(err => {
+      hideSpinner();
+      console.error("Submission error:", err);
+      showError("Failed to create savings plan.");
+    });
+  });
+
+  // Reload whole page after success modal is dismissed, preserving scroll
+  $('#successModal').on('hidden.bs.modal', function () {
+    if ($(this).data('refresh-page')) {
+      $(this).data('refresh-page', false);
+      sessionStorage.setItem('scrollY', window.scrollY);
+      location.reload();
+    }
+  });
+
+  // Also reload page if user clicks OK on the success modal, preserving scroll
+  $('#successModalOkBtn').off('click').on('click', function () {
+    if ($('#successModal').data('refresh-page')) {
+      $('#successModal').data('refresh-page', false);
+      sessionStorage.setItem('scrollY', window.scrollY);
+      location.reload();
+    } else {
+      $('#successModal').modal('hide');
+    }
+  });
+});
+</script>
+<!-- Script for adding new savings plan (End) -->
+
+<!-- Script for displaying responses for savings plans (Start) -->
+<script>
+function showRequestHistory(planId, planType = '', employeeEmail = '') {
+  const modalTitle = employeeEmail 
+    ? `Change Requests for ${employeeEmail}`
+    : (planType ? `Change Requests for plan: ${planType}` : 'Change Request History');
+  $('#requestHistoryModal .modal-title').text(modalTitle);
+  showSpinner();
+  $.ajax({
+    url: `/admin/savings_plan_requests/${planId}`,
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + sessionStorage.getItem('adminToken')
+    },
+    success: function(res) {
+      hideSpinner();
+      const requests = res.requests || [];
+      const tbody = $('#requestsTable tbody');
+      tbody.empty();
+      if (requests.length === 0) {
+        tbody.html(`
+          <tr>
+            <td colspan="6" class="text-center py-4">
+              <i class="bi bi-info-circle fs-4"></i>
+              <p class="mt-2">No requests from employees for this plan.</p>
+            </td>
+          </tr>
+        `);
+      } else {
+        requests.forEach(request => {
+          const statusText = (request.status || '').toLowerCase();
+          let statusBadge;
+          if (statusText === 'approved') {
+            statusBadge = 'success';
+          } else if (statusText === 'rejected') {
+            statusBadge = 'danger';
+          } else if (statusText === 'pending') {
+            statusBadge = 'warning';
+          } else {
+            statusBadge = 'secondary';
+          }
+          const documentButton = request.document_path ? `
+            <a href="${request.document_path}" 
+               target="_blank" 
+               class="btn btn-sm btn-outline-secondary" 
+               title="View Attached Document">
+              <i class="bi bi-file-earmark-text"></i> View
+            </a>` : `<span class="text-muted"></span>`;
+          tbody.append(`
+            <tr class="align-middle">
+              <td>${planType || 'N/A'}</td>
+              <td><span class="badge bg-${statusBadge}">${request.status}</span></td>
+              <td>${formatDateTime(request.submitted_at)}</td>
+              <td>${request.reviewed_at ? formatDateTime(request.reviewed_at) : 'Pending'}</td>
+              <td class="text-end">
+                <button class="btn btn-sm btn-outline-primary view-response-btn" 
+                  data-request-id="${request.request_id}"
+                  title="View details">
+                  <i class="bi bi-eye-fill"></i> View
+                </button>
+                <button class="btn btn-sm btn-outline-success reply-request-btn"
+                  data-request-id="${request.request_id}"
+                  data-request-status="${request.status || ''}"
+                  title="Reply">
+                  <i class="bi bi-reply"></i> Reply
+                </button>
+                <button class="btn btn-sm btn-outline-danger delete-request-btn"
+                  data-request-id="${request.request_id}"
+                  data-plan-id="${planId}"
+                  title="Delete">
+                  <i class="bi bi-trash"></i> Delete
+                </button>
+              </td>
+            </tr>
+          `);
+        });
+      }
+      $('#requestHistoryModal').modal('show');
+    },
+    error: function(xhr) {
+      hideSpinner();
+      console.error('Request history error:', xhr.responseText);
+      showErrorAlert('Failed to load request history');
+    }
+  });
+}
+$(document).on('click', '.reply-request-btn', function () {
+  const requestId = $(this).data('request-id');
+  const status = $(this).data('request-status') || 'Pending';
+  $('#replyRequestId').val(requestId);
+  $('#replyStatus').val(status);
+  $('#replyText').val('');
+  $('#replyRequestModal').modal('show');
+});
+$('#replyRequestForm').on('submit', function (e) {
+  e.preventDefault();
+  const requestId = $('#replyRequestId').val();
+  const response = $('#replyText').val().trim();
+  const status = $('#replyStatus').val();
+  if (!requestId || !response || !status) {
+    showErrorAlert("All fields are required.");
+    return;
+  }
+  showSpinner();
+  secureFetch(`/admin/respond_savings_plan_request/${requestId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('adminToken')
+    },
+    body: JSON.stringify({ response, status })
+  })
+    
+    .then(data => {
+      hideSpinner();
+      if (data.error) throw new Error(data.error);
+      $('#replyRequestModal').modal('hide');
+      showSuccess('Response submitted successfully!');
+      const planId = $('.view-requests-btn.active, .view-requests-btn[aria-expanded="true"]').data('plan-id') ||
+                     $('#requestHistoryModal').data('currentPlanId');
+      if (planId) showRequestHistory(planId);
+    })
+    .catch(err => {
+      hideSpinner();
+      showErrorAlert("Failed to submit response: " + err.message);
+    });
+});
+$(document).on('click', '.view-requests-btn', function () {
+  const planId = $(this).data('plan-id');
+  const planType = $(this).data('plan-type');
+  const employeeEmail = $(this).data('employee-email');
+  showRequestHistory(planId, planType, employeeEmail);
+});
+$(document).on('click', '.view-response-btn', function () {
+  const requestId = $(this).data('request-id');
+  const $modal = $('#responseModal');
+  $modal.find('#responsePlanType, #responseProvider, #responseContribution, #responseStatusView, #requestMessage, #adminResponse, #submittedAt, #reviewedAt, #reviewerInfo')
+    .text('Loading...');
+  showSpinner();
+  $modal.modal('show');
+  $.ajax({
+    url: `/admin/savings_plan_request/${requestId}`,
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + sessionStorage.getItem('adminToken')
+    },
+    success: function (data) {
+      hideSpinner();
+      if (!data || typeof data !== 'object') {
+        console.warn('Unexpected response format:', data);
+        showErrorAlert('No data received for this request.');
+        $modal.modal('hide');
+        return;
+      }
+      const planType = data.plan_type || 'N/A';
+      const provider = data.provider || 'N/A';
+      const contribution = typeof data.contribution_percent === 'number' ? `${data.contribution_percent}%` : 'N/A';
+      const status = data.status || 'Pending';
+      const message = formatMessage(data.message || 'No message provided.');
+      const response = formatMessage(data.response || 'No response yet.');
+      const submitted = data.submitted_at ? formatDateTime(data.submitted_at) : 'Not available';
+      const reviewed = data.reviewed_at ? formatDateTime(data.reviewed_at) : 'Not reviewed yet';
+      const reviewer = data.reviewer_info || 'Not specified';
+      const badgeClass = status === 'Approved' ? 'success' :
+                         status === 'Rejected' ? 'danger' : 'warning';
+      $('#responsePlanType').text(planType);
+      $('#responseProvider').text(provider);
+      $('#responseContribution').text(contribution);
+      $('#responseStatusView')
+        .text(status)
+        .removeClass()
+        .addClass(`badge bg-${badgeClass}`);
+      $('#requestMessage').html(message);
+      $('#adminResponse').html(response);
+      $('#submittedAt').text(submitted);
+      $('#reviewedAt').text(reviewed);
+      $('#reviewerInfo').text(reviewer);
+    },
+    error: function (xhr) {
+      hideSpinner();
+      console.error('Failed to load plan details:', xhr.responseText || xhr.statusText);
+      showErrorAlert('Failed to load request details.');
+      $modal.modal('hide');
+    }
+  });
+});
+function formatDateTime(dateString) {
+  if (!dateString) return 'N/A';
+  const date = new Date(dateString);
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+function formatMessage(text) {
+  if (!text) return '<em>No content</em>';
+  return text.replace(/\n/g, '<br>');
+}
+function showErrorAlert(message) {
+  const alertHtml = `
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      ${message}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  `;
+  $('#alertsContainer').append(alertHtml);
+}
+</script>
+<!-- Script for displaying responses for savings plans (End) -->
+
+ <!-- Script for displaying,responding, viewing, deleting and editing saving plans (Start) -->
+<script>
+$(document).ready(function () {
+  // --------- Utility Functions ---------
+  function getAdminAuthHeaders() {
+    const token = sessionStorage.getItem('adminToken');
+    return {
+      'Authorization': `Bearer ${token}`
+    };
+  }
+  function formatDateTime(dateString) {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return date.toLocaleString('en-US', {
+      year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+    });
+  }
+  function formatContribution(plan) {
+    if (plan.contribution_amount && plan.contribution_unit) {
+      return `${Number(plan.contribution_amount).toLocaleString()} ${plan.contribution_unit}`;
+    } else if (plan.contribution_percent) {
+      return `${plan.contribution_percent}%`;
+    } else {
+      return '-';
+    }
+  }
+  function formatEmployerMatch(plan) {
+    if (plan.employer_match_amount && plan.employer_match_unit) {
+      return `${Number(plan.employer_match_amount).toLocaleString()} ${plan.employer_match_unit}`;
+    } else if (plan.employer_match_percent) {
+      return `${plan.employer_match_percent}%`;
+    } else {
+      return '-';
+    }
+  }
+  function statusColorSavingsPlans(status) {
+    switch ((status || '').toLowerCase()) {
+      case 'pending': return 'warning';
+      case 'approved':
+      case 'active': return 'success';
+      case 'rejected':
+      case 'ended': return 'danger';
+      case 'paused': return 'warning';
+      default: return 'secondary';
+    }
+  }
+  function showError(message) {
+    $('#errorModalMessage').text(message);
+    $('#errorModal').modal('show');
+  }
+  function showSuccess(message) {
+    $('#successModalMessage').text(message);
+    $('#successModal').modal('show');
+  }
+  function showConfirm(message, callback) {
+    $('#customConfirmMessage').text(message);
+    const $modal = $('#customConfirmModal');
+    $modal.modal('show');
+    $('#confirmYesBtn').off('click').on('click', function () {
+      $modal.modal('hide');
+      callback(true);
+    });
+    $('#confirmNoBtn').off('click').on('click', function () {
+      $modal.modal('hide');
+      callback(false);
+    });
+  }
+  function toDateInputFormat(dateStr) {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    return date.toISOString().split('T')[0];
+  }
+
+  // --------- Employee Dropdown ---------
+  function loadEmployeesDropdown(modalType, selectedId) {
+    secureFetch('/admin/employees/all', {
+      headers: getAdminAuthHeaders()
+    })
+      .then(data => {
+        const select = modalType === 'edit' ? document.getElementById('editPlanEmployee') : document.getElementById('createPlanEmployee');
+        if (!select) return;
+        select.innerHTML = '<option value="">Select Employee</option>';
+        data.forEach(emp => {
+          const option = document.createElement('option');
+          option.value = emp.employee_id;
+          option.textContent = emp.email || `Employee ${emp.employee_id}`;
+          select.appendChild(option);
+        });
+        if (selectedId) select.value = selectedId;
+      })
+      .catch(err => console.error('[loadEmployeesDropdown] Fetch error:', err));
+  }
+
+  // --------- Search/filter Plans ---------
+  $('#savingsPlansSearch').on('keyup', function () {
+    const searchText = $(this).val().toLowerCase();
+    $('#savingsPlansTable tbody tr').filter(function () {
+      const rowText = $(this).find('td:not(:last-child)').text().toLowerCase();
+      $(this).toggle(rowText.includes(searchText));
+    });
+  });
+
+  // --- Smart Pagination Helper ---
+  function renderSmartPaginationControls(options) {
+    const { containerId, currentPage, totalPages, onPageChange } = options;
+    let container = document.getElementById(containerId);
+    if (!container) {
+      container = document.createElement('div');
+      container.id = containerId;
+      container.className = 'd-flex justify-content-center my-2';
+      const tableDiv = document.querySelector('.table-responsive');
+      if (tableDiv) {
+        tableDiv.parentNode.insertBefore(container, tableDiv.nextSibling);
+      } else {
+        document.body.appendChild(container);
+      }
+    }
+    container.innerHTML = "";
+    if (totalPages <= 1) {
+      container.style.display = "none";
+      return;
+    } else {
+      container.style.display = "flex";
+    }
+    const windowSize = 2;
+    function createBtn(label, page, disabled = false, active = false) {
+      const btn = document.createElement("button");
+      btn.className = "btn btn-sm mx-1 " + (active ? "btn-primary" : "btn-outline-primary");
+      btn.textContent = label;
+      btn.disabled = disabled;
+      if (!disabled && !active) {
+        btn.onclick = function () {
+          onPageChange(page);
+        };
+      }
+      return btn;
+    }
+    // Previous
+    container.appendChild(createBtn("Previous", currentPage - 1, currentPage === 1));
+    // Always show first page
+    container.appendChild(createBtn("1", 1, false, currentPage === 1));
+    // Left ellipsis
+    if (currentPage - windowSize > 2) {
+      const span = document.createElement("span");
+      span.className = "mx-1";
+      span.textContent = "...";
+      container.appendChild(span);
+    }
+    // Page window
+    for (
+      let i = Math.max(2, currentPage - windowSize);
+      i <= Math.min(totalPages - 1, currentPage + windowSize);
+      i++
+    ) {
+      container.appendChild(createBtn(i, i, false, currentPage === i));
+    }
+    // Right ellipsis
+    if (currentPage + windowSize < totalPages - 1) {
+      const span = document.createElement("span");
+      span.className = "mx-1";
+      span.textContent = "...";
+      container.appendChild(span);
+    }
+    // Always show last page
+    if (totalPages > 1)
+      container.appendChild(createBtn(totalPages, totalPages, false, currentPage === totalPages));
+    // Next
+    container.appendChild(createBtn("Next", currentPage + 1, currentPage === totalPages));
+  }
+
+  // --- Pagination constants and state ---
+  const SAVINGS_PLAN_PAGE_SIZE = 40;
+  let savingsPlanCurrentPage = 1;
+  let allSavingsPlans = [];
+
+  // --- Smart pagination control renderer ---
+  function renderSavingsPlansPaginationControls(totalPages) {
+    renderSmartPaginationControls({
+      containerId: "savings-plans-pagination-controls",
+      currentPage: savingsPlanCurrentPage,
+      totalPages,
+      onPageChange: function (page) {
+        savingsPlanCurrentPage = page;
+        renderSavingsPlansTable(allSavingsPlans);
+      }
+    });
+  }
+
+  // --- Paginated table renderer ---
+  function renderSavingsPlansTable(plans) {
+    const tbody = $('#savingsPlansTable tbody');
+    tbody.empty();
+    allSavingsPlans = plans;
+    if (!plans || plans.length === 0) {
+      tbody.html('<tr><td colspan="10" class="text-center">No plans available.</td></tr>');
+      renderSavingsPlansPaginationControls(0);
+      return;
+    }
+    const totalPages = Math.ceil(plans.length / SAVINGS_PLAN_PAGE_SIZE);
+    if (savingsPlanCurrentPage > totalPages) savingsPlanCurrentPage = totalPages;
+    if (savingsPlanCurrentPage < 1) savingsPlanCurrentPage = 1;
+    const startIdx = (savingsPlanCurrentPage - 1) * SAVINGS_PLAN_PAGE_SIZE;
+    const endIdx = startIdx + SAVINGS_PLAN_PAGE_SIZE;
+    const pagedList = plans.slice(startIdx, endIdx);
+
+    pagedList.forEach(plan => {
+      const statusBadge = `<span class="badge bg-${statusColorSavingsPlans(plan.plan_status)}">${plan.plan_status}</span>`;
+      const documentButton = plan.document_path
+        ? `<a href="${plan.document_path}" target="_blank" class="btn btn-sm btn-warning" title="View Document">
+              <i class="bi bi-file-earmark-text"></i> View
+           </a>`
+        : `<span class="text-muted">N/A</span>`;
+      const row = `
+        <tr>
+          <td>${plan.email}</td>
+          <td>${plan.plan_type}</td>
+          <td>${plan.provider || '-'}</td>
+          <td>${formatContribution(plan)}</td>
+          <td>${formatEmployerMatch(plan)}</td>
+          <td>${statusBadge}</td>
+          <td>${plan.start_date}</td>
+          <td>${plan.notes || ''}</td>
+          <td class="text-center">${documentButton}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-success mr-1 view-requests-btn"
+              data-plan-id="${plan.plan_id}"
+              data-plan-type="${plan.plan_type || ''}"
+              data-employee-email="${plan.email || ''}">
+              <i class="bi bi-list-ul"></i> View Requests
+            </button>
+            <button class="btn btn-sm btn-info mr-1 view-saving-plan-btn" data-plan-id="${plan.plan_id}" title="View Plan">View</button>
+            <button class="btn btn-sm btn-warning mr-1 edit-saving-plan-btn"
+              data-plan-id="${plan.plan_id}"
+              data-employee-id="${plan.employee_id}"
+              data-plan-type="${plan.plan_type || ''}"
+              data-provider="${plan.provider || ''}"
+              data-status="${plan.plan_status || ''}"
+              data-start-date="${plan.start_date || ''}"
+              data-notes="${plan.notes || ''}"
+              data-image-url="${plan.document_path || ''}"
+              data-contribution-amount="${plan.contribution_amount || ''}"
+              data-contribution-unit="${plan.contribution_unit || ''}"
+              data-contribution-percent="${plan.contribution_percent || ''}"
+              data-employer-match-amount="${plan.employer_match_amount || ''}"
+              data-employer-match-unit="${plan.employer_match_unit || ''}"
+              data-employer-match-percent="${plan.employer_match_percent || ''}"
+              title="Edit Plan">Edit</button>
+            <button class="btn btn-sm btn-danger mr-1 delete-saving-plan-btn" data-plan-id="${plan.plan_id}" title="Delete Plan">Delete</button>
+          </td>
+        </tr>
+      `;
+      tbody.append(row);
+    });
+    renderSavingsPlansPaginationControls(totalPages);
+  }
+
+  // --- Replace fetchPlans body with this version ---
+  function fetchPlans() {
+    showSpinner();
+    $.ajax({
+      url: '/admin/savings_plans?_=' + new Date().getTime(),
+      type: 'GET',
+      headers: getAdminAuthHeaders(),
+      success: function (data) {
+        hideSpinner();
+        renderSavingsPlansTable(data.plans || []);
+      },
+      error: function (xhr) {
+        hideSpinner();
+        showError('Failed to fetch savings plans');
+      }
+    });
+  }
+  fetchPlans();
+
+  // --------- Respond to Request Modal (shows on Respond click) ---------
+  $(document).on('click', '.respond-request-btn', function () {
+    const requestId = $(this).data('request-id');
+    const planRequests = $(this).data('requests');
+    let requests = [];
+    try { requests = typeof planRequests === "string" ? JSON.parse(planRequests) : planRequests; } catch (e) { }
+    // Find the clicked request only
+    const r = requests.find(r => r.request_id == requestId);
+    let responsesHtml = '';
+    if (r) {
+      responsesHtml = `
+        <div class="border rounded p-2 mb-2 bg-light">
+          <div><b>Status:</b> ${r.status || '-'} | <b>Submitted:</b> ${r.submitted_at ? formatDateTime(r.submitted_at) : '-'}</div>
+          <div><b>Message:</b> ${r.message || '-'}</div>
+          <div><b>Admin Response:</b> ${r.response || '<span class="text-muted">No response yet</span>'}</div>
+          <div><b>Reviewed:</b> ${r.reviewed_at ? formatDateTime(r.reviewed_at) : '-'}</div>
+          <button type="button" class="btn btn-sm btn-primary mt-2 reply-btn" data-request-id="${r.request_id}">Reply</button>
+          <button type="button" class="btn btn-sm btn-danger mt-2 delete-request-btn" data-request-id="${r.request_id}">Delete</button>
+        </div>
+      `;
+    } else {
+      responsesHtml = `<div class="text-muted">Request not found.</div>`;
+    }
+    $('#allResponsesList').html(responsesHtml);
+    $('#respondRequestId').val(requestId);
+    $('#responseTextSavings').val('');
+    $('#responseStatusSavings').val('Pending');
+    $('#respondRequestModal').modal('show');
+  });
+  // --------- Reply Button inside Modal (selects request) ---------
+  $(document).on('click', '.reply-btn', function () {
+    const requestId = $(this).data('request-id');
+    $('#respondRequestId').val(requestId);
+    $('#responseTextSavings').val('');
+    $('#responseStatusSavings').val('Pending');
+  });
+
+  // --------- Delete Request (inside modal) ---------
+  let requestIdToDelete = null;
+  let planIdForDelete = null;
+
+  $(document).on('click', '.delete-request-btn', function () {
+    requestIdToDelete = $(this).data('request-id');
+    planIdForDelete = $(this).data('plan-id'); // needed to refresh correct modal
+    $('#deleteRequestConfirmModal').modal('show');
+  });
+
+  $('#confirmDeleteRequestBtn').on('click', function () {
+     showSpinner();
+    if (!requestIdToDelete) return;
+    secureFetch(`/admin/delete_savings_plan_request/${requestIdToDelete}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer ' + sessionStorage.getItem('adminToken')
+      }
+    })
+      .then(data => {
+        hideSpinner();
+        if (data.error) throw new Error(data.error);
+        showSuccess(data.message || 'Request deleted');
+        $('#deleteRequestConfirmModal').modal('hide');
+        // Refresh the requests list in the modal
+        if (planIdForDelete) showRequestHistory(planIdForDelete);
+        requestIdToDelete = null;
+        planIdForDelete = null;
+      })
+      .catch(err => {
+        hideSpinner();
+        showErrorAlert("Failed to delete request: " + err.message);
+        $('#deleteRequestConfirmModal').modal('hide');
+        requestIdToDelete = null;
+        planIdForDelete = null;
+      });
+  });
+
+  // --------- Submit Response to Request ---------
+  $('#respondRequestForm').on('submit', function (e) {
+    e.preventDefault();
+    const requestId = $('#respondRequestId').val();
+    const response = $('#responseTextSavings').val().trim();
+    const status = $('#responseStatusSavings').val();
+    if (!requestId) {
+      showError("No request selected for response.");
+      return;
+    }
+    if (!response) {
+      showError("Response text cannot be empty!");
+      return;
+    }
+    showSpinner();
+    secureFetch(`/admin/respond_savings_plan_request/${requestId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAdminAuthHeaders()
+      },
+      body: JSON.stringify({ response, status })
+    })
+      .then(data => {
+        hideSpinner();
+        if (data.error) throw new Error(data.error);
+        $('#respondRequestModal').modal('hide');
+        showSuccess('Response submitted successfully!');
+        setTimeout(fetchPlans, 1000);
+      })
+      .catch(err => {
+        hideSpinner();
+        showError("Failed to submit response: " + err.message);
+      });
+  });
+
+  // --------- View Plan Modal ---------
+  $(document).on('click', '.view-saving-plan-btn', function () {
+    const planId = $(this).data('plan-id');
+    showSpinner();
+    secureFetch(`/get_saving_plan/${planId}`, {
+      headers: getAdminAuthHeaders()
+    })
+      .then(plan => {
+        hideSpinner();
+        if (!plan || plan.error) throw new Error(plan.error || 'No plan data returned.');
+        $('#viewPlanName').text(plan.plan_type || 'N/A');
+        $('#viewContribution').text(formatContribution(plan));
+        $('#viewEmployerMatch').text(formatEmployerMatch(plan));
+        $('#viewStartDate').text(plan.start_date || 'N/A');
+        $('#viewStatus').text(plan.status || 'N/A');
+        $('#viewNotes').text(plan.notes || 'N/A');
+        $('#viewEmployeeInfo').text(plan.email || 'N/A');
+        if (plan.document_path) {
+          const path = plan.document_path.replace(/\\/g, '/');
+          $('#viewDocumentLink').html(`<a href="/${path}" target="_blank">View Document</a>`);
+        } else {
+          $('#viewDocumentLink').text('No document');
+        }
+        $('#viewSavingPlanModal').modal('show');
+      })
+      .catch(err => {
+         hideSpinner();
+        showError("Failed to load plan details: " + err.message);
+      });
+  });
+
+  // --------- Edit Plan Modal ---------
+  $(document).on('click', '.edit-saving-plan-btn', function () {
+    const btn = $(this);
+    const planId = btn.data('plan-id');
+     showSpinner();
+    secureFetch(`/get_saving_plan/${planId}`, {
+      headers: getAdminAuthHeaders()
+    })
+      .then(plan => {
+        hideSpinner();
+        // Employee
+        $('#editPlanId').val(plan.plan_id ?? '');
+        loadEmployeesDropdown('edit', plan.employee_id);
+        setTimeout(() => { $('#editPlanEmployee').val(plan.employee_id ?? ''); }, 500);
+
+        // Plan Type as select (update your modal if you still use input!)
+        $('#editPlanForm select[name="plan_type"]').val(plan.plan_type ?? '');
+
+        // Provider
+        $('#editPlanForm [name="provider"]').val(plan.provider ?? '');
+
+        // Contribution
+        $('#editPlanForm [name="contribution_amount"]').val(plan.contribution_amount ?? '');
+        $('#editPlanForm select[name="contribution_unit"]').val(plan.contribution_unit ?? 'KHR');
+        // Use strict null/undefined check to allow 0
+        $('#editPlanForm [name="contribution_percent"]').val(
+          plan.contribution_percent !== null && plan.contribution_percent !== undefined
+            ? plan.contribution_percent
+            : ''
+        );
+
+        // Employer Match
+        $('#editPlanForm [name="employer_match_amount"]').val(plan.employer_match_amount ?? '');
+        $('#editPlanForm select[name="employer_match_unit"]').val(plan.employer_match_unit ?? 'KHR');
+        $('#editPlanForm [name="employer_match_percent"]').val(
+          plan.employer_match_percent !== null && plan.employer_match_percent !== undefined
+            ? plan.employer_match_percent
+            : ''
+        );
+
+        // Status
+        $('#editPlanForm select[name="status"]').val(plan.plan_status ?? plan.status ?? 'Active');
+
+        // Dates
+        $('#editPlanForm [name="edit_start_date"]').val(toDateInputFormat(plan.start_date));
+        $('#editPlanForm [name="start_date"]').val(toDateInputFormat(plan.start_date)); // fallback, if needed
+
+        // Notes
+        $('#editPlanForm [name="notes"]').val(plan.notes ?? '');
+
+        // Document preview
+        const normalizedPath = (plan.document_path || '').replace(/\\/g, '/');
+        if (normalizedPath.toLowerCase().endsWith('.pdf')) {
+          $('#currentPdfLink').attr('href', '/' + normalizedPath).show();
+          $('#currentImage').hide();
+        } else if (normalizedPath) {
+          $('#currentImage').attr('src', '/' + normalizedPath).show();
+          $('#currentPdfLink').hide();
+        } else {
+          $('#currentImage, #currentPdfLink').hide();
+        }
+
+        // Optionally, show/hide percent fields based on unit
+        $('#editPlanForm select[name="contribution_unit"]').trigger('change');
+        $('#editPlanForm select[name="employer_match_unit"]').trigger('change');
+
+        $('#editPlanModal').modal('show');
+      })
+      .catch(err => {
+        hideSpinner();
+        showError("Failed to load plan for editing: " + err.message);
+      });
+  });
+
+  // Show/hide percent input for contribution
+  $('#editPlanForm select[name="contribution_unit"]').on('change', function () {
+    if ($(this).val() === '% of salary') {
+      $('#editPlanForm [name="contribution_percent"]').closest('.col-md-6').show();
+    } else {
+      $('#editPlanForm [name="contribution_percent"]').closest('.col-md-6').hide();
+    }
+  });
+  // Show/hide percent input for employer match
+  $('#editPlanForm select[name="employer_match_unit"]').on('change', function () {
+    if ($(this).val() === '% of salary') {
+      $('#editPlanForm [name="employer_match_percent"]').closest('.col-md-6').show();
+    } else {
+      $('#editPlanForm [name="employer_match_percent"]').closest('.col-md-6').hide();
+    }
+  });
+  // (Optional) On modal open, trigger these for initial state
+  $('#editPlanForm select[name="contribution_unit"]').trigger('change');
+  $('#editPlanForm select[name="employer_match_unit"]').trigger('change');
+
+  // --------- Delete Plan Button (table row) ---------
+  $(document).on('click', '.delete-saving-plan-btn', function () {
+    const planId = $(this).data('plan-id');
+    showConfirm("Are you sure you want to delete this savings plan?", confirmed => {
+      if (!confirmed) return;
+      showSpinner();
+      secureFetch(`/admin/delete_savings_plan/${planId}`, {
+        method: 'POST',
+        headers: getAdminAuthHeaders()
+      })
+        .then(data => {
+          hideSpinner();
+          if (data.error) throw new Error(data.error);
+          showSuccess("Savings plan deleted successfully!");
+          setTimeout(fetchPlans, 1000);
+        })
+        .catch(err => {
+          hideSpinner();
+          showError("Failed to delete plan: " + err.message);
+        });
+    });
+  });
+
+  // --------- Submit Edit Plan Form ---------
+  $('#editPlanForm').on('submit', function (e) {
+    e.preventDefault();
+    const planId = $('#editPlanId').val();
+    const formData = new FormData(this);
+    showSpinner();
+    secureFetch(`/admin/update_savings_plan/${planId}`, {
+      method: 'POST',
+      headers: getAdminAuthHeaders(),
+      body: formData
+    })
+      .then(data => {
+        hideSpinner();
+        if (data.error) throw new Error(data.error);
+        $('#editPlanModal').modal('hide');
+        showSuccess("Savings plan updated successfully!");
+        setTimeout(fetchPlans, 1000);
+      })
+      .catch(err => {
+        hideSpinner();
+        showError("Failed to update plan: " + err.message);
+      });
+  });
+});
+</script>
+<!-- Script for displaying,responding, viewing, deleting and editing saving plans (End) -->
+
+<!-- Script for displaying bonuses, adding bonuses, editing bonuses (Start) -->
+<script>
+window.bonusesList = [];
+
+$(document).ready(function () {
+  fetchBonuses();
+
+  // Edit Bonus Submit
+  $('#editBonusForm').on('submit', function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    showSpinner();
+    secureFetch(`/update_bonus`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${sessionStorage.getItem('adminToken')}`
+      },
+      body: formData
+    })
+      .then(data => {
+        hideSpinner();
+        $('#editBonusModal').modal('hide');
+        if (data.status === 'success') {
+          showSuccessModalForBonus(data.message || 'Bonus updated successfully.', true);
+        } else {
+          showErrorModalForBonus(data.message || 'Error updating bonus.');
+        }
+      })
+      .catch(() => {
+        hideSpinner();
+        showErrorModalForBonus('Failed to update bonus.');
+      });
+  });
+
+  // Search Bonuses
+  $('#bonusSearchInput').on('keyup', function () {
+    const filter = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#bonusTableBody tr');
+    rows.forEach(row => {
+      const text = row.textContent.toLowerCase();
+      row.style.display = text.includes(filter) ? '' : 'none';
+    });
+  });
+
+  // OPEN ADD BONUS MODAL BUTTON HANDLER (JS only)
+  $('#openAddBonusBtn').on('click', function() {
+    $('#addBonusModal').modal('show');
+  });
+
+  // Add Bonus Submit
+  $('#addBonusForm').on('submit', function (e) {
+    e.preventDefault();
+    const form = this;
+    const formData = new FormData(form);
+    showSpinner();
+    secureFetch('/add_bonus', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${sessionStorage.getItem('adminToken')}`
+      },
+      body: formData
+    })
+      .then(data => {
+        hideSpinner();
+        if (data.status === 'success') {
+          showSuccessModalForBonus(data.message || 'Bonus added successfully.', true);
+          form.reset();
+          $('#addBonusModal').modal('hide');
+        } else {
+          showErrorModalForBonus(data.message || 'Failed to add bonus.');
+        }
+      })
+      .catch(() => {
+        hideSpinner();
+        showErrorModalForBonus('Something went wrong while adding bonus.');
+      });
+  });
+
+  // Populate employee dropdown on modal show
+  $('#addBonusModal').on('shown.bs.modal', function () {
+    populateEmployeeDropdown();
+  });
+
+  // Success modal: fetch bonuses on OK if requested
+  $('#successModalOkBtn').off('click').on('click', function () {
+    if ($('#successModal').data('refresh-on-close')) {
+      $('#successModal').data('refresh-on-close', false);
+      fetchBonuses(); // Refresh only the table, do not reload the page
+      $('#successModal').modal('hide');
+    } else {
+      $('#successModal').modal('hide');
+    }
+  });
+
+  // Also handle when modal hidden by other means (e.g., user clicks outside)
+  $('#successModal').on('hidden.bs.modal', function () {
+    if ($(this).data('refresh-on-close')) {
+      $(this).data('refresh-on-close', false);
+      fetchBonuses(); // Refresh only the table, do not reload the page
+    }
+  });
+});
+
+// --- Smart Pagination Helper ---
+function renderSmartPaginationControls(options) {
+  const { containerId, currentPage, totalPages, onPageChange } = options;
+  let container = document.getElementById(containerId);
+  if (!container) {
+    container = document.createElement('div');
+    container.id = containerId;
+    container.className = 'd-flex justify-content-center my-2';
+    const tableDiv = document.querySelector('.table-responsive');
+    if (tableDiv) {
+      tableDiv.parentNode.insertBefore(container, tableDiv.nextSibling);
+    } else {
+      document.body.appendChild(container);
+    }
+  }
+  container.innerHTML = "";
+  if (totalPages <= 1) {
+    container.style.display = "none";
+    return;
+  } else {
+    container.style.display = "flex";
+  }
+  const windowSize = 2;
+  function createBtn(label, page, disabled = false, active = false) {
+    const btn = document.createElement("button");
+    btn.className = "btn btn-sm mx-1 " + (active ? "btn-primary" : "btn-outline-primary");
+    btn.textContent = label;
+    btn.disabled = disabled;
+    if (!disabled && !active) {
+      btn.onclick = function () {
+        onPageChange(page);
+      };
+    }
+    return btn;
+  }
+  // Previous
+  container.appendChild(createBtn("Previous", currentPage - 1, currentPage === 1));
+  // Always show first page
+  container.appendChild(createBtn("1", 1, false, currentPage === 1));
+  // Left ellipsis
+  if (currentPage - windowSize > 2) {
+    const span = document.createElement("span");
+    span.className = "mx-1";
+    span.textContent = "...";
+    container.appendChild(span);
+  }
+  // Page window
+  for (
+    let i = Math.max(2, currentPage - windowSize);
+    i <= Math.min(totalPages - 1, currentPage + windowSize);
+    i++
+  ) {
+    container.appendChild(createBtn(i, i, false, currentPage === i));
+  }
+  // Right ellipsis
+  if (currentPage + windowSize < totalPages - 1) {
+    const span = document.createElement("span");
+    span.className = "mx-1";
+    span.textContent = "...";
+    container.appendChild(span);
+  }
+  // Always show last page
+  if (totalPages > 1)
+    container.appendChild(createBtn(totalPages, totalPages, false, currentPage === totalPages));
+  // Next
+  container.appendChild(createBtn("Next", currentPage + 1, currentPage === totalPages));
+}
+
+// --- Pagination constants and state ---
+const BONUS_PAGE_SIZE = 40;
+let bonusCurrentPage = 1;
+
+// --- Smart pagination control renderer ---
+function renderBonusPaginationControls(totalPages) {
+  renderSmartPaginationControls({
+    containerId: "bonus-pagination-controls",
+    currentPage: bonusCurrentPage,
+    totalPages,
+    onPageChange: function (page) {
+      bonusCurrentPage = page;
+      renderBonusTable(window.bonusesList);
+    }
+  });
+}
+
+function renderBonusTable(data) {
+  const tbody = document.getElementById('bonusTableBody');
+  tbody.innerHTML = '';
+  if (!data || data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" class="text-center">No records found</td></tr>`;
+    renderBonusPaginationControls(0);
+    return;
+  }
+  const totalPages = Math.ceil(data.length / BONUS_PAGE_SIZE);
+  if (bonusCurrentPage > totalPages) bonusCurrentPage = totalPages;
+  if (bonusCurrentPage < 1) bonusCurrentPage = 1;
+  const startIdx = (bonusCurrentPage - 1) * BONUS_PAGE_SIZE;
+  const endIdx = startIdx + BONUS_PAGE_SIZE;
+  const pagedList = data.slice(startIdx, endIdx);
+  pagedList.forEach(bonus => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${bonus.id}</td>
+      <td>${bonus.employee_id}</td>
+      <td>${bonus.amount}$</td>
+      <td>${bonus.description}</td>
+      <td>${bonus.type}</td>
+      <td>${bonus.awarded_date}</td>
+      <td>
+        <button class="btn btn-sm btn-info mr-1" onclick='openViewBonusModal(${bonus.id})'>View</button>
+        <button class="btn btn-sm btn-warning mr-1" onclick='openEditBonusModalById(${bonus.id})'>Edit</button>
+        <button class="btn btn-sm btn-danger" onclick='openDeleteBonusModal(${bonus.id})'>Delete</button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+  renderBonusPaginationControls(totalPages);
+}
+
+function fetchBonuses() {
+  showSpinner();
+  secureFetch('/get_all_bonuses', {
+    headers: {
+      'Authorization': `Bearer ${sessionStorage.getItem('adminToken')}`
+    }
+  })
+    .then(data => {
+      hideSpinner();
+      window.bonusesList = data;
+      bonusCurrentPage = 1; // Reset to first page on fetch
+      renderBonusTable(window.bonusesList);
+    })
+    .catch(() => {
+      hideSpinner();
+      renderBonusTable([]);
+      showErrorModalForBonus('Failed to load bonuses.');
+    });
+}
+
+function openViewBonusModal(bonusId) {
+  showSpinner();
+  secureFetch(`/get_bonus/${bonusId}`, {
+    headers: {
+      'Authorization': `Bearer ${sessionStorage.getItem('adminToken')}`
+    }
+  })
+    .then(bonus => {
+      hideSpinner();
+      if (bonus.status === 'error') {
+        showErrorModalForBonus('Bonus not found.');
+        return;
+      }
+      document.getElementById('viewBonusId').textContent = bonus.id;
+      document.getElementById('viewEmployeeId').textContent = bonus.employee_id;
+      document.getElementById('viewEmployeeEmail').textContent = bonus.email;
+      document.getElementById('viewAmount').textContent = bonus.amount;
+      document.getElementById('viewDescription').textContent = bonus.description;
+      document.getElementById('viewType').textContent = bonus.type;
+      document.getElementById('viewAwardedDate').textContent = bonus.awarded_date;
+      $('#viewBonusModal').modal('show');
+    })
+    .catch(() => {
+      hideSpinner();
+      showErrorModalForBonus('Failed to load bonus details.');
+    });
+}
+
+function openDeleteBonusModal(bonusId) {
+  document.getElementById('deleteBonusId').value = bonusId;
+  $('#deleteBonusModal').modal('show');
+}
+
+function confirmDeleteBonus() {
+  const bonusId = document.getElementById('deleteBonusId').value;
+  showSpinner();
+  secureFetch(`/delete_bonus/${bonusId}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${sessionStorage.getItem('adminToken')}`
+    }
+  })
+    .then(data => {
+      hideSpinner();
+      $('#deleteBonusModal').modal('hide');
+      if (data.status === 'success') {
+        showSuccessModalForBonus(data.message || 'Bonus deleted successfully.', true);
+      } else {
+        showErrorModalForBonus(data.message || 'Error deleting bonus.');
+      }
+    })
+    .catch(() => {
+      hideSpinner();
+      showErrorModalForBonus('Failed to delete bonus.');
+    });
+}
+
+function openEditBonusModalById(bonusId) {
+  const bonus = window.bonusesList.find(b => b.id === bonusId);
+  openEditBonusModal(bonus);
+}
+
+function openEditBonusModal(bonus) {
+  if (!bonus) {
+    showErrorModalForBonus('Bonus not found.');
+    return;
+  }
+  document.getElementById('editBonusId').value = bonus.id;
+  document.getElementById('editAmount').value = bonus.amount;
+  document.getElementById('editDescription').value = bonus.description;
+  document.getElementById('editType').value = bonus.type;
+  $('#editBonusModal').modal('show');
+}
+
+function populateEmployeeDropdown() {
+  showSpinner();
+  secureFetch('/get_employees', {
+    headers: {
+      'Authorization': `Bearer ${sessionStorage.getItem('adminToken')}`
+    }
+  })
+    .then(data => {
+      hideSpinner();
+      const dropdown = document.getElementById('bonusEmployee');
+      dropdown.innerHTML = '<option value="">-- Select an employee --</option>';
+      data.forEach(emp => {
+        const option = document.createElement('option');
+        option.value = emp.employee_id;
+        option.textContent = emp.email || `Employee ${emp.employee_id}`;
+        dropdown.appendChild(option);
+      });
+    })
+    .catch(() => {
+      hideSpinner();
+      showErrorModalForBonus('Failed to load employees.');
+    });
+}
+
+// Show success modal, and refresh data if refreshOnClose is true.
+function showSuccessModalForBonus(message, refreshOnClose = false) {
+  document.getElementById('successModalMessage').textContent = message;
+  $('#successModal').data('refresh-on-close', !!refreshOnClose);
+  $('#successModal').modal('show');
+}
+function showErrorModalForBonus(message) {
+  document.getElementById('errorModalMessage').textContent = message;
+  $('#errorModal').modal('show');
+}
+</script>
+<!-- Script for displaying bonuses, adding bonuses, editing bonuses (End) -->
+ 
+  <!-- Script for handling salary processing (Start) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+<script>
+  function showSpinner() {
+    if (!window._spinnerOpen) {
+      $('#loadingSpinnerModal').modal({
+        backdrop: 'static',
+        keyboard: false
+      });
+      window._spinnerOpen = true;
+    }
+  }
+  function hideSpinner() {
+    $('#loadingSpinnerModal').modal('hide');
+    window._spinnerOpen = false;
+  }
+
+  function showSuccessModal(message) {
+    document.getElementById("successModalMessage").textContent = message;
+    $('#successModal').modal('show');
+  }
+
+  function showErrorModal(message) {
+    document.getElementById("errorModalMessage").textContent = message;
+    $('#errorModal').modal('show');
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const employeeTypeDropdown = document.getElementById("employeeDropdown");
+    const specificEmployeeDropdown = document.getElementById("specificEmployeeDropdown");
+    const employeeDetails = document.getElementById("employeeDetails");
+    const submitActions = document.getElementById("submitActions");
+    const reportActions = document.getElementById("reportActions");
+
+    employeeTypeDropdown.addEventListener("change", function () {
+      const selectedValue = this.value;
+      specificEmployeeDropdown.style.display = selectedValue === "specific_employee" ? "block" : "none";
+      employeeDetails.style.display = selectedValue === "specific_employee" ? "block" : "none";
+      submitActions.style.display = selectedValue === "specific_employee" ? "block" : "none";
+      reportActions.style.display = (selectedValue === "specific_employee" || selectedValue === "all_employees") ? "block" : "none";
+      // Removed submitAllPayrollBtn logic
+    });
+
+    function debugLog(message, level = 'info') {
+      const timestamp = new Date().toISOString();
+      const levels = {
+        error: console.error,
+        warn: console.warn,
+        debug: console.debug,
+        info: console.log,
+      };
+      (levels[level] || console.log)(`[${timestamp}] ${level.toUpperCase()}: ${message}`);
+    }
+
+    const token = sessionStorage.getItem("adminToken");
+    if (!token) {
+      debugLog("No token found. Redirecting to login.", "error");
+      window.location.href = "/admin_login";
+      return;
+    }
+
+    const headers = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    };
+
+    // Employee
+    const employeeSelect = document.getElementById("employeeSelect");
+    const reportButton = document.getElementById("generateReportButton");
+
+    const employeeIdField = document.getElementById("employeeID");
+    const hoursWorkedField = document.getElementById("hoursWorked");
+    const overtimeField = document.getElementById("overtimeHours");
+    const bonusesField = document.getElementById("bonuses");
+    const taxRateField = document.getElementById("taxRate");
+    const taxField = document.getElementById("taxAmount");
+
+    // Fetch employees
+    showSpinner();
+    secureFetch('/get_employees', { headers })
+      .then(employees => {
+        debugLog(`Employees fetched: ${employees.length}`);
+        employeeSelect.innerHTML = '';
+        let manualOption = document.createElement("option");
+        manualOption.textContent = " -- Choose an employee -- ";
+        manualOption.value = "";
+        employeeSelect.appendChild(manualOption);
+        employees.forEach(emp => {
+          let option = document.createElement("option");
+          option.value = emp.employee_id;
+          option.textContent = emp.email || `ID : ${emp.employee_id}`;
+          employeeSelect.appendChild(option);
+        });
+        hideSpinner();
+      })
+      .catch(err => {
+        hideSpinner();
+        debugLog(`Error fetching employees: ${err.message}`, 'error');
+        showErrorModal("Unable to load employees. Please check your network.");
+      });
+
+    function fetchEmployeeDetails(employeeId) {
+      if (!employeeId) return;
+      showSpinner();
+      secureFetch(`/get_employee_details_salary/${employeeId}`, { headers })
+        .then(data => {
+          hideSpinner();
+          if (data.error) {
+            showErrorModal("Employee details not found.");
+            return;
+          }
+          employeeIdField.value = data.employee_id;
+          hoursWorkedField.value = data.hours_worked || 0;
+          overtimeField.value = data.overtime_hours || 0;
+          bonusesField.value = data.bonuses || 0;
+          taxRateField.value = data.tax_rate || 0;
+          taxField.value = data.tax || 0;
+          calculateTax();
+        })
+        .catch(err => {
+          hideSpinner();
+          debugLog(`Error: ${err.message}`, 'error');
+          showErrorModal("Failed to fetch employee details.");
+        });
+    }
+
+    function calculateTax() {
+      const hours = parseFloat(hoursWorkedField.value) || 0;
+      const overtime = parseFloat(overtimeField.value) || 0;
+      const bonuses = parseFloat(bonusesField.value) || 0;
+      const taxRate = parseFloat(taxRateField.value) || 0;
+
+      const base = hours * 20;
+      const overtimePay = overtime * 30;
+      const income = base + overtimePay + bonuses;
+      const tax = income * (taxRate / 100);
+      taxField.value = tax.toFixed(2);
+    }
+
+    employeeSelect.addEventListener("change", e => {
+      fetchEmployeeDetails(e.target.value);
+    });
+
+    [hoursWorkedField, overtimeField, bonusesField, taxRateField].forEach(field =>
+      field.addEventListener("input", calculateTax)
+    );
+
+    document.getElementById("salaryForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const selectedOption = document.getElementById("employeeDropdown").value;
+      const generatePDF = false;
+
+      if (selectedOption === "specific_employee") {
+        const employeeId = employeeIdField.value.trim();
+        if (!employeeId) {
+          showErrorModal("Please select an employee.");
+          return;
+        }
+
+        const payload = {
+          employee_id: parseInt(employeeId),
+          month: new Date().toISOString().slice(0, 7),
+          base_salary: 3000,
+          hours_worked: parseFloat(hoursWorkedField.value) || 0,
+          overtime_hours: parseFloat(overtimeField.value) || 0,
+          overtime_pay: (parseFloat(overtimeField.value) || 0) * (3000 / 160) * 1.5,
+          bonuses: parseFloat(bonusesField.value) || 0,
+          tax_rate: parseFloat(taxRateField.value) || 0
+        };
+
+        showSpinner();
+        secureFetch("/process_payroll", {
+          method: "POST",
+          headers,
+          body: JSON.stringify(payload)
+        })
+        .then(data => {
+          hideSpinner();
+          showSuccessModal(data.message);
+          $('#successModalOkBtn').one('click', () => location.reload());
+
+          if (generatePDF) {
+            const singleEmployeeData = [{
+              employee_id: payload.employee_id,
+              email: employeeSelect.options[employeeSelect.selectedIndex].textContent,
+              hours_worked: payload.hours_worked,
+              overtime_hours: payload.overtime_hours,
+              bonuses: payload.bonuses,
+              tax_rate: payload.tax_rate,
+              net_salary: ((payload.base_salary + payload.overtime_pay + payload.bonuses) -
+                           ((payload.base_salary + payload.overtime_pay + payload.bonuses) * (payload.tax_rate / 100))).toFixed(2)
+            }];
+            generatePDFReport(singleEmployeeData);
+          }
+        })
+        .catch(err => {
+          hideSpinner();
+          debugLog(`Payroll submission failed: ${err.message}`, 'error');
+          showErrorModal("Payroll submission failed.");
+        });
+
+      } else if (selectedOption === "all_employees") {
+        showSpinner();
+        secureFetch("/process-payroll/all", {
+          method: "POST",
+          headers
+        })
+        .then(data => {
+          hideSpinner();
+          showSuccessModal(data.message || "All payrolls processed successfully.");
+          $('#successModalOkBtn').one('click', () => location.reload());
+        })
+        .catch(err => {
+          hideSpinner();
+          debugLog(`Bulk payroll processing failed: ${err.message}`, 'error');
+          showErrorModal("Bulk payroll processing failed.");
+        });
+      } else {
+        showErrorModal("Please select a payroll option.");
+      }
+    });
+
+    reportButton.addEventListener("click", function () {
+      const selectedOption = document.getElementById("employeeDropdown").value;
+
+      if (selectedOption === "specific_employee") {
+        const employeeId = employeeIdField.value.trim();
+        if (!employeeId) {
+          showErrorModal("Please select an employee.");
+          return;
+        }
+        const employeeData = [{
+          employee_id: parseInt(employeeId),
+          email: employeeSelect.options[employeeSelect.selectedIndex].textContent,
+          hours_worked: parseFloat(hoursWorkedField.value) || 0,
+          overtime_hours: parseFloat(overtimeField.value) || 0,
+          bonuses: parseFloat(bonusesField.value) || 0,
+          tax_rate: parseFloat(taxRateField.value) || 0,
+          net_salary: ((3000 + ((parseFloat(overtimeField.value) || 0) * (3000 / 160) * 1.5) +
+                       (parseFloat(bonusesField.value) || 0)) *
+                      (1 - ((parseFloat(taxRateField.value) || 0) / 100))).toFixed(2)
+        }];
+        generatePDFReport(employeeData);
+      } else if (selectedOption === "all_employees") {
+        showSpinner();
+        secureFetch("/process-payroll/all", {
+          method: "POST",
+          headers
+        })
+        .then(data => {
+          hideSpinner();
+          if (data.status === "Success" && data.data.length > 0) {
+            generatePDFReport(data.data);
+          } else {
+            showErrorModal("No payroll data available.");
+          }
+        })
+        .catch(err => {
+          hideSpinner();
+          debugLog(`Report generation failed: ${err.message}`, 'error');
+          showErrorModal("Failed to generate report.");
+        });
+      } else {
+        showErrorModal("Please select an employee option to generate report.");
+      }
+    });
+
+    function generatePDFReport(data) {
+      if (!data || data.length === 0) {
+        alert("No payroll data to generate.");
+        return;
+      }
+      const jsPDF = window.jspdf.jsPDF;
+      const doc = new jsPDF();
+      doc.setFontSize(18);
+      doc.text("Company XYZ", 80, 10);
+      doc.setFontSize(14);
+      doc.text("Payroll Report", 85, 20);
+      doc.setFontSize(10);
+      doc.text(`Generated on: ${new Date().toLocaleString()}`, 10, 30);
+
+      const columns = [
+        { title: "Employee ID", dataKey: "employee_id" },
+        { title: "Email", dataKey: "email" },
+        { title: "Hours Worked", dataKey: "hours_worked" },
+        { title: "Overtime (hrs)", dataKey: "overtime_hours" },
+        { title: "Bonuses ($)", dataKey: "bonuses" },
+        { title: "Tax Rate (%)", dataKey: "tax_rate" },
+        { title: "Net Salary ($)", dataKey: "net_salary" },
+      ];
+
+      const rows = data.map(emp => ({
+        employee_id: emp.employee_id || "N/A",
+        email: emp.email || "N/A",
+        hours_worked: emp.hours_worked || 0,
+        overtime_hours: emp.overtime_hours || 0,
+        bonuses: `$${Number(emp.bonuses || 0).toFixed(2)}`,
+        tax_rate: `%${Number(emp.tax_rate || 0).toFixed(2)}`,
+        net_salary: `$${Number(emp.net_salary || 0).toFixed(2)}`
+      }));
+
+      doc.autoTable({
+        startY: 40,
+        head: [columns.map(c => c.title)],
+        body: rows.map(row => columns.map(col => row[col.dataKey])),
+        theme: "striped",
+        headStyles: { fillColor: [0, 0, 102], textColor: 255, fontSize: 10 },
+        bodyStyles: { fontSize: 9 },
+        alternateRowStyles: { fillColor: [240, 240, 240] },
+        didDrawPage: function(data) {
+          doc.setFontSize(8);
+          doc.text(`Page ${doc.internal.getNumberOfPages()}`, 180, 285);
+        }
+      });
+      doc.save("payroll_report.pdf");
+    }
+  });
+</script>
+  <!-- Script for handling salary processing (End) -->
+
+<!-- Script for handling approving and rejecting expense claims (Start) -->
+<script>
+// --- Bootstrap 4 Modals + No scroll-to-bottom on refresh ---
+
+function getToken() {
+    return sessionStorage.getItem('adminToken');
+}
+
+function showSuccess(message) {
+    document.getElementById('successModalMessage').innerText = message;
+    // Bootstrap 4 modal show
+    $('#successModal').modal({ backdrop: 'static', keyboard: false });
+    $('#successModal').modal('show');
+}
+
+function showError(message) {
+    document.getElementById('errorModalMessage').innerText = message;
+    // Bootstrap 4 modal show
+    $('#errorModal').modal({ backdrop: 'static', keyboard: false });
+    $('#errorModal').modal('show');
+}
+
+// Open reject modal
+function openRejectModal(claim_id) {
+    $('#rejectModal').modal({ backdrop: 'static', keyboard: false });
+    $('#rejectModal').modal('show');
+    document.getElementById('rejectReason').value = '';
+    document.getElementById('rejectModal').setAttribute('data-claim-id', claim_id);
+}
+
+// Open delete confirmation modal
+let claimToDelete = null;
+function openDeleteModal(claim_id) {
+    claimToDelete = claim_id;
+    $('#deleteConfirmModalExpense').modal({ backdrop: 'static', keyboard: false });
+    $('#deleteConfirmModalExpense').modal('show');
+}
+
+// --- ONLY ONE SEARCH LISTENER NEEDED ---
+document.getElementById('expenseSearchInput').addEventListener('input', function () {
+    const search = this.value.toLowerCase().trim();
+    const rows = document.querySelectorAll('#expenseTableBody tr');
+    rows.forEach(row => {
+        const rowText = Array.from(row.cells).map(cell =>
+            (cell.innerText || cell.textContent)
+        ).join(' ').toLowerCase();
+        row.style.display = rowText.includes(search) ? '' : 'none';
+    });
+});
+
+const EXPENSE_PAGE_SIZE = 40;
+let expenseCurrentPage = 1;
+let allExpenseClaims = [];
+
+// --- Smart Pagination Helper ---
+function renderSmartPaginationControls(options) {
+    const { containerId, currentPage, totalPages, onPageChange } = options;
+    let container = document.getElementById(containerId);
+    if (!container) {
+        container = document.createElement('div');
+        container.id = containerId;
+        container.className = 'd-flex justify-content-center my-2';
+        const tableDiv = document.querySelector('.table-responsive');
+        if (tableDiv) {
+            tableDiv.parentNode.insertBefore(container, tableDiv.nextSibling);
+        } else {
+            document.body.appendChild(container);
+        }
+    }
+    container.innerHTML = "";
+    if (totalPages <= 1) {
+        container.style.display = "none";
+        return;
+    } else {
+        container.style.display = "flex";
+    }
+    const windowSize = 2;
+    function createBtn(label, page, disabled = false, active = false) {
+        const btn = document.createElement("button");
+        btn.className = "btn btn-sm mx-1 " + (active ? "btn-primary" : "btn-outline-primary");
+        btn.textContent = label;
+        btn.disabled = disabled;
+        if (!disabled && !active) {
+            btn.onclick = function () {
+                onPageChange(page);
+            };
+        }
+        return btn;
+    }
+    // Previous
+    container.appendChild(createBtn("Previous", currentPage - 1, currentPage === 1));
+    // Always show first page
+    container.appendChild(createBtn("1", 1, false, currentPage === 1));
+    // Left ellipsis
+    if (currentPage - windowSize > 2) {
+        const span = document.createElement("span");
+        span.className = "mx-1";
+        span.textContent = "...";
+        container.appendChild(span);
+    }
+    // Page window
+    for (
+        let i = Math.max(2, currentPage - windowSize);
+        i <= Math.min(totalPages - 1, currentPage + windowSize);
+        i++
+    ) {
+        container.appendChild(createBtn(i, i, false, currentPage === i));
+    }
+    // Right ellipsis
+    if (currentPage + windowSize < totalPages - 1) {
+        const span = document.createElement("span");
+        span.className = "mx-1";
+        span.textContent = "...";
+        container.appendChild(span);
+    }
+    // Always show last page
+    if (totalPages > 1)
+        container.appendChild(createBtn(totalPages, totalPages, false, currentPage === totalPages));
+    // Next
+    container.appendChild(createBtn("Next", currentPage + 1, currentPage === totalPages));
+}
+
+// --- Smart pagination control renderer ---
+function renderExpensePaginationControls(totalPages) {
+    renderSmartPaginationControls({
+        containerId: "expense-pagination-controls",
+        currentPage: expenseCurrentPage,
+        totalPages,
+        onPageChange: function (page) {
+            expenseCurrentPage = page;
+            renderExpenseTable(allExpenseClaims);
+        }
+    });
+}
+
+function renderExpenseTable(data) {
+    const tableBody = document.getElementById('expenseTableBody');
+    allExpenseClaims = data; // always keep the latest source
+    tableBody.innerHTML = '';
+    if (!data || data.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="7" class="text-center">No records found</td></tr>`;
+        renderExpensePaginationControls(0);
+        return;
+    }
+    const totalPages = Math.ceil(data.length / EXPENSE_PAGE_SIZE);
+    if (expenseCurrentPage > totalPages) expenseCurrentPage = totalPages;
+    if (expenseCurrentPage < 1) expenseCurrentPage = 1;
+    const startIdx = (expenseCurrentPage - 1) * EXPENSE_PAGE_SIZE;
+    const endIdx = startIdx + EXPENSE_PAGE_SIZE;
+    const pagedList = data.slice(startIdx, endIdx);
+
+    pagedList.forEach(claim => {
+        const statusLower = claim.status.toLowerCase();
+        const statusColor = statusLower === 'approved' ? 'success' :
+            statusLower === 'rejected' ? 'danger' : 'warning';
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${claim.claim_id}</td>
+            <td>${claim.employee_display}</td>
+            <td>${claim.amount}</td>
+            <td>${claim.description}</td>
+            <td><a href="/static/ExpenseClaimsUploads/${claim.receipt}" target="_blank">View Receipt</a></td>
+            <td><span class="badge badge-${statusColor}">${claim.status}</span></td>
+            <td>
+                <button class="btn btn-success" onclick="approveClaim(${claim.claim_id})">Approve</button>
+                <button class="btn btn-danger" onclick="openRejectModal(${claim.claim_id})">Reject</button>
+                <button class="btn btn-warning" onclick="openDeleteModal(${claim.claim_id})">Delete</button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+
+    renderExpensePaginationControls(totalPages);
+}
+
+// --- REFRESH WITHOUT SCROLL TO BOTTOM ---
+function softRefresh() {
+    // Save scroll position
+    const scrollY = window.scrollY;
+    showSpinner();
+    secureFetch('/get-expense-claims', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+        }
+    })
+    .then(data => {
+        hideSpinner();
+        if (data.status === 'success') {
+            expenseCurrentPage = 1; // reset to first page on refresh
+            renderExpenseTable(data.claims || []);
+            // Restore scroll position
+            window.scrollTo(0, scrollY);
+        } else {
+            renderExpenseTable([]);
+            showError('Error fetching expense claims');
+        }
+    })
+    .catch(error => {
+        hideSpinner();
+        console.error('Error:', error);
+        renderExpenseTable([]);
+        showError('Error fetching expense claims');
+    });
+}
+
+// Use softRefresh for all data reloads
+window.onload = softRefresh;
+
+// Confirm deletion
+document.getElementById('confirmDeleteBtnExpense').addEventListener('click', function () {
+    if (!claimToDelete) return;
+    showSpinner();
+    secureFetch(`/delete-expense/${claimToDelete}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+        }
+    })
+    .then(data => {
+        hideSpinner();
+        $('#deleteConfirmModalExpense').modal('hide');
+        if (data.status === 'success') {
+            showSuccess('Expense claim deleted successfully');
+            setTimeout(() => softRefresh(), 1500); // Use softRefresh instead of reload
+        } else {
+            showError('Error deleting claim');
+        }
+    })
+    .catch(error => {
+        hideSpinner();
+        $('#deleteConfirmModalExpense').modal('hide');
+        console.error('Error:', error);
+        showError('Error deleting claim');
+    });
+});
+
+// Approve claim
+function approveClaim(claim_id) {
+    showSpinner();
+    secureFetch(`/approve-expense/${claim_id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+        }
+    })
+    .then(data => {
+        hideSpinner();
+        if (data.status === 'success') {
+            showSuccess('Expense claim approved');
+            setTimeout(() => softRefresh(), 1500); // Use softRefresh instead of reload
+        } else {
+            showError('Error approving claim');
+        }
+    })
+    .catch(error => {
+        hideSpinner();
+        console.error('Error:', error);
+        showError('Error approving claim');
+    });
+}
+
+// Reject claim
+function rejectClaim() {
+    const claim_id = document.getElementById('rejectModal').getAttribute('data-claim-id');
+    const reason = document.getElementById('rejectReason').value;
+
+    if (!reason.trim()) {
+        showError('Please provide a reason for rejection.');
+        return;
+    }
+    showSpinner();
+    secureFetch(`/reject-expense/${claim_id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+        },
+        body: JSON.stringify({ reason })
+    })
+    .then(data => {
+        hideSpinner();
+        $('#rejectModal').modal('hide');
+        if (data.status === 'success') {
+            showSuccess('Expense claim rejected');
+            setTimeout(() => softRefresh(), 1500); // Use softRefresh instead of reload
+        } else {
+            showError('Error rejecting claim');
+        }
+    })
+    .catch(error => {
+        hideSpinner();
+        $('#rejectModal').modal('hide');
+        console.error('Error:', error);
+        showError('Error rejecting claim');
+    });
+}
+</script>
+<!-- Script for handling rejecting and approving expense claims (End) -->
+
+<!-- Script for handling tax document generating process and display the tax details for employees (Start) -->
+<script>
+  const dropdown = document.getElementById("TaxemployeeDropdown");
+  const employeeInput = document.getElementById("employeeIDTaxForm");
+  const taxForm = document.getElementById("taxForm");
+  const token = sessionStorage.getItem('adminToken');
+  let documentToDelete = null;
+  let allTaxDocuments = []; // Store all data for client-side search
+
+  // Debug utility
+  function debugLog(...args) {
+    console.debug("[TaxDoc Debug]", ...args);
+  }
+
+  // --- Smart Pagination Helper ---
+  function renderSmartPaginationControls(options) {
+    const { containerId, currentPage, totalPages, onPageChange } = options;
+    let container = document.getElementById(containerId);
+    if (!container) {
+      container = document.createElement("div");
+      container.id = containerId;
+      container.className = "d-flex justify-content-center my-2";
+      const tableDiv = document.querySelector(".table-responsive");
+      if (tableDiv) {
+        tableDiv.parentNode.insertBefore(container, tableDiv.nextSibling);
+      } else {
+        document.body.appendChild(container);
+      }
+    }
+    container.innerHTML = "";
+    if (totalPages <= 1) {
+      container.style.display = "none";
+      return;
+    } else {
+      container.style.display = "flex";
+    }
+    const windowSize = 2;
+    function createBtn(label, page, disabled = false, active = false) {
+      const btn = document.createElement("button");
+      btn.className = "btn btn-sm mx-1 " + (active ? "btn-primary" : "btn-outline-primary");
+      btn.textContent = label;
+      btn.disabled = disabled;
+      if (!disabled && !active) {
+        btn.onclick = function () {
+          onPageChange(page);
+        };
+      }
+      return btn;
+    }
+    // Previous
+    container.appendChild(createBtn("Previous", currentPage - 1, currentPage === 1));
+    // Always show first page
+    container.appendChild(createBtn("1", 1, false, currentPage === 1));
+    // Left ellipsis
+    if (currentPage - windowSize > 2) {
+      const span = document.createElement("span");
+      span.className = "mx-1";
+      span.textContent = "...";
+      container.appendChild(span);
+    }
+    // Page window
+    for (
+      let i = Math.max(2, currentPage - windowSize);
+      i <= Math.min(totalPages - 1, currentPage + windowSize);
+      i++
+    ) {
+      container.appendChild(createBtn(i, i, false, currentPage === i));
+    }
+    // Right ellipsis
+    if (currentPage + windowSize < totalPages - 1) {
+      const span = document.createElement("span");
+      span.className = "mx-1";
+      span.textContent = "...";
+      container.appendChild(span);
+    }
+    // Always show last page
+    if (totalPages > 1)
+      container.appendChild(createBtn(totalPages, totalPages, false, currentPage === totalPages));
+    // Next
+    container.appendChild(createBtn("Next", currentPage + 1, currentPage === totalPages));
+  }
+
+  $(document).ready(function () {
+    debugLog("Document ready. Elements:", {dropdown, employeeInput, taxForm});
+    if (!dropdown || !employeeInput || !taxForm) {
+      debugLog("Missing one or more required DOM elements. Aborting script.");
+      return;
+    }
+
+    // Set employeeID input when dropdown changes
+    $(dropdown).on("change", function () {
+      debugLog("Dropdown changed. Value:", this.value);
+      employeeInput.value = this.value || "";
+    });
+
+    // Fetch employees and tax documents on load
+    fetchEmployees();
+    fetchAndStoreTaxDocuments(); // fetch and cache all docs
+
+    // Re-filter on search (no server call)
+    $("#taxDocumentSearch").on("input", function () {
+      debugLog("Search input changed. Value:", this.value);
+      filterAndRenderTaxDocuments();
+    });
+
+    // Modal close event listeners
+    $('#errorModal').on('hidden.bs.modal', function () {
+      debugLog("Error modal closed.");
+    });
+    $('#successModal').on('hidden.bs.modal', function () {
+      debugLog("Success modal closed.");
+    });
+  });
+
+  // Handle tax form submission
+  taxForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    debugLog("Tax form submitted.");
+    const employee_id = employeeInput.value;
+    const tax_year = document.getElementById("taxYear").value;
+    const gross_income = parseFloat(document.getElementById("grossIncome").value);
+    const document_type = document.getElementById("formType").value;
+
+    debugLog("Form values:", {employee_id, tax_year, gross_income, document_type});
+
+    if (!employee_id || !tax_year || !gross_income || !document_type) {
+      debugLog("Form validation failed.");
+      showErrorModal("Please fill in all required fields.");
+      return;
+    }
+    showSpinner();
+    secureFetch("/generate-tax-document", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        employee_id,
+        tax_year,
+        document_type,
+        gross_income
+      })
+    })
+    .then(data => {
+      hideSpinner();
+      debugLog("Generate tax document response:", data);
+      if (data.status === "success") {
+        showSuccessModal("✅ Tax document generated successfully.");
+        taxForm.reset();
+        employeeInput.value = "";
+        dropdown.value = "";
+        fetchAndStoreTaxDocuments(); // refresh cache and table
+      } else {
+        showErrorModal("❌ Error: " + (data.message || "Unknown error"));
+      }
+    })
+    .catch(err => {
+      hideSpinner();
+      debugLog("Error generating tax document:", err);
+      showErrorModal("An unexpected error occurred.");
+    });
+  });
+
+  function showSuccessModal(message) {
+    debugLog("Showing success modal:", message);
+    $("#successModalMessage").text(message);
+    $('#successModal').modal('show');
+  }
+
+  function showErrorModal(message) {
+    debugLog("Showing error modal:", message);
+    $("#errorModalMessage").text(message);
+    $('#errorModal').modal('show');
+  }
+
+  function fetchEmployees() {
+    const token = sessionStorage.getItem('adminToken');
+    debugLog("Fetching employees with token:", token);
+    if (!token) {
+      debugLog("Admin token missing in sessionStorage, cannot fetch employees.");
+      return;
+    }
+    showSpinner();
+    secureFetch("/get_employees", {
+      method: "GET",
+      headers: { "Authorization": `Bearer ${token}` }
+    })
+      .then(data => {
+        hideSpinner();
+        debugLog("Employees fetched:", data);
+        dropdown.innerHTML = '<option value="">-- Select Employee --</option>';
+        data.forEach(employee => {
+          const option = document.createElement("option");
+          option.value = employee.employee_id;
+          option.textContent = `${employee.email} (ID: ${employee.employee_id})`;
+          dropdown.appendChild(option);
+        });
+      })
+      .catch(err => {
+        hideSpinner();
+        debugLog("Error fetching employees:", err);
+      });
+  }
+
+  function viewTaxDocument(filePath) {
+    const token = sessionStorage.getItem('adminToken');
+    debugLog("Viewing tax document:", filePath);
+    showSpinner();
+    secureFetch(`/TaxDocuments/${filePath}`, {
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+    .then(res => {
+      debugLog("Initial secureFetch response for tax document view:", res);
+      // secureFetch returns parsed data, but for blobs we need the original fetch
+      // So, use normal fetch here for file blobs
+      return fetch(`/TaxDocuments/${filePath}`, {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+    })
+    .then(response => {
+      debugLog("Raw fetch response for tax document view:", response);
+      if (!response.ok) throw new Error("Failed to load tax document.");
+      return response.blob();
+    })
+    .then(blob => {
+      hideSpinner();
+      debugLog("Tax document blob size:", blob.size);
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+        debugLog("Revoked object URL for tax document.");
+      }, 5 * 60 * 1000); // Clean up after 5min
+    })
+    .catch(err => {
+      hideSpinner();
+      debugLog('Error opening tax document:', err);
+      showErrorModal('Error opening tax document: ' + err.message);
+    });
+  }
+
+  // Fetch and store all tax documents for client-side search
+  function fetchAndStoreTaxDocuments() {
+    debugLog("Fetching all tax documents...");
+    showSpinner();
+    secureFetch("/admin/get-tax-documents", {
+      method: "GET",
+      headers: { "Authorization": `Bearer ${token}` }
+    })
+    .then(data => {
+      hideSpinner();
+      debugLog("Fetched tax documents raw response:", data);
+      allTaxDocuments = Array.isArray(data) ? data : (data.data || []);
+      debugLog("Stored in allTaxDocuments:", allTaxDocuments);
+      filterAndRenderTaxDocuments(); // render with current search term
+    })
+    .catch(error => {
+      hideSpinner();
+      debugLog("Error loading tax documents:", error);
+    });
+  }
+
+  // --- Pagination constants and state ---
+  const TAX_DOC_PAGE_SIZE = 40;
+  let taxDocCurrentPage = 1;
+
+  // --- Smart Pagination ---
+  function renderTaxDocPaginationControls(totalPages) {
+    renderSmartPaginationControls({
+      containerId: "tax-documents-pagination-controls",
+      currentPage: taxDocCurrentPage,
+      totalPages,
+      onPageChange: function (page) {
+        taxDocCurrentPage = page;
+        filterAndRenderTaxDocuments();
+      }
+    });
+  }
+
+  // Filter and render based on current input
+  function filterAndRenderTaxDocuments() {
+    debugLog("Filtering and rendering tax documents.");
+    const tableBody = document.getElementById("taxDocumentsDetailsTable");
+    const searchInput = document.getElementById("taxDocumentSearch");
+    if (!tableBody || !searchInput) {
+      debugLog("Required DOM elements not found for rendering table!");
+      return;
+    }
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    debugLog("Current search term:", searchTerm);
+    tableBody.innerHTML = "";
+    let filteredDocs = [];
+    try {
+      filteredDocs = allTaxDocuments.filter(doc => {
+        return (
+          doc.email.toLowerCase().includes(searchTerm) ||
+          doc.tax_year.toString().includes(searchTerm) ||
+          doc.document_type.toLowerCase().includes(searchTerm) ||
+          doc.gross_income.toString().includes(searchTerm) ||
+          doc.tax_deducted.toString().includes(searchTerm) ||
+          doc.net_income.toString().includes(searchTerm)
+        );
+      });
+      debugLog("Filtered documents count:", filteredDocs.length);
+
+      const totalPages = Math.ceil(filteredDocs.length / TAX_DOC_PAGE_SIZE);
+      if (taxDocCurrentPage > totalPages) taxDocCurrentPage = totalPages;
+      if (taxDocCurrentPage < 1) taxDocCurrentPage = 1;
+      const startIdx = (taxDocCurrentPage - 1) * TAX_DOC_PAGE_SIZE;
+      const endIdx = startIdx + TAX_DOC_PAGE_SIZE;
+      const pagedList = filteredDocs.slice(startIdx, endIdx);
+
+      pagedList.forEach(doc => {
+        let row = `
+          <tr>
+              <td>${doc.email}</td>
+              <td>${doc.tax_year}</td>
+              <td>${doc.document_type}</td>
+              <td>USD ${parseFloat(doc.gross_income).toFixed(2)}</td>
+              <td>USD ${parseFloat(doc.tax_deducted).toFixed(2)}</td>
+              <td>USD ${parseFloat(doc.net_income).toFixed(2)}</td>
+              <td>
+                  <button type="button" class="btn btn-info btn-sm" onclick="viewTaxDocument('${doc.file_path}')">View</button>
+                  <button onclick="openEditModal(${doc.tax_document_id}, '${doc.tax_year}', '${doc.document_type}', '${doc.file_path}')" class="btn btn-warning btn-sm">Edit</button>
+                  <button onclick="confirmDeleteTaxDocument(${doc.tax_document_id})" class="btn btn-danger btn-sm">Delete</button>
+              </td>
+          </tr>
+        `;
+        tableBody.innerHTML += row;
+      });
+
+      renderTaxDocPaginationControls(totalPages);
+    } catch (err) {
+      debugLog("Error filtering/rendering tax documents:", err, allTaxDocuments);
+    }
+  }
+
+  // Delete modal logic for Bootstrap 4
+  function confirmDeleteTaxDocument(documentId) {
+    debugLog("Confirm delete modal opened for documentId:", documentId);
+    documentToDelete = documentId;
+    $('#deleteConfirmModalTaxDocument').modal('show');
+    $("#confirmDeleteBtnTaxDocument").off('click').on('click', function () {
+      debugLog("Delete confirmed for documentId:", documentToDelete);
+      if (documentToDelete) {
+        deleteTaxDocument(documentToDelete);
+        $('#deleteConfirmModalTaxDocument').modal('hide');
+        documentToDelete = null;
+      }
+    });
+  }
+
+  function deleteTaxDocument(documentId) {
+    debugLog("Deleting tax document with documentId:", documentId);
+    showSpinner();
+    secureFetch(`/delete-tax-document/${documentId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(data => {
+      hideSpinner();
+      debugLog("Delete tax document response:", data);
+      if (data.status === 'success') {
+        showSuccessModal('✅ Tax document deleted successfully.');
+        fetchAndStoreTaxDocuments(); // refresh cache and table
+      } else {
+        showErrorModal('❌ Error: ' + (data.message || 'Failed to delete document'));
+      }
+    })
+    .catch(error => {
+      hideSpinner();
+      debugLog('Error deleting tax document:', error);
+      showErrorModal('❌ An unexpected error occurred while deleting the document.');
+    });
+  }
+
+  window.confirmDeleteTaxDocument = confirmDeleteTaxDocument;
+  window.deleteTaxDocument = deleteTaxDocument;
+  window.fetchAndStoreTaxDocuments = fetchAndStoreTaxDocuments;
+  window.viewTaxDocument = viewTaxDocument;
+</script>
+<!-- Script for handling tax document generating process and display the tax details for employees (End) -->
+
+<!-- Script for editing, deleting, and loading tax document details (Start, spinner integrated) -->
+<script>
+let currentDeleteId = null;
+let currentDeleteButton = null;
+
+// Open Edit Modal (Bootstrap 4)
+function openEditModal(documentId, taxYear, documentType, filePath) {
+  document.getElementById("editDocumentId").value = documentId;
+  document.getElementById("editTaxYear").value = taxYear;
+  document.getElementById("editDocumentType").value = documentType;
+  document.getElementById("editFilePath").value = filePath;
+
+  $('#editTaxModal').modal('show');
+}
+
+// Close Edit Modal (Bootstrap 4)
+function closeEditModal() {
+  $('#editTaxModal').modal('hide');
+}
+
+// Show Success/Error Modal (Bootstrap 4)
+function showModal(type, message) {
+  const modalId = type === 'success' ? 'successModal' : 'errorModal';
+  // Use .modal-body for Bootstrap 4
+  const modalBody = document.querySelector(`#${modalId} .modal-body`);
+  modalBody.textContent = message;
+  $(`#${modalId}`).modal('show');
+}
+
+// Submit Edit Tax Document (uses PUT)
+function submitEditTaxDocument() {
+  const token = sessionStorage.getItem('adminToken');
+
+  let documentId = document.getElementById("editDocumentId").value;
+  let updatedData = {
+    tax_year: document.getElementById("editTaxYear").value,
+    document_type: document.getElementById("editDocumentType").value,
+    file_path: document.getElementById("editFilePath").value
+  };
+
+  showSpinner();
+  secureFetch(`/edit-tax-document/${documentId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify(updatedData)
+  })
+  .then(data => {
+    hideSpinner();
+    if (data.status === "success") {
+      showModal('success', data.message || "Document updated successfully.");
+      closeEditModal();
+      loadTaxDocuments();
+    } else {
+      showModal('error', data.message || "Failed to update document.");
+    }
+  })
+  .catch(error => {
+    hideSpinner();
+    console.error("Error updating tax document:", error);
+    showModal('error', "Failed to update document.");
+  });
+}
+
+// Confirm Delete Modal (Bootstrap 4)
+function confirmDelete(documentId, buttonElement) {
+  currentDeleteId = documentId;
+  currentDeleteButton = buttonElement;
+  $('#confirmDeleteModal').modal('show');
+}
+
+// Confirmed Delete Action
+function deleteTaxDocumentConfirmed() {
+  const token = sessionStorage.getItem('adminToken');
+
+  if (!currentDeleteId || !currentDeleteButton) return;
+
+  showSpinner();
+  secureFetch(`/delete-tax-document/${currentDeleteId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+      "Cache-Control": "no-cache"
+    }
+  })
+  .then(data => {
+    hideSpinner();
+    if (data.status === "success" || (data.message && data.message.includes("deleted"))) {
+      showModal('success', data.message || "Document deleted successfully.");
+      const rowToRemove = currentDeleteButton.closest("tr");
+      if (rowToRemove) rowToRemove.remove();
+      loadTaxDocuments();
+    } else {
+      showModal('error', "Failed to delete document: " + (data.message || "Unknown error"));
+    }
+  })
+  .catch(error => {
+    hideSpinner();
+    console.error("Error deleting tax document:", error);
+    showModal('error', "Error deleting tax document.");
+  });
+}
+</script>
+<!-- Script for editing, deleting, and loading tax document details (End) -->
+
+<!-- Script for logging out (Start) -->
+<script>
+  document.querySelector(".logout-btn").addEventListener("click", function () {
+    $("#logoutModal").modal("show"); // Show modal using jQuery
+  });
+
+  document
+    .getElementById("confirmLogout")
+    .addEventListener("click", function () {
+      sessionStorage.removeItem("adminToken");
+      window.location.href = "/admin_login";
+    });
+
+  document
+    .getElementById("cancelLogout")
+    .addEventListener("click", function () {
+      $("#logoutModal").modal("hide"); // Hide modal using jQuery
+    });
+
+  document
+    .getElementById("closeLogoutModal")
+    .addEventListener("click", function () {
+      $("#logoutModal").modal("hide"); // Also hide on "X"
+    });
+</script>
+<!-- Script for logging out (End) -->
+
+<!-- Script that redirects admin back to login page if the token doesn't exist (Start, spinner integrated) -->
+<script>
+  if (!sessionStorage.getItem("adminToken")) {
+    showSpinner();
+    setTimeout(function() {
+      alert("Not authenticated. Redirecting to login.");
+      window.location.href = "/admin_login";
+    }, 600);
+  }
+</script>
+<!-- Script that redirects admin back to login page if the token doesn't exist (End) -->
+
+<!-- Script for redirect admin back to the login page when someone else logged in from another tab (Start, spinner integrated) -->
+<script>
+  function getToken() {
+    return sessionStorage.getItem("adminToken");
+  }
+
+  function checkSessionConflict() {
+    const token = getToken();
+    if (!token) return;
+
+    showSpinner();
+    secureFetch("/check_jti", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => {
+        hideSpinner();
+        if (response.status === 403) {
+          throw new Error("session_conflict");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.error === "session_conflict") {
+          throw new Error("session_conflict");
+        }
+      })
+      .catch((err) => {
+        hideSpinner();
+        if (err.message === "session_conflict") {
+          // Show modal
+          const modal = new bootstrap.Modal(
+            document.getElementById("sessionConflictModal"),
+            {
+              backdrop: "static",
+              keyboard: false,
+            }
+          );
+          modal.show();
+
+          // Attach event listener only once
+          const logoutBtn = document.getElementById("confirmLogoutBetweenTabs");
+          if (!logoutBtn.dataset.bound) {
+            logoutBtn.addEventListener("click", () => {
+              showSpinner();
+              setTimeout(function() {
+                sessionStorage.removeItem("adminToken");
+                window.location.href = "/admin_login";
+              }, 600);
+            });
+            logoutBtn.dataset.bound = "true";
+          }
+        }
+      });
+  }
+
+  // Initial check + every 30 seconds
+  checkSessionConflict();
+  setInterval(checkSessionConflict, 30000);
+</script>
+<!-- Script for redirect admin back to the login page when someone else logged in from another tab (End) -->
+
+<!-- Script for checking admin if they have access to this page (Start, spinner integrated) -->
+<script>
+  // Only run this if the backend passed access_denied = True
+  const accessDenied = {{ 'true' if access_denied else 'false' }};
+  if (accessDenied) {
+    const accessModal = new bootstrap.Modal(document.getElementById("accessDeniedModal"));
+    accessModal.show();
+
+    document.getElementById("forceLogoutBtn").addEventListener("click", function () {
+      showSpinner();
+      setTimeout(function() {
+        sessionStorage.removeItem("adminToken");
+        window.location.href = "/admin_login";
+      }, 600);
+    });
+  }
+</script>
+<!-- Script for checking admin if they have access to this page (End) -->
+
+<!-- Script for handling transparent background issue (Start) -->
+<script>
+$(document).ready(function() {
+  $('.modal').on('hidden.bs.modal', function () {
+    // Only remove backdrop and modal-open if NO modals are open
+    if ($('.modal.show').length === 0) {
+      $('.modal-backdrop').remove();
+      $('body').removeClass('modal-open');
+      $('body').css('padding-right', '');
+    }
+  });
+
+  // Extra: Remove backdrop if ESC pressed and no modals are open
+  $(document).on('keydown', function(e) {
+    if (e.key === 'Escape' && $('.modal.show').length === 0) {
+      $('.modal-backdrop').remove();
+      $('body').removeClass('modal-open');
+      $('body').css('padding-right', '');
+    }
+  });
+});
+</script>
+<!-- Script for handling transparent background issue (End) -->
+      
+  </body>
+</html>

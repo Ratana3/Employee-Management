@@ -1,0 +1,3062 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Spica Admin</title>
+    <!-- base:css -->
+    <link
+      rel="stylesheet"
+      href="../../static/Admin/vendors/mdi/css/materialdesignicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../static/Admin/vendors/css/vendor.bundle.base.css"
+    />
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../static/Admin/css/style.css" />
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../static/Admin/images/favicon.png" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+  </head>
+
+  <body>
+    <div class="container-scroller d-flex">
+      <!-- partial:../../partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item sidebar-category">
+            <p>Admin dashboard</p>
+            <span></span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard">
+              <i class="mdi mdi-view-quilt menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+              <div class="badge badge-info badge-pill"></div>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/employeemanagement">
+              <i class="mdi mdi-account-box-outline menu-icon"></i>
+              <span class="menu-title">Employee <br />management</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/attendanceandtimetracking">
+              <i class="mdi mdi-clipboard-text menu-icon"></i>
+              <span class="menu-title">Attendance and <br />Time tracking</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/perfomancemanagement">
+              <i class="mdi mdi-settings menu-icon"></i>
+              <span class="menu-title">Performance <br />management</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/reportingandanalytics">
+              <i class="mdi mdi-chart-pie menu-icon"></i>
+              <span class="menu-title">Reporting <br />and Analytics </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/notificationsandcommunication">
+              <i class="mdi mdi-bell-ring menu-icon"></i>
+              <span class="menu-title"
+                >Notifications <br />and Communication
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/payrollandfinancialmanagement">
+              <i class="mdi mdi-currency-usd menu-icon"></i>
+              <span class="menu-title"
+                >Payroll and <br />Financial Management
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/securityandcompliance">
+              <i class="mdi mdi-security menu-icon"></i>
+              <span class="menu-title"
+                >Security and<br />
+                Compliance
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/systemadministration">
+              <i class="mdi mdi-monitor menu-icon"></i>
+              <span class="menu-title">System <br />Administration </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/traininganddevelopment">
+              <i class="mdi mdi-grease-pencil menu-icon"></i>
+              <span class="menu-title"
+                >Training and<br />
+                Development
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/workflowmanagement">
+              <i class="mdi mdi-lan-connect menu-icon"></i>
+              <span class="menu-title">Workflow <br />Management </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/employeeEngagement">
+              <i class="mdi mdi-human-male menu-icon"></i>
+              <span class="menu-title">Employee <br />Engagement </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dataimportandexport">
+              <i class="mdi mdi-file-document menu-icon"></i>
+              <span class="menu-title">Data Import </span>
+            </a>
+          </li>
+                    <li class="nav-item">
+            <a class="nav-link" href="/verification">
+              <i class="mdi mdi-clipboard-check menu-icon"></i>
+              <span class="menu-title">Access control</span>
+              <div class="badge badge-info badge-pill"></div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-danger logout-btn" style="margin-left: 80px">
+              <i class="la la-power-off"></i>
+              <p>Logout</p>
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+      
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Task Management</h4>
+                        <p class="card-description">Assign a Task</p>
+                        <form class="forms-sample" id="taskForm">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            
+                            <div class="form-group">
+                                <label for="assignmentType">Assignment Type</label>
+                                <select class="form-control" id="assignmentType" >
+                                    <option value="task">Assign a task</option>
+                                    <option value="project">Assign a project</option>
+                                </select>
+                            </div>
+            
+                            <div id="projectFields" style="display: none;">
+                                <div class="form-group">
+                                    <label for="projectName">Project Name</label>
+                                    <input type="text" class="form-control" id="projectName" name="project_name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="projectDescription">Project Description</label>
+                                    <textarea class="form-control" id="projectDescription" name="project_description"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="startDate">Start Date</label>
+                                    <input type="datetime-local" class="form-control" id="startDate" name="start_date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="endDate">End Date</label>
+                                    <input type="datetime-local" class="form-control" id="endDate" name="end_date">
+                                </div>
+                            </div>
+            
+                            <div class="form-group">
+                                <label for="taskName">Task Name</label>
+                                <input type="text" class="form-control" id="taskName" placeholder="Enter task name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="taskDescription">Task Description</label>
+                                <textarea class="form-control" id="taskDescription" placeholder="Describe the task" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="assignTo">Assign To</label>
+                                <select class="form-control" id="assignTo" required>
+                                    <option value="" disabled>-- Select an option --</option>
+                                    <option value="employee">Employee</option>
+                                    <option value="team">Team</option>
+                                    <option value="both">Both</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="employeeSelect" style="display: none;">
+                                <label for="selectEmployee">Select Employee(s)</label>
+                                <select multiple class="form-control" id="selectEmployee">
+                                    <option value="">-- Select Employee(s) --</option>
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+            
+                            <div class="form-group" id="teamSelect" style="display: none;">
+                                <label for="selectTeam">Select Team(s)</label>
+                                <select multiple class="form-control" id="selectTeam">
+                                    <option value="">-- Select Team(s) --</option>
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Task Parts</label>
+                                <div id="taskParts">
+                                    <div class="task-part">
+                                        <input type="text" class="form-control" placeholder="Part Name" required>
+                                        <input type="number" class="form-control" placeholder="Percentage" min="1" max="100" required>
+                                        <button type="button" class="btn btn-danger btn-sm remove-part">Remove</button>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-success btn-sm mt-2" id="addPart">Add Part</button>
+                            </div>
+                            <div class="form-group">
+                                <label for="dueDate">Due Date</label>
+                                <input type="date" class="form-control" id="dueDate" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Assign Task</button>
+                            <button type="button" class="btn btn-light" id="cancelBtn">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Task details:</h4>
+                    <p class="card-description">
+                      Details of tasks that are assigned
+                    </p>
+                    <div class="form-group">
+  <input type="text" id="taskSearchInput" class="form-control" placeholder="Search tasks..." style="border: 1px solid black; color: black;">
+</div>
+
+                    <div id="task-list">
+                      <!-- Tasks will be dynamically inserted here -->
+                    </div>
+                  </div>
+                  <div id="task-list-pagination-controls"></div>
+                </div>
+              </div>
+              <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Performance Review</h4>
+                    <p class="card-description">Submit an Employee Performance Review</p>
+                    <form class="forms-sample" id="reviewForm">
+                      <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                  />
+                        <div class="form-group">
+                            <label for="selectEmployee">Select Employee</label>
+                            <select class="form-control" id="selectEmployee-reviewform" required>
+                                <option value="">-- Select Employee --</option>
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewDate">Review Date</label>
+                            <input type="date" class="form-control" id="reviewDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback">Feedback</label>
+                            <textarea class="form-control" id="feedback" placeholder="Provide feedback" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="rating">Rating</label>
+                            <select class="form-control" id="rating" required>
+                                <option value="">-- Select Rating --</option>
+                                <option value="Excellent">Excellent</option>
+                                <option value="Good">Good</option>
+                                <option value="Average">Average</option>
+                                <option value="Needs Improvement">Needs Improvement</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2">Submit Review</button>
+                        <button type="button" class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+            </div>
+          </div>
+                    
+              <div class="col-md-12 grid-margin stretch-card">
+
+                <div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Performance Reviews Table</h4>
+    <p class="card-description">Search User:</p>
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="searchInput"
+        placeholder="Search Here..."
+        aria-label="search"
+        aria-describedby="search"
+        style="border: 1px solid black; color: black;"
+      />
+    </div>
+    <p class="card-description">Search user by email, name, date, permission, etc.</p>
+    <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Review ID</th>
+            <th>Employee Email</th>
+            <th>Review Date</th>
+            <th>Feedback</th>
+            <th>Rating</th>
+            <th>Team</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="reviewTableBody">
+          <!-- Populated dynamically with JavaScript -->
+        </tbody>
+        
+      </table>
+      <div id="reviewPagination"></div>
+    </div>
+  </div>
+</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                      <h4 class="card-title">Goal Setting</p>
+                      </h4>
+                      <p class="card-description">Assign a SMART Goal to an Employee or Team</p>
+                      <div class="goal-section">
+                        <div class="card goal-card">
+                            <div class="card-body">
+                                <h5 class="card-title">SMART Goal Example:</h5>
+                                <p><strong>Goal:</strong> Increase the number of sales calls made by 20% over the next quarter.</p>
+                                <p><strong>Specific:</strong> Increase sales calls by 20%.</p>
+                                <p><strong>Measurable:</strong> Track the number of calls made per week.</p>
+                                <p><strong>Achievable:</strong> Based on past performance, this goal is realistic.</p>
+                                <p><strong>Relevant:</strong> It aligns with the overall business strategy to increase sales.</p>
+                                <p><strong>Time-bound:</strong> Achieve this goal within 3 months (one quarter).</p>
+                            </div>
+                        </div>
+                    </div>
+                      <form class="forms-sample" method="POST" id="assignGoalForm" action="{{ url_for('admin_bp.assign_goal') }}">
+                          <!-- Goal Name -->
+                          <div class="form-group">
+                              <label for="goalName">Goal Name</label>
+                              <input type="text" class="form-control" id="goalName" name="goal_name" placeholder="Enter goal name" required>
+                          </div>
+              
+                          <!-- Description -->
+                          <div class="form-group">
+                              <label for="goalDescription">Goal Description</label>
+                              <textarea class="form-control" id="goalDescription" name="description" rows="3" placeholder="Provide a detailed description of the goal" required></textarea>
+                          </div>
+              
+                          <!-- Specific Goal -->
+                          <div class="form-group">
+                              <label for="specificGoal">Specific Goal</label>
+                              <input type="text" class="form-control" id="specificGoal" name="specific_goal" placeholder="Define what needs to be achieved" required>
+                          </div>
+              
+                          <!-- Measurable Goal -->
+                          <div class="form-group">
+                              <label for="measurableGoal">Measurable Goal</label>
+                              <input type="text" class="form-control" id="measurableGoal" name="measurable_goal" placeholder="How will progress be measured?" required>
+                          </div>
+              
+                          <!-- Achievable Goal -->
+                          <div class="form-group">
+                              <label for="achievableGoal">Achievable Goal</label>
+                              <input type="text" class="form-control" id="achievableGoal" name="achievable_goal" placeholder="Ensure the goal is realistic" required>
+                          </div>
+              
+                          <!-- Relevant Goal -->
+                          <div class="form-group">
+                              <label for="relevantGoal">Relevant Goal</label>
+                              <input type="text" class="form-control" id="relevantGoal" name="relevant_goal" placeholder="Explain why this goal is relevant" required>
+                          </div>
+              
+                          <!-- Time-bound Goal -->
+                          <div class="form-group">
+                              <label for="timeBoundGoal">Time-bound Goal</label>
+                              <input type="date" class="form-control" id="timeBoundGoal" name="time_bound_goal" required>
+                          </div>
+              
+                          <!-- Employee or Team Selection -->
+                          <div class="form-group">
+                              <label for="employeeOrTeam">Assign to</label>
+                              <select class="form-control" id="employeeOrTeam" name="employee_or_team" required>
+                                <option value="">-- Select an option --</option>
+                                  <option value="employee">Employee</option>
+                                  <option value="team">Team</option>
+                              </select>
+                          </div>
+              
+                          <!-- Employee Selection -->
+                          <div class="form-group" id="employeeSelectDiv" style="display:none;">
+                            <label for="employeeSelect-goal">Select Employee</label>
+                            <select class="form-control" id="employeeSelect-goal" name="employee_id">
+                              <option value="" disabled selected>Select an Employee</option>
+                          </select>
+                        </div>
+                        
+              
+                          <!-- Team Selection -->
+                          <div class="form-group" id="teamSelectDiv" style="display:none;">
+                              <label for="teamSelect-goal">Select Team</label>
+                              <select class="form-control" id="teamSelect-goal" name="team_id">
+                                <option value="" disabled selected>Select a Team</option>
+                            </select>
+                          </div>
+              
+                          <!-- Submit and Cancel Buttons -->
+                          <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                          <button type="reset" class="btn btn-light">Cancel</button>
+                      </form>
+                  </div>
+              </div>
+              </div>
+              <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Goal details for employees :</h4>
+                    <p class="card-description">
+                      Details of goals that are assigned for employees
+                    </p>
+                    <input style="border: 1px solid black; color: black;margin-bottom: 10px;" class="form-control" type="text" id="EmployeegoalSearchInput" placeholder="Search goals...">
+                    <div id="goal-list">
+                      <!-- Tasks will be dynamically inserted here -->
+                    </div>
+                    <div id="goal-list-pagination"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Goal details for teams :</h4>
+                    <p class="card-description">
+                      Details of goals that are assigned for teams
+                    </p>
+                    <input style="border: 1px solid black; color: black; margin-bottom: 10px;" class="form-control" type="text" id="TeamgoalSearchInput" placeholder="Search goals..." oninput="fetchAndRenderGoals('/get_team_goals', 'teamgoal-list', 'team_name','TeamgoalSearchInput');">
+                    
+                    <div id="teamgoal-list">
+                      <!-- Tasks will be dynamically inserted here -->
+                    </div>
+                    <div id="teamgoal-list-pagination"></div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+    
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html -->
+          <footer class="footer">
+            <div class="card">
+              <div class="card-body">
+                <div
+                  class="d-sm-flex justify-content-center justify-content-sm-between"
+                >
+                  <span
+                    class="text-muted d-block text-center text-sm-left d-sm-inline-block"
+                    >Copyright © bootstrapdash.com 2020</span
+                  >
+                  <span
+                    class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"
+                  >
+                    Free
+                    <a href="https://www.bootstrapdash.com/" target="_blank"
+                      >Bootstrap dashboard templates</a
+                    >
+                    from Bootstrapdash.com</span
+                  >
+                </div>
+              </div>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+
+
+  <!-- Modal for editing performance review details of employees -->
+    <div class="modal fade" id="editReviewModal" tabindex="-1" role="dialog" aria-labelledby="editReviewModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editReviewModalLabel">Edit Performance Review</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="editReviewForm">
+              <input type="hidden" id="review-id" name="review_id">
+              <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                  />
+    
+              <!-- Employee Dropdown -->
+              <div class="form-group">
+                <label for="employee-select">Select Employee</label>
+                <select class="form-control" id="employee-select-review" name="employee_id" required>
+                  <option value="">Select Employee</option>
+                  <!-- Options will be added by JS -->
+                </select>
+              </div>
+    
+              <!-- Review Date -->
+              <div class="form-group">
+                <label for="review-date">Review Date</label>
+                <input type="date" class="form-control" id="review-date" name="review_date" required>
+              </div>
+    
+              <!-- Feedback -->
+              <div class="form-group">
+                <label for="feedback">Feedback</label>
+                <input type="text" class="form-control" id="edit_feedback" name="edit_feedback" required>
+              </div>
+    
+              <!-- Rating Dropdown -->
+              <div class="form-group">
+                <label for="rating">Rating</label>
+                <select class="form-control" id="edit_rating" name="edit_rating" required>
+                  <option value="Excellent">Excellent</option>
+                  <option value="Good">Good</option>
+                  <option value="Average">Average</option>
+                  <option value="Needs Improvement">Needs Improvement</option>
+                </select>
+              </div>
+    
+              <button type="submit" class="btn btn-success">Save Changes</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- Modal for Goal Evaluation -->
+<div class="modal fade" id="goalEvaluationModal" tabindex="-1" role="dialog" aria-labelledby="goalEvaluationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="goalEvaluationModalLabel">Edit Goal Evaluation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="goalEvaluationForm">
+          <input type="hidden" id="goal-id" name="goal_id">
+          
+          <div class="form-group">
+            <label for="final-score">Final Score</label>
+            <input type="text" class="form-control" id="final-score" name="final_score" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="lessons-learned">Lessons Learned</label>
+            <textarea class="form-control" id="lessons-learned" name="lessons_learned" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="action-plan">Action Plan</label>
+            <textarea class="form-control" id="action-plan" name="action_plan" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="course">Recommended Course</label>
+            <input type="text" class="form-control" id="course" name="course" value="No recommended course" required>
+          </div>
+          
+          <button type="submit" class="btn btn-success">Save Changes</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Edit Task Modal -->
+<div id="editTaskModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Edit Task</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <form id="editTaskForm">
+                  <input type="hidden" id="editTaskId" name="task_id">
+                  <div class="form-group">
+                      <label for="editTaskName">Task Name:</label>
+                      <input type="text" class="form-control" id="editTaskName" name="task_name" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="editTaskDescription">Description:</label>
+                      <textarea class="form-control" id="editTaskDescription" name="description"></textarea>
+                  </div>
+                  <div class="form-group">
+                      <label for="editTaskProgress">Progress (%):</label>
+                      <input type="number" class="form-control" id="editTaskProgress" name="progress" min="0" max="100" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="editTaskStatus">Status:</label>
+                      <select class="form-control" id="editTaskStatus" name="status">
+                          <option value="Pending">Pending</option>
+                          <option value="In Progress">In Progress</option>
+                          <option value="Completed">Completed</option>
+                      </select>
+                  </div>
+                  <button type="submit" class="btn btn-success">Save Changes</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<!-- Delete Task Modal -->
+<div id="deleteTaskModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Delete Task</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <p>Are you sure you want to delete this task?</p>
+              <form id="deleteTaskForm">
+                  <input type="hidden" id="deleteTaskId" name="task_id">
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<!-- Modal for adding task parts -->
+<div class="modal fade" id="addPartModal" tabindex="-1" role="dialog" aria-labelledby="addPartModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form id="addPartForm" onsubmit="submitNewPart(event)">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addPartModalLabel">Add Task Part</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="task_id">
+          <div class="form-group">
+            <label for="part_name">Part Name</label>
+            <input type="text" id="part_name" name="part_name" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="part_percentage">Percentage</label>
+            <input type="number" id="part_percentage" name="part_percentage" class="form-control" min="1" max="100" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Add Part</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- Logout Confirmation Modal -->
+<div class="modal fade" id="logoutModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Logout</h5>
+        <button type="button" class="close" id="closeLogoutModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to logout?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancelLogout">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmLogout">Logout</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-success">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="successModalLabel">Success</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="successModalMessage">
+        <!-- Message will be injected here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal" id="successModalOkBtn">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Error Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="errorModalMessage">
+        <!-- Message will be injected here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Dismiss</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Note Modal -->
+<div class="modal fade" id="editNoteModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form id="modalEditNoteForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Note</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="modalEditNoteId" />
+          <textarea id="modalEditNoteDescription" class="form-control"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmDeleteNoteModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Deletion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this note?
+        <input type="hidden" id="modalDeleteNoteId" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="confirmDeleteNoteBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Update Progress Modal -->
+<div class="modal fade" id="updateProgressModal" tabindex="-1" role="dialog" aria-labelledby="updateProgressLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form id="updateProgressForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Goal Progress</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="progressGoalId">
+        <label for="progressInput">Progress (%)</label>
+        <input type="number" class="form-control" id="progressInput" min="0" max="100" required>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Feedback Modal -->
+<div class="modal fade" id="editFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="editFeedbackLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form id="editFeedbackForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Feedback</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editFeedbackId">
+        <textarea class="form-control" id="editFeedbackInput" required></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Delete Feedback Modal -->
+<div class="modal fade" id="deleteFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="deleteFeedbackLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this feedback?
+        <input type="hidden" id="deleteFeedbackId">
+      </div>
+      <div class="modal-footer">
+        <button id="confirmDeleteFeedbackBtn" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Submit Feedback Modal -->
+<div class="modal fade" id="submitFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="submitFeedbackLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form id="submitFeedbackForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Submit Feedback</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="submitFeedbackGoalId">
+        <label for="submitFeedbackInput">Feedback</label>
+        <textarea id="submitFeedbackInput" class="form-control" required></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Goal Deletion Confirmation Modal -->
+<div class="modal fade" id="confirmGoalDeleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">Confirm Goal Deletion</h5>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this goal?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button id="confirmGoalDeleteBtn" type="button" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Confirm Delete Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this review?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Task Part Modal -->
+<div id="deleteTaskPartModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Delete Task Part</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <p>Are you sure you want to delete this task part?</p>
+              <form id="deleteTaskPartForm">
+                  <input type="hidden" id="deleteTaskPartId" name="task_part_id">
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Session Conflict Modal -->
+<div
+  class="modal fade"
+  id="sessionConflictModal"
+  tabindex="-1"
+  aria-labelledby="sessionConflictLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="sessionConflictLabel">Session Conflict</h5>
+      </div>
+      <div class="modal-body">
+        <p>
+          <strong
+            >Someone has logged into your account from another tab or
+            device.</strong
+          >
+        </p>
+        <p>You will be logged out for security reasons.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-danger" id="confirmLogoutBetweenTabs">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Logout Confirmation Modal -->
+<div class="modal fade" id="logoutModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Logout</h5>
+        <button type="button" class="close" id="closeLogoutModal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to logout?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancelLogout">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-danger" id="confirmLogout">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Access Denied Modal -->
+<div
+  class="modal fade"
+  id="accessDeniedModal"
+  tabindex="-1"
+  aria-labelledby="accessDeniedLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="accessDeniedLabel">Access Denied</h5>
+      </div>
+      <div class="modal-body">
+        <p>Only Super Admins are allowed to access this page.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="redirectBtn" type="button" class="btn btn-danger">
+          Go to Dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Loading Spinner Modal -->
+    <div
+      class="modal fade"
+      id="loadingSpinnerModal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+      data-backdrop="static"
+      data-keyboard="false"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 bg-transparent shadow-none">
+          <div class="modal-body text-center">
+            <div
+              class="spinner-border text-white"
+              style="width: 4rem; height: 4rem"
+              role="status"
+            >
+              <span class="sr-only"></span>
+            </div>
+            <div class="mt-3 text-white font-weight-bold">Please wait...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="../../static/Admin/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="../../static/Admin/js/off-canvas.js"></script>
+    <script src="../../static/Admin/js/hoverable-collapse.js"></script>
+    <script src="../../static/Admin/js/template.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="../../static/Admin/js/file-upload.js"></script>
+    <!-- End custom js for this page-->
+
+    <!-- Script for spinner logic and displaying success and error (Start) -->
+    <script>
+      window.ModalUtils = (function () {
+        let spinnerVisible = false;
+
+        function showSpinner() {
+          if (spinnerVisible) return;
+          spinnerVisible = true;
+          $("#loadingSpinnerModal").modal({
+            backdrop: "static",
+            keyboard: false,
+            show: true,
+          });
+        }
+
+        function hideSpinner() {
+          spinnerVisible = false;
+          $("#loadingSpinnerModal").modal("hide");
+        }
+
+        function showSuccess(message, onClose) {
+          $("#successModalMessage").html(message);
+          $("#successModal").modal("show");
+          $("#successModal").off("hidden.bs.modal");
+          if (typeof onClose === "function") {
+            const handler = function () {
+              $("#successModal").off("hidden.bs.modal", handler);
+              onClose();
+            };
+            $("#successModal").on("hidden.bs.modal", handler);
+          }
+        }
+
+        function showerror(message, onClose) {
+          $("#errorModalMessage").html(message);
+          $("#errorModal").modal("show");
+          $("#errorModal").off("hidden.bs.modal");
+          if (typeof onClose === "function") {
+            const handler = function () {
+              $("#errorModal").off("hidden.bs.modal", handler);
+              onClose();
+            };
+            $("#errorModal").on("hidden.bs.modal", handler);
+          }
+        }
+
+        function hideSuccess() {
+          $("#successModal").modal("hide");
+        }
+        function hideError() {
+          $("#errorModal").modal("hide");
+        }
+
+        return {
+          showSpinner,
+          hideSpinner,
+          showSuccess,
+          showerror,
+          hideSuccess,
+          hideError,
+        };
+      })();
+    </script>
+    <!-- Script for spinner logic and displaying success and error (End) -->
+
+<!-- Script for displaying task details (Start) -->
+<script>
+  // Script for task list: works with modals for edit, delete, add part, and shows success/error modals
+// Requires: Bootstrap & jQuery
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Helper: Get token for Authorization
+    function getToken() { return sessionStorage.getItem('adminToken') || ''; }
+
+    // --- State ---
+    let allTasks = [];
+    let filteredTasks = [];
+    let currentPage = 1;
+    const pageSize = 40; // Change this for more/less tasks per page
+
+    // --- Smart Pagination Helper ---
+    function renderSmartPaginationControls(options) {
+        // options: { containerId, currentPage, totalPages, onPageChange }
+        const { containerId, currentPage, totalPages, onPageChange } = options;
+        let paginationContainer = document.getElementById(containerId);
+        if (!paginationContainer) {
+            paginationContainer = document.createElement('div');
+            paginationContainer.id = containerId;
+            paginationContainer.className = 'd-flex justify-content-center mt-3';
+            // Insert after task-list if possible
+            const listDiv = document.getElementById('task-list');
+            if (listDiv) {
+                listDiv.parentNode.insertBefore(paginationContainer, listDiv.nextSibling);
+            } else {
+                document.body.appendChild(paginationContainer);
+            }
+        }
+        paginationContainer.innerHTML = '';
+
+        if (totalPages <= 1) {
+            paginationContainer.style.display = 'none';
+            return;
+        } else {
+            paginationContainer.style.display = 'flex';
+        }
+
+        const windowSize = 2; // how many pages left/right of current
+
+        function createBtn(label, page, disabled = false, active = false) {
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-sm mx-1 ' + (active ? 'btn-primary' : 'btn-outline-primary');
+            btn.textContent = label;
+            btn.disabled = disabled;
+            if (!disabled && !active) {
+                btn.onclick = function () { onPageChange(page); };
+            }
+            return btn;
+        }
+
+        // Prev
+        paginationContainer.appendChild(createBtn('Previous', currentPage - 1, currentPage === 1));
+        // Always show first page
+        paginationContainer.appendChild(createBtn('1', 1, false, currentPage === 1));
+        // Left ellipsis
+        if (currentPage - windowSize > 2) {
+            const span = document.createElement('span');
+            span.className = 'mx-1';
+            span.textContent = '...';
+            paginationContainer.appendChild(span);
+        }
+        // Page window
+        for (
+            let i = Math.max(2, currentPage - windowSize);
+            i <= Math.min(totalPages - 1, currentPage + windowSize);
+            i++
+        ) {
+            paginationContainer.appendChild(createBtn(i, i, false, currentPage === i));
+        }
+        // Right ellipsis
+        if (currentPage + windowSize < totalPages - 1) {
+            const span = document.createElement('span');
+            span.className = 'mx-1';
+            span.textContent = '...';
+            paginationContainer.appendChild(span);
+        }
+        // Always show last page
+        if (totalPages > 1)
+            paginationContainer.appendChild(createBtn(totalPages, totalPages, false, currentPage === totalPages));
+        // Next
+        paginationContainer.appendChild(createBtn('Next', currentPage + 1, currentPage === totalPages));
+    }
+
+    // --- Fetch and render tasks ---
+function fetchTasks() {
+        ModalUtils.showSpinner();
+        fetch('/get_tasks', {
+            headers: { 'Authorization': 'Bearer ' + getToken() }
+        })
+        .then(res => res.json())
+        .then(renderTasks)
+        .catch(() => {
+            ModalUtils.showerror('Failed to load tasks.');
+        })
+        .finally(() => {
+            ModalUtils.hideSpinner();
+        });
+    }
+
+    function flattenTasks(grouped) {
+        let flat = [];
+        for (const assignee in grouped) {
+            grouped[assignee].forEach(t => {
+                flat.push({ ...t, assigned_to: assignee });
+            });
+        }
+        return flat;
+    }
+
+   function renderTasks(data) {
+        allTasks = flattenTasks(data);
+        filteredTasks = [...allTasks];
+        currentPage = 1;
+        displayTasksPage();
+    }
+
+    function displayTasksPage() {
+        const listDiv = document.getElementById('task-list');
+        if (!filteredTasks.length) {
+            listDiv.innerHTML = '<div class="alert alert-info">No tasks assigned.</div>';
+            renderTaskPagination();
+            return;
+        }
+        listDiv.innerHTML = '';
+        const startIdx = (currentPage - 1) * pageSize;
+        const endIdx = startIdx + pageSize;
+        const pageTasks = filteredTasks.slice(startIdx, endIdx);
+        pageTasks.forEach(task => {
+            const card = document.createElement('div');
+            card.className = 'card mb-2 task-card';
+            card.innerHTML = `
+                <div class="card-body">
+                    <h5 class="card-title">${escapeHTML(task.name)}</h5>
+                    <p>${escapeHTML(task.description)}</p>
+                    <ul>
+                        <li><strong>Assigned to:</strong> ${escapeHTML(task.assigned_to)}</li>
+                        <li><strong>Status:</strong> <span class="badge badge-${statusColor(task.status)}">${escapeHTML(task.status)}</span></li>
+                        <li><strong>Progress:</strong> ${Number(task.progress) || 0}%</li>
+                    </ul>
+                    ${renderParts(task.task_parts, task.task_id)}
+                    <div class="mt-2">
+                        <button class="btn btn-primary btn-sm mr-2 edit-task-btn" data-id="${task.task_id}">Edit</button>
+                        <button class="btn btn-danger btn-sm delete-task-btn" data-id="${task.task_id}">Delete</button>
+                        <button class="btn btn-success btn-sm add-part-btn" data-id="${task.task_id}">Add Part</button>
+                    </div>
+                </div>
+            `;
+            listDiv.appendChild(card);
+        });
+        renderTaskPagination();
+    }
+
+    // --- Smart Pagination for tasks ---
+    function renderTaskPagination() {
+        const totalPages = Math.ceil(filteredTasks.length / pageSize);
+        renderSmartPaginationControls({
+            containerId: 'task-list-pagination-controls',
+            currentPage,
+            totalPages,
+            onPageChange: function (page) {
+                currentPage = page;
+                displayTasksPage();
+            }
+        });
+    }
+
+    function renderParts(parts, taskId) {
+        if (!parts || !parts.length) return '';
+        return `
+            <div><strong>Parts:</strong></div>
+            <ul>
+                ${parts.map(
+                    p => `<li>
+                        ${escapeHTML(p.part_name)} - ${p.part_percentage}% 
+                        <button class="btn btn-link btn-sm text-danger p-0 ml-2 delete-part-btn" title="Delete part" data-part-id="${p.task_part_id}" data-task-id="${taskId}">&#10006;</button>
+                    </li>`
+                ).join('')}
+            </ul>
+        `;
+    }
+
+    // --- Search ---
+    document.getElementById('taskSearchInput').addEventListener('input', function () {
+        const q = this.value.trim().toLowerCase();
+        if (!q) {
+            filteredTasks = [...allTasks];
+        } else {
+            filteredTasks = allTasks.filter(t =>
+                t.name.toLowerCase().includes(q) ||
+                t.description.toLowerCase().includes(q) ||
+                t.assigned_to.toLowerCase().includes(q)
+            );
+        }
+        currentPage = 1;
+        displayTasksPage();
+    });
+
+    // --- Task Action Handlers ---
+    document.getElementById('task-list').addEventListener('click', function (e) {
+        // --- Edit Task ---
+        if (e.target.classList.contains('edit-task-btn')) {
+            const taskId = e.target.getAttribute('data-id');
+            const task = allTasks.find(t => t.task_id == taskId);
+            if (!task) return;
+
+            // Fill modal fields
+            document.getElementById('editTaskId').value = task.task_id;
+            document.getElementById('editTaskName').value = task.name;
+            document.getElementById('editTaskDescription').value = task.description;
+            document.getElementById('editTaskProgress').value = Number(task.progress) || 0;
+            document.getElementById('editTaskStatus').value = task.status || "Pending";
+            $('#editTaskModal').modal('show');
+        }
+
+        // --- Delete Task ---
+        if (e.target.classList.contains('delete-task-btn')) {
+            const taskId = e.target.getAttribute('data-id');
+            document.getElementById('deleteTaskId').value = taskId;
+            $('#deleteTaskModal').modal('show');
+        }
+
+        // --- Delete Task Part: Show confirmation modal ---
+        if (e.target.classList.contains('delete-part-btn')) {
+            const partId = e.target.getAttribute('data-part-id');
+            document.getElementById('deleteTaskPartId').value = partId;
+            $('#deleteTaskPartModal').modal('show');
+        }
+
+        // --- Add Task Part ---
+        if (e.target.classList.contains('add-part-btn')) {
+            const taskId = e.target.getAttribute('data-id');
+            // Reset form fields
+            $('#addPartForm')[0].reset();
+            $('#addPartForm input[name="task_id"]').val(taskId);
+            $('#addPartModal').modal('show');
+        }
+    });
+
+    // --- Edit Task: Modal Submit ---
+    document.getElementById('editTaskForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const taskId = document.getElementById('editTaskId').value;
+        const name = document.getElementById('editTaskName').value.trim();
+        const description = document.getElementById('editTaskDescription').value.trim();
+        const progress = document.getElementById('editTaskProgress').value.trim();
+        const status = document.getElementById('editTaskStatus').value;
+
+        ModalUtils.showSpinner();
+        fetch(`/update_task/${taskId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + getToken()
+            },
+            body: JSON.stringify({
+                task_name: name,
+                description: description,
+                progress: progress,
+                status: status
+            })
+        })
+        .then(res => res.json().then(data => ({status: res.status, body: data})))
+        .then(({status, body}) => {
+            $('#editTaskModal').modal('hide');
+            if (status === 200 && body.message) {
+                // To reload after modal closes, do:
+                ModalUtils.showSuccess('Task updated successfully!', function(){ location.reload(); });
+                fetchTasks();
+            } else {
+                ModalUtils.showerror(body.error || 'Failed to update task.');
+            }
+        })
+        .catch(err => {
+            $('#editTaskModal').modal('hide');
+            ModalUtils.showerror('Error: ' + err);
+        })
+        .finally(() => {
+            ModalUtils.hideSpinner();
+        });
+    });
+
+    // --- Delete Task: Modal Submit ---
+    document.getElementById('deleteTaskForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const taskId = document.getElementById('deleteTaskId').value;
+        ModalUtils.showSpinner();
+        fetch(`/delete_task/${taskId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': 'Bearer ' + getToken() }
+        })
+        .then(res => res.json().then(data => ({status: res.status, body: data})))
+        .then(({status, body}) => {
+            $('#deleteTaskModal').modal('hide');
+            if (status === 200 && body.message) {
+                ModalUtils.showSuccess('Task deleted successfully!');
+                fetchTasks();
+            } else {
+                ModalUtils.showerror(body.error || 'Failed to delete task.');
+            }
+        })
+        .catch(err => {
+            $('#deleteTaskModal').modal('hide');
+            ModalUtils.showerror('Error: ' + err);
+        })
+        .finally(() => {
+            ModalUtils.hideSpinner();
+        });
+    });
+
+    // --- Delete Task Part: Modal Submit ---
+    document.getElementById('deleteTaskPartForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const partId = document.getElementById('deleteTaskPartId').value;
+        ModalUtils.showSpinner();
+        fetch(`/delete_task_part/${partId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': 'Bearer ' + getToken() }
+        })
+        .then(res => res.json().then(data => ({status: res.status, body: data})))
+        .then(({status, body}) => {
+            $('#deleteTaskPartModal').modal('hide');
+            if (status === 200 && body.message) {
+                ModalUtils.showSuccess('Task part deleted successfully!');
+                fetchTasks();
+            } else {
+                ModalUtils.showerror(body.error || 'Failed to delete task part.');
+            }
+        })
+        .catch(err => {
+            $('#deleteTaskPartModal').modal('hide');
+            ModalUtils.showerror('Error: ' + err);
+        })
+        .finally(() => {
+            ModalUtils.hideSpinner();
+        });
+    });
+
+    // --- Add Task Part: Modal Submit ---
+        window.submitNewPart = function (e) {
+        e.preventDefault();
+        const form = document.getElementById('addPartForm');
+        const taskId = form.task_id.value;
+        const partName = form.part_name.value.trim();
+        const partPerc = form.part_percentage.value.trim();
+
+        if (!partName || !partPerc) {
+            ModalUtils.showerror('Please enter both part name and percentage.');
+            return;
+        }
+        if (isNaN(partPerc) || partPerc <= 0 || partPerc > 100) {
+            ModalUtils.showerror('Percentage must be a number between 1 and 100.');
+            return;
+        }
+
+        ModalUtils.showSpinner();
+        fetch('/add_task_part', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + getToken()
+            },
+            body: JSON.stringify({
+                task_id: taskId,
+                part_name: partName,
+                part_percentage: partPerc
+            })
+        })
+        .then(res => res.json().then(data => ({status: res.status, body: data})))
+        .then(({status, body}) => {
+            $('#addPartModal').modal('hide');
+            if (status === 201 && body.success) {
+                ModalUtils.showSuccess('Task part added successfully!');
+                fetchTasks();
+            } else {
+                ModalUtils.showerror(body.error || 'Failed to add task part.');
+            }
+        })
+        .catch(err => {
+            $('#addPartModal').modal('hide');
+            ModalUtils.showerror('Error: ' + err);
+        })
+        .finally(() => {
+            ModalUtils.hideSpinner();
+        });
+    };
+
+    // --- Utility ---
+    function escapeHTML(str) {
+        return (str || '').replace(/[&<>"']/g, function (m) {
+            return ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;',
+                '"': '&quot;', "'": '&#39;'
+            })[m];
+        });
+    }
+    function statusColor(status) {
+        status = (status || '').toLowerCase();
+        if (status === 'completed') return 'success';
+        if (status === 'in progress') return 'info';
+        return 'secondary';
+    }
+
+    // --- Initial Load ---
+    fetchTasks();
+});
+</script>
+<!-- Script for displaying task details (End) -->
+
+<!-- Script for assigning task and project (Start) -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Helper to get token from sessionStorage
+    function getToken() {
+        return sessionStorage.getItem('adminToken') || '';
+    }
+
+    // Use ModalUtils for error handling
+    function errorMsg(prefix) {
+        return prefix + (prefix.endsWith('.') ? '' : '.');
+    }
+
+    // Populate employee and team selects
+    function fetchAndPopulate(url, selectId, valueKey, labelKey) {
+        ModalUtils.showSpinner();
+        fetch(url, { headers: { 'Authorization': 'Bearer ' + getToken() } })
+            .then(res => res.json())
+            .then(data => {
+                const select = document.getElementById(selectId);
+                select.innerHTML = `<option value="">-- Select --</option>`;
+                data.forEach(item => {
+                    const opt = document.createElement('option');
+                    opt.value = item[valueKey];
+                    opt.textContent = item[labelKey];
+                    select.appendChild(opt);
+                });
+            })
+            .catch(() => {
+                ModalUtils.showerror(errorMsg('Failed to fetch ' + (selectId === 'selectEmployee' ? 'employees' : 'teams')));
+            })
+            .finally(() => {
+                ModalUtils.hideSpinner();
+            });
+    }
+
+    fetchAndPopulate('/get_employees', 'selectEmployee', 'employee_id', 'email');
+    fetchAndPopulate('/get_teams', 'selectTeam', 'team_id', 'team_name');
+
+    // Show/hide project fields
+    document.getElementById('assignmentType').addEventListener('change', function () {
+        document.getElementById('projectFields').style.display =
+            this.value === 'project' ? '' : 'none';
+    });
+
+    // Show/hide employee/team selects
+    document.getElementById('assignTo').addEventListener('change', function () {
+        const val = this.value;
+        document.getElementById('employeeSelect').style.display =
+            (val === 'employee' || val === 'both') ? '' : 'none';
+        document.getElementById('teamSelect').style.display =
+            (val === 'team' || val === 'both') ? '' : 'none';
+    });
+
+    // Task Parts logic
+    function createPartRow(name = '', perc = '') {
+        const div = document.createElement('div');
+        div.className = 'task-part mb-2';
+        div.innerHTML = `
+            <input type="text" class="form-control part-name" placeholder="Part Name" value="${name}" required style="width:48%;display:inline-block;">
+            <input type="number" class="form-control part-percentage" placeholder="Percentage" min="1" max="100" value="${perc}" required style="width:32%;display:inline-block;">
+            <button type="button" class="btn btn-danger btn-sm remove-part" style="width:18%;display:inline-block;">Remove</button>
+        `;
+        div.querySelector('.remove-part').onclick = function () {
+            div.remove();
+        };
+        return div;
+    }
+
+    const taskPartsDiv = document.getElementById('taskParts');
+    function resetParts() {
+        taskPartsDiv.innerHTML = '';
+        taskPartsDiv.appendChild(createPartRow());
+    }
+    resetParts();
+
+    document.getElementById('addPart').onclick = function () {
+        taskPartsDiv.appendChild(createPartRow());
+    };
+
+    // Form submission
+    document.getElementById('taskForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const isProject = document.getElementById('assignmentType').value === 'project';
+        const assigned_to = document.getElementById('assignTo').value;
+        const employeeSel = document.getElementById('selectEmployee');
+        const teamSel = document.getElementById('selectTeam');
+        const employee_ids = Array.from(employeeSel.selectedOptions).map(opt => opt.value).filter(Boolean);
+        const team_ids = Array.from(teamSel.selectedOptions).map(opt => opt.value).filter(Boolean);
+
+        // Basic validation
+        if (!assigned_to) {
+            ModalUtils.showerror('Please select "Assign To" type.');
+            return;
+        }
+        if ((assigned_to === 'employee' || assigned_to === 'both') && employee_ids.length === 0) {
+            ModalUtils.showerror('Select at least one employee.');
+            return;
+        }
+        if ((assigned_to === 'team' || assigned_to === 'both') && team_ids.length === 0) {
+            ModalUtils.showerror('Select at least one team.');
+            return;
+        }
+
+        // Gather task parts
+        const parts = [];
+        let percentageSum = 0;
+        taskPartsDiv.querySelectorAll('.task-part').forEach(function (row) {
+            const name = row.querySelector('.part-name').value.trim();
+            const perc = parseInt(row.querySelector('.part-percentage').value, 10);
+            if (name && perc) {
+                parts.push({ part_name: name, part_percentage: perc });
+                percentageSum += perc;
+            }
+        });
+        // Optional: Uncomment to enforce 100% sum
+        // if (parts.length && percentageSum !== 100) {
+        //     ModalUtils.showerror('Sum of all part percentages must be 100.');
+        //     return;
+        // }
+
+        // Compose payload
+        const payload = {
+            task_name: document.getElementById('taskName').value,
+            description: document.getElementById('taskDescription').value,
+            assigned_to,
+            assigned_ids: { employee_ids, team_ids },
+            due_date: document.getElementById('dueDate').value,
+            task_parts: parts,
+            is_project: isProject
+        };
+        if (isProject) {
+            payload.project_name = document.getElementById('projectName').value;
+            payload.project_description = document.getElementById('projectDescription').value;
+            payload.start_date = document.getElementById('startDate').value;
+            payload.end_date = document.getElementById('endDate').value;
+        }
+
+        ModalUtils.showSpinner();
+        fetch('/assign_task', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + getToken()
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json().then(data => ({status: res.status, body: data})))
+        .then(({status, body}) => {
+            if (status === 201 || body.message) {
+                ModalUtils.showSuccess(
+                    'Task assigned successfully!',
+                    function () { location.reload(); }
+                );
+                document.getElementById('taskForm').reset();
+                document.getElementById('projectFields').style.display = 'none';
+                document.getElementById('employeeSelect').style.display = 'none';
+                document.getElementById('teamSelect').style.display = 'none';
+                resetParts();
+            } else {
+                ModalUtils.showerror(body.error || 'Failed to assign task.');
+            }
+        })
+        .catch(err => {
+            ModalUtils.showerror('Error: ' + err);
+        })
+        .finally(() => {
+            ModalUtils.hideSpinner();
+        });
+    });
+
+    // Cancel button
+    document.getElementById('cancelBtn').onclick = function () {
+        document.getElementById('taskForm').reset();
+        document.getElementById('projectFields').style.display = 'none';
+        document.getElementById('employeeSelect').style.display = 'none';
+        document.getElementById('teamSelect').style.display = 'none';
+        resetParts();
+    };
+
+    // Optionally, close modal also resets form (for UX)
+    document.getElementById('successModalOkBtn').onclick = function () {
+        ModalUtils.hideSuccess();
+    };
+});
+</script>
+<!-- Script for assigning task and project (End) -->
+
+<!-- Script for submitting performance review (Start) -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Helper: Get token for Authorization
+    function getToken() { return sessionStorage.getItem('adminToken') || ''; }
+
+    // Populate Employees in Select
+    function populateEmployees() {
+        ModalUtils.showSpinner();
+        fetch('/get_employees', {
+            headers: { 'Authorization': 'Bearer ' + getToken() }
+        })
+        .then(res => res.json())
+        .then(data => {
+            const select = document.getElementById('selectEmployee-reviewform');
+            select.innerHTML = '<option value="">-- Select Employee --</option>';
+            data.forEach(emp => {
+                const opt = document.createElement('option');
+                opt.value = emp.employee_id;
+                opt.textContent = emp.email || emp.name || `Employee #${emp.employee_id}`;
+                select.appendChild(opt);
+            });
+        })
+        .catch(() => ModalUtils.showerror('Failed to load employees!'))
+        .finally(() => ModalUtils.hideSpinner());
+    }
+
+    // Handle Form Submission
+    document.getElementById('reviewForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const employee_id = document.getElementById('selectEmployee-reviewform').value;
+        const review_date = document.getElementById('reviewDate').value;
+        const feedback = document.getElementById('feedback').value.trim();
+        const rating = document.getElementById('rating').value;
+
+        if (!employee_id || !review_date || !feedback || !rating) {
+            ModalUtils.showerror('Please fill all required fields.');
+            return;
+        }
+
+        ModalUtils.showSpinner();
+        fetch('/submit_review', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + getToken()
+            },
+            body: JSON.stringify({
+                employee_id, review_date, feedback, rating
+            })
+        })
+        .then(res => res.json().then(data => ({status: res.status, body: data})))
+        .then(({status, body}) => {
+            if (status === 201 || body.message) {
+                document.getElementById('reviewForm').reset();
+                // Save scroll position
+                const scrollY = window.scrollY || window.pageYOffset;
+                ModalUtils.showSuccess('Performance review submitted successfully!', function () {
+                    // After modal closed, reload and restore scroll
+                    window.location.reload();
+                    // Restore scroll position after reload using sessionStorage
+                    sessionStorage.setItem("scrollY", scrollY);
+                });
+            } else {
+                ModalUtils.showerror(body.error || 'Failed to submit review.');
+            }
+        })
+        .catch(err => {
+            ModalUtils.showerror('Error: ' + err);
+        })
+        .finally(() => ModalUtils.hideSpinner());
+    });
+
+    // Restore scroll after reload (run ASAP on DOMContentLoaded)
+    if (sessionStorage.getItem("scrollY")) {
+        window.scrollTo({top: parseInt(sessionStorage.getItem("scrollY")), behavior: "instant"});
+        sessionStorage.removeItem("scrollY");
+    }
+
+    // Cancel button clears the form
+    document.querySelector('#reviewForm .btn-light').addEventListener('click', function () {
+        document.getElementById('reviewForm').reset();
+    });
+
+    // Initial population
+    populateEmployees();
+});
+</script>
+ <!-- Script for submitting performance review (End) -->
+
+<!-- Script for fetching api for "Performance review" table (Start) -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  const token = sessionStorage.getItem('adminToken');
+  const tableBody = document.getElementById("reviewTableBody");
+  const searchInput = document.getElementById("searchInput");
+  const paginationDiv = document.getElementById("reviewPagination");
+  const pageSize = 40; // Change this to set how many reviews per page
+  let allReviews = [];
+  let filteredReviews = [];
+  let currentPage = 1;
+
+  if (!token) {
+    ModalUtils.showerror("No admin token found. Please log in again.");
+    return;
+  }
+
+  ModalUtils.showSpinner();
+  fetch("/perfomancemanagement_data", {
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  })
+  .then(response => {
+    if (!response.ok) throw new Error("Failed to fetch performance data.");
+    return response.json();
+  })
+  .then(data => {
+    allReviews = Array.isArray(data.reviews) ? data.reviews : [];
+    filteredReviews = [...allReviews];
+    currentPage = 1;
+    renderTablePage();
+    // Optionally: populate dropdowns if you use them elsewhere
+    // populateDropdown("selectEmployee", data.employees, "employee_id", "email");
+    // populateDropdown("selectTeam", data.teams, "team_id", "team_name");
+  })
+  .catch(error => {
+    console.error("Error loading performance data:", error);
+    ModalUtils.showerror("Unable to load performance data.");
+  })
+  .finally(() => {
+    ModalUtils.hideSpinner();
+  });
+
+  // --- Smart Pagination Helper ---
+  function renderSmartPaginationControls(options) {
+    // options: { containerId, currentPage, totalPages, onPageChange }
+    const { containerId, currentPage, totalPages, onPageChange } = options;
+    let paginationContainer = document.getElementById(containerId);
+    if (!paginationContainer) {
+      paginationContainer = document.createElement('div');
+      paginationContainer.id = containerId;
+      paginationContainer.className = 'd-flex justify-content-center my-2';
+      // Insert after table if possible
+      const tableDiv = document.querySelector('.table-responsive');
+      if (tableDiv) {
+        tableDiv.parentNode.insertBefore(paginationContainer, tableDiv.nextSibling);
+      } else {
+        document.body.appendChild(paginationContainer);
+      }
+    }
+    paginationContainer.innerHTML = '';
+
+    if (totalPages <= 1) {
+      paginationContainer.style.display = 'none';
+      return;
+    } else {
+      paginationContainer.style.display = 'flex';
+    }
+
+    const windowSize = 2; // number of pages left/right of current
+
+    function createBtn(label, page, disabled = false, active = false) {
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-sm mx-1 ' + (active ? 'btn-primary' : 'btn-outline-primary');
+      btn.textContent = label;
+      btn.disabled = disabled;
+      if (!disabled && !active) {
+        btn.onclick = function () {
+          onPageChange(page);
+        };
+      }
+      return btn;
+    }
+
+    // Prev
+    paginationContainer.appendChild(createBtn('Previous', currentPage - 1, currentPage === 1));
+    // Always show first page
+    paginationContainer.appendChild(createBtn('1', 1, false, currentPage === 1));
+    // Left ellipsis
+    if (currentPage - windowSize > 2) {
+      const span = document.createElement('span');
+      span.className = 'mx-1';
+      span.textContent = '...';
+      paginationContainer.appendChild(span);
+    }
+    // Page window
+    for (
+      let i = Math.max(2, currentPage - windowSize);
+      i <= Math.min(totalPages - 1, currentPage + windowSize);
+      i++
+    ) {
+      paginationContainer.appendChild(createBtn(i, i, false, currentPage === i));
+    }
+    // Right ellipsis
+    if (currentPage + windowSize < totalPages - 1) {
+      const span = document.createElement('span');
+      span.className = 'mx-1';
+      span.textContent = '...';
+      paginationContainer.appendChild(span);
+    }
+    // Always show last page
+    if (totalPages > 1)
+      paginationContainer.appendChild(createBtn(totalPages, totalPages, false, currentPage === totalPages));
+    // Next
+    paginationContainer.appendChild(createBtn('Next', currentPage + 1, currentPage === totalPages));
+  }
+
+  // --- Use smart pagination for reviews ---
+  function renderPagination() {
+    const totalPages = Math.ceil(filteredReviews.length / pageSize);
+    renderSmartPaginationControls({
+      containerId: "reviewPagination",
+      currentPage,
+      totalPages,
+      onPageChange: function (page) {
+        currentPage = page;
+        renderTablePage();
+      }
+    });
+  }
+
+  function renderTablePage() {
+    tableBody.innerHTML = "";
+    const startIdx = (currentPage - 1) * pageSize;
+    const endIdx = startIdx + pageSize;
+    const pageReviews = filteredReviews.slice(startIdx, endIdx);
+
+    if (!pageReviews.length) {
+      tableBody.innerHTML = `<tr><td colspan="7" class="text-center">No reviews found.</td></tr>`;
+      renderPagination();
+      return;
+    }
+
+    pageReviews.forEach(review => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${review.review_id}</td>
+        <td>${review.employee_email}</td>
+        <td>${review.review_date}</td>
+        <td>${review.feedback}</td>
+        <td>${review.rating}</td>
+        <td>${review.team_name}</td>
+        <td>
+          <button class="btn btn-info" onclick="openEditModalForReview(${review.review_id}, '${review.employee_id}', '${review.review_date}', '${review.feedback}', '${review.rating}')">Edit</button>
+          <button class="btn btn-danger" onclick="deleteReview(${review.review_id})">Delete</button>
+        </td>
+      `;
+      tableBody.appendChild(row);
+    });
+
+    renderPagination();
+  }
+
+  // Live search functionality with pagination
+  searchInput.addEventListener("input", function () {
+    const searchTerm = this.value.toLowerCase();
+    filteredReviews = allReviews.filter(review => {
+      return (
+        (review.review_id && review.review_id.toString().toLowerCase().includes(searchTerm)) ||
+        (review.employee_email && review.employee_email.toLowerCase().includes(searchTerm)) ||
+        (review.review_date && review.review_date.toLowerCase().includes(searchTerm)) ||
+        (review.feedback && review.feedback.toLowerCase().includes(searchTerm)) ||
+        (review.rating && review.rating.toString().toLowerCase().includes(searchTerm)) ||
+        (review.team_name && review.team_name.toLowerCase().includes(searchTerm))
+      );
+    });
+    currentPage = 1;
+    renderTablePage();
+  });
+});
+</script>
+<!-- Script for fetching api for "Performance review" table (End) -->
+
+<!-- Script for editing and deleting performance review details of employees (Start) -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  let pendingDeleteReviewId = null;
+
+  document.getElementById("editReviewForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const token = sessionStorage.getItem("adminToken");
+    const reviewId = document.getElementById("review-id").value;
+    const employeeId = document.getElementById("employee-select-review").value;
+    const reviewDate = document.getElementById("review-date").value;
+    const feedback = document.getElementById("edit_feedback").value.trim();
+    const rating = document.getElementById("edit_rating").value;
+
+    ModalUtils.showSpinner();
+    fetch(`/edit_review/${reviewId}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            employee_id: employeeId,
+            review_date: reviewDate,
+            feedback: feedback,
+            rating: rating
+        })
+    })
+    .then(response => response.json().then(data => ({ status: response.status, body: data })))
+    .then(({ status, body }) => {
+        ModalUtils.hideSpinner();
+        $("#editReviewModal").modal("hide");
+        if (status === 200) {
+            ModalUtils.showSuccess(body.message || "Review updated successfully.", function() {
+                location.reload();
+            });
+        } else {
+            ModalUtils.showerror(body.error || "Failed to update review.");
+        }
+    })
+    .catch(error => {
+        ModalUtils.hideSpinner();
+        console.error("Error updating review:", error);
+        ModalUtils.showerror("An unexpected error occurred while updating the review.");
+    });
+  });
+
+  function populateEmployeeDropdown() {
+    const token = sessionStorage.getItem("adminToken");
+
+    ModalUtils.showSpinner();
+    fetch("/get_employees", {
+        headers: {
+            "Authorization": `Bearer ${token}`,
+        }
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Failed to fetch employees.");
+        return response.json();
+    })
+    .then(data => {
+        ModalUtils.hideSpinner();
+        const select = document.getElementById("employee-select-review");
+        select.innerHTML = `<option value="">-- Select Employee --</option>`; // reset options
+
+        data.forEach(emp => {
+            const option = document.createElement("option");
+            option.value = emp.employee_id;
+            option.textContent = emp.email || `Employee's ID: ${emp.employee_id}`;
+            select.appendChild(option);
+        });
+    })
+    .catch(error => {
+        ModalUtils.hideSpinner();
+        console.error("Error loading employees:", error);
+        ModalUtils.showerror("Error loading employees.");
+    });
+  }
+
+  window.openEditModalForReview = function(reviewId, employeeId, reviewDate, feedback, rating) {
+    populateEmployeeDropdown(); // Load employee list
+
+    // Small timeout to ensure dropdown is populated before setting the value
+    setTimeout(() => {
+        document.getElementById("review-id").value = reviewId;
+        document.getElementById("employee-select-review").value = employeeId;
+        document.getElementById("review-date").value = reviewDate;
+        document.getElementById("edit_feedback").value = feedback;
+        document.getElementById("edit_rating").value = rating;
+        $("#editReviewModal").modal("show");
+    }, 300);
+  }
+
+  window.deleteReview = function(reviewId) {
+    pendingDeleteReviewId = reviewId;
+    $("#confirmDeleteModal").modal("show");
+  }
+
+  document.getElementById("confirmDeleteBtn").addEventListener("click", function () {
+    if (!pendingDeleteReviewId) return;
+
+    const token = sessionStorage.getItem("adminToken");
+
+    ModalUtils.showSpinner();
+    fetch(`/delete_review/${pendingDeleteReviewId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+        }
+    })
+    .then(response => response.json().then(data => ({ status: response.status, body: data })))
+    .then(({ status, body }) => {
+        ModalUtils.hideSpinner();
+        $("#confirmDeleteModal").modal("hide");
+        if (status === 200) {
+            ModalUtils.showSuccess(body.message || "Review deleted successfully.", function() {
+                location.reload();
+            });
+        } else {
+            ModalUtils.showerror(body.error || "Failed to delete review.");
+        }
+    })
+    .catch(error => {
+        ModalUtils.hideSpinner();
+        console.error("Error deleting review:", error);
+        ModalUtils.showerror("An unexpected error occurred while deleting the review.");
+    });
+
+    pendingDeleteReviewId = null;
+  });
+});
+</script>
+<!-- Script for editing and deleting performance review details of employees (End) -->
+
+<!-- Script for a function that is used to render goals for employees and teams (START)-->
+<script>
+function formatDate(dateString) {
+  if (!dateString) return "-";
+  let date = new Date(dateString);
+  if (isNaN(date)) return dateString;
+  let options = { 
+      year: 'numeric', month: 'long', day: 'numeric', 
+      hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true 
+  };
+  return date.toLocaleString('en-US', options);
+}
+
+// Store goals in memory for client-side filtering & pagination
+let employeeGoalsData = [];
+let teamGoalsData = [];
+let employeeGoalsFiltered = [];
+let teamGoalsFiltered = [];
+let employeeCurrentPage = 1;
+let teamCurrentPage = 1;
+const pageSize = 2; // Change this value for more/less goals per page
+
+// --- Smart Pagination Helper ---
+function renderSmartPaginationControls(options) {
+  // options: { containerId, currentPage, totalPages, onPageChange }
+  const { containerId, currentPage, totalPages, onPageChange } = options;
+  let paginationContainer = document.getElementById(containerId);
+  if (!paginationContainer) {
+    paginationContainer = document.createElement('div');
+    paginationContainer.id = containerId;
+    paginationContainer.className = 'd-flex justify-content-center my-2';
+    // Insert after goals list
+    const containerDiv = document.getElementById(containerId.replace('-pagination', ''));
+    if (containerDiv) {
+      containerDiv.parentNode.insertBefore(paginationContainer, containerDiv.nextSibling);
+    } else {
+      document.body.appendChild(paginationContainer);
+    }
+  }
+  paginationContainer.innerHTML = '';
+
+  if (totalPages <= 1) {
+    paginationContainer.style.display = 'none';
+    return;
+  } else {
+    paginationContainer.style.display = 'flex';
+  }
+
+  const windowSize = 2;
+
+  function createBtn(label, page, disabled = false, active = false) {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-sm mx-1 ' + (active ? 'btn-primary' : 'btn-outline-primary');
+    btn.textContent = label;
+    btn.disabled = disabled;
+    if (!disabled && !active) {
+      btn.onclick = function () {
+        onPageChange(page);
+      };
+    }
+    return btn;
+  }
+
+  // Prev
+  paginationContainer.appendChild(createBtn('Previous', currentPage - 1, currentPage === 1));
+  // Always show first page
+  paginationContainer.appendChild(createBtn('1', 1, false, currentPage === 1));
+  // Left ellipsis
+  if (currentPage - windowSize > 2) {
+    const span = document.createElement('span');
+    span.className = 'mx-1';
+    span.textContent = '...';
+    paginationContainer.appendChild(span);
+  }
+  // Page window
+  for (
+    let i = Math.max(2, currentPage - windowSize);
+    i <= Math.min(totalPages - 1, currentPage + windowSize);
+    i++
+  ) {
+    paginationContainer.appendChild(createBtn(i, i, false, currentPage === i));
+  }
+  // Right ellipsis
+  if (currentPage + windowSize < totalPages - 1) {
+    const span = document.createElement('span');
+    span.className = 'mx-1';
+    span.textContent = '...';
+    paginationContainer.appendChild(span);
+  }
+  // Always show last page
+  if (totalPages > 1)
+    paginationContainer.appendChild(createBtn(totalPages, totalPages, false, currentPage === totalPages));
+  // Next
+  paginationContainer.appendChild(createBtn('Next', currentPage + 1, currentPage === totalPages));
+}
+
+function renderGoals(data, containerId, assignedKey, searchInputId, currentPage, setCurrentPage) {
+  const searchTerm = document.getElementById(searchInputId)?.value.trim().toLowerCase() || "";
+  const container = document.getElementById(containerId);
+  const paginationDivId = containerId + "-pagination";
+  let filteredGoals = [];
+
+  if (!container) return;
+
+  if (!Array.isArray(data) || !data.length) {
+    container.innerHTML = `<div class="alert alert-warning text-center" role="alert"><strong>No goals available!</strong></div>`;
+    document.getElementById(paginationDivId).innerHTML = "";
+    return;
+  }
+
+  filteredGoals = data.filter(goal => {
+    try {
+      if (!goal.goal_id) return false;
+      const combinedStr = `
+        ${(goal[assignedKey] || "").toString().toLowerCase()}
+        ${(goal.goal_name || "").toLowerCase()}
+        ${(goal.specific_goal || "").toLowerCase()}
+        ${(goal.measurable_goal || "").toLowerCase()}
+        ${(goal.status || "").toLowerCase()}
+        ${(goal.progress_percentage?.toString() || "")}
+        ${(goal.notes || []).map(note => note.note_description?.toLowerCase() || "").join(" ")}
+        ${(goal.feedback || []).map(feedback => feedback.feedback_description?.toLowerCase() || "").join(" ")}
+        ${(goal.final_score || "").toLowerCase()}
+        ${(goal.lessons_learned || "").toLowerCase()}
+        ${(goal.action_plan || "").toLowerCase()}
+        ${(goal.course || "").toLowerCase()}
+      `;
+      return combinedStr.includes(searchTerm);
+    } catch {
+      return false;
+    }
+  });
+
+  // Save filtered goals for pagination control
+  if (containerId === 'goal-list') {
+    employeeGoalsFiltered = filteredGoals;
+  } else {
+    teamGoalsFiltered = filteredGoals;
+  }
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredGoals.length / pageSize);
+  if (currentPage > totalPages) currentPage = totalPages || 1;
+  const startIdx = (currentPage - 1) * pageSize;
+  const endIdx = startIdx + pageSize;
+  const pageGoals = filteredGoals.slice(startIdx, endIdx);
+
+  container.innerHTML = "";
+  if (!pageGoals.length) {
+    container.innerHTML = `<div class="alert alert-info text-center">No goals match your search.</div>`;
+    document.getElementById(paginationDivId).innerHTML = "";
+    setCurrentPage(1); // reset
+    return;
+  }
+
+  pageGoals.forEach(goal => {
+    let badgeClass = "badge-danger";
+    if (goal.progress_percentage > 0 && goal.progress_percentage < 100) {
+      badgeClass = "badge-warning";
+    } else if (goal.progress_percentage === 100) {
+      badgeClass = "badge-success";
+    }
+
+    const notesHtml = (goal.notes || []).map(note => `
+      <p>
+        <strong>(${formatDate(note.notes_created_at)}):</strong> ${note.note_description}
+        <button class="btn btn-info btn-sm" onclick="editNote(${note.note_id})">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteNote(${note.note_id})">Delete</button>
+      </p>
+    `).join('');
+
+    const feedbackHtml = (goal.feedback || []).map(feedback => `
+      <p>
+        <strong>(Submitted at): ${formatDate(feedback.feedback_date)}:</strong> ${feedback.feedback_description}
+        <button class="btn btn-info btn-sm" onclick="editFeedback(${feedback.feedback_id})">Update</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteFeedback(${feedback.feedback_id})">Delete</button>
+        <strong>(Last updated at: ${formatDate(feedback.feedback_updated_at)})</strong>
+      </p>
+    `).join('');
+
+    const goalDiv = document.createElement("div");
+    goalDiv.classList.add("row", "goal-item");
+    goalDiv.setAttribute("data-goal-id", goal.goal_id);
+
+    goalDiv.innerHTML = `
+      <div class="col-md-12 d-flex align-items-center mb-3">
+        <div class="w-100">
+          <div class="d-flex justify-content-between align-items-center">
+            <h6 class="mb-0">
+              <i class="mdi mdi-seal icon-lg text-warning mr-2"></i>
+              Deadline: ${formatDate(goal.time_bound_goal)}
+              <label class="badge ${badgeClass} ml-2">${goal.status}</label>
+            </h6>
+            <button class="btn btn-danger ml-auto" onclick="confirmGoalDeletion(${goal.goal_id})">Delete</button>
+          </div>
+          <p class="mb-0">Assigned to: ${goal[assignedKey] || "N/A"}</p>
+          <p>Goal details :</p>
+          <p class="text-muted">- Goal: ${goal.goal_name}</p>
+          ${goal.specific_goal !== "N/A" ? `<p class="text-muted">- Specific goal: ${goal.specific_goal}</p>` : ""}
+          ${goal.measurable_goal !== "N/A" ? `<p class="text-muted">- Measurable: ${goal.measurable_goal}</p>` : ""}
+          <p class="text-muted"> => Goal progress :</p>
+          <div class="progress">
+            <div id="progress-bar-${goal.goal_id}" class="progress-bar" role="progressbar"
+              style="width: ${goal.progress_percentage}%"
+              aria-valuenow="${goal.progress_percentage}" aria-valuemin="0" aria-valuemax="100">
+              ${goal.progress_percentage}%
+            </div>
+          </div>
+          <button class="btn btn-primary" style="margin-top: 5px" onclick="updateGoalProgress(${goal.goal_id})">Update the progress</button>
+          ${notesHtml ? `
+          <div class="goal-section" style="margin-top: 10px">
+            <div class="card goal-card">
+              <div class="card-body">
+                <h5 class="card-title">Note history :</h5>
+                <div id="note-history">${notesHtml}</div>
+              </div>
+            </div>
+          </div>` : ""}
+          <div class="goal-section" style="margin-top: 10px">
+            <div class="card goal-card">
+              <div class="card-body">
+                <h5 class="card-title">Your feedback :</h5>
+                <button class="btn btn-success" onclick="submitFeedback(${goal.goal_id})" style="margin-bottom: 5px">Add feedback</button>
+                ${feedbackHtml ? `
+                <h5 class="card-title">Feedback history :</h5>
+                <div id="feedback-history">${feedbackHtml}</div>` : ""}
+              </div>
+            </div>
+          </div>
+          <div class="goal-section" style="margin-top: 10px">
+            <div class="card goal-card">
+              <div class="card-body">
+                <h5 class="card-title">Goal evaluation example :</h5>
+                <p><strong>Final outcome :</strong> Goal exceeded. </p>
+                <p><strong>Lesson learned :</strong> Extra efforts and innovative approaches paid off. </p>
+                <p><strong>Action plan :</strong> Continue using creative problem-solving methods.</p>
+                <p><strong>Recommended course :</strong> Leadership Development.</p>
+              </div>
+              <h5 class="card-title" style="margin-top: 10px">Goal evaluation :</h5>
+              <button class="btn btn-primary" onclick="openGoalEvaluationModal(${goal.goal_id})">Edit Goal Evaluation</button>
+              <div class="card-body">
+                <p><strong>- Final outcome :</strong> ${goal.final_score}</p>
+                <p><strong>- Lesson learned :</strong> ${goal.lessons_learned}</p>
+                <p><strong>- Action plan :</strong> ${goal.action_plan}</p>
+                <p><strong>- Recommended course :</strong> ${goal.course}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    container.appendChild(goalDiv);
+  });
+
+  // Render Pagination Controls
+  renderGoalsPagination(paginationDivId, filteredGoals.length, currentPage, totalPages, setCurrentPage);
+}
+
+function renderGoalsPagination(paginationDivId, totalItems, currentPage, totalPages, setCurrentPage) {
+  renderSmartPaginationControls({
+    containerId: paginationDivId,
+    currentPage,
+    totalPages,
+    onPageChange: function(page) {
+      setCurrentPage(page);
+    }
+  });
+}
+
+// Fetch once, render, then filter/paginate client-side!
+document.addEventListener('DOMContentLoaded', function() {
+  // Employee goals
+  fetch('/get_goals', {
+    headers: {
+      'Authorization': 'Bearer ' + (sessionStorage.getItem('adminToken') || ''),
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    employeeGoalsData = Array.isArray(data) ? data : [];
+    employeeCurrentPage = 1;
+    renderGoals(employeeGoalsData, 'goal-list', 'email', 'EmployeegoalSearchInput', employeeCurrentPage, function(page){ employeeCurrentPage = page; renderGoals(employeeGoalsData, 'goal-list', 'email', 'EmployeegoalSearchInput', employeeCurrentPage, arguments.callee); });
+  });
+
+  // Team goals
+  fetch('/get_team_goals', {
+    headers: {
+      'Authorization': 'Bearer ' + (sessionStorage.getItem('adminToken') || ''),
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    teamGoalsData = Array.isArray(data) ? data : [];
+    teamCurrentPage = 1;
+    renderGoals(teamGoalsData, 'teamgoal-list', 'team_name', 'TeamgoalSearchInput', teamCurrentPage, function(page){ teamCurrentPage = page; renderGoals(teamGoalsData, 'teamgoal-list', 'team_name', 'TeamgoalSearchInput', teamCurrentPage, arguments.callee); });
+  });
+
+  // Attach client-side search events (search resets page to 1)
+  document.getElementById('EmployeegoalSearchInput').addEventListener('input', function() {
+    employeeCurrentPage = 1;
+    renderGoals(employeeGoalsData, 'goal-list', 'email', 'EmployeegoalSearchInput', employeeCurrentPage, function(page){ employeeCurrentPage = page; renderGoals(employeeGoalsData, 'goal-list', 'email', 'EmployeegoalSearchInput', employeeCurrentPage, arguments.callee); });
+  });
+  document.getElementById('TeamgoalSearchInput').addEventListener('input', function() {
+    teamCurrentPage = 1;
+    renderGoals(teamGoalsData, 'teamgoal-list', 'team_name', 'TeamgoalSearchInput', teamCurrentPage, function(page){ teamCurrentPage = page; renderGoals(teamGoalsData, 'teamgoal-list', 'team_name', 'TeamgoalSearchInput', teamCurrentPage, arguments.callee); });
+  });
+});
+</script>
+<!-- Script for a function that is used to render goals for employees and teams (END)-->
+ 
+<!-- Script for assigning a goal for an employee or team (Start) -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('assignGoalForm');
+
+  // Helper to get token or show error
+  function getTokenOrShowError() {
+    const token = sessionStorage.getItem('adminToken');
+    if (!token) {
+      ModalUtils.showerror("You are not authenticated.");
+      return null;
+    }
+    return token;
+  }
+
+  // Show/hide dropdowns based on selection
+  document.getElementById('employeeOrTeam').addEventListener('change', function () {
+    const selectedValue = this.value;
+    document.getElementById('employeeSelectDiv').style.display = (selectedValue === 'employee') ? 'block' : 'none';
+    document.getElementById('teamSelectDiv').style.display = (selectedValue === 'team') ? 'block' : 'none';
+  });
+
+  // Populate employee dropdown
+  (function fetchEmployees() {
+    const token = getTokenOrShowError();
+    if (!token) return;
+    ModalUtils.showSpinner();
+    fetch('/get_employees', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to fetch employees");
+        return res.json();
+      })
+      .then(data => {
+        const employeeSelect = document.getElementById("employeeSelect-goal");
+        employeeSelect.innerHTML = ""; // clear old options
+        data.forEach(emp => {
+          const option = document.createElement("option");
+          option.value = emp.employee_id;
+          option.textContent = emp.email || `Employee's ID: ${emp.employee_id}`;
+          employeeSelect.appendChild(option);
+        });
+      })
+      .catch(err => {
+        console.error("Failed to load employees:", err);
+        ModalUtils.showerror("Failed to load employees.");
+      })
+      .finally(() => {
+        ModalUtils.hideSpinner();
+      });
+  })();
+
+  // Populate team dropdown
+  (function fetchTeams() {
+    const token = getTokenOrShowError();
+    if (!token) return;
+    ModalUtils.showSpinner();
+    fetch('/get_teams', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to fetch teams");
+        return res.json();
+      })
+      .then(data => {
+        const teamSelect = document.getElementById("teamSelect-goal");
+        teamSelect.innerHTML = ""; // clear old options
+        data.forEach(team => {
+          const option = document.createElement("option");
+          option.value = team.team_id;
+          option.textContent = team.team_name;
+          teamSelect.appendChild(option);
+        });
+      })
+      .catch(err => {
+        console.error("Failed to load teams:", err);
+        ModalUtils.showerror("Failed to load teams.");
+      })
+      .finally(() => {
+        ModalUtils.hideSpinner();
+      });
+  })();
+
+  // Submit handler
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const token = getTokenOrShowError();
+    if (!token) return;
+
+    const formData = new FormData(form);
+
+    ModalUtils.showSpinner();
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token
+        },
+        body: formData
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+
+        if (window.fetchAndRenderGoals) {
+          fetchAndRenderGoals('/get_goals', 'goal-list', 'email', 'searchGoalInput');
+          setTimeout(function () {
+            fetchAndRenderGoals('/get_team_goals', 'teamgoal-list', 'team_name', 'searchTeamGoalInput');
+          }, 400);
+        }
+
+        ModalUtils.showSuccess(result.message || "Goal successfully assigned.", function() {
+          // Optionally: re-fetch goals or reload page after modal closes
+          if (window.fetchAndRenderGoals) {
+            fetchAndRenderGoals('/get_goals', 'goal-list', 'email', 'searchGoalInput');
+            setTimeout(function () {
+              fetchAndRenderGoals('/get_team_goals', 'teamgoal-list', 'team_name', 'searchTeamGoalInput');
+            }, 400);
+          }
+          location.reload();
+        });
+
+        // Reset the form
+        form.reset();
+
+        // Hide employee and team dropdowns
+        document.getElementById('employeeSelectDiv').style.display = 'none';
+        document.getElementById('teamSelectDiv').style.display = 'none';
+      }
+      else {
+        const errorData = await response.json();
+        ModalUtils.showerror(errorData.error || "Something went wrong.");
+      }
+    } catch (error) {
+      console.error('Submission failed:', error);
+      ModalUtils.showerror("A network or server error occurred.");
+    } finally {
+      ModalUtils.hideSpinner();
+    }
+  });
+});
+</script>
+<!-- Script for assigning a goal for an employee or team (End) -->
+
+<!-- Script for updating goal progress, editing/deleting notes, submitting/editing/deleting feedback, and updating goal evaluation for employees and teams (Start) -->
+<script>
+  // Script for updating goal progress, editing/deleting notes, submitting/editing/deleting feedback, and updating goal evaluation for employees and teams (Admin actions)
+function getAuthHeaders() {
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + (sessionStorage.getItem('adminToken') || '')
+  };
+}
+
+// 1. Update Goal Progress (PUT /update_progress/:goal_id)
+function updateGoalProgress(goal_id) {
+  // Show modal, prefill
+  document.getElementById('progressGoalId').value = goal_id;
+  document.getElementById('progressInput').value = '';
+  $('#updateProgressModal').modal('show');
+}
+
+document.getElementById('updateProgressForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const goal_id = document.getElementById('progressGoalId').value;
+  const perc = Number(document.getElementById('progressInput').value);
+  if (isNaN(perc) || perc < 0 || perc > 100) {
+    ModalUtils.showerror("Please enter a valid number between 0 and 100.");
+    return;
+  }
+  ModalUtils.showSpinner();
+  fetch(`/update_progress/${goal_id}`, {
+    method: 'PUT',
+    headers: getAuthHeaders(),
+    body: JSON.stringify({ progress_percentage: perc })
+  })
+    .then(res => res.json().then(data => ({ status: res.status, body: data })))
+    .then(({ status, body }) => {
+      ModalUtils.hideSpinner();
+      $('#updateProgressModal').modal('hide');
+      if (status === 200) {
+        ModalUtils.showSuccess("Progress and status updated successfully.", function() { location.reload(); });
+      } else {
+        ModalUtils.showerror(body.error || "Failed to update progress.");
+      }
+    })
+    .catch(e => {
+      ModalUtils.hideSpinner();
+      $('#updateProgressModal').modal('hide');
+      ModalUtils.showerror("An error occurred while updating progress.");
+    });
+});
+
+// 2. Edit Note (PUT /edit_note/:note_id)
+function editNote(note_id, description = "") {
+  document.getElementById('modalEditNoteId').value = note_id;
+  document.getElementById('modalEditNoteDescription').value = description;
+  $('#editNoteModal').modal('show');
+}
+
+document.getElementById('modalEditNoteForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const note_id = document.getElementById('modalEditNoteId').value;
+  const newDescription = document.getElementById('modalEditNoteDescription').value.trim();
+  if (!newDescription) {
+    ModalUtils.showerror("Note description cannot be empty.");
+    return;
+  }
+  ModalUtils.showSpinner();
+  fetch(`/edit_note/${note_id}`, {
+    method: 'PUT',
+    headers: getAuthHeaders(),
+    body: JSON.stringify({ note_description: newDescription })
+  })
+    .then(res => res.json().then(data => ({ status: res.status, body: data })))
+    .then(({ status, body }) => {
+      ModalUtils.hideSpinner();
+      $('#editNoteModal').modal('hide');
+      if (status === 200) {
+        ModalUtils.showSuccess("Note updated successfully.", function() { location.reload(); });
+      } else {
+        ModalUtils.showerror(body.error || "Failed to update note.");
+      }
+    })
+    .catch(e => {
+      ModalUtils.hideSpinner();
+      $('#editNoteModal').modal('hide');
+      ModalUtils.showerror("An error occurred while updating the note.");
+    });
+});
+
+// 3. Delete Note (DELETE /delete_note/:note_id)
+function deleteNote(note_id) {
+  document.getElementById('modalDeleteNoteId').value = note_id;
+  $('#confirmDeleteNoteModal').modal('show');
+}
+document.getElementById('confirmDeleteNoteBtn').addEventListener('click', function() {
+  const note_id = document.getElementById('modalDeleteNoteId').value;
+  ModalUtils.showSpinner();
+  fetch(`/delete_note/${note_id}`, {
+    method: 'DELETE',
+    headers: getAuthHeaders()
+  })
+    .then(res => res.json().then(data => ({ status: res.status, body: data })))
+    .then(({ status, body }) => {
+      ModalUtils.hideSpinner();
+      $('#confirmDeleteNoteModal').modal('hide');
+      if (status === 200) {
+        ModalUtils.showSuccess("Note deleted successfully.", function() { location.reload(); });
+      } else {
+        ModalUtils.showerror(body.error || "Failed to delete note.");
+      }
+    })
+    .catch(e => {
+      ModalUtils.hideSpinner();
+      $('#confirmDeleteNoteModal').modal('hide');
+      ModalUtils.showerror("An error occurred while deleting the note.");
+    });
+});
+
+// 4. Update Goal Evaluation (PUT /update_goal_evaluation)
+function openGoalEvaluationModal(goal_id) {
+  // Fetch current evaluation first
+  ModalUtils.showSpinner();
+  fetch(`/get_goal_evaluation?goal_id=${goal_id}`, {
+    headers: getAuthHeaders()
+  })
+    .then(res => res.json().then(data => ({ status: res.status, body: data })))
+    .then(({ status, body }) => {
+      ModalUtils.hideSpinner();
+      if (status === 200 && body.success && body.evaluation) {
+        // Show modal and prefill fields
+        document.getElementById('goal-id').value = goal_id;
+        document.getElementById('final-score').value = body.evaluation.final_score || "";
+        document.getElementById('lessons-learned').value = body.evaluation.lessons_learned || "";
+        document.getElementById('action-plan').value = body.evaluation.action_plan || "";
+        document.getElementById('course').value = body.evaluation.course || "";
+        $('#goalEvaluationModal').modal('show');
+      } else {
+        ModalUtils.showerror(body.error || body.message || "Failed to load evaluation.");
+      }
+    })
+    .catch(e => {
+      ModalUtils.hideSpinner();
+      ModalUtils.showerror("An error occurred while fetching goal evaluation.");
+    });
+}
+
+document.getElementById('goalEvaluationForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const goal_id = document.getElementById('goal-id').value;
+  const final_score = document.getElementById('final-score').value;
+  const lessons_learned = document.getElementById('lessons-learned').value;
+  const action_plan = document.getElementById('action-plan').value;
+  const course = document.getElementById('course').value;
+  ModalUtils.showSpinner();
+  fetch('/update_goal_evaluation', {
+    method: 'PUT',
+    headers: getAuthHeaders(),
+    body: JSON.stringify({ goal_id, final_score, lessons_learned, action_plan, course })
+  })
+    .then(res => res.json().then(data => ({ status: res.status, body: data })))
+    .then(({ status, body }) => {
+      ModalUtils.hideSpinner();
+      $('#goalEvaluationModal').modal('hide');
+      if (status === 200 && body.success) {
+        ModalUtils.showSuccess("Goal evaluation updated successfully.", function() { location.reload(); });
+      } else {
+        ModalUtils.showerror(body.error || "Failed to update goal evaluation.");
+      }
+    })
+    .catch(e => {
+      ModalUtils.hideSpinner();
+      $('#goalEvaluationModal').modal('hide');
+      ModalUtils.showerror("An error occurred while updating goal evaluation.");
+    });
+});
+
+// 5. Delete Feedback (DELETE /delete_feedback/:feedback_id)
+function deleteFeedback(feedback_id) {
+  document.getElementById('deleteFeedbackId').value = feedback_id;
+  $('#deleteFeedbackModal').modal('show');
+}
+document.getElementById('confirmDeleteFeedbackBtn').addEventListener('click', function() {
+  const feedback_id = document.getElementById('deleteFeedbackId').value;
+  ModalUtils.showSpinner();
+  fetch(`/delete_feedback/${feedback_id}`, {
+    method: 'DELETE',
+    headers: getAuthHeaders()
+  })
+    .then(res => res.json().then(data => ({ status: res.status, body: data })))
+    .then(({ status, body }) => {
+      ModalUtils.hideSpinner();
+      $('#deleteFeedbackModal').modal('hide');
+      if (status === 200) {
+        ModalUtils.showSuccess("Feedback deleted successfully.", function() { location.reload(); });
+      } else {
+        ModalUtils.showerror(body.error || "Failed to delete feedback.");
+      }
+    })
+    .catch(e => {
+      ModalUtils.hideSpinner();
+      $('#deleteFeedbackModal').modal('hide');
+      ModalUtils.showerror("An error occurred while deleting feedback.");
+    });
+});
+
+// 6. Edit Feedback (PUT /edit_feedback/:feedback_id)
+function editFeedback(feedback_id, description = "") {
+  document.getElementById('editFeedbackId').value = feedback_id;
+  document.getElementById('editFeedbackInput').value = description;
+  $('#editFeedbackModal').modal('show');
+}
+document.getElementById('editFeedbackForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const feedback_id = document.getElementById('editFeedbackId').value;
+  const newFeedback = document.getElementById('editFeedbackInput').value.trim();
+  if (!newFeedback) {
+    ModalUtils.showerror("Feedback description cannot be empty.");
+    return;
+  }
+  ModalUtils.showSpinner();
+  fetch(`/edit_feedback/${feedback_id}`, {
+    method: 'PUT',
+    headers: getAuthHeaders(),
+    body: JSON.stringify({ feedback_description: newFeedback })
+  })
+    .then(res => res.json().then(data => ({ status: res.status, body: data })))
+    .then(({ status, body }) => {
+      ModalUtils.hideSpinner();
+      $('#editFeedbackModal').modal('hide');
+      if (status === 200) {
+        ModalUtils.showSuccess("Feedback updated successfully.", function() { location.reload(); });
+      } else {
+        ModalUtils.showerror(body.error || "Failed to update feedback.");
+      }
+    })
+    .catch(e => {
+      ModalUtils.hideSpinner();
+      $('#editFeedbackModal').modal('hide');
+      ModalUtils.showerror("An error occurred while updating feedback.");
+    });
+});
+
+// 7. Submit Feedback (POST /submit_feedback)
+function submitFeedback(goal_id) {
+  document.getElementById('submitFeedbackGoalId').value = goal_id;
+  document.getElementById('submitFeedbackInput').value = '';
+  $('#submitFeedbackModal').modal('show');
+}
+document.getElementById('submitFeedbackForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const goal_id = document.getElementById('submitFeedbackGoalId').value;
+  const feedback = document.getElementById('submitFeedbackInput').value.trim();
+  if (!feedback) {
+    ModalUtils.showerror("Feedback cannot be empty.");
+    return;
+  }
+  ModalUtils.showSpinner();
+  fetch('/submit_feedback', {
+    method: 'POST',
+    headers: getAuthHeaders(),
+    body: JSON.stringify({ goal_id: goal_id, feedback_description: feedback })
+  })
+    .then(res => res.json().then(data => ({ status: res.status, body: data })))
+    .then(({ status, body }) => {
+      ModalUtils.hideSpinner();
+      $('#submitFeedbackModal').modal('hide');
+      if (status === 201 || status === 200) {
+        ModalUtils.showSuccess("Feedback submitted successfully.", function() { location.reload(); });
+      } else {
+        ModalUtils.showerror(body.error || "Failed to submit feedback.");
+      }
+    })
+    .catch(e => {
+      ModalUtils.hideSpinner();
+      $('#submitFeedbackModal').modal('hide');
+      ModalUtils.showerror("An error occurred while submitting feedback.");
+    });
+});
+</script>
+<!-- Script for updating goal progress, editing/deleting notes, submitting/editing/deleting feedback, and updating goal evaluation for employees and teams (End) -->
+
+<!-- Script for deleting an assigned goal (Start) -->
+<script>
+  let goalIdToDelete = null;
+
+function confirmGoalDeletion(goalId) {
+    goalIdToDelete = goalId;
+    $('#confirmGoalDeleteModal').modal('show');
+}
+
+document.getElementById('confirmGoalDeleteBtn').addEventListener('click', function () {
+    if (!goalIdToDelete) return;
+
+    const token = sessionStorage.getItem("adminToken");
+
+    ModalUtils.showSpinner();
+    fetch(`/delete_goal/${goalIdToDelete}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => response.json().then(data => ({ status: response.status, body: data })))
+    .then(({ status, body }) => {
+        ModalUtils.hideSpinner();
+        $('#confirmGoalDeleteModal').modal('hide');
+
+        if (status === 200) {
+            ModalUtils.showSuccess("Goal deleted successfully.", function () {
+                if (window.fetchAndRenderGoals) {
+                    fetchAndRenderGoals('/get_goals', 'goal-list', 'email');
+                    fetchAndRenderGoals('/get_team_goals', 'teamgoal-list', 'team_name');
+                } else {
+                    location.reload();
+                }
+            });
+        } else {
+            ModalUtils.showerror(body.error || "Failed to delete goal.");
+        }
+    })
+    .catch(error => {
+        ModalUtils.hideSpinner();
+        ModalUtils.showerror("An error occurred: " + error);
+        console.error("Delete goal error:", error);
+    });
+});
+</script>
+<!-- Script for deleting an assigned goal (End) -->
+
+<!-- Script for logging out (Start) -->
+<script>
+  document.querySelector(".logout-btn").addEventListener("click", function () {
+    $("#logoutModal").modal("show"); // Show modal using jQuery
+  });
+
+  document
+    .getElementById("confirmLogout")
+    .addEventListener("click", function () {
+      sessionStorage.removeItem("adminToken");
+      window.location.href = "/admin_login";
+    });
+
+  document
+    .getElementById("cancelLogout")
+    .addEventListener("click", function () {
+      $("#logoutModal").modal("hide"); // Hide modal using jQuery
+    });
+
+  document
+    .getElementById("closeLogoutModal")
+    .addEventListener("click", function () {
+      $("#logoutModal").modal("hide"); // Also hide on "X"
+    });
+</script>
+<!-- Script for logging out (End) -->
+
+<!-- Script that redirects admin back to login page if the token doesn't exist (Start) -->
+<script>
+  const token = sessionStorage.getItem("adminToken")
+  if (!token) {
+    ModalUtils.showSpinner();
+    setTimeout(function() {
+      alert("Not authenticated. Redirecting to login.");
+      window.location.href = "/admin_login";
+    }, 600);
+  }
+</script>
+<!-- Script that redirects admin back to login page if the token doesn't exist (End) -->
+
+<!-- Script for redirect admin back to the login page when someone else logged in from another tab (Start) -->
+<script>
+  function getToken() {
+  return sessionStorage.getItem("adminToken");
+}
+
+function checkSessionConflict() {
+  const token = getToken();
+  if (!token) return;
+
+  fetch("/check_jti", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((response) => {
+      if (response.status === 403) {
+        throw new Error("session_conflict");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.error === "session_conflict") {
+        throw new Error("session_conflict");
+      }
+    })
+    .catch((err) => {
+      if (err.message === "session_conflict") {
+        // Bootstrap 4 modal logic
+        $('#sessionConflictModal').modal({
+          backdrop: "static",
+          keyboard: false,
+          show: true
+        });
+
+        // Attach event listener only once
+        const logoutBtn = document.getElementById("confirmLogoutBetweenTabs");
+        if (!logoutBtn.dataset.bound) {
+          logoutBtn.addEventListener("click", () => {
+            ModalUtils.showSpinner();
+            setTimeout(function() {
+              sessionStorage.removeItem("adminToken");
+              window.location.href = "/admin_login";
+            }, 600);
+          });
+          logoutBtn.dataset.bound = "true";
+        }
+      }
+    });
+}
+
+// Initial check + every 30 seconds
+checkSessionConflict();
+setInterval(checkSessionConflict, 30000);
+</script>
+<!-- Script for redirect admin back to the login page when someone else logged in from another tab (End) -->
+
+<!-- Script for checking admin if they have access to this page (Start) -->
+<script>
+  // Only run this if the backend passed access_denied = True
+const accessDenied = {{ 'true' if access_denied else 'false' }};
+if (accessDenied) {
+  // Bootstrap 4 modal logic
+  $('#accessDeniedModal').modal('show');
+
+  document.getElementById("forceLogoutBtn").addEventListener("click", function () {
+    ModalUtils.showSpinner();
+    setTimeout(function() {
+      sessionStorage.removeItem("adminToken");
+      window.location.href = "/admin_login";
+    }, 600);
+  });
+}
+</script>
+<!-- Script for checking admin if they have access to this page (End) -->
+ 
+  </body>
+</html>

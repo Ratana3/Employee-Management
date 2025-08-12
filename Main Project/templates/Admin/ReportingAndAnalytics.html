@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Spica Admin</title>
+    <!-- base:css -->
+    <link
+      rel="stylesheet"
+      href="../../static/Admin/vendors/mdi/css/materialdesignicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../static/Admin/vendors/css/vendor.bundle.base.css"
+    />
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../static/Admin/css/style.css" />
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../static/Admin/images/favicon.png" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+  </head>
+
+  <body>
+    <div class="container-scroller d-flex">
+      <!-- partial:../../partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item sidebar-category">
+            <p>Admin dashboard</p>
+            <span></span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard">
+              <i class="mdi mdi-view-quilt menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+              <div class="badge badge-info badge-pill"></div>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/employeemanagement">
+              <i class="mdi mdi-account-box-outline menu-icon"></i>
+              <span class="menu-title">Employee <br />management</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/attendanceandtimetracking">
+              <i class="mdi mdi-clipboard-text menu-icon"></i>
+              <span class="menu-title">Attendance and <br />Time tracking</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/perfomancemanagement">
+              <i class="mdi mdi-settings menu-icon"></i>
+              <span class="menu-title">Performance <br />management</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/reportingandanalytics">
+              <i class="mdi mdi-chart-pie menu-icon"></i>
+              <span class="menu-title">Reporting <br />and Analytics </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/notificationsandcommunication">
+              <i class="mdi mdi-bell-ring menu-icon"></i>
+              <span class="menu-title"
+                >Notifications <br />and Communication
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/payrollandfinancialmanagement">
+              <i class="mdi mdi-currency-usd menu-icon"></i>
+              <span class="menu-title"
+                >Payroll and <br />Financial Management
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/securityandcompliance">
+              <i class="mdi mdi-security menu-icon"></i>
+              <span class="menu-title"
+                >Security and<br />
+                Compliance
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/systemadministration">
+              <i class="mdi mdi-monitor menu-icon"></i>
+              <span class="menu-title">System <br />Administration </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/traininganddevelopment">
+              <i class="mdi mdi-grease-pencil menu-icon"></i>
+              <span class="menu-title"
+                >Training and<br />
+                Development
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/workflowmanagement">
+              <i class="mdi mdi-lan-connect menu-icon"></i>
+              <span class="menu-title">Workflow <br />Management </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/employeeEngagement">
+              <i class="mdi mdi-human-male menu-icon"></i>
+              <span class="menu-title">Employee <br />Engagement </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dataimportandexport">
+              <i class="mdi mdi-file-document menu-icon"></i>
+              <span class="menu-title">Data Import </span>
+            </a>
+          </li>
+                    <li class="nav-item">
+            <a class="nav-link" href="/verification">
+              <i class="mdi mdi-clipboard-check menu-icon"></i>
+              <span class="menu-title">Access control</span>
+              <div class="badge badge-info badge-pill"></div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-danger logout-btn" style="margin-left: 80px">
+              <i class="la la-power-off"></i>
+              <p>Logout</p>
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+      
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Generate reports</h4>
+                    <form class="forms-sample">
+                      <!-- Report Selection -->
+                      <div class="form-group">
+                        <label for="exampleFormControlSelect1">Select report</label>
+                        <select class="form-control form-control-lg" id="exampleFormControlSelect1">
+                          <option value="attendance_report">Attendance Report</option>
+                          <option value="payroll_report">Payroll Report</option>
+                          <option value="performance_report">Performance Report</option>
+                          <option value="productivity_report">Productivity Report</option>
+                        </select>
+                      </div>
+        
+                      <!-- Date Range Selection -->
+                      <div class="form-group">
+                        <label>Select Date Range:</label><br>
+                        Start date :
+                        <input type="date" id="start-date" name="start-date"
+                          style="padding: 5px; border: 1px solid #ccc; border-radius: 5px; margin-right: 5px;" /><br>
+                        End date :
+                        <input type="date" id="end-date" name="end-date"
+                          style="padding: 5px; border: 1px solid #ccc; border-radius: 5px; margin-left: 5px;" />
+                        <br>
+                        <button type="button" id="generate-report"
+                          class="btn btn-primary" style="margin-top: 10px;">
+                          Generate
+                        </button>
+        
+                        <!-- Button to generate all reports at once -->
+                        <button type="button" id="generate-all-reports" class="btn btn-primary" style="margin-top: 10px;">Generate All Reports</button>
+                      </div>
+        
+                      <!-- Export Buttons -->
+                      <div class="form-group" style="margin-top: 10px;">
+                        <button type="button" id="export-csv" class="btn btn-warning btn-icon-text">Export to CSV</button>
+                        <button type="button" id="export-excel" class="btn btn-success btn-icon-text">Export to Excel</button>
+                        <button type="button" id="export-pdf" class="btn btn-info btn-icon-text">Export to PDF</button>
+                      </div>
+                    </form>
+                                          <!-- Report Display -->
+                      <div class="row" id="reports-container">
+                        <!-- Cards for the charts will be dynamically added here -->
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 grid-margin grid-margin-md-0 stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">List of admin actions</h4>
+      <p class="card-description">Choose date:</p>
+      <div class="mb-3">
+        <input type="date" id="selected-date" class="form-control">
+        <button id="fetch-btn" class="btn btn-primary mt-2">Confirm date</button>
+      </div>
+      <div class="form-group">
+  <input
+    type="text"
+    id="audit-search"
+    placeholder="Search admin actions..."
+    class="form-control"
+    style="margin-bottom: 10px;"
+  />
+</div>
+
+      <ul class="list-star" id="audit-list">
+        <!-- Populated by JavaScript -->
+      </ul>
+      <div id="audit-pagination-controls"></div>
+    </div>
+  </div>
+</div>
+            </div>
+        
+          </div>
+        </div>
+        
+      <!-- page-body-wrapper ends -->
+    </div>
+    
+<!-- Session Conflict Modal -->
+<div
+  class="modal fade"
+  id="sessionConflictModal"
+  tabindex="-1"
+  aria-labelledby="sessionConflictLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="sessionConflictLabel">Session Conflict</h5>
+      </div>
+      <div class="modal-body">
+        <p>
+          <strong
+            >Someone has logged into your account from another tab or
+            device.</strong
+          >
+        </p>
+        <p>You will be logged out for security reasons.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-danger" id="confirmLogoutBetweenTabs">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Logout Confirmation Modal -->
+<div class="modal fade" id="logoutModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Logout</h5>
+        <button type="button" class="close" id="closeLogoutModal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to logout?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancelLogout">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-danger" id="confirmLogout">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Access Denied Modal -->
+<div
+  class="modal fade"
+  id="accessDeniedModal"
+  tabindex="-1"
+  aria-labelledby="accessDeniedLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="accessDeniedLabel">Access Denied</h5>
+      </div>
+      <div class="modal-body">
+        <p>Only Super Admins are allowed to access this page.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="redirectBtn" type="button" class="btn btn-danger">
+          Go to Dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Loading Spinner Modal -->
+    <div
+      class="modal fade"
+      id="loadingSpinnerModal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+      data-backdrop="static"
+      data-keyboard="false"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 bg-transparent shadow-none">
+          <div class="modal-body text-center">
+            <div
+              class="spinner-border text-white"
+              style="width: 4rem; height: 4rem"
+              role="status"
+            >
+              <span class="sr-only"></span>
+            </div>
+            <div class="mt-3 text-white font-weight-bold">Please wait...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <!-- Script for exporting file to Excel -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <!-- Script for exporting file to PDF file-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- container-scroller -->
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- base:js -->
+    <script src="../../static/Admin/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="../../static/Admin/js/off-canvas.js"></script>
+    <script src="../../static/Admin/js/hoverable-collapse.js"></script>
+    <script src="../../static/Admin/js/template.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="../../static/Admin/js/file-upload.js"></script>
+    <!-- End custom js for this page-->
+     <!-- plugin js for this page -->
+    
+    <!-- End plugin js for this page -->
+
+    <!-- Script for exporting to excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Script for exporting PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+<!-- Spinner logic for Bootstrap 5 (add once, for all modals and actions) -->
+<script>
+function showSpinner() {
+  if (!window._spinnerOpen) {
+    const modalElement = document.getElementById('loadingSpinnerModal');
+    if (!modalElement) return;
+    window._spinnerInstance = new bootstrap.Modal(modalElement, {
+      backdrop: 'static',
+      keyboard: false
+    });
+    window._spinnerInstance.show();
+    window._spinnerOpen = true;
+  }
+}
+function hideSpinner() {
+  if (window._spinnerInstance) {
+    window._spinnerInstance.hide();
+    window._spinnerOpen = false;
+  }
+}
+</script>
+
+<!-- Script for generating reports (Start) -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const allReportTypes = ['attendance_report', 'payroll_report', 'performance_report', 'productivity_report'];
+
+  const reportApiMap = {
+    attendance_report: '/api/attendance_report',
+    payroll_report: '/api/payroll_report',
+    performance_report: '/api/performance_report',
+    productivity_report: '/api/productivity_report',
+  };
+
+  function clearReports() {
+    const container = document.getElementById('reports-container');
+    container.innerHTML = '';
+    window.reportState = { reportsData: {} };
+  }
+
+  function formatAMPMDate(str) {
+    if (!str) return '';
+    let d = new Date(str);
+    if (isNaN(d.getTime())) {
+      if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(str)) {
+        let [datePart, timePart] = str.split(' ');
+        let [y, m, d2] = datePart.split('-');
+        let [h, mi, s] = timePart.split(':');
+        d = new Date(y, m-1, d2, h, mi, s);
+      } else {
+        return str;
+      }
+    }
+    let yyyy = d.getFullYear();
+    let mm = String(d.getMonth()+1).padStart(2, '0');
+    let dd = String(d.getDate()).padStart(2, '0');
+    let h = d.getHours();
+    let m = String(d.getMinutes()).padStart(2, '0');
+    let s = String(d.getSeconds()).padStart(2, '0');
+    let ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12;
+    h = h ? h : 12;
+    return `${yyyy}-${mm}-${dd} ${h}:${m}:${s} ${ampm}`;
+  }
+
+  function formatMonthColumn(val) {
+    if (!val) return "No month info";
+    const d = new Date(val);
+    if (isNaN(d.getTime())) return val;
+    const options = { year: 'numeric', month: 'long' };
+    return d.toLocaleString('en-US', options);
+  }
+
+  // --- Display Functions ---
+  function createAttendanceTable(data) {
+    return `
+      <div class="mb-2">
+       This report shows the <b>average hours worked per day</b> across all employees for each date in the selected range.
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr>
+              <th>Date</th>
+              <th>Average Hours Worked</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.labels.map((date, i) => `
+              <tr>
+                <td>${formatAMPMDate(date)}</td>
+                <td>${Number(data.data[i]).toFixed(2)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  function createPayrollTable(data) {
+    if (!Array.isArray(data) || data.length === 0) {
+      return `<div class="mb-2"><strong>What this means:</strong> Payroll records found for the selected range.</div>
+              <div>No payroll data found for the period.</div>`;
+    }
+
+    const columns = [
+      { key: "payroll_id", label: "Payroll ID" },
+      { key: "employee_id", label: "Employee ID" },
+      { key: "month", label: "Month", formatter: formatMonthColumn },
+      { key: "base_salary", label: "Base Salary", nullMsg: "No base salary info" },
+      { key: "hours_worked", label: "Hours Worked", nullMsg: "No hours worked info" },
+      { key: "overtime_hours", label: "Overtime Hours", nullMsg: "No overtime hours" },
+      { key: "overtime_pay", label: "Overtime Pay", nullMsg: "No overtime pay" },
+      { key: "bonuses", label: "Bonuses", nullMsg: "No bonuses" },
+      { key: "tax_rate", label: "Tax Rate", nullMsg: "No tax rate info" },
+      { key: "tax", label: "Tax", nullMsg: "No tax info" },
+      { key: "deductions", label: "Deductions", nullMsg: "No deductions" },
+      { key: "net_salary", label: "Net Salary", nullMsg: "No net salary info" },
+      { key: "payment_status", label: "Payment Status", nullMsg: "No payment status" },
+      { key: "payment_date", label: "Payment Date", nullMsg: "No payment date" },
+      { key: "created_at", label: "Created At" }
+    ];
+
+    function renderCell(val, col) {
+      if (col.key === 'created_at' || col.key === 'payment_date') {
+        if (val === null || val === undefined || val === "") {
+          return col.nullMsg || "No data";
+        }
+        return formatAMPMDate(val);
+      }
+      if (col.formatter) {
+        return col.formatter(val);
+      }
+      if (val === null || val === undefined) {
+        return col.nullMsg || "No data";
+      }
+      return val;
+    }
+
+    const headers = columns.map(col => `<th>${col.label}</th>`).join('');
+    const rows = data
+      .map(row => `<tr>${columns.map(col => `<td>${renderCell(row[col.key], col)}</td>`).join('')}</tr>`)
+      .join('');
+
+    return `
+      <div class="mb-2">
+        <strong>What this means:</strong> Each row is a payroll record for an employee during the selected period. Null values are replaced with relevant descriptions.
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr>${headers}</tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  function createPerformanceTable(data) {
+    return `
+      <div class="mb-2">
+         This report shows the <b>average goal progress percentage</b> for each month in the selected range.
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr>
+              <th>Month</th>
+              <th>Average Progress (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.labels.map((month, i) => `
+              <tr>
+                <td>${month}</td>
+                <td>${Number(data.data[i]).toFixed(2)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  function createProductivityTable(data) {
+    return `
+      <div class="mb-2">
+         This report shows the <b>number of tasks assigned</b> to each department during the selected period.
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr>
+              <th>Department</th>
+              <th>Task Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.labels.map((dept, i) => `
+              <tr>
+                <td>${dept}</td>
+                <td>${data.data[i]}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  // --- Export helpers for each report type ---
+  function attendanceToExportRows(data) {
+    // [["Date", "Average Hours Worked"], [...], ...]
+    if (!data || !data.labels || !data.data) return [];
+    const rows = [["Date", "Average Hours Worked"]];
+    for (let i = 0; i < data.labels.length; i++) {
+      rows.push([formatAMPMDate(data.labels[i]), Number(data.data[i]).toFixed(2)]);
+    }
+    return rows;
+  }
+
+  function payrollToExportRows(data) {
+    if (!Array.isArray(data) || data.length === 0) return [];
+    const columns = [
+      { key: "payroll_id", label: "Payroll ID" },
+      { key: "employee_id", label: "Employee ID" },
+      { key: "month", label: "Month", formatter: formatMonthColumn },
+      { key: "base_salary", label: "Base Salary", nullMsg: "No base salary info" },
+      { key: "hours_worked", label: "Hours Worked", nullMsg: "No hours worked info" },
+      { key: "overtime_hours", label: "Overtime Hours", nullMsg: "No overtime hours" },
+      { key: "overtime_pay", label: "Overtime Pay", nullMsg: "No overtime pay" },
+      { key: "bonuses", label: "Bonuses", nullMsg: "No bonuses" },
+      { key: "tax_rate", label: "Tax Rate", nullMsg: "No tax rate info" },
+      { key: "tax", label: "Tax", nullMsg: "No tax info" },
+      { key: "deductions", label: "Deductions", nullMsg: "No deductions" },
+      { key: "net_salary", label: "Net Salary", nullMsg: "No net salary info" },
+      { key: "payment_status", label: "Payment Status", nullMsg: "No payment status" },
+      { key: "payment_date", label: "Payment Date", nullMsg: "No payment date" },
+      { key: "created_at", label: "Created At" }
+    ];
+    function renderCell(val, col) {
+      if (col.key === 'created_at' || col.key === 'payment_date') {
+        if (val === null || val === undefined || val === "") {
+          return col.nullMsg || "No data";
+        }
+        return formatAMPMDate(val);
+      }
+      if (col.formatter) {
+        return col.formatter(val);
+      }
+      if (val === null || val === undefined) {
+        return col.nullMsg || "No data";
+      }
+      return val;
+    }
+    const rows = [columns.map(col => col.label)];
+    for (const row of data) {
+      rows.push(columns.map(col => renderCell(row[col.key], col)));
+    }
+    return rows;
+  }
+
+  function performanceToExportRows(data) {
+    if (!data || !data.labels || !data.data) return [];
+    const rows = [["Month", "Average Progress (%)"]];
+    for (let i = 0; i < data.labels.length; i++) {
+      rows.push([data.labels[i], Number(data.data[i]).toFixed(2)]);
+    }
+    return rows;
+  }
+
+  function productivityToExportRows(data) {
+    if (!data || !data.labels || !data.data) return [];
+    const rows = [["Department", "Task Count"]];
+    for (let i = 0; i < data.labels.length; i++) {
+      rows.push([data.labels[i], data.data[i]]);
+    }
+    return rows;
+  }
+
+  function getExportRowsByType(type, data) {
+    if (type === "attendance_report") return attendanceToExportRows(data);
+    if (type === "payroll_report") return payrollToExportRows(data);
+    if (type === "performance_report") return performanceToExportRows(data);
+    if (type === "productivity_report") return productivityToExportRows(data);
+    return [];
+  }
+
+  // --- Main report generation logic ---
+  function createReportCardWithTable(reportType, reportData) {
+    const container = document.getElementById('reports-container');
+    const titleMap = {
+      attendance_report: 'Attendance Report',
+      payroll_report: 'Payroll Report',
+      performance_report: 'Performance Report',
+      productivity_report: 'Productivity Report',
+    };
+    const card = document.createElement('div');
+    card.className = 'col-md-12 mb-4';
+    let innerHTML = '';
+    let noData = !reportData || (Array.isArray(reportData) && reportData.length === 0) ||
+      (reportData && reportData.labels && reportData.labels.length === 0);
+
+    if (noData) {
+      innerHTML = `
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">${titleMap[reportType] || reportType}</h5>
+            <p class="text-muted">No data available</p>
+          </div>
+        </div>
+      `;
+    } else {
+      let tableHtml = '';
+      if (reportType === 'attendance_report') {
+        tableHtml = createAttendanceTable(reportData);
+      } else if (reportType === 'payroll_report') {
+        tableHtml = createPayrollTable(reportData);
+      } else if (reportType === 'performance_report') {
+        tableHtml = createPerformanceTable(reportData);
+      } else if (reportType === 'productivity_report') {
+        tableHtml = createProductivityTable(reportData);
+      }
+      innerHTML = `
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">${titleMap[reportType] || reportType}</h5>
+            ${tableHtml}
+          </div>
+        </div>
+      `;
+    }
+    card.innerHTML = innerHTML;
+    container.appendChild(card);
+  }
+
+async function fetchReportData(reportType, startDate, endDate, token) {
+    const apiUrl = reportApiMap[reportType];
+    const url = new URL(apiUrl, window.location.origin);
+    url.searchParams.append('start_date', startDate);
+    url.searchParams.append('end_date', endDate);
+    showSpinner();
+    try {
+      const response = await fetch(url.toString(), {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      let data;
+      try {
+        data = await response.json();
+      } catch (jsonErr) {
+        throw new Error('Invalid server response');
+      }
+      if (!response.ok) {
+        throw new Error(data.message || `Failed to fetch ${reportType}`);
+      }
+      return data;
+    } finally {
+      hideSpinner();
+    }
+  }
+  
+async function fetchAndGenerateReports(reportType = 'all') {
+    const startDate = document.getElementById('start-date').value;
+    const endDate = document.getElementById('end-date').value;
+    if (!startDate || !endDate) {
+      alert('Please select both start date and end date.');
+      return;
+    }
+    clearReports();
+    const token = sessionStorage.getItem('adminToken');
+    if (!token) {
+      alert('You are not authenticated. Please login.');
+      return;
+    }
+    try {
+      const typesToFetch = reportType === 'all' ? allReportTypes : [reportType];
+      for (const type of allReportTypes) {
+        if (typesToFetch.includes(type)) {
+          try {
+            const data = await fetchReportData(type, startDate, endDate, token);
+            window.reportState.reportsData[type] = data;
+            createReportCardWithTable(type, data);
+          } catch (err) {
+            createReportCardWithTable(type, null);
+          }
+        } else {
+          createReportCardWithTable(type, null);
+        }
+      }
+    } catch (err) {
+      alert('Fetch error: ' + err.message);
+      console.error(err);
+    }
+  }
+
+  document.getElementById('generate-report').addEventListener('click', () => {
+    const selectedReport = document.getElementById('exampleFormControlSelect1').value;
+    fetchAndGenerateReports(selectedReport);
+  });
+
+  document.getElementById('generate-all-reports').addEventListener('click', () => {
+    fetchAndGenerateReports('all');
+  });
+
+  // Export all reports in CSV format
+  function exportCSV() {
+    if (!window.reportState || !window.reportState.reportsData) {
+      alert('No report data to export!');
+      return;
+    }
+    let csvContent = '';
+    for (const [type, data] of Object.entries(window.reportState.reportsData)) {
+      const rows = getExportRowsByType(type, data);
+      if (!rows.length) continue;
+      csvContent += `${type.toUpperCase()}\r\n`;
+      csvContent += rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+      csvContent += "\r\n\r\n";
+    }
+    if (!csvContent) {
+      alert('No data available to export.');
+      return;
+    }
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `reports_export_${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  // Export all reports in Excel format using SheetJS
+function exportExcel() {
+  if (!window.reportState || !window.reportState.reportsData) {
+    alert('No report data to export!');
+    return;
+  }
+  const wb = XLSX.utils.book_new();
+  for (const [type, data] of Object.entries(window.reportState.reportsData)) {
+    const rows = getExportRowsByType(type, data); // Make sure this returns array-of-arrays
+    if (!rows || !rows.length) continue; // skip if no rows
+    // Sheet name: remove _report suffix, capitalize
+    const sheetName = (type.replace('_report', '').replace(/^\w/, c => c.toUpperCase()));
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    XLSX.utils.book_append_sheet(wb, ws, sheetName);
+  }
+  XLSX.writeFile(wb, `reports_export_${new Date().toISOString().slice(0,10)}.xlsx`);
+}
+  // Export all reports in PDF format using jsPDF and AutoTable
+  async function exportPDF() {
+    if (!window.reportState || !window.reportState.reportsData) {
+      alert('No report data to export!');
+      return;
+    }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    let y = 10;
+    for (const [type, data] of Object.entries(window.reportState.reportsData)) {
+      const rows = getExportRowsByType(type, data);
+      if (!rows.length) {
+        doc.setFontSize(14);
+        doc.text(`${type.replace('_report', '').toUpperCase()} - No data available`, 10, y);
+        y += 10;
+        continue;
+      }
+      doc.setFontSize(16);
+      doc.text(type.replace('_report', '').toUpperCase(), 10, y);
+      y += 8;
+      doc.autoTable({
+        startY: y,
+        head: [rows[0]],
+        body: rows.slice(1),
+        theme: 'grid',
+        styles: { fontSize: 10 },
+      });
+      y = doc.lastAutoTable.finalY + 10;
+      if (y > 270) {
+        doc.addPage();
+        y = 10;
+      }
+    }
+    doc.save(`reports_export_${new Date().toISOString().slice(0,10)}.pdf`);
+  }
+
+  // --- Helper to log export action ---
+  async function logExportAction(exportType, reportType) {
+    const token = sessionStorage.getItem('adminToken');
+    if (!token) return; // Not logged in, skip logging
+    try {
+      await fetch('/api/log_export', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({
+          export_type: exportType,
+          report_type: reportType
+        })
+      });
+    } catch (err) {
+      // Optionally, you can show an error or log to console
+      console.warn("Failed to log export action:", err);
+    }
+  }
+
+  // --- Export all reports in CSV format
+  function exportCSV() {
+    if (!window.reportState || !window.reportState.reportsData) {
+      alert('No report data to export!');
+      return;
+    }
+    let csvContent = '';
+    for (const [type, data] of Object.entries(window.reportState.reportsData)) {
+      const rows = getExportRowsByType(type, data);
+      if (!rows.length) continue;
+      csvContent += `${type.toUpperCase()}\r\n`;
+      csvContent += rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+      csvContent += "\r\n\r\n";
+      // log for each report type exported as CSV
+      logExportAction('csv', type);
+    }
+    if (!csvContent) {
+      alert('No data available to export.');
+      return;
+    }
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `reports_export_${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  // --- Export all reports in Excel format using SheetJS
+  function exportExcel() {
+    if (!window.reportState || !window.reportState.reportsData) {
+      alert('No report data to export!');
+      return;
+    }
+    const wb = XLSX.utils.book_new();
+    for (const [type, data] of Object.entries(window.reportState.reportsData)) {
+      const rows = getExportRowsByType(type, data); // Make sure this returns array-of-arrays
+      if (!rows || !rows.length) continue; // skip if no rows
+      // Sheet name: remove _report suffix, capitalize
+      const sheetName = (type.replace('_report', '').replace(/^\w/, c => c.toUpperCase()));
+      const ws = XLSX.utils.aoa_to_sheet(rows);
+      XLSX.utils.book_append_sheet(wb, ws, sheetName);
+      // log for each report type exported as Excel
+      logExportAction('excel', type);
+    }
+    XLSX.writeFile(wb, `reports_export_${new Date().toISOString().slice(0,10)}.xlsx`);
+  }
+
+  // --- Export all reports in PDF format using jsPDF and AutoTable
+  async function exportPDF() {
+    if (!window.reportState || !window.reportState.reportsData) {
+      alert('No report data to export!');
+      return;
+    }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    let y = 10;
+    for (const [type, data] of Object.entries(window.reportState.reportsData)) {
+      const rows = getExportRowsByType(type, data);
+      if (!rows.length) {
+        doc.setFontSize(14);
+        doc.text(`${type.replace('_report', '').toUpperCase()} - No data available`, 10, y);
+        y += 10;
+        continue;
+      }
+      doc.setFontSize(16);
+      doc.text(type.replace('_report', '').toUpperCase(), 10, y);
+      y += 8;
+      doc.autoTable({
+        startY: y,
+        head: [rows[0]],
+        body: rows.slice(1),
+        theme: 'grid',
+        styles: { fontSize: 10 },
+      });
+      y = doc.lastAutoTable.finalY + 10;
+      if (y > 270) {
+        doc.addPage();
+        y = 10;
+      }
+      // log for each report type exported as PDF
+      logExportAction('pdf', type);
+    }
+    doc.save(`reports_export_${new Date().toISOString().slice(0,10)}.pdf`);
+  }
+
+  document.getElementById('export-csv').addEventListener('click', exportCSV);
+  document.getElementById('export-excel').addEventListener('click', exportExcel);
+  document.getElementById('export-pdf').addEventListener('click', exportPDF);
+});
+</script>
+<!-- Script for generating reports (End) -->
+
+<!-- Script for displaying List of admin actions (Start) -->
+<script>
+function formatAMPMDate(str) {
+  if (!str) return '';
+  let d = new Date(str);
+  if (isNaN(d.getTime())) {
+    if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(str)) {
+      let [datePart, timePart] = str.split(' ');
+      let [y, m, d2] = datePart.split('-');
+      let [h, mi, s] = timePart.split(':');
+      d = new Date(y, m-1, d2, h, mi, s);
+    } else {
+      return str;
+    }
+  }
+  let yyyy = d.getFullYear();
+  let mm = String(d.getMonth()+1).padStart(2, '0');
+  let dd = String(d.getDate()).padStart(2, '0');
+  let h = d.getHours();
+  let m = String(d.getMinutes()).padStart(2, '0');
+  let s = String(d.getSeconds()).padStart(2, '0');
+  let ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12;
+  h = h ? h : 12;
+  return `${yyyy}-${mm}-${dd} ${h}:${m}:${s} ${ampm}`;
+}
+
+// --- Pagination constants and state ---
+const AUDIT_PAGE_SIZE = 20;
+let auditCurrentPage = 1;
+let globalAuditEntries = [];
+
+// --- Smart Pagination Controls ---
+function renderSmartPaginationControls(options) {
+  const { containerId, currentPage, totalPages, onPageChange } = options;
+  let paginationContainer = document.getElementById(containerId);
+  if (!paginationContainer) {
+    paginationContainer = document.createElement('div');
+    paginationContainer.id = containerId;
+    paginationContainer.className = 'd-flex justify-content-center my-2';
+    const listDiv = document.getElementById('audit-list');
+    if (listDiv) {
+      listDiv.parentNode.insertBefore(paginationContainer, listDiv.nextSibling);
+    } else {
+      document.body.appendChild(paginationContainer);
+    }
+  }
+  paginationContainer.innerHTML = '';
+
+  if (totalPages <= 1) {
+    paginationContainer.style.display = 'none';
+    return;
+  } else {
+    paginationContainer.style.display = 'flex';
+  }
+
+  const windowSize = 2;
+  function createBtn(label, page, disabled = false, active = false) {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-sm mx-1 ' + (active ? 'btn-primary' : 'btn-outline-primary');
+    btn.textContent = label;
+    btn.disabled = disabled;
+    if (!disabled && !active) {
+      btn.onclick = function () {
+        onPageChange(page);
+      };
+    }
+    return btn;
+  }
+
+  // Prev
+  paginationContainer.appendChild(createBtn('Previous', currentPage - 1, currentPage === 1));
+  // Always show first page
+  paginationContainer.appendChild(createBtn('1', 1, false, currentPage === 1));
+  // Left ellipsis
+  if (currentPage - windowSize > 2) {
+    const span = document.createElement('span');
+    span.className = 'mx-1';
+    span.textContent = '...';
+    paginationContainer.appendChild(span);
+  }
+  // Page window
+  for (
+    let i = Math.max(2, currentPage - windowSize);
+    i <= Math.min(totalPages - 1, currentPage + windowSize);
+    i++
+  ) {
+    paginationContainer.appendChild(createBtn(i, i, false, currentPage === i));
+  }
+  // Right ellipsis
+  if (currentPage + windowSize < totalPages - 1) {
+    const span = document.createElement('span');
+    span.className = 'mx-1';
+    span.textContent = '...';
+    paginationContainer.appendChild(span);
+  }
+  // Always show last page
+  if (totalPages > 1)
+    paginationContainer.appendChild(createBtn(totalPages, totalPages, false, currentPage === totalPages));
+  // Next
+  paginationContainer.appendChild(createBtn('Next', currentPage + 1, currentPage === totalPages));
+}
+
+// --- Pagination controls rendering, smart version ---
+function renderAuditPaginationControls(totalPages) {
+  renderSmartPaginationControls({
+    containerId: 'audit-pagination-controls',
+    currentPage: auditCurrentPage,
+    totalPages,
+    onPageChange: function(page) {
+      auditCurrentPage = page;
+      renderAuditEntries(globalAuditEntries);
+    }
+  });
+}
+
+// --- Audit entries rendering with pagination ---
+function renderAuditEntries(entries) {
+  const auditList = document.getElementById('audit-list');
+  globalAuditEntries = entries;
+  auditList.innerHTML = '';
+
+  if (!entries || entries.length === 0) {
+    auditList.innerHTML = '<li>No admin actions found for the selected date.</li>';
+    renderAuditPaginationControls(0);
+    return;
+  }
+
+  const totalPages = Math.ceil(entries.length / AUDIT_PAGE_SIZE);
+  if (auditCurrentPage > totalPages) auditCurrentPage = totalPages;
+  if (auditCurrentPage < 1) auditCurrentPage = 1;
+
+  const startIdx = (auditCurrentPage - 1) * AUDIT_PAGE_SIZE;
+  const endIdx = startIdx + AUDIT_PAGE_SIZE;
+  const pagedList = entries.slice(startIdx, endIdx);
+
+  for (const entry of pagedList) {
+    const item = document.createElement('li');
+    item.innerHTML = `
+      <div>
+        <strong>Date:</strong> ${formatAMPMDate(entry.timestamp)}
+      </div>
+      <div>
+        <strong>Role:</strong> ${entry.role_name || entry.role_id}
+      </div>
+      <div>
+        <strong>Action:</strong> ${entry.action}
+      </div>
+      <div>
+        <strong>Details:</strong> ${entry.details || 'N/A'}
+      </div>
+      <div>
+        <strong>Category:</strong> ${entry.category || 'N/A'}
+      </div>
+      <div>
+        <strong>Compliance Status:</strong> ${entry.compliance_status || 'N/A'}
+      </div>
+    `;
+    item.style.marginBottom = "1em";
+    item.style.borderBottom = "1px solid #eee";
+    item.style.paddingBottom = "1em";
+    auditList.appendChild(item);
+  }
+
+  renderAuditPaginationControls(totalPages);
+}
+
+// --- Modified fetch logic to use paginated rendering ---
+document.getElementById('fetch-btn').addEventListener('click', async () => {
+  const token = sessionStorage.getItem('adminToken');
+  const date = document.getElementById('selected-date').value;
+  showSpinner();
+  try {
+    const res = await fetch('/reportingandanalytics_data', {
+      method: date ? 'POST' : 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: date ? JSON.stringify({ selected_date: date }) : null
+    });
+    let data;
+    try {
+      data = await res.json();
+    } catch(jsonErr) {
+      throw new Error('Invalid server response');
+    }
+    if (!res.ok) {
+      throw new Error(data.error || 'Failed to fetch audit data');
+    }
+    const entries = data.audit_entries;
+    renderAuditEntries(entries || []);
+  } catch (err) {
+    const auditList = document.getElementById('audit-list');
+    auditList.innerHTML = `<li class="text-danger">Error: ${err.message}</li>`;
+    renderAuditPaginationControls(0);
+  } finally {
+    hideSpinner();
+  }
+});
+
+// --- Search filter logic does NOT need to change ---
+document.getElementById('audit-search').addEventListener('input', function () {
+  const searchTerm = this.value.toLowerCase();
+  const auditList = document.getElementById('audit-list');
+  const items = auditList.getElementsByTagName('li');
+
+  for (const item of items) {
+    const text = item.textContent.toLowerCase();
+    if (text.includes(searchTerm)) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  }
+});
+
+// --- Initial fetch on page load ---
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('fetch-btn').click();
+});
+</script>
+<!-- Script for displaying List of admin actions (End) -->
+
+<!-- Script for logging out (Start) -->
+<script>
+  document.querySelector(".logout-btn").addEventListener("click", function () {
+    $("#logoutModal").modal("show"); // Show modal using jQuery
+  });
+
+  document
+    .getElementById("confirmLogout")
+    .addEventListener("click", function () {
+      sessionStorage.removeItem("adminToken");
+      window.location.href = "/admin_login";
+    });
+
+  document
+    .getElementById("cancelLogout")
+    .addEventListener("click", function () {
+      $("#logoutModal").modal("hide"); // Hide modal using jQuery
+    });
+
+  document
+    .getElementById("closeLogoutModal")
+    .addEventListener("click", function () {
+      $("#logoutModal").modal("hide"); // Also hide on "X"
+    });
+</script>
+<!-- Script for logging out (End) -->
+
+<!-- Script that redirects admin back to login page if the token doesn't exist (Start) -->
+<script>
+  const token = sessionStorage.getItem("adminToken");
+  if (!token) {
+    showSpinner();
+    setTimeout(function() {
+      alert("Not authenticated. Redirecting to login.");
+      hideSpinner(); // Hide spinner before redirect
+      window.location.href = "/admin_login";
+    }, 600);
+  }
+</script>
+<!-- Script that redirects admin back to login page if the token doesn't exist (End) -->
+
+<!-- Script for redirect admin back to the login page when someone else logged in from another tab (Start) -->
+<script>
+  function getToken() {
+    return sessionStorage.getItem("adminToken");
+  }
+  function checkSessionConflict() {
+    const token = getToken();
+    if (!token) return;
+    showSpinner();
+    fetch("/check_jti", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => {
+        if (response.status === 403) {
+          throw new Error("session_conflict");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.error === "session_conflict") {
+          throw new Error("session_conflict");
+        }
+      })
+      .catch((err) => {
+        if (err.message === "session_conflict") {
+          const modal = new bootstrap.Modal(
+            document.getElementById("sessionConflictModal"),
+            { backdrop: "static", keyboard: false }
+          );
+          modal.show();
+          const logoutBtn = document.getElementById("confirmLogoutBetweenTabs");
+          if (!logoutBtn.dataset.bound) {
+            logoutBtn.addEventListener("click", () => {
+              showSpinner();
+              setTimeout(function() {
+                hideSpinner(); // Hide before redirect
+                sessionStorage.removeItem("adminToken");
+                window.location.href = "/admin_login";
+              }, 600);
+            });
+            logoutBtn.dataset.bound = "true";
+          }
+        }
+      })
+      .finally(() => {
+        hideSpinner();
+      });
+  }
+  checkSessionConflict();
+  setInterval(checkSessionConflict, 30000);
+</script>
+<!-- Script for redirect admin back to the login page when someone else logged in from another tab (End) -->
+
+<!-- Script for checking admin if they have access to this page (Start) -->
+<script>
+  const accessDenied = {{ 'true' if access_denied else 'false' }};
+  if (accessDenied) {
+    const accessModal = new bootstrap.Modal(document.getElementById("accessDeniedModal"));
+    accessModal.show();
+    document.getElementById("forceLogoutBtn").addEventListener("click", function () {
+      showSpinner();
+      setTimeout(function() {
+        hideSpinner(); // Hide before redirect
+        sessionStorage.removeItem("adminToken");
+        window.location.href = "/admin_login";
+      }, 600);
+    });
+  }
+</script>
+<!-- Script for checking admin if they have access to this page (End) -->
+
+  </body>
+</html>

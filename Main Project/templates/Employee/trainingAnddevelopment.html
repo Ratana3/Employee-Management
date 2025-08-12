@@ -1,0 +1,2276 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>Ready Bootstrap Dashboard</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+	<link rel="stylesheet" href="../../static/Employee/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+	<link rel="stylesheet" href="../../static/Employee/assets/css/ready.css">
+	<link rel="stylesheet" href="../../static/Employee/assets/css/demo.css">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+	<!-- Styling the logging you out spinner -->	
+	<style>
+        /* Make modal-body scrollable in Bootstrap 4 */
+.inbox-scrollable {
+  max-height: 60vh;   /* Adjust height as needed */
+  overflow-y: auto;
+}
+    /* Make modal-body scrollable in Bootstrap 4 */
+.inbox-scrollable {
+  max-height: 60vh;   /* Adjust height as needed */
+  overflow-y: auto;
+}
+		/* Basic styling for spinner container */
+    .spinner-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Spinner Animation (Circular Progress) */
+    .spinner {
+        border: 4px solid transparent;
+        border-top: 4px solid #007bff; /* Blue color for the spinner */
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        animation: spin 1.5s linear infinite;
+    }
+		/* CSS for spinner animation */
+		@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .spinner-border {
+        animation: spin 2s linear infinite;
+    }
+	</style>
+	<!-- Styling the logging you out spinner -->	
+</head>
+<body>
+	<div class="wrapper">
+		<div class="main-header">
+			<div class="logo-header">
+				<a href="#" class="logo" data-toggle="modal" data-target="#modalUpdate">
+					Contact Details
+				</a>
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+			</div>
+			<nav class="navbar navbar-header navbar-expand-lg">
+				<div class="container-fluid">
+
+					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+																								<!-- Message Dropdown -->
+																								<li class="nav-item dropdown hidden-caret">
+																									<a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																									  <i class="la la-envelope"></i>
+																									</a>
+																									<ul class="dropdown-menu notif-box msg-box" aria-labelledby="messageDropdown">
+																									  <li>
+																										<div class="dropdown-title d-flex justify-content-between align-items-center">
+																										  Messages
+																										  <a href="javascript:void(0);" onclick="openComposeMessageModal()">Compose</a>
+																										</div>
+																									  </li>
+																									  <li>
+																										<div class="message-notif-scroll" style="max-height: 250px; overflow-y: auto;">
+																										  <div id="messagePreviewContainer" class="notif-center">
+																											<!-- JS will insert message previews here -->
+																										  </div>
+																										</div>
+																									  </li>
+																									  <li>
+																										<a class="see-all" href="javascript:void(0);" onclick="openMessageInboxModal()"> <strong>View Inbox</strong> <i class="la la-angle-right"></i> </a>
+																									  </li>
+																									</ul>
+																								  </li>
+																								  
+																								  <!-- Notification Dropdown -->
+																								  <li class="nav-item dropdown hidden-caret">
+																									<a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																									  <i class="la la-bell"></i>
+																									  <span class="notification" id="unreadCountBadge" style="display:none;"></span>
+																									</a>
+																									<ul class="dropdown-menu notif-box" aria-labelledby="notificationDropdown">
+																									  <li>
+																										<div class="dropdown-title">You have <span id="notificationTitleCount">0</span> new notification(s)</div>
+																									  </li>
+																									  <li>
+																										<div class="notif-center" id="notificationList">
+																										  <!-- JS will insert notifications here -->
+																										</div>
+																									  </li>
+																									</ul>
+																								  </li>  
+																								  <li class="nav-item dropdown">
+																									<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img alt="user-img" width="36" class="img-circle" id="profile-picture-dropdown"><span id="user-name"></span></span> </a>
+																									<ul class="dropdown-menu dropdown-user">
+																										<li>
+																											<div class="user-box">
+																												<div class="u-img"><img alt="user" id="profile-picture-box"></div>
+																												<div class="u-text">
+																													<h4 id="user-name"></h4>
+																													<p class="text-muted" id="user-email-dropdown"></p>
+																													<a href="/profile" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+																												</div>
+																												</div>
+																											</li>
+																										</ul>
+																										<!-- /.dropdown-user -->
+																									</li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="sidebar">
+				<div class="scrollbar-inner sidebar-wrapper">
+					<div class="user">
+						<div class="photo">
+							<img id="profile-picture-sidebar">
+						</div>
+						<div class="info">
+							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+								<span>
+									<span id="user-name"></span> (Your ID: <span id="user-id"></span>)
+									<span class="user-level" id="user-position"></span>
+									<span class="caret"></span>
+								</span>
+							</a>
+							<div class="clearfix"></div>
+			
+							<div class="collapse in" id="collapseExample" aria-expanded="true" >
+								<ul class="nav">
+									<li>
+										
+											<span class="link-collapse" style="color: black;">Department : <span id="user-department"></span></span>
+										
+									</li>
+									<li>
+										
+										<span class="link-collapse" style="color: black;">Hired since : <span id="user-date-hired"></span></span>
+									
+								</li>
+								<li>
+										
+									<span class="link-collapse" style="color: black;">Team : <span id="user-team_name"></span></span>
+								
+							</li>
+							
+									
+								</ul>
+							</div>
+						</div>
+					</div>
+          					<ul class="nav">
+						<li class="nav-item ">
+							<a href="/user">
+								<i class="la la-dashboard"></i>
+								<p>Dashboard</p>
+							</a>
+						</li>
+						<li class="nav-item ">
+							<a href="/payroll">
+								<i class="la la-cc-mastercard"></i>
+								<p>Payroll information</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/goals">
+								<i class="
+								la la-crosshairs"></i>
+								<p>Your goals</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/workandproductivity">
+								<i class="
+								la la-file-text-o"></i>
+								<p>Your tasks</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/notifications">
+								<i class="la la-bell"></i>
+								<p>Notifications</p>
+							</a>
+						</li>
+						<li class="nav-item active">
+							<a href="/trainings">
+								<i class="la la-mortar-board"></i>
+								<p>Training and Development</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/feedbackandsupport">
+								<i class="la la-weixin"></i>
+								<p>Feedback and support</p>
+							</a>
+						</li>
+						<li class="nav-item ">
+							<a href="/financialmanagement">
+								<i class="la la-usd"></i>
+								<p>Financial management</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/AdministrativeTools">
+								<i class="la la-gear"></i>
+								<p>Administrative Tools</p>
+							</a>
+						</li>
+						
+						<li class="nav-item update-pro">
+							<button class="btn btn-danger" data-toggle="modal" data-target="#logoutModal">
+								<i class="la la-power-off"></i>
+								<p>Logout</p>
+							</button>
+						</li>
+
+						<li class="nav-item update-pro">
+						<button id="viewDevicesBtn" class="btn btn-warning">
+							🖥️ View Recent Devices
+						</button>
+					</li>
+					</ul>
+				</div>
+			</div>
+			<div class="main-panel">
+				<div class="content">
+					<div class="row">
+						
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<h4 class="card-title">Training Materials</h4>
+									<p class="card-category mb-0">Access assigned training materials and certificates</p>
+								</div>
+								<div class="card-body" id="trainingContainer">
+									<!-- Modules will be inserted here by JS -->
+									<div class="text-center">
+										<div class="spinner-border text-primary" role="status">
+											<span class="sr-only">Loading...</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<h4 class="card-title">Your Skill Assessments</h4>
+									<p class="card-category mb-0">Access and submit your skill assessments</p>
+								</div>
+								<div class="card-body" id="assessments-container">
+									<!-- Assessments will be dynamically inserted here -->
+									<div class="text-center">
+										<div class="spinner-border text-primary" role="status">
+											<span class="sr-only">Loading...</span>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="card">
+							  <div class="card-header d-flex justify-content-between align-items-center">
+								<div>
+								  <h4 class="card-title">Learning Resources</h4>
+								  <p class="card-category mb-0">Explore available learning materials</p>
+								</div>
+								<div class="form-inline">
+								  <input id="searchInput" type="text" class="form-control mr-2" placeholder="Search...">
+								  <select id="typeFilter" class="form-control mr-2">
+									<option value="">All Types</option>
+									<option value="Guide">Guide</option>
+									<option value="Tutorial">Tutorial</option>
+									<option value="Article">Article</option>
+								  </select>
+								  <select id="sortBy" class="form-control">
+									<option value="desc">Newest</option>
+									<option value="asc">Oldest</option>
+								  </select>
+								</div>
+							  </div>
+							  <div class="card-body" id="learningResourceContainer">
+								<div class="text-center" id="loadingSpinner">
+								  <div class="spinner-border text-primary" role="status">
+									<span class="sr-only">Loading...</span>
+								  </div>
+								</div>
+							  </div>
+							</div>
+						  </div>
+						
+					</div>
+				</div>
+				<footer class="footer">
+					<div class="container-fluid">
+						<nav class="pull-left">
+							<ul class="nav">
+								<li class="nav-item">
+									<a class="nav-link" href="http://www.themekita.com">
+										ThemeKita
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">
+										Help
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="https://themewagon.com/license/#free-item">
+										Licenses
+									</a>
+								</li>
+							</ul>
+						</nav>
+						<div class="copyright ml-auto">
+							2018, made with <i class="la la-heart heart text-danger"></i> by <a href="http://www.themekita.com">ThemeKita</a>
+						</div>				
+					</div>
+				</footer>
+			</div>
+		</div>
+	</div>
+
+<!-- View Resource Modal -->
+<div class="modal fade" id="viewResourceModal" tabindex="-1" role="dialog" aria-labelledby="viewResourceModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="resourceModalTitle"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Type:</strong> <span id="resourceModalType"></span></p>
+        <p><strong>Description:</strong> <span id="resourceModalDescription"></span></p>
+        <hr>
+        <div id="resourceModalContent"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Assessment Result Modal -->
+<div class="modal fade" id="result-modal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Assessment Result</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="result-content">
+        <p class="card-description">Your Score: <span id="result-score"></span>%</p>
+        <button type="button" onclick="closeResultModal()" class="btn btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
+</div>	
+
+<!-- Modal for displaying reminders (meetings, project/tasks deadlines) -->
+<div class="modal fade" id="remindersModal" tabindex="-1" role="dialog" aria-labelledby="remindersModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Your Reminders</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="reminderContent">
+        <!-- Content will be loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal to display contact details -->
+<div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h6 class="modal-title"><i class="la la-phone-square"></i> Contact <span id="user-name"></span> </h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">                   
+        <p>Phone number : <b><span id="user-phone"></span></b></p>
+        <p>Email : <b><span id="user-email-contact"></span></b></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Compose Message Modal -->
+<div class="modal fade" id="composeMessageModal" tabindex="-1" role="dialog" aria-labelledby="composeMessageLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="composeMessageLabel">Compose Message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="composeForm">
+          <div class="form-group">
+            <label for="roleSelect">Select Role</label>
+            <select id="roleSelect" class="form-control">
+              <!-- Options dynamically loaded -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="receiverSelect">Select Receiver</label>
+            <select id="receiverSelect" class="form-control">
+              <!-- Dynamically filtered based on role -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="messageText">Message</label>
+            <textarea class="form-control" id="messageText" rows="4" placeholder="Write your message..."></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" id="sendButton" class="btn btn-primary">Send Message</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Inbox Modal -->
+<div class="modal fade" id="inboxModal" tabindex="-1" role="dialog" aria-labelledby="inboxLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="inboxLabel">Inbox</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body inbox-scrollable" id="inboxMessages">
+        <!-- Messages are dynamically inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for displaying the recent devices -->
+<div class="modal fade" id="recentDevicesModal" tabindex="-1" role="dialog" aria-labelledby="recentDevicesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="recentDevicesLabel">Recent Devices</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped" id="devicesTable">
+          <thead>
+            <tr>
+              <th>Device</th>
+              <th>OS</th>
+              <th>Browser</th>
+              <th>IP Address</th>
+              <th>Last Seen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Devices will be injected here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Logout Confirmation Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to logout?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmLogoutBtnCurrentUser">Logout</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Logging you out modal -->
+<div id="loadingModalCurrentUser" class="modal" style="display: none; position: fixed; z-index: 1050; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
+    <div class="modal-dialog modal-lg" style="max-width: 600px;">
+        <div class="modal-content">
+            <div class="modal-body text-center" style="padding: 30px;">
+                <h4 style="font-size: 2rem; font-weight: 600; color: #007bff;">Logging you out... 🔄</h4>
+                <p style="font-size: 1.2rem; color: #6c757d; margin-top: 10px;">Please wait while we log you out from your account.</p>
+                <div class="spinner-container" style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Token Invalid Modal -->
+<div class="modal fade" id="sessionExpiredModal" tabindex="-1" role="dialog" aria-labelledby="sessionExpiredLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content text-center">
+      <div class="modal-header">
+        <h5 class="modal-title w-100" id="sessionExpiredLabel">Session Expired</h5>
+      </div>
+      <div class="modal-body">
+        Your session has ended due to another login or token expiration.
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-danger" id="redirectToLogin">Go to Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Account Deactivated Modal -->
+<div class="modal fade" id="accountDeactivatedModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-danger border-3 shadow">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">Account Deactivated</h5>
+      </div>
+      <div class="modal-body font-weight-semibold text-danger text-center">
+        Your account has been <strong>deactivated</strong> by the administrator. Please contact support for assistance.
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Account Terminated Modal -->
+<div class="modal fade" id="accountTerminatedModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content bg-dark text-white border-light border-2 shadow">
+      <div class="modal-header border-0">
+        <h5 class="modal-title">Account Terminated</h5>
+      </div>
+      <div class="modal-body text-center font-weight-semibold">
+        Your account has been <strong>terminated</strong>. Access is no longer available.
+      </div>
+      <div class="modal-footer border-0"></div>
+    </div>
+  </div>
+</div>
+
+	
+		  		<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white justify-content-center">
+        <div class="d-flex align-items-center mx-auto">
+          <h5 class="modal-title mb-0" id="successModalLabel">Success</h5>
+        </div>
+      </div>
+      <div class="modal-body text-center" id="successModalBody"></div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Error Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white justify-content-center">
+        <div class="d-flex align-items-center mx-auto">
+          <h5 class="modal-title mb-0" id="errorModalLabel">Error</h5>
+        </div>
+      </div>
+      <div class="modal-body text-center" id="errorModalBody"></div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Confirm Delete Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger" id="confirmDeleteModalHeader">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this message?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+	<!-- Spinner Modal (Bootstrap 4) -->
+<div class="modal fade" id="employeeSpinnerModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="background: rgba(255,255,255,0.90); border: none; box-shadow: none;">
+      <div class="modal-body d-flex flex-column justify-content-center align-items-center" style="min-height: 170px;">
+        <div style="
+          width: 3.5rem;
+          height: 3.5rem;
+          border: 0.5rem solid #e3e6ef;
+          border-top: 0.5rem solid #007bff;
+          border-radius: 50%;
+          animation: employee-spin 0.8s linear infinite;
+          margin-bottom: 16px;
+          ">
+        </div>
+        <div class="spinner-message" style="color: #007bff; font-weight: 600; font-size: 1.15rem; letter-spacing: 0.02em;">
+          Loading...
+        </div>
+        <style>
+          @keyframes employee-spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+          }
+        </style>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- Popper.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<!-- Bootstrap 4 JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Include jsPDF from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Your static imports (keep these) -->
+<script src="../../static/Employee/assets/js/core/popper.min.js"></script>
+<script src="../../static/Employee/assets/js/core/bootstrap.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/chartist/chartist.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/chart-circle/circles.min.js"></script>
+<script src="../../static/Employee/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="../../static/Employee/assets/js/ready.min.js"></script>
+<script src="../../static/Employee/assets/js/demo.js"></script>
+
+<!-- Script for making the spinner modal to disappear first before displaying the follow up modals (Start) -->
+<script>
+function showModalAfterSpinnerHide(modalSelector) {
+  return new Promise((resolve) => {
+    const spinner = $('#employeeSpinnerModal');
+
+    // Helper function to ensure modal backdrop exists
+    const ensureModalBackdrop = () => {
+      // Check if there's already a backdrop
+      const existingBackdrop = document.querySelector('.modal-backdrop');
+      
+      if (!existingBackdrop) {
+        // Create backdrop if it doesn't exist
+        const backdrop = document.createElement('div');
+        backdrop.className = 'modal-backdrop fade show';
+        backdrop.style.zIndex = '1040'; // Bootstrap's default backdrop z-index
+        document.body.appendChild(backdrop);
+      }
+    };
+
+    // Function to show the target modal after hiding spinner
+    const showTargetModal = () => {
+      // Ensure backdrop exists before showing modal
+      ensureModalBackdrop();
+      
+      $(modalSelector).modal('show');
+      setTimeout(() => {
+        document.body.classList.add('modal-open');
+        resolve();
+      }, 150); // Slightly increased delay for better backdrop handling
+    };
+
+    // If spinner is already hidden
+    if (!spinner.hasClass('show')) {
+      showTargetModal();
+    } else {
+      // Wait until spinner finishes hiding
+      spinner.one('hidden.bs.modal', () => {
+        // Small delay to ensure spinner is fully hidden and backdrop is ready
+        setTimeout(showTargetModal, 100);
+      });
+      spinner.modal('hide');
+    }
+  });
+}
+</script>
+<!-- Script for making the spinner modal to disappear first before displaying the follow up modals (End) -->
+
+<!-- Script for displaying spinner (Start) -->
+<script>
+(function () {
+  const modalId = 'employeeSpinnerModal';
+  let _spinnerOpen = false;
+  let _eventAttached = false;
+  let _forceHideTimeoutId = null;
+  let _pendingModals = []; // Track modals that need to be shown after spinner
+
+  function getModalElement() {
+    return document.getElementById(modalId);
+  }
+
+  function showEmployeeSpinner() {
+    console.log('[Spinner] showEmployeeSpinner called');
+    const modalElement = getModalElement();
+    if (!modalElement || typeof jQuery === "undefined") return;
+
+    if (!_eventAttached) {
+      jQuery(modalElement).off('hidden.bs.modal', spinnerHiddenHandler);
+      jQuery(modalElement).on('hidden.bs.modal', spinnerHiddenHandler);
+      _eventAttached = true;
+    }
+
+    if (!_spinnerOpen) {
+      jQuery(modalElement).modal({
+        backdrop: 'static',
+        keyboard: false,
+        show: true
+      });
+      _spinnerOpen = true;
+      _forceHideTimeoutId = setTimeout(forceHideSpinner, 30000); // fallback
+    }
+  }
+
+  function hideEmployeeSpinner() {
+    console.log('[Spinner] hideEmployeeSpinner called');
+    const modalElement = getModalElement();
+    if (!modalElement || typeof jQuery === "undefined") return;
+
+    if (_spinnerOpen) {
+      jQuery(modalElement).modal('hide');
+      _spinnerOpen = false;
+      setTimeout(forceHideSpinner, 2000);
+    }
+  }
+
+  function spinnerHiddenHandler() {
+    console.log('[Spinner] spinnerHiddenHandler (hidden.bs.modal) fired');
+    _spinnerOpen = false;
+    if (_forceHideTimeoutId) clearTimeout(_forceHideTimeoutId);
+    
+    // Check if there are other modals that need backdrop
+    const hasOtherModals = checkForOtherActiveModals();
+    
+    if (!hasOtherModals) {
+      removeAllBackdrops();
+      document.body.classList.remove('modal-open');
+      document.body.style.paddingRight = '';
+    } else {
+      // Keep modal-open class and padding for other modals
+      console.log('[Spinner] Preserving modal state for other active modals');
+    }
+  }
+
+  function forceHideSpinner() {
+    const modalElement = getModalElement();
+    if (!modalElement) return;
+
+    jQuery(modalElement).modal('hide');
+    jQuery(modalElement).hide();
+    _spinnerOpen = false;
+    if (_forceHideTimeoutId) clearTimeout(_forceHideTimeoutId);
+    
+    // Check if there are other modals that need backdrop
+    const hasOtherModals = checkForOtherActiveModals();
+    
+    if (!hasOtherModals) {
+      removeAllBackdrops();
+      document.body.classList.remove('modal-open');
+      document.body.style.paddingRight = '';
+    }
+    
+    console.log('[Spinner] forceHideSpinner called (emergency fallback)');
+  }
+
+  function checkForOtherActiveModals() {
+    // Check for any other visible modals
+    const allModals = document.querySelectorAll('.modal');
+    for (let modal of allModals) {
+      if (modal.id !== modalId && (modal.classList.contains('show') || jQuery(modal).hasClass('show'))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function removeAllBackdrops() {
+    const backdrops = document.querySelectorAll('.modal-backdrop');
+    backdrops.forEach(el => el.parentNode && el.parentNode.removeChild(el));
+  }
+
+  // Enhanced function to check if spinner is currently visible
+  function isSpinnerVisible() {
+    const modalElement = getModalElement();
+    if (!modalElement) return false;
+    
+    return _spinnerOpen || 
+           modalElement.classList.contains('show') || 
+           jQuery(modalElement).hasClass('show') ||
+           jQuery(modalElement).is(':visible');
+  }
+
+  // Function to wait for spinner to hide before executing callback
+  function waitForSpinnerHide(callback) {
+    if (!isSpinnerVisible()) {
+      // Spinner is already hidden, execute callback with small delay
+      setTimeout(callback, 100);
+      return;
+    }
+
+    // Listen for spinner hidden event
+    const modalElement = getModalElement();
+    if (modalElement) {
+      jQuery(modalElement).one('hidden.bs.modal', function() {
+        setTimeout(callback, 150);
+      });
+    }
+
+    // Fallback polling
+    let attempts = 0;
+    const maxAttempts = 50;
+    
+    const checkHidden = () => {
+      attempts++;
+      if (!isSpinnerVisible() || attempts >= maxAttempts) {
+        setTimeout(callback, 150);
+      } else {
+        setTimeout(checkHidden, 100);
+      }
+    };
+
+    setTimeout(checkHidden, 100);
+  }
+
+  // Export functions globally
+  window.showEmployeeSpinner = showEmployeeSpinner;
+  window.hideEmployeeSpinner = hideEmployeeSpinner;
+  window.waitForSpinnerHide = waitForSpinnerHide;
+  window.isSpinnerVisible = isSpinnerVisible;
+
+  document.addEventListener('keydown', function (e) {
+    if (e.altKey && e.key.toLowerCase() === 's') {
+      console.log('[Spinner] Alt+S pressed, force hiding spinner');
+      forceHideSpinner();
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // Only clean up if no modals are active
+    if (!checkForOtherActiveModals()) {
+      document.body.classList.remove('modal-open');
+      document.body.style.paddingRight = '';
+      removeAllBackdrops();
+    }
+  });
+})();
+</script>
+ <!-- Script for displaying spinner (End) -->
+
+
+<!-- Script for checking 2FA (Start) -->
+<script>
+(function () {
+  const modalId = 'employeeSpinnerModal';
+  let _spinnerOpen = false;
+  let _eventAttached = false;
+  let _forceHideTimeoutId = null;
+
+  function getModalElement() {
+    return document.getElementById(modalId);
+  }
+
+  function showEmployeeSpinner() {
+    const modalElement = getModalElement();
+    if (!modalElement || typeof jQuery === "undefined") return;
+
+    if (!_eventAttached) {
+      jQuery(modalElement).off('hidden.bs.modal', spinnerHiddenHandler);
+      jQuery(modalElement).on('hidden.bs.modal', spinnerHiddenHandler);
+      _eventAttached = true;
+    }
+
+    if (!_spinnerOpen) {
+      jQuery(modalElement).modal({
+        backdrop: 'static',
+        keyboard: false,
+        show: true
+      });
+      _spinnerOpen = true;
+      _forceHideTimeoutId = setTimeout(forceHideSpinner, 30000); // fallback
+    }
+  }
+
+  function hideEmployeeSpinner() {
+    const modalElement = getModalElement();
+    if (!modalElement || typeof jQuery === "undefined") return;
+
+    if (_spinnerOpen) {
+      jQuery(modalElement).modal('hide');
+      _spinnerOpen = false;
+      setTimeout(forceHideSpinner, 2000);
+    }
+  }
+
+  function spinnerHiddenHandler() {
+    _spinnerOpen = false;
+    if (_forceHideTimeoutId) clearTimeout(_forceHideTimeoutId);
+
+    // Check for other active modals
+    const hasOtherModals = checkForOtherActiveModals();
+
+    if (!hasOtherModals) {
+      removeAllBackdrops();
+      document.body.classList.remove('modal-open');
+      document.body.style.paddingRight = '';
+    }
+  }
+
+  function forceHideSpinner() {
+    const modalElement = getModalElement();
+    if (!modalElement) return;
+
+    jQuery(modalElement).modal('hide');
+    jQuery(modalElement).hide();
+    _spinnerOpen = false;
+    if (_forceHideTimeoutId) clearTimeout(_forceHideTimeoutId);
+
+    const hasOtherModals = checkForOtherActiveModals();
+    if (!hasOtherModals) {
+      removeAllBackdrops();
+      document.body.classList.remove('modal-open');
+      document.body.style.paddingRight = '';
+    }
+  }
+
+  function checkForOtherActiveModals() {
+    const allModals = document.querySelectorAll('.modal');
+    for (let modal of allModals) {
+      if (modal.id !== modalId && (modal.classList.contains('show') || jQuery(modal).hasClass('show'))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function removeAllBackdrops() {
+    const backdrops = document.querySelectorAll('.modal-backdrop');
+    backdrops.forEach(el => el.parentNode && el.parentNode.removeChild(el));
+  }
+
+  function isSpinnerVisible() {
+    const modalElement = getModalElement();
+    if (!modalElement) return false;
+    return _spinnerOpen || 
+           modalElement.classList.contains('show') ||
+           jQuery(modalElement).hasClass('show') ||
+           jQuery(modalElement).is(':visible');
+  }
+
+  function waitForSpinnerHide(callback) {
+    if (!isSpinnerVisible()) {
+      setTimeout(callback, 100);
+      return;
+    }
+
+    const modalElement = getModalElement();
+    if (modalElement) {
+      jQuery(modalElement).one('hidden.bs.modal', function() {
+        setTimeout(callback, 150);
+      });
+    }
+
+    let attempts = 0;
+    const maxAttempts = 50;
+    const checkHidden = () => {
+      attempts++;
+      if (!isSpinnerVisible() || attempts >= maxAttempts) {
+        setTimeout(callback, 150);
+      } else {
+        setTimeout(checkHidden, 100);
+      }
+    };
+    setTimeout(checkHidden, 100);
+  }
+
+  window.showEmployeeSpinner = showEmployeeSpinner;
+  window.hideEmployeeSpinner = hideEmployeeSpinner;
+  window.waitForSpinnerHide = waitForSpinnerHide;
+  window.isSpinnerVisible = isSpinnerVisible;
+})();
+
+function employeeSecureFetch(url, options = {}) {
+  options.headers = options.headers || {};
+  const token = sessionStorage.getItem('employeeToken');
+  if (token) options.headers['Authorization'] = 'Bearer ' + token;
+  options.headers['X-Requested-With'] = 'XMLHttpRequest';
+
+  const showSpinner = options.showSpinner !== false;
+  let didRedirect = false;
+
+  if (showSpinner) {
+    showEmployeeSpinner();
+  }
+
+  const finalize = async () => {
+    if (!didRedirect && showSpinner) {
+      hideEmployeeSpinner();
+      await new Promise(resolve => waitForSpinnerHide(resolve));
+    }
+  };
+
+  return fetch(url, options)
+    .then(async res => {
+      let data;
+      try { data = await res.clone().json(); } catch { data = {}; }
+      if (res.status === 403 && data?.error === "2FA_REQUIRED" && data.redirect) {
+        didRedirect = true;
+        window.location.href = data.redirect;
+        return Promise.reject("2FA required, redirecting");
+      }
+      if ((res.status === 401 || res.status === 403) && data.redirect) {
+        didRedirect = true;
+        window.location.href = data.redirect;
+        return Promise.reject(data.error || "Unauthorized, redirecting");
+      }
+      if (!res.ok) {
+        throw new Error(data.message || "An error occurred");
+      }
+      if (options.showSuccessMessage) {
+        // Use your preferred success modal logic here
+      }
+      return data;
+    })
+    .catch(err => {
+      if (!didRedirect && !options.suppressErrorModal) {
+        // Use your preferred error modal logic here
+      }
+      throw err;
+    })
+    .finally(finalize);
+}
+
+</script>
+<!-- Script for checking 2FA (End) -->
+
+<!-- Script for checking if the account is terminated or deactivated (Start) -->
+<script>
+  // Global helper to wait for spinner to finish before showing other modals
+  function waitForSpinnerToHide() {
+    return new Promise(resolve => {
+      const spinner = $('#employeeSpinnerModal');
+      if (!spinner.hasClass('show')) return resolve();
+      spinner.one('hidden.bs.modal', resolve);
+      spinner.modal('hide');
+    });
+  }
+
+  function checkAccountStatusPeriodically() {
+    async function checkStatus() {
+      try {
+        const data = await employeeSecureFetch('/api/employee_status', { showSpinner: false });
+        // ✅ Active user, no action needed
+      } catch (err) {
+        if (typeof err === 'string') return;
+
+        try {
+          const res = await fetch('/api/employee_status', {
+            headers: {
+              'Authorization': `Bearer ${sessionStorage.getItem('employeeToken') || ''}`,
+              'X-Requested-With': 'XMLHttpRequest'
+            }
+          });
+
+          if (res.status === 401 || res.status === 403) {
+            const data = await res.json();
+            const status = data.status?.toLowerCase();
+
+            await waitForSpinnerToHide(); // 🛑 Wait for spinner to finish before showing modal
+
+            if (status === 'deactivated') {
+              $('#accountDeactivatedModal').modal({ backdrop: 'static', keyboard: false });
+              $('#accountDeactivatedModal').modal('show');
+            } else if (status === 'terminated') {
+              $('#accountTerminatedModal').modal({ backdrop: 'static', keyboard: false });
+              $('#accountTerminatedModal').modal('show');
+            }
+
+            setTimeout(function () {
+              sessionStorage.clear();
+              sessionStorage.clear();
+              hideEmployeeSpinner(); // Make sure it's hidden before redirect
+              window.location.href = '/';
+            }, 5000);
+          }
+        } catch (modalErr) {
+          console.error('Modal error:', modalErr);
+          hideEmployeeSpinner(); // fallback
+        }
+      }
+    }
+
+    checkStatus();
+    setInterval(checkStatus, 10000);
+  }
+
+  document.addEventListener('DOMContentLoaded', checkAccountStatusPeriodically);
+</script>
+<!-- Script for checking if the account is terminated or deactivated (End) -->
+
+<!-- Script for redirecting the employee back to login page when the token is blacklisted or overwritten (Start) -->
+<script>
+  // Helper to wait for spinner to hide
+  function waitForSpinnerToHide() {
+    return new Promise(resolve => {
+      const spinner = $('#employeeSpinnerModal');
+      if (!spinner.hasClass('show')) return resolve();
+      spinner.one('hidden.bs.modal', resolve);
+      spinner.modal('hide');
+    });
+  }
+
+  // Uses employeeSecureFetch for token validation and session handling
+  function checkTokenValidity() {
+    employeeSecureFetch('/validate_token', { method: 'GET', showSpinner: false })
+      .catch(err => {
+        showExpiredModal();
+      });
+  }
+
+  async function showExpiredModal() {
+    await waitForSpinnerToHide(); // ⏳ Ensure spinner is fully hidden first
+
+    $('#sessionExpiredModal').modal({
+      backdrop: 'static',
+      keyboard: false
+    }).modal('show');
+
+    document.body.classList.add("modal-open");
+
+    document.querySelectorAll('button, a, input, select, textarea').forEach(el => {
+      if (!el.closest('#sessionExpiredModal')) {
+        el.setAttribute('disabled', 'disabled');
+      }
+    });
+
+    document.getElementById('redirectToLogin').addEventListener('click', () => {
+      sessionStorage.removeItem('employeeToken');
+      window.location.href = '/';
+    });
+  }
+
+  setInterval(checkTokenValidity, 10000);
+</script>
+<!-- Script for redirecting the employee back to login page when the token is blacklisted or overwritten (End) -->
+
+<!-- Script for displaying learning resources (Start) -->
+<script>
+  // Debounce function to avoid too many fetches on fast typing
+  function debounce(fn, delay) {
+    let timer = null;
+    return function (...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+  }
+
+  function loadLearningResources() {
+    const search = document.getElementById('searchInput').value;
+    const type = document.getElementById('typeFilter').value;
+    const sort = document.getElementById('sortBy').value;
+
+    const spinner = document.getElementById('loadingSpinner');
+    if (spinner) spinner.style.display = 'block';
+
+    employeeSecureFetch(`/employee/learning_resources?search=${encodeURIComponent(search)}&type=${type}&sort=${sort}`, {
+      method: 'GET'
+    })
+    .then(data => {
+      const container = document.getElementById('learningResourceContainer');
+      if (spinner) spinner.style.display = 'none';
+
+      container.innerHTML = '';
+
+      if (!data || data.length === 0) {
+        container.innerHTML = '<p class="text-center">No learning resources found.</p>';
+        return;
+      }
+
+      data.forEach((resource, index) => {
+        const collapseId = `collapseContent${index}`;
+
+        const card = `
+          <div class="card mb-3 resource-card">
+            <div class="card-body">
+              <h5 class="card-title">${resource.title}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">${resource.resource_type} • ${new Date(resource.created_at).toLocaleDateString()}</h6>
+              <p class="card-text">${resource.description}</p>
+
+              <p>
+                <a class="btn btn-link p-0 text-primary" data-toggle="collapse" href="#${collapseId}" role="button" aria-expanded="false" aria-controls="${collapseId}">
+                  View Content
+                </a>
+              </p>
+
+              <div class="collapse" id="${collapseId}">
+                <div class="mt-2">
+                  ${resource.content}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', card);
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      const container = document.getElementById('learningResourceContainer');
+      if (spinner) spinner.style.display = 'none';
+      container.innerHTML = '<p class="text-danger">Error loading resources.</p>';
+    });
+  }
+
+  // Use debounce for search input to avoid too many fetches
+  document.getElementById('searchInput').addEventListener('input', debounce(loadLearningResources, 300));
+  document.getElementById('typeFilter').addEventListener('change', loadLearningResources);
+  document.getElementById('sortBy').addEventListener('change', loadLearningResources);
+
+  document.addEventListener('DOMContentLoaded', loadLearningResources);
+</script>
+<!-- Script for displaying learning resources (End) -->
+
+<!-- Script for displaying skill assessments and quizzes (Start) -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        employeeSecureFetch("/get_my_assessments", { method: "GET" })
+        .then(data => {
+            console.log("Data received from /get_my_assessments:", data);
+            if (data.success) {
+                renderAssessments(data.assessments);
+            } else {
+                showErrorModal("Failed to load assessments.");
+            }
+        })
+        .catch(err => {
+            console.error("Error fetching assessments:", err);
+            showErrorModal("Error loading assessments. Check your network or login again.");
+        });
+    });
+
+    let answers = {};
+    let correctAnswers = {};
+    let submittedAssessments = {};
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        if (isNaN(date)) return dateString;
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+    }
+
+    function renderAssessments(assessments) {
+        const container = document.getElementById("assessments-container");
+        container.innerHTML = "";
+
+        if (!assessments.length) {
+            container.innerHTML = `<div class="alert alert-info text-center">No assessments assigned yet.</div>`;
+            return;
+        }
+
+        assessments.forEach(assessment => {
+            const card = document.createElement("div");
+            card.className = "card mb-4 shadow-sm border-0";
+
+            // Minimalistic header: Module name, date, score, feedback
+            const header = document.createElement("div");
+            header.className = "p-3 border-bottom bg-white d-flex flex-wrap align-items-center justify-content-between";
+            header.style.background = "#fff";
+            header.innerHTML = `
+                <div>
+                    <span class="fw-semibold" style="font-size:1.11rem">${assessment.module_name}</span>
+                    <span class="text-muted ms-2" style="font-size:0.96rem">${formatDate(assessment.assessment_date)}</span>
+                </div>
+                <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+                    <span class="badge bg-light text-dark border" style="font-weight:400;">Score: ${assessment.score !== null ? `<span class="fw-bold">${assessment.score}</span>` : "N/A"}</span>
+                    <span class="badge bg-light text-dark border" style="font-weight:400;">
+                        Feedback: ${assessment.feedback ? `<span class="fw-bold">${assessment.feedback}</span>` : "None"}
+                    </span>
+                </div>
+            `;
+
+            // Questions and submit structure unchanged
+            const questionList = document.createElement("div");
+            questionList.className = "card-body pb-2";
+
+            answers[assessment.assessment_id] = {};
+            if (assessment.submitted) submittedAssessments[assessment.assessment_id] = true;
+
+            assessment.questions.forEach((q, idx) => {
+                const questionBlock = document.createElement("div");
+                questionBlock.className = "question-block mb-3";
+                questionBlock.id = `question-${q.question_id}`;
+
+                const qText = document.createElement("p");
+                qText.textContent = `${idx + 1}. ${q.question_text}`;
+
+                const opts = document.createElement("div");
+                opts.className = "options";
+
+                q.options.forEach(opt => {
+                    const button = document.createElement("button");
+                    button.className = "btn option-button";
+                    button.style = "margin-bottom: 5px";
+                    button.textContent = opt.option_text;
+                    button.dataset.optionId = opt.option_id;
+
+                    const selected = q.selected_option === opt.option_id;
+                    const correct = opt.is_correct;
+
+                    if (assessment.submitted) {
+                        button.disabled = true;
+                        const labelSpan = document.createElement("span");
+                        labelSpan.style.marginLeft = "10px";
+
+                        if (selected && correct) {
+                            button.classList.add("btn-success");
+                            labelSpan.textContent = "(Correct answer)";
+                            labelSpan.style.color = "white";
+                        } else if (selected && !correct) {
+                            button.classList.add("btn-danger");
+                            labelSpan.textContent = "(Wrong answer)";
+                            labelSpan.style.color = "white";
+                        } else if (!selected && correct) {
+                            button.classList.add("btn-outline-success");
+                            labelSpan.textContent = "(Correct answer)";
+                            labelSpan.style.color = "green";
+                        } else {
+                            button.classList.add("btn-outline-secondary");
+                        }
+
+                        button.appendChild(labelSpan);
+                    } else {
+                        button.classList.add("btn-outline-primary");
+                        button.onclick = () =>
+                            handleOptionClick(button, assessment.assessment_id, q.question_id, opt.option_id);
+                    }
+
+                    if (selected) {
+                        answers[assessment.assessment_id][q.question_id] = opt.option_id;
+                    }
+
+                    opts.appendChild(button);
+                    opts.appendChild(document.createElement("br"));
+                });
+
+                questionBlock.appendChild(qText);
+                questionBlock.appendChild(opts);
+                questionList.appendChild(questionBlock);
+            });
+
+            const submitBtn = document.createElement("button");
+            submitBtn.id = `submit-btn-${assessment.assessment_id}`;
+            submitBtn.className = "btn mt-3";
+
+            if (assessment.submitted) {
+                submitBtn.classList.add("btn-danger");
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Already Submitted";
+            } else {
+                submitBtn.classList.add("btn-success");
+                submitBtn.textContent = "Submit Assessment";
+                submitBtn.onclick = () =>
+                    submitAssessment(assessment.assessment_id, assessment.questions);
+            }
+
+            card.appendChild(header);
+            card.appendChild(questionList);
+            card.appendChild(submitBtn);
+            container.appendChild(card);
+        });
+    }
+
+    function handleOptionClick(button, assessmentId, questionId, optionId) {
+        const questionBlock = document.getElementById(`question-${questionId}`);
+        const buttons = questionBlock.querySelectorAll(".option-button");
+
+        const isAlreadySelected = button.classList.contains("btn-success");
+
+        buttons.forEach(btn => {
+            btn.classList.remove("btn-success");
+            btn.classList.add("btn-outline-primary");
+        });
+
+        if (isAlreadySelected) {
+            delete answers[assessmentId][questionId];
+        } else {
+            button.classList.remove("btn-outline-primary");
+            button.classList.add("btn-success");
+
+            if (!answers[assessmentId]) {
+                answers[assessmentId] = {};
+            }
+
+            answers[assessmentId][questionId] = optionId;
+        }
+
+        console.log("Current answers object:", answers);
+    }
+
+    function submitAssessment(assessmentId, questions) {
+        if (submittedAssessments[assessmentId]) {
+            showErrorModal("You have already submitted this assessment.");
+            const submitBtn = document.getElementById(`submit-btn-${assessmentId}`);
+            submitBtn.classList.remove("btn-success");
+            submitBtn.classList.add("btn-danger");
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Already Submitted";
+            return;
+        }
+
+        employeeSecureFetch(`/submit_assessment/${assessmentId}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ answers: answers[assessmentId] })
+        })
+        .then(data => {
+            console.log("Submission response:", data);
+            if (data.success) {
+                correctAnswers[assessmentId] = data.correct_answers;
+                showResultModal(data.score, questions, correctAnswers, assessmentId);
+                submittedAssessments[assessmentId] = true;
+            } else {
+                showErrorModal("Error submitting assessment: " + data.message);
+            }
+        })
+        .catch(err => {
+            console.error("Submission failed:", err);
+            showErrorModal("Submission error. Try again or log in again.");
+        });
+    }
+
+    function showResultModal(score, questions, correctAnswers, assessmentId) {
+        document.getElementById("result-score").textContent = score.toFixed(2);
+        highlightAnswers(questions, correctAnswers);
+        $('#result-modal').modal('show');
+
+        const submitBtn = document.getElementById(`submit-btn-${assessmentId}`);
+        submitBtn.classList.remove("btn-success");
+        submitBtn.classList.add("btn-danger");
+        submitBtn.disabled = true;
+    }
+
+    function highlightAnswers(questions, correctAnswers) {
+        questions.forEach(q => {
+            const questionBlock = document.getElementById(`question-${q.question_id}`);
+            const selectedOptionId = answers[q.assessment_id] && answers[q.assessment_id][q.question_id];
+
+            q.options.forEach(opt => {
+                const optionButton = questionBlock.querySelector(`button[data-option-id="${opt.option_id}"]`);
+                if (opt.is_correct) {
+                    if (selectedOptionId == opt.option_id) {
+                        optionButton.classList.add("btn-success");
+                    } else {
+                        optionButton.classList.add("btn-outline-success");
+                    }
+                } else if (selectedOptionId == opt.option_id) {
+                    optionButton.classList.add("btn-danger");
+                }
+            });
+        });
+    }
+
+    function closeResultModal() {
+        $('#result-modal').modal('hide');
+    }
+
+function showSuccessModal(message) {
+    let modal = document.getElementById('successModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.className = 'modal fade';
+        modal.id = 'successModal';
+        modal.tabIndex = -1;
+        modal.innerHTML = `
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title">Success</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <span id="successModalMessage"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+    document.getElementById('successModalMessage').textContent = message || "Operation successful!";
+    $('#successModal').modal('show');
+}
+
+function showErrorModal(message) {
+    let modal = document.getElementById('errorModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.className = 'modal fade';
+        modal.id = 'errorModal';
+        modal.tabIndex = -1;
+        modal.innerHTML = `
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">Error</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <span id="errorModalMessage"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+    document.getElementById('errorModalMessage').textContent = message || "An error occurred!";
+    $('#errorModal').modal('show');
+}
+
+</script>
+<!-- Script for displaying skill assessments and quizzes (End) -->
+
+<!-- Script for displaying details of training materials and certifications (Start) -->
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		employeeSecureFetch("/api/my_trainings", { method: "GET" })
+		.then(data => {
+			const container = document.getElementById("trainingContainer");
+			container.innerHTML = "";
+
+			if (!data || data.length === 0) {
+				container.innerHTML = "<div class='col-12 text-center'><p>No training modules assigned.</p></div>";
+				return;
+			}
+
+			data.forEach(item => {
+				const col = document.createElement("div");
+				col.className = "col-md-6 col-lg-4 mb-4";
+
+				const card = document.createElement("div");
+				card.className = "card h-100 shadow-sm border-0 rounded";  // Bootstrap 4 uses 'rounded', not 'rounded-lg'
+
+				const cardBody = document.createElement("div");
+				cardBody.className = "card-body d-flex flex-column";
+
+				cardBody.innerHTML = `
+					<h5 class="card-title text-warning">${item.module_name}</h5>
+					<p class="card-text">${item.description}</p>
+					<p class="mb-1"><strong>Deadline:</strong> ${item.deadline || 'N/A'}</p>
+					<p class="mb-1"><strong>Status:</strong> ${item.assessment?.is_completed ? 'Completed' : 'Pending'}</p>
+				`;
+
+				if (item.certificate) {
+					const certInfo = document.createElement("div");
+					certInfo.className = "mt-auto pt-3 border-top";
+					certInfo.innerHTML = `
+						<p class="mb-1 text-success"><strong>Certificate Status:</strong> ${item.certificate.certificate_status}</p>
+						<p class="mb-2"><strong>Issued:</strong> ${item.certificate.issued_date}</p>
+						<button class="btn btn-outline-success btn-sm" onclick="downloadCertificate('${item.module_name}', '${item.certificate.issued_date}', '${item.certificate.certificate_status}')">
+							<i class="fas fa-download"></i> Download Certificate
+						</button>
+					`;
+					cardBody.appendChild(certInfo);
+				} else {
+					const noCert = document.createElement("p");
+					noCert.className = "text-muted mt-auto pt-3 border-top";
+					noCert.innerHTML = "<em>No certificate issued yet.</em>";
+					cardBody.appendChild(noCert);
+				}
+
+				card.appendChild(cardBody);
+				col.appendChild(card);
+				container.appendChild(col);
+			});
+		})
+		.catch(error => {
+			console.error("Error fetching training modules:", error);
+		});
+	});
+
+	function downloadCertificate(moduleName, issuedDate, certificateStatus) {
+		const doc = new jsPDF();
+		doc.setFontSize(22);
+		doc.text("Certificate of Completion", 20, 30);
+
+		doc.setFontSize(16);
+		doc.text(`This certifies the completion of:`, 20, 50);
+		doc.text(moduleName, 20, 60);
+
+		doc.setFontSize(14);
+		doc.text(`Issued on: ${issuedDate}`, 20, 80);
+		doc.text(`Status: ${certificateStatus}`, 20, 90);
+
+		doc.save(`${moduleName.replace(/\s+/g, '_')}_Certificate.pdf`);
+	}
+</script>
+	<script>
+		window.jsPDF = window.jspdf.jsPDF;
+	</script>
+	<!-- Script for displaying details of training materials and certifications (End) -->
+
+<!-- Script for messages and notifications (Start) -->
+<script>
+  // Employee Messaging Module - Seamless spinner, success, and error handling using employeeSecureFetch
+
+// Globals
+let previousUnreadCount = 0;
+let messageIdToDelete = null;
+let userData = null;
+
+/**
+ * Fetches messages from inbox.
+ * @returns {Promise<Array>}
+ */
+function fetchMessages(url = '/employee/messages/inbox') {
+  return employeeSecureFetch(url, { method: 'GET' })
+    .then(messages => {
+      if (Array.isArray(messages)) return messages;
+      if (Array.isArray(messages.messages)) return messages.messages;
+      return [];
+    });
+}
+
+/**
+ * Opens the compose message modal, fetching roles.
+ */
+function openComposeMessageModal() {
+  employeeSecureFetch("/employee/roles", { method: 'GET' })
+    .then(roleData => {
+      $('#composeMessageModal').modal('show');
+      const roleSelect = document.getElementById("roleSelect");
+      roleSelect.innerHTML = '<option disabled selected>Select a role</option>';
+      roleData.forEach(role => {
+        const option = document.createElement("option");
+        option.value = role.role_id;
+        option.textContent = role.role_name;
+        roleSelect.appendChild(option);
+      });
+      if (roleData.length > 0) {
+        roleSelect.selectedIndex = 1;
+        roleSelect.dispatchEvent(new Event("change"));
+        handleRoleChange();
+      }
+    })
+    .catch(err => {
+      console.error("[openComposeMessageModal] Error:", err);
+      showMessageModal("Failed to load compose modal.", false);
+    });
+}
+
+/**
+ * Opens the message inbox modal and populates messages.
+ */
+function openMessageInboxModal() {
+  fetchMessages()
+    .then(messages => {
+      const container = document.getElementById('inboxMessages');
+      container.innerHTML = '';
+      if (!messages || messages.length === 0) {
+        container.innerHTML = '<p class="text-muted">No messages found.</p>';
+      } else {
+        messages.forEach(msg => {
+          const card = createMessageCard(msg);
+          container.appendChild(card);
+        });
+      }
+      $('#inboxModal').modal('show');
+    })
+    .catch(err => {
+      console.error("[openMessageInboxModal] Error:", err);
+      showMessageModal("Failed to load inbox messages.", false);
+    });
+}
+
+/**
+ * Creates a DOM card for a message.
+ * @param {Object} msg
+ * @returns {HTMLElement}
+ */
+function createMessageCard(msg) {
+  const card = document.createElement('div');
+  card.className = 'card mb-2';
+  card.innerHTML = `
+    <div class="card-body">
+      <h6 class="card-subtitle mb-1 text-muted">
+        From ${msg.sender_role?.toUpperCase() || ''} (User ID: ${msg.sender_id})
+      </h6>
+      <p class="card-text">${msg.content}</p>
+      <small class="text-muted">${new Date(msg.timestamp).toLocaleString()}</small>
+      ${!msg.is_read ? `<button class="btn btn-sm btn-outline-primary float-right ml-2" onclick="markAsRead(${msg.message_id})">Mark as Read</button>` : ''}
+      <button class="btn btn-sm btn-outline-danger float-right" onclick="showDeleteConfirmModal(${msg.message_id})">Delete</button>
+    </div>`;
+  return card;
+}
+
+/**
+ * Shows the delete confirm modal for a message.
+ * @param {number} messageId
+ */
+function showDeleteConfirmModal(messageId) {
+  messageIdToDelete = messageId;
+  $('#confirmDeleteModal').modal('show');
+}
+
+// Confirm delete handler
+document.addEventListener('DOMContentLoaded', function() {
+  const deleteBtn = document.getElementById('confirmDeleteBtn');
+  if (deleteBtn) {
+    deleteBtn.onclick = function() {
+      if (messageIdToDelete !== null) {
+        actuallyDeleteMessage(messageIdToDelete);
+        messageIdToDelete = null;
+        $('#confirmDeleteModal').modal('hide');
+      }
+    };
+  }
+});
+
+/**
+ * Deletes a message.
+ * @param {number} messageId
+ */
+function actuallyDeleteMessage(messageId) {
+  employeeSecureFetch(`/employee/messages/delete/${messageId}`, { method: 'DELETE' })
+    .then(response => {
+      showMessageModal("Message deleted successfully.", true);
+      openMessageInboxModal();
+      loadMessageNotifications(userData.user.employee_id, userData.employee_role);
+    })
+    .catch(err => {
+      console.error("[deleteMessage] Error:", err);
+      showMessageModal("Failed to delete message.", false);
+    });
+}
+
+/**
+ * Marks a message as read.
+ * @param {number} messageId
+ */
+function markAsRead(messageId) {
+  employeeSecureFetch(`/employee/messages/read/${messageId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+    },
+    body: JSON.stringify({})
+  })
+    .then(() => {
+      openMessageInboxModal();
+      loadMessageNotifications(userData.user.employee_id, userData.employee_role);
+    })
+    .catch(err => {
+      console.error("[markAsRead] Error:", err);
+      showMessageModal("Failed to mark message as read.", false);
+    });
+}
+
+/**
+ * Loads unread message count and updates UI.
+ * @param {string} userId
+ * @param {string} role
+ */
+function loadMessageNotifications(userId, role) {
+  const url = `/employee/messages/unread-count?user_id=${userId}&role=${role}`;
+  employeeSecureFetch(url, { method: 'GET', showSpinner: false })
+    .then(data => {
+      updateUnreadCountBadge(data.unread_count);
+      updateNotificationList(data.unread_count);
+      if (data.unread_count > previousUnreadCount) {
+        playNotificationSound();
+        showNewMessageNotification(data.unread_count - previousUnreadCount);
+      }
+      previousUnreadCount = data.unread_count;
+    })
+    .catch(error => {
+      console.error("[loadMessageNotifications] Error:", error);
+      showMessageModal("Failed to load unread messages count.", false);
+    });
+}
+
+/**
+ * Updates the unread badge in the UI.
+ * @param {number} count
+ */
+function updateUnreadCountBadge(count) {
+  const badge = document.getElementById('unreadCountBadge');
+  if (!badge) return;
+  badge.innerText = count;
+  badge.style.display = count === 0 ? 'none' : 'inline-block';
+}
+
+/**
+ * Updates the notification dropdown.
+ * @param {number} count
+ */
+function updateNotificationList(count) {
+  const list = document.getElementById('notificationList');
+  if (!list) return;
+  list.innerHTML = count > 0
+    ? `<a class="dropdown-item preview-item" href="#" onclick="openMessageInboxModal()">
+        <div class="preview-thumbnail">
+          <div class="preview-icon bg-warning">
+            <i class="mdi mdi-email-alert text-white"></i>
+          </div>
+        </div>
+        <div class="preview-item-content">
+          <h6 class="preview-subject font-weight-normal">You have ${count} unread message${count > 1 ? 's' : ''}</h6>
+          <p class="font-weight-light small-text text-muted mb-0">Check your inbox</p>
+        </div>
+      </a>`
+    : '<p class="px-3 text-muted">Empty</p>';
+}
+
+/**
+ * Shows a notification for new messages.
+ * @param {number} newCount
+ */
+function showNewMessageNotification(newCount) {
+  if (Notification.permission === 'granted') {
+    new Notification(`New Message${newCount > 1 ? 's' : ''}`, {
+      body: `You have ${newCount} new unread message${newCount > 1 ? 's' : ''}.`,
+      icon: '/path/to/your/message-icon.png'
+    });
+  }
+}
+
+/**
+ * Plays a notification sound.
+ */
+function playNotificationSound() {
+  const audio = document.getElementById('messageSound');
+  if (audio) {
+    audio.play().catch(err => console.error("[playNotificationSound] Play error:", err));
+  }
+}
+
+/**
+ * Handles a role change in the compose message modal.
+ */
+function handleRoleChange() {
+  const roleSelect = document.getElementById("roleSelect");
+  const roleId = roleSelect.value;
+  if (!roleId) return;
+  const url = `/employee/users/by_role/${roleId}`;
+  employeeSecureFetch(url, { method: 'GET' })
+    .then(users => {
+      const receiverSelect = document.getElementById("receiverSelect");
+      receiverSelect.innerHTML = '';
+      if (!users || users.length === 0) {
+        receiverSelect.innerHTML = '<option disabled selected>No users available</option>';
+      } else {
+        const defaultOption = document.createElement("option");
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        defaultOption.value = "";
+        defaultOption.textContent = "Select a receiver";
+        receiverSelect.appendChild(defaultOption);
+        users.forEach(user => {
+          const option = document.createElement("option");
+          option.value = user.user_id;
+          option.setAttribute("data-email", user.email);
+          option.textContent = user.email;
+          receiverSelect.appendChild(option);
+        });
+      }
+    })
+    .catch(err => {
+      console.error("[handleRoleChange] Error:", err);
+      showMessageModal("Failed to load users for the selected role.", false);
+    });
+}
+
+/**
+ * Sends a message from the compose modal.
+ */
+function sendMessage() {
+  const receiverSelect = document.getElementById("receiverSelect");
+  const selectedOption = receiverSelect.options[receiverSelect.selectedIndex];
+  if (!selectedOption || selectedOption.disabled) {
+    showMessageModal("Please select a valid receiver.", false);
+    return;
+  }
+  const receiverId = parseInt(selectedOption.value);
+  const receiverEmail = selectedOption.getAttribute("data-email");
+  const receiverRoleText = document.getElementById("roleSelect").selectedOptions[0]?.text || "Unknown";
+  const message = document.getElementById("messageText").value;
+  if (!message.trim()) {
+    showMessageModal("Please enter a message.", false);
+    return;
+  }
+  const payload = {
+    sender_id: userData.user.employee_id,
+    sender_role: userData.employee_role,
+    receiver_id: receiverId,
+    receiver_email: receiverEmail,
+    receiver_role: receiverRoleText,
+    subject: "No Subject",
+    body: message
+  };
+  employeeSecureFetch('/employee/messages/send', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+    },
+    body: JSON.stringify(payload)
+  })
+    .then(response => {
+      showMessageModal("Message sent!", true);
+      $('#composeMessageModal').modal('hide');
+    })
+    .catch(err => {
+      console.error("[sendMessage] Error:", err);
+      showMessageModal('Failed to send message.', false);
+    });
+}
+
+/**
+ * Shows a message modal (success or error) using the correct modal IDs.
+ * @param {string} message
+ * @param {boolean} isSuccess
+ */
+function showMessageModal(message, isSuccess = true) {
+  if (isSuccess) {
+    const body = document.getElementById("successModalBody");
+    if (body) body.textContent = message || "Success!";
+    $('#successModal').modal('show');
+  } else {
+    const body = document.getElementById("errorModalBody");
+    if (body) body.textContent = message || "An error occurred!";
+    $('#errorModal').modal('show');
+  }
+}
+
+/**
+ * Initializes messaging features.
+ * @param {Object} data
+ */
+function initMessagingFeatures(data) {
+  userData = data;
+  const roleSelect = document.getElementById("roleSelect");
+  const sendButton = document.getElementById("sendButton");
+  if (roleSelect) roleSelect.addEventListener("change", handleRoleChange);
+  if (sendButton) sendButton.addEventListener("click", sendMessage);
+  fetchMessages();
+  loadMessageNotifications(userData.user.employee_id, userData.employee_role);
+  setInterval(() => loadMessageNotifications(userData.user.employee_id, userData.employee_role), 30000);
+
+  if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+    Notification.requestPermission().then(permission => {
+      console.log("[initMessagingFeatures] Notification permission:", permission);
+    });
+  }
+}
+</script>
+<!-- Script for messages and notifications (End) -->
+
+<!-- Script for displaying the recent devices that is logged in (Start) -->
+<script>
+  $('#viewDevicesBtn').on('click', function () {
+    employeeSecureFetch('/recent-devices', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(data => {
+      // Wait for spinner to hide before showing modal and updating DOM
+      $('#employeeSpinnerModal').one('hidden.bs.modal', () => {
+        const tableBody = $('#devicesTable tbody');
+        tableBody.empty();
+
+        if (data.success) {
+          if (data.devices.length === 0) {
+            tableBody.html('<tr><td colspan="5" class="text-center">No devices found.</td></tr>');
+          } else {
+            data.devices.forEach(device => {
+              const row = `
+                <tr>
+                  <td>${device.device_name}</td>
+                  <td>${device.device_os}</td>
+                  <td>${device.browser_name}</td>
+                  <td>${device.ip_address}</td>
+                  <td>${device.issued_at}</td>
+                </tr>`;
+              tableBody.append(row);
+            });
+          }
+        } else {
+          tableBody.html('<tr><td colspan="5" class="text-center text-danger">Failed to load recent devices.</td></tr>');
+        }
+
+        // Now show the recent devices modal after spinner hidden and table updated
+        $('#recentDevicesModal').modal('show');
+
+        // Fix Bootstrap removing modal-open class for multiple modals
+        setTimeout(() => {
+          if ($('#recentDevicesModal').hasClass('show')) {
+            document.body.classList.add('modal-open');
+          }
+        }, 100);
+      });
+
+      // Hide spinner modal (will trigger the one('hidden.bs.modal') handler above)
+      $('#employeeSpinnerModal').modal('hide');
+    })
+    .catch(error => {
+      console.error('Error fetching recent devices:', error);
+      const tableBody = $('#devicesTable tbody');
+      tableBody.empty();
+      tableBody.html('<tr><td colspan="5" class="text-center text-danger">Failed to load recent devices.</td></tr>');
+
+      // Also hide spinner if visible
+      $('#employeeSpinnerModal').modal('hide');
+
+      // Show recent devices modal anyway (or show an error modal if you prefer)
+      $('#recentDevicesModal').modal('show');
+
+      setTimeout(() => {
+        if ($('#recentDevicesModal').hasClass('show')) {
+          document.body.classList.add('modal-open');
+        }
+      }, 100);
+    });
+  });
+</script>
+<!-- Script for displaying the recent devices that is logged in (End) -->
+
+<!-- Script for handling logout confirmation (Current User) (Start) -->
+<script>
+  // Token validity polling: no spinner, no success, no error modals for /validate_token
+
+let tokenCheckIntervalId = null;
+
+function checkTokenValidity() {
+  // Do NOT show spinner, success, or error modal for this route
+  employeeSecureFetch('/validate_token', { method: 'GET', showSpinner: false })
+    .catch(err => {
+      showExpiredModal();
+    });
+}
+
+function showExpiredModal() {
+  $('#sessionExpiredModal').modal({
+    backdrop: 'static',
+    keyboard: false
+  });
+
+  $('#sessionExpiredModal').modal('show');
+
+  document.body.classList.add("modal-open");
+  document.querySelectorAll('button, a, input, select, textarea').forEach(el => {
+    if (!el.closest('#sessionExpiredModal')) {
+      el.setAttribute('disabled', 'disabled');
+    }
+  });
+
+  document.getElementById('redirectToLogin').addEventListener('click', () => {
+    sessionStorage.removeItem('employeeToken');
+    window.location.href = '/';
+  });
+}
+
+tokenCheckIntervalId = setInterval(checkTokenValidity, 10000);
+
+document.addEventListener('DOMContentLoaded', function () {
+  const logoutBtn = document.getElementById('confirmLogoutBtnCurrentUser');
+  if (!logoutBtn) return;
+
+  logoutBtn.addEventListener('click', function () {
+    clearInterval(tokenCheckIntervalId);
+
+    const token = sessionStorage.getItem("employeeToken"); // 👈 Read BEFORE removing
+
+    $('#loadingModalCurrentUser').modal('show');
+    $('#logoutModal').modal('hide');
+
+    fetch("{{ url_for('login_bp.logout') }}", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`  // 👈 Add token to header
+      }
+    })
+    .then(res => {
+      sessionStorage.removeItem("employeeToken"); // 👈 Now safe to remove
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 3000);
+    })
+    .catch(err => {
+      sessionStorage.removeItem("employeeToken");
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 3000);
+    });
+  });
+});
+</script>
+<!-- Script for handling logout confirmation (Current User (End) -->
+
+<!-- Script for loading user data from API routes (Start) -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("📦 DOM fully loaded and parsed.");
+
+    employeeSecureFetch("/api/profile-info", { method: "GET" })
+    .then(data => {
+        console.log("📄 Parsed response data:", data);
+
+        const user = data.user;
+        const userRole = data.employee_role;
+
+        if (!user) {
+            throw new Error("User data not found in response");
+        }
+
+        console.log("👤 Populating UI with user data:", user);
+
+        const displayValue = (val) => (val === null || val === undefined || val === "") ? "N/A" : val;
+
+        const safeSet = (id, value, prop = "textContent") => {
+            const el = document.getElementById(id);
+            if (el) {
+                if (prop === "src") {
+                    el.src = (value === "N/A") ? "/static/path/to/placeholder-image.png" : value;
+                } else {
+                    el.textContent = displayValue(value);
+                }
+                console.log(`✅ Set #${id} →`, value);
+            } else {
+                console.warn(`⚠️ Element with id "${id}" not found.`);
+            }
+        };
+
+        let cacheBustedUrl = "";
+        if (user.profile_picture_url) {
+            cacheBustedUrl = user.profile_picture_url + (user.profile_picture_url.includes('?') ? '&' : '?') + 'v=' + Date.now();
+        }
+
+        safeSet("profile-picture", cacheBustedUrl || "N/A", "src");
+        safeSet("profile-picture-dropdown", cacheBustedUrl || "N/A", "src");
+        safeSet("profile-picture-box", cacheBustedUrl || "N/A", "src");
+        safeSet("profile-picture-sidebar", cacheBustedUrl || "N/A", "src");
+
+        safeSet("user-email-dropdown", user.email);
+        safeSet("user-id", user.employee_id);
+        safeSet("user-position", user.role_name);
+        safeSet("user-name", user.first_name + " " + user.last_name);
+        safeSet("user-department", user.department);
+        safeSet("user-date-hired", user.date_hired);
+        safeSet("user-team_name", user.team_name);
+        safeSet("user-email-contact", user.email);
+        safeSet("user-phone", user.phone_number);
+
+        safeSet("position-modal-detail", user.role_name);
+        safeSet("first-name-modal", user.first_name);
+        safeSet("last-name-modal", user.last_name);
+        safeSet("email", user.email);
+        safeSet("phone-number-modal", user.phone_number);
+        safeSet("phone-number-modal-emergency", user.phone_number);
+        safeSet("department-modal", user.department);
+        safeSet("department-modal-detail", user.department);
+        safeSet("address1-modal", user.address1);
+        safeSet("address2-modal", user.address2);
+        safeSet("certification", user.certification);
+        safeSet("skills", user.skills);
+        safeSet("education", user.education);
+        safeSet("language", user.language);
+        safeSet("hobbies", user.hobbies);
+        safeSet("city-modal", user.city);
+
+        if (typeof initMessagingFeatures === "function") {
+            console.log("📬 Initializing messaging features...");
+            initMessagingFeatures({
+                user: user,
+                employee_role: userRole
+            });
+        } else {
+            console.log("ℹ️ initMessagingFeatures() not found, skipping messaging setup.");
+        }
+
+    })
+    .catch(error => {
+        console.error("❌ Error loading profile info:", error);
+        alert("Error loading profile info. Please try again later or contact support.");
+    });
+});
+</script>
+<!-- Script for loading user data from API routes (End) -->
+
+</html>
