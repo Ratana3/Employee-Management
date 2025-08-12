@@ -8,9 +8,9 @@ def get_db_connection():
     """Establish a connection to the PostgreSQL database."""
     return psycopg2.connect(
         host='localhost',
-        database='YourDatabaseName',
-        user='YourUsername',
-        password='123',
+        database='YourDatabaseName', # Change this to your database name
+        user='YourUsername', # Change this to your server username
+        password='123', # Change this to your database password
     )
 
 def seed_superadmin():

@@ -7,6 +7,7 @@ Seed script for inserting default roles into the 'roles' table.
 
 import psycopg2
 
+# Add more roles if needed
 ROLES = [
     (1, 'admin'),
     (2, 'super_admin'),
@@ -20,9 +21,9 @@ def get_db_connection():
     """Establish a connection to the PostgreSQL database."""
     return psycopg2.connect(
         host='localhost',
-        database='YourDatabaseName',
-        user='YourUsername',
-        password='123',
+        database='YourDatabaseName', # Change this to your database name
+        user='YourUsername', # Change this to your server username
+        password='123', # Change this to your database password
     )
 
 
