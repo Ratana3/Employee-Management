@@ -11,7 +11,7 @@ def get_db_connection():
     return psycopg2.connect(
         host='localhost',
         database='YourDatabaseName', # Change this to your database name
-        user='Username', # Change this to your server username
+        user='YourUsername', # Change this to your server username
         password='123', # Change this to your database password
     )
 

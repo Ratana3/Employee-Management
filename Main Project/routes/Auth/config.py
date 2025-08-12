@@ -84,7 +84,7 @@ BACKUP_DIR = "D:/EmployeeAttendance/Backups"
 # for backup , u have to change the database here 
 DB_HOST = "localhost"
 DB_NAME = "YourDatabaseName"
-DB_USER = "Username"
+DB_USER = "YourUsername"
 DB_PASSWORD = "123"
 # Full path to pg_dump (Update it according to your PostgreSQL version)
 PG_DUMP_PATH = r"C:\Program Files\PostgreSQL\17\bin\pg_dump.exe"
