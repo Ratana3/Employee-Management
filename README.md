@@ -583,7 +583,7 @@ information, and looks good on computers, tablets, and phones.
 | DB_USER = "Username"                                                      |
 | DB_PASSWORD = "123"                                                       |
 |  									    |
-│ 💡 Troubleshooting                                                       │
+│ 💡 Troubleshooting ( Optional )                                           │
 │ • Ensure .sql file matches your PostgreSQL version                        │
 │ • Verify connection to correct database                                   │
 └───────────────────────────────────────────────────────────────────────────┘
