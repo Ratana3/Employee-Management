@@ -483,6 +483,13 @@ information, and looks good on computers, tablets, and phones.
 │ 2. Choose your operating system                                           │
 │ 3. Download and run the installer                                         │
 │ 4. Complete the installation steps                                        │
+│                                                                           │
+│ Python Installation                                                       │
+│ 1. Visit the official Python website                                      │
+│ 2. Select your operating system                                           │
+│ 3. Download the latest version of Python                                  │
+│ 4. Run the installer and follow setup instructions                        │
+│ 5. Verify installation: open a terminal and type `python --version`       │
 └───────────────────────────────────────────────────────────────────────────┘
 
 ┌─ 📂 Project Setup ─────────────────────────────────────────────────────────────┐
